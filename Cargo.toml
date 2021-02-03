@@ -1,0 +1,9 @@
+[package]
+name = "android-manifest"
+version = "0.1.0"
+authors = ["David Ackerman <enfipy@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+quick-xml = "0.20.0"
+serde = { version = "1.0", features = ["derive"] }
