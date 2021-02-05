@@ -1,9 +1,12 @@
-use android_manifest;
-mod common;
+use std::io::Cursor;
 
 use quick_xml::events::attributes::Attribute;
 use quick_xml::events::Event::*;
 use quick_xml::Reader;
+use quick_xml::Writer;
+
+use android_manifest;
+mod common;
 
 
 #[test]
@@ -23,4 +26,24 @@ fn test_sample_xml() {
         buf.clear();
     }
     println!("{}", count);
+}
+
+
+#[test]
+fn test_writer() {
+    let txt = std::include_str!("documents/test_write.xml").trim();
+    let mut reader = Reader::from_str(txt);
+    reader.trim_text(true);
+    let mut writer = Writer::new(Cursor::new(Vec::new()));
+    let mut buf = Vec::new();
+    loop {
+        match reader.read_event(&mut buf) {
+            Ok(Eof) => break,
+            Ok(e) => assert!(writer.write_event(e).is_ok()),
+            Err(e) => panic!(e),
+        }
+    }
+
+    let result = writer.into_inner().into_inner();
+    assert_eq!(result, txt.as_bytes());
 }
