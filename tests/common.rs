@@ -1,3 +1,3 @@
-pub fn setup() {
-    println!("Setup is working");
+pub fn test_function() -> &'static str {
+    return "Setup is working";
 }
