@@ -9,7 +9,6 @@
         android:minSdkVersion="16" />
     <uses-feature android:glEsVersion="0x00030001" android:required="true"></uses-feature>
     
-    
     <application
             android:hasCode="false"
             android:label="Creator 2D"
