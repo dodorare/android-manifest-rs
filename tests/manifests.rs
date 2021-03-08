@@ -1,9 +1,11 @@
 use quick_xml::de::from_reader;
-use serde::Deserialize;
+use quick_xml::se::to_writer;
+use serde::{Deserialize, Serialize};
 use std::fs::File;
-use std::io::BufReader;
+use std::io::{BufReader, BufWriter};
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[serde(rename = "xml")]
 struct Xml {
     to: String,
     from: String,
@@ -28,12 +30,13 @@ fn test_simple_xml_fail_read() {
 
 #[test]
 fn test_simple_xml_write() {
-    // Need to test write XML file
-}
-
-#[test]
-#[should_panic]
-fn test_simple_xml_fail_write() {
-    // Need to test fail write XML file
-    panic!();
+    let file = File::create("docs/xml_example_write.xml").unwrap();
+    let writer = BufWriter::new(file);
+    let note = Xml {
+        to: "Adil".to_string(),
+        from: "Alex".to_string(),
+        heading: "Massage".to_string(),
+        body: "Hello".to_string(),
+    };
+    to_writer(writer, &note).unwrap();
 }

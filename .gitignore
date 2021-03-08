@@ -477,3 +477,6 @@ fabric.properties
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar
+
+### Ignore test gen. files
+docs/xml_example_write.xml
