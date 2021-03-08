@@ -1,8 +1,10 @@
-use quick_xml::de::from_reader;
+use quick_xml::de::{from_reader, from_str, DeError};
 use quick_xml::se::to_writer;
 use serde::{Deserialize, Serialize};
-use std::fs::File;
 use std::io::{BufReader, BufWriter};
+use std::{fs::File, i32};
+extern crate quick_xml;
+extern crate serde;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename = "xml")]
@@ -17,7 +19,8 @@ struct Xml {
 fn test_simple_xml_read() {
     let file = File::open("docs/xml_example.xml").unwrap();
     let reader = BufReader::new(file);
-    let _note: Xml = from_reader(reader).unwrap();
+    let note: Xml = from_reader(reader).unwrap();
+    println!("{:?}", note);
 }
 
 #[test]
@@ -39,4 +42,23 @@ fn test_simple_xml_write() {
         body: "Hello".to_string(),
     };
     to_writer(writer, &note).unwrap();
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+struct Manifest {
+    #[serde(rename = "xmlns:android")]
+    xmlns: Option<String>,
+    package: String,
+    #[serde(rename = "android:versionCode")]
+    version_code: Option<i32>,
+    #[serde(rename = "android:versionName")]
+    version_name: Option<String>,
+}
+
+#[test]
+fn test_simple_android_manifest_deserialize() {
+    let file = File::open("docs/AndroidManifest.xml").unwrap();
+    let reader = BufReader::new(file);
+    let manifest: Manifest = from_reader(reader).unwrap();
+    println!("{:?}", manifest);
 }
