@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 /// The root element of the AndroidManifest.xml file.
 /// It must contain an `<application>` element and specify `xmlns:android` and `package` attributes.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename = "android:{camelCase}")]
 pub struct Manifest {
     /// Defines the Android namespace.
     /// This attribute should always be set to `http://schemas.android.com/apk/res/android`.
@@ -16,7 +17,7 @@ pub struct Manifest {
     /// However, if this attribute is set to the same value for two or more apps, they will all share the same ID — provided that their certificate sets are identical.
     /// Apps with the same user ID can access each other's data and, if desired, run in the same process.
     #[serde(rename = "android:sharedUserId")]
-    pub shared_user_id: Option<i32>,
+    pub shared_user_id: Option<String>,
     /// The higher the sandbox version number, the higher the level of security.
     /// Its default value is 1; you can also set it to 2. Setting this attribute to 2 switches the app to a different SELinux sandbox.
     /// The following restrictions apply to a level 2 sandbox:
@@ -43,10 +44,23 @@ pub struct Manifest {
     pub install_location: Option<InstallLocation>,
 }
 
+/// The default install location for the app.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum InstallLocation {
+    /// The app may be installed on the external storage, but the system will install
+    /// the app on the internal storage by default. If the internal storage is full,
+    /// then the system will install it on the external storage.
+    /// Once installed, the user can move the app to either internal or external storage through the system settings.
     Auto,
+    /// The app must be installed on the internal device storage only.
+    /// If this is set, the app will never be installed on the external storage.
+    /// If the internal storage is full, then the system will not install the app.
+    /// This is also the default behavior if you do not define android:installLocation.
     InternalOnly,
+    /// The app prefers to be installed on the external storage (SD card).
+    /// There is no guarantee that the system will honor this request.
+    /// The app might be installed on internal storage if the external media is unavailable or full.
+    /// Once installed, the user can move the app to either internal or external storage through the system settings.
     PreferExternal,
 }
