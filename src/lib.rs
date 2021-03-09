@@ -1,9 +1,11 @@
+mod resources;
+
+use resources::{Resource, StringResource};
 use serde::{Deserialize, Serialize};
 
 /// The root element of the AndroidManifest.xml file.
 /// It must contain an `<application>` element and specify `xmlns:android` and `package` attributes.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
-#[serde(rename = "android:{camelCase}")]
 pub struct Manifest {
     /// Defines the Android namespace.
     /// This attribute should always be set to `http://schemas.android.com/apk/res/android`.
@@ -28,7 +30,7 @@ pub struct Manifest {
     /// A user-readable label for the shared user ID. The label must be set as a reference to a string resource; it cannot be a raw string.
     /// This attribute was introduced in API Level 3. It is meaningful only if the sharedUserId attribute is also set.
     #[serde(rename = "android:sharedUserLabel")]
-    pub shared_user_label: Option<String>,
+    pub shared_user_label: Option<Resource<StringResource>>,
     /// An internal version number. This number is used only to determine whether one version is more recent than another, with higher numbers indicating more recent versions.
     /// This is not the version number shown to users; that number is set by the versionName attribute.
     /// The value must be set as an integer, such as "100". You can define it however you want, as long as each successive version has a higher number.
