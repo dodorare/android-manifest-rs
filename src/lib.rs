@@ -12,10 +12,33 @@ pub struct Manifest {
     /// The name may contain uppercase or lowercase letters ('A' through 'Z'), numbers, and underscores ('_').
     /// However, individual package name parts may only start with letters.
     pub package: String,
+    /// The name of a Linux user ID that will be shared with other apps. By default, Android assigns each app its own unique user ID.
+    /// However, if this attribute is set to the same value for two or more apps, they will all share the same ID — provided that their certificate sets are identical.
+    /// Apps with the same user ID can access each other's data and, if desired, run in the same process.
+    #[serde(rename = "android:sharedUserId")]
+    pub shared_user_id: Option<i32>,
+    /// The higher the sandbox version number, the higher the level of security.
+    /// Its default value is 1; you can also set it to 2. Setting this attribute to 2 switches the app to a different SELinux sandbox.
+    /// The following restrictions apply to a level 2 sandbox:
+    /// The default value of `usesCleartextTraffic` in the Network Security Config is false.
+    /// Uid sharing is not permitted.
+    #[serde(rename = "android:targetSandboxVersion")]
+    pub target_sandbox_version: Option<String>,
+    /// A user-readable label for the shared user ID. The label must be set as a reference to a string resource; it cannot be a raw string.
+    /// This attribute was introduced in API Level 3. It is meaningful only if the sharedUserId attribute is also set.
+    #[serde(rename = "android:sharedUserLabel")]
+    pub shared_user_label: Option<String>,
+    /// An internal version number. This number is used only to determine whether one version is more recent than another, with higher numbers indicating more recent versions.
+    /// This is not the version number shown to users; that number is set by the versionName attribute.
+    /// The value must be set as an integer, such as "100". You can define it however you want, as long as each successive version has a higher number.
     #[serde(rename = "android:versionCode")]
     pub version_code: Option<i32>,
+    /// The version number shown to users. This attribute can be set as a raw string or as a reference to a string resource.
+    /// The string has no other purpose than to be displayed to users. The versionCode attribute holds the significant version number used internally.
     #[serde(rename = "android:versionName")]
     pub version_name: Option<String>,
+    /// Note: By default, your app will be installed on the internal storage and cannot be installed on the external
+    /// storage unless you define this attribute to be either `auto` or `preferExternal`.
     #[serde(rename = "android:installLocation")]
     pub install_location: Option<InstallLocation>,
 }
