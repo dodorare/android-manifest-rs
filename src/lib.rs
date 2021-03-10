@@ -66,3 +66,42 @@ pub enum InstallLocation {
     /// Once installed, the user can move the app to either internal or external storage through the system settings.
     PreferExternal,
 }
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+struct Application {
+    /// The `<activity>` element has its own `allowTaskReparenting` attribute that can override the value set here. See that attribute for more information.
+    #[serde(rename = "android:allowTaskReparenting")]
+    pub allow_task_reparenting: Option<bool>,
+    /// Whether to allow the application to participate in the backup and restore infrastructure. If this attribute is set
+    /// to false, no backup or restore of the application will ever be performed, even by a full-system backup that would otherwise cause all application data to be saved via adb.
+    /// The default value of this attribute is true.
+    #[serde(rename = "android:allowBackup")]
+    pub allow_backup: Option<bool>,
+    /// Whether to allow the application to reset user data.
+    /// This data includes flags—such as whether the user has seen introductory tooltips—as well as user-customizable settings and preferences.
+    /// The default value of this attribute is true
+    /// Note: Only apps that are part of the system image can declare this attribute explicitly. Third-party apps cannot include this attribute in their manifest files.
+    #[serde(rename = "android:allowClearUserData")]
+    pub allow_clear_user_data: Option<bool>,
+    /// Whether or not the app has the Heap pointer tagging feature enabled. The default value of this attribute is `true`.
+    /// `Note:` Disabling this feature does not address the underlying code health issue. Future hardware devices may not support this manifest tag.
+    #[serde(rename = "android:allowNativeHeapPointerTagging")]
+    pub allow_native_heap_pointer_tagging: Option<bool>,
+    /// The name of the class that implements the application's backup agent, a subclass of BackupAgent.
+    /// The attribute value should be a fully qualified class name (such as, `"com.example.project.MyBackupAgent"`).
+    /// However, as a shorthand, if the first character of the name is a period (for example, `".MyBackupAgent"`),
+    /// it is appended to the package name specified in the `<manifest>` element.
+    #[serde(rename = "android:backupAgent")]
+    pub backup_agent: Option<String>,
+    /// Indicates that Auto Backup operations may be performed on this app even if the app is in a foreground-equivalent state.
+    /// The system shuts down an app during auto backup operation, so use this attribute with caution.
+    /// Setting this flag to true can impact app behavior while the app is active.
+    /// The default value is false, which means that the OS will avoid backing up the app while it is running in the foreground
+    /// (such as a music app that is actively playing music via a service in the startForeground() state).
+    #[serde(rename = "android:backupInForeground")]
+    pub backup_in_foreground: Option<bool>,
+    /// A drawable resource providing an extended graphical banner for its associated item. Use with the
+    /// `<application>` tag to supply a default banner for all application activities, or with the `<activity>` tag to supply a banner for a specific activity.
+    #[serde(rename = "android:banner")]
+    pub banner: Option<Resource<StringResource>>,
+}
