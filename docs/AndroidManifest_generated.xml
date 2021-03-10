@@ -1,0 +1,1 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="rust.myapp" android:sharedUserLabel="@string/resource_name"><application/></manifest>

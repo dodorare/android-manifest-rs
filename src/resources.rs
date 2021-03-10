@@ -7,9 +7,10 @@ use std::marker::PhantomData;
 use std::str::FromStr;
 
 pub trait ResourceType: FromStr {
-    fn new(name: &str) -> Resource<Self> {
+    fn new(name: &str, package: Option<String>) -> Resource<Self> {
         Resource {
             name: name.to_owned(),
+            package,
             phantom: PhantomData,
         }
     }
@@ -19,13 +20,15 @@ pub trait ResourceType: FromStr {
 #[derive(Debug, PartialEq)]
 pub struct Resource<T: ResourceType> {
     name: String,
+    package: Option<String>,
     phantom: PhantomData<T>,
 }
 
 impl<T: ResourceType> Resource<T> {
-    pub fn new(name: &str) -> Self {
+    pub fn new(name: &str, package: Option<String>) -> Self {
         Self {
             name: name.to_owned(),
+            package,
             phantom: PhantomData,
         }
     }
@@ -44,7 +47,16 @@ impl<T: ResourceType> Serialize for Resource<T> {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&format!("@{}/{}", T::resource_type(), self.name))
+        if let Some(package) = &self.package {
+            serializer.serialize_str(&format!(
+                "@{}:{}/{}",
+                package,
+                T::resource_type(),
+                self.name
+            ))
+        } else {
+            serializer.serialize_str(&format!("@{}/{}", T::resource_type(), self.name))
+        }
     }
 }
 
@@ -57,7 +69,7 @@ impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
 
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         formatter.write_str(&format!(
-            "an {} resource in format @{}/resource_name",
+            "an {} resource in format @[package:]{}/resource_name",
             T::resource_type(),
             T::resource_type()
         ))
@@ -70,17 +82,23 @@ impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
         let split_str: Vec<_> = v.split('/').collect();
         if split_str.len() != 2 {
             return Err(E::custom(format!(
-                "an {} resource in format @{}/resource_name",
+                "a wrong resource format, expected format @[package:]{}/resource_name, found {}",
                 T::resource_type(),
-                T::resource_type()
+                v
             )));
         };
         let first_part = split_str.get(0).unwrap();
         let resource_type = &first_part[1..];
+        let split_type: Vec<_> = resource_type.split(':').collect();
+        let (resource_type, package) = if split_type.len() == 2 {
+            (split_type[1], Some(split_type[0].to_string()))
+        } else {
+            (split_type[0], None)
+        };
         let resource_name = split_str.get(1).unwrap();
         if resource_type != T::resource_type() {
             return Err(E::custom(format!(
-                "a wrong resource type, expected @{}/{} found {}",
+                "a wrong resource type, expected @[package:]{}/{}, found {}",
                 T::resource_type(),
                 resource_name,
                 v
@@ -88,6 +106,7 @@ impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
         };
         Ok(Resource {
             name: resource_name.to_string(),
+            package,
             phantom: PhantomData,
         })
     }

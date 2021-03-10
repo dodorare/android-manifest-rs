@@ -1,11 +1,12 @@
 mod resources;
 
-use resources::{DrawableResource, Resource, StringResource, StyleResource, XmlResource};
+pub use resources::*;
 use serde::{Deserialize, Serialize};
 
 /// The root element of the AndroidManifest.xml file.
 /// It must contain an `<application>` element and specify `xmlns:android` and `package` attributes.
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
+#[serde(rename = "manifest")]
 pub struct Manifest {
     /// Defines the Android namespace.
     /// This attribute should always be set to `http://schemas.android.com/apk/res/android`.
@@ -44,6 +45,8 @@ pub struct Manifest {
     /// storage unless you define this attribute to be either `auto` or `preferExternal`.
     #[serde(rename = "android:installLocation")]
     pub install_location: Option<InstallLocation>,
+
+    pub application: Application,
 }
 
 /// The default install location for the app.
@@ -67,8 +70,9 @@ pub enum InstallLocation {
     PreferExternal,
 }
 
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
-struct Application {
+#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
+#[serde(rename = "application")]
+pub struct Application {
     /// The `<activity>` element has its own `allowTaskReparenting` attribute that can override the value set here. See that attribute for more information.
     #[serde(rename = "android:allowTaskReparenting")]
     pub allow_task_reparenting: Option<bool>,
@@ -181,13 +185,13 @@ struct Application {
     /// Enabling this also does not guarantee a fixed increase in available memory, because some devices are constrained by their total available memory.
     /// To query the available memory size at runtime, use the methods `getMemoryClass()` or `getLargeMemoryClass()`.
     #[serde(rename = "android:largeHeap")]
-    pub large_heap: Option<Resource<StringResource>>,
+    pub large_heap: Option<bool>,
     /// A user-readable label for the application as a whole, and a default label for each of the application's components.
     /// See the individual `label` attributes for `<activity>`, `<activity-alias>`, `<service>`, `<receiver>`, and `<provider>` elements.
     /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
     /// However, as a convenience while you're developing the application, it can also be set as a raw string.
     #[serde(rename = "android:label")]
-    pub label: Option<bool>,
+    pub label: Option<Resource<StringResource>>,
     /// A logo for the application as whole, and the default logo for activities.
     /// This attribute must be set as a reference to a drawable resource containing the image (for example `"@drawable/logo"`). There is no default logo.
     #[serde(rename = "android:logo")]
@@ -296,13 +300,14 @@ struct Application {
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
-enum GwpAsanMode {
+pub enum GwpAsanMode {
     Always,
     Never,
 }
+
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
-enum UiOptions {
+pub enum UiOptions {
     /// No extra UI options. This is the default.
     None,
     /// Add a bar at the bottom of the screen to display action items in the app bar (also known as the action bar),
