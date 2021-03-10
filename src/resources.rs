@@ -1,7 +1,3 @@
-mod string;
-
-pub use string::*;
-
 use serde::{
     de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
@@ -11,6 +7,12 @@ use std::marker::PhantomData;
 use std::str::FromStr;
 
 pub trait ResourceType: FromStr {
+    fn new(name: &str) -> Resource<Self> {
+        Resource {
+            name: name.to_owned(),
+            phantom: PhantomData,
+        }
+    }
     fn resource_type() -> &'static str;
 }
 
@@ -21,6 +23,13 @@ pub struct Resource<T: ResourceType> {
 }
 
 impl<T: ResourceType> Resource<T> {
+    pub fn new(name: &str) -> Self {
+        Self {
+            name: name.to_owned(),
+            phantom: PhantomData,
+        }
+    }
+
     pub fn name(&self) -> &str {
         &self.name
     }
@@ -58,8 +67,27 @@ impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
     where
         E: de::Error,
     {
+        let split_str: Vec<_> = v.split('/').collect();
+        if split_str.len() != 2 {
+            return Err(E::custom(format!(
+                "an {} resource in format @{}/resource_name",
+                T::resource_type(),
+                T::resource_type()
+            )));
+        };
+        let first_part = split_str.get(0).unwrap();
+        let resource_type = &first_part[1..];
+        let resource_name = split_str.get(1).unwrap();
+        if resource_type != T::resource_type() {
+            return Err(E::custom(format!(
+                "a wrong resource type, expected @{}/{} found {}",
+                T::resource_type(),
+                resource_name,
+                v
+            )));
+        };
         Ok(Resource {
-            name: v.to_string(),
+            name: resource_name.to_string(),
             phantom: PhantomData,
         })
     }
@@ -73,5 +101,26 @@ impl<'de, T: ResourceType> Deserialize<'de> for Resource<T> {
         deserializer.deserialize_string(ResourceVisitor {
             phantom: PhantomData,
         })
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub struct StringResource;
+
+impl FromStr for StringResource {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s == "string" {
+            Ok(StringResource)
+        } else {
+            Err(format!("failed to convert {} to string recource type", s))
+        }
+    }
+}
+
+impl ResourceType for StringResource {
+    fn resource_type() -> &'static str {
+        "string"
     }
 }

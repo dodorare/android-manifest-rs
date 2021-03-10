@@ -3,6 +3,6 @@
     package="rust.twod"
     android:versionCode="16777992"
     android:versionName="0.3.8"
-    android:sharedUserLabel="@string/string_name"
+    android:sharedUserLabel="@drawable/bla_bla_bla"
     android:installLocation="internalOnly">
 </manifest>
