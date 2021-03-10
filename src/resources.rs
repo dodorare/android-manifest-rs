@@ -124,3 +124,24 @@ impl ResourceType for StringResource {
         "string"
     }
 }
+
+#[derive(Debug, PartialEq)]
+pub struct DrawableResource;
+
+impl FromStr for DrawableResource {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s == "drawable" {
+            Ok(DrawableResource)
+        } else {
+            Err(format!("failed to convert {} to drawable resource type", s))
+        }
+    }
+}
+
+impl ResourceType for DrawableResource {
+    fn resource_type() -> &'static str {
+        "drawable"
+    }
+}
