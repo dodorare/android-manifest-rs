@@ -1,4 +1,4 @@
-use super::resources::{DrawableResource, Resource, StringResource, StyleResource};
+use super::resources::{DrawableResource, Resource, StringResourceOrString, StyleResource};
 use serde::{Deserialize, Serialize};
 
 /// Declares an activity (an `Activity` subclass) that implements part of the application's visual user interface.
@@ -111,7 +111,7 @@ pub struct Activity {
     /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
     /// However, as a convenience while you're developing the application, it can also be set as a raw string.
     #[serde(rename = "android:label")]
-    pub label: Option<Resource<StringResource>>,
+    pub label: Option<StringResourceOrString>,
     /// An instruction on how the activity should be launched. There are four modes that work in conjunction
     /// with activity flags (`FLAG_ACTIVITY_*` constants) in `Intent` objects to determine what should happen when the activity is called upon to handle an intent.
     /// The default mode is "standard".
