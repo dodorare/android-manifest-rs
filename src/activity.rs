@@ -1,4 +1,4 @@
-use super::resources::{DrawableResource, Resource, StringResource};
+use super::resources::{DrawableResource, Resource, StringResource, StyleResource};
 use serde::{Deserialize, Serialize};
 
 /// Declares an activity (an `Activity` subclass) that implements part of the application's visual user interface.
@@ -191,9 +191,51 @@ pub struct Activity {
     /// This attribute was added in API level 24.
     #[serde(rename = "android:resizeableActivity")]
     pub resizeable_activity: Option<bool>,
-    // /// The orientation of the activity's display on the device. The system ignores this attribute if the activity is running in multi-window mode.
-    // #[serde(rename = "android:creenOrientation")]
-    // pub resizeable_activity: Option<bool>,
+    /// The orientation of the activity's display on the device. The system ignores this attribute if the activity is running in multi-window mode.
+    #[serde(rename = "android:screenOrientation")]
+    pub screen_orientation: Option<ScreenOrientation>,
+    /// Whether or not the activity is shown when the device's current user is different than the user who launched the activity.
+    /// You can set this attribute to a literal value—"true" or "false"—or you can set the attribute to a resource or theme attribute that contains a boolean value.
+    /// This attribute was added in API level 23.
+    #[serde(rename = "android:showForAllUsers")]
+    pub show_for_all_users: Option<bool>,
+    /// Whether or not the activity can be killed and successfully restarted without having saved its state — "true" if
+    /// it can be restarted without reference to its previous state, and "false" if its previous state is required. The default value is "false".
+    /// Normally, before an activity is temporarily shut down to save resources, its onSaveInstanceState() method is called. This method stores the current state of the activity in a Bundle object, which is then passed to
+    /// onCreate() when the activity is restarted. If this attribute is set to "true", onSaveInstanceState() may not be called and onCreate() will be passed null instead of the Bundle — just as it was when the activity started for the first time.
+    /// A "true" setting ensures that the activity can be restarted in the absence of retained state. For example, the activity that displays the home screen uses this setting
+    /// to make sure that it does not get removed if it crashes for some reason.
+    #[serde(rename = "android:stateNotNeeded")]
+    pub state_not_needed: Option<bool>,
+    /// Specifies whether the activity supports Picture-in-Picture display.
+    /// This attribute was added in API level 24.
+    #[serde(rename = "android:supportsPictureInPicture")]
+    pub supports_picture_in_picture: Option<bool>,
+    /// The task that the activity has an affinity for. Activities with the same affinity conceptually belong to the same task (to the same "application" from the user's perspective).
+    /// The affinity of a task is determined by the affinity of its root activity.
+    /// The affinity determines two things — the task that the activity is re-parented to (see the allowTaskReparenting attribute) and the task that will house the activity when it is launched with the FLAG_ACTIVITY_NEW_TASK flag.
+    /// By default, all activities in an application have the same affinity. You can set this attribute to group them differently, and even place activities defined in different applications within the same task.
+    /// To specify that the activity does not have an affinity for any task, set it to an empty string.
+    /// If this attribute is not set, the activity inherits the affinity set for the application (see the <application> element's taskAffinity attribute).
+    /// The name of the default affinity for an application is the package name set by the <manifest> element.
+    #[serde(rename = "android:taskAffinity")]
+    pub task_affinity: Option<String>,
+    /// A reference to a style resource defining an overall theme for the activity. This automatically sets the activity's context to use this theme (see setTheme()
+    /// and may also cause "starting" animations prior to the activity being launched (to better match what the activity actually looks like).
+    /// If this attribute is not set, the activity inherits the theme set for the application as a whole — from the <application> element's theme attribute.
+    /// If that attribute is also not set, the default system theme is used. For more information, see the Styles and Themes developer guide.
+    #[serde(rename = "android:theme")]
+    pub theme: Option<Resource<StyleResource>>,
+    /// Extra options for an activity's UI.
+    /// Must be one of the following values.
+    #[serde(rename = "android:uiOptions")]
+    pub ui_options: Option<String>,
+    /// How the main window of the activity interacts with the window containing the on-screen soft keyboard. The setting for this attribute affects two things:
+    /// The state of the soft keyboard — whether it is hidden or visible — when the activity becomes the focus of user attention.
+    /// The adjustment made to the activity's main window — whether it is resized smaller to make room for the soft keyboard or whether its contents pan to make the current focus visible when part of the window is covered by the soft keyboard.
+    /// The setting must be one of the values listed in the following table, or a combination of one `"state..."` value plus one `"adjust..."` value.
+    #[serde(rename = "android:windowSoftInputMode")]
+    pub window_soft_input_mode: Option<WindowSoftInputMode>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
@@ -319,6 +361,11 @@ pub enum PersistableMode {
     PersistNever,
 }
 
+/// Note: When you declare one of the landscape or portrait values, it is considered a hard requirement for the orientation in which the activity runs. As such, the value you declare enables filtering by services such as
+/// Google Play so your application is available only to devices that support the orientation required by your activities. For example, if you declare either "landscape", "reverseLandscape", or "sensorLandscape", then
+/// your application will be available only to devices that support landscape orientation. However, you should also explicitly declare that your application requires either portrait or landscape orientation with the <uses-feature> element.
+/// For example, <uses-feature android:name="android.hardware.screen.portrait"/>. This is purely a filtering behavior provided by Google Play (and other services that support it) and the platform
+/// itself does not control whether your app can be installed when a device supports only certain orientations.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenOrientation {
@@ -356,4 +403,44 @@ pub enum ScreenOrientation {
     FullUser,
     /// Locks the orientation to its current rotation, whatever that is. Added in API level 18.
     Locked,
+}
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum UiOptions {
+    ///	No extra UI options. This is the default
+    None,
+    /// Add a bar at the bottom of the screen to display action items in the app bar (also known as the action bar), when constrained for horizontal space (such as when in portrait mode on a handset).
+    /// Instead of a small number of action items appearing in the app bar at the top of the screen, the app bar is split into the top navigation section and the bottom bar for action items.
+    /// This ensures a reasonable amount of space is made available not only for the action items, but also for navigation and title elements at the top. Menu items are not split across the two bars; they always appear together.
+    SplitActionBarWhenNarrow,
+}
+
+/// Values set here (other than "stateUnspecified" and "adjustUnspecified") override values set in the theme.
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum WindowSoftInputMode {
+    /// The state of the soft keyboard (whether it is hidden or visible) is not specified. The system will choose an appropriate state or rely on the setting in the theme.
+    /// This is the default setting for the behavior of the soft keyboard.
+    StateUnspecified,
+    /// The soft keyboard is kept in whatever state it was last in, whether visible or hidden, when the activity comes to the fore.
+    StateUnchanged,
+    /// The soft keyboard is hidden when the user chooses the activity — that is, when the user affirmatively navigates forward to the activity, rather than backs into it because of leaving another activity.
+    StateHidden,
+    /// The soft keyboard is always hidden when the activity's main window has input focus.
+    StateAlwaysHidden,
+    /// The soft keyboard is made visible when the user chooses the activity — that is, when the user affirmatively navigates forward to the activity, rather than backs into it because of leaving another activity.
+    StateVisible,
+    /// The soft keyboard is visible when the window receives input focus.
+    StateAlwaysVisible,
+    /// It is unspecified whether the activity's main window resizes to make room for the soft keyboard, or whether the contents of the window pan to make the current focus visible on-screen.
+    /// The system will automatically select one of these modes depending on whether the content of the window has any layout views that can scroll their contents.
+    /// If there is such a view, the window will be resized, on the assumption that scrolling can make all of the window's contents visible within a smaller area.
+    /// This is the default setting for the behavior of the main window.
+    AdjustUnspecified,
+    ///	The activity's main window is always resized to make room for the soft keyboard on screen.
+    AdjustResize,
+    /// The activity's main window is not resized to make room for the soft keyboard. Rather, the contents of the window are automatically panned so that the current focus is never obscured by the keyboard and users can always see what they are typing.
+    /// This is generally less desirable than resizing, because the user may need to close the soft keyboard to get at and interact with obscured parts of the window.
+    AdjustPan,
 }
