@@ -90,6 +90,112 @@ pub struct Activity {
     /// If this attribute and allowTaskReparenting are both "true", this attribute trumps the other. The affinity of the activity is ignored. The activity is not re-parented, but destroyed. 
     #[serde(rename = "android:finishOnTaskLaunch")]
     pub finish_on_task_launch: Option<bool>,
+    /// Whether or not hardware-accelerated rendering should be enabled for this Activity — `"true"` if it should be enabled, and "false" if not. The default value is `"false".
+    /// Starting from Android 3.0, a hardware-accelerated OpenGL renderer is available to applications, to improve performance for many common 2D graphics operations.
+    /// When the hardware-accelerated renderer is enabled, most operations in Canvas, Paint, Xfermode, ColorFilter, Shader, and Camera are accelerated.
+    /// Note that not all of the OpenGL 2D operations are accelerated. If you enable the hardware-accelerated renderer, test your application to ensure that it can make use of the renderer without errors.
+    #[serde(rename = "android:hardwareAccelerated")]
+    pub hardware_accelerated: Option<bool>,
+    /// An icon representing the activity. The icon is displayed to users when a representation of the activity is required on-screen.
+    /// For example, icons for activities that initiate tasks are displayed in the launcher window. The icon is often accompanied by a label (see the android:label attribute).
+    /// This attribute must be set as a reference to a drawable resource containing the image definition. If it is not set, the icon specified for the application
+    /// as a whole is used instead (see the <application> element's icon attribute). The activity's icon — whether set here or by the <application> element — is also the default icon for all
+    /// the activity's intent filters (see the `<intent-filter>` element's icon attribute).
+    #[serde(rename = "android:icon")]
+    pub icon: Option<Resource<DrawableResource>>,
+    /// Sets the immersive mode setting for the current activity. If the android:immersive attribute is set to true in the app's manifest entry for this activity, the ActivityInfo.flags
+    /// member always has its `FLAG_IMMERSIVE` bit set, even if the immersive mode is changed at runtime using the setImmersive() method.
+    #[serde(rename = "android:immersive")]
+    pub immersive: Option<bool>,
+    /// A user-readable label for the activity. The label is displayed on-screen when the activity must be represented to the user. It's often displayed along with the activity icon.
+    /// If this attribute is not set, the label set for the application as a whole is used instead (see the <application> element's label attribute).
+    /// The activity's label — whether set here or by the <application> element — is also the default label for all the activity's intent filters (see the <intent-filter> element's label attribute).
+    /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface. 
+    /// However, as a convenience while you're developing the application, it can also be set as a raw string.
+    #[serde(rename = "android:label")]
+    pub label: Option<Resource<StringResource>>,
+    /// An instruction on how the activity should be launched. There are four modes that work in conjunction
+    /// with activity flags (`FLAG_ACTIVITY_*` constants) in `Intent` objects to determine what should happen when the activity is called upon to handle an intent.
+    /// The default mode is "standard".
+    /// As shown in the table below, the modes fall into two main groups, with "standard" and "singleTop" activities on one side, and "singleTask" and "singleInstance" activities on the other. 
+    /// An activity with the "standard" or "singleTop" launch mode can be instantiated multiple times. 
+    /// The instances can belong to any task and can be located anywhere in the activity stack. 
+    /// Typically, they're launched into the task that called startActivity() (unless the Intent object contains a FLAG_ACTIVITY_NEW_TASK instruction, in which case a different task is chosen — see the taskAffinity attribute).
+    #[serde(rename = "android:launchMode")]
+    pub launch_mode: Option<LaunchMode>,
+    /// Determines how the system presents this activity when the device is running in lock task mode.
+    /// Android can run tasks in an immersive, kiosk-like fashion called lock task mode. When the system runs in lock task mode, device users typically can’t see notifications, access non-allowlisted apps, or return to the
+    /// home screen (unless the Home app is allowlisted). Only apps that have been allowlisted by a device policy controller (DPC) can run when the system is in lock task mode.
+    /// System and privileged apps, however, can run in lock task mode without being allowlisted.
+    #[serde(rename = "android:lockTaskMode")]
+    pub lock_task_mode: Option<LockTaskMode>,
+    /// The maximum number of tasks rooted at this activity in the overview screen. When this number of entries is reached, the system removes the least-recently used instance from the overview screen. 
+    /// Valid values are 1 through 50 (25 on low memory devices); zero is invalid. This must be an integer value, such as 50. The default value is 16.
+    #[serde(rename = "android:maxRecents")]
+    pub max_recents: Option<i32>,
+    /// The maximum aspect ratio the activity supports. If the app runs on a device with a wider aspect ratio, the system automatically letterboxes the app, leaving portions of the screen unused so the app can run at its
+    /// specified maximum aspect ratio. Maximum aspect ratio is expressed as the decimal form of the quotient of the device's longer dimension divided by its shorter dimension. For example, if the maximum aspect ratio is
+    /// 7:3, set the value of this attribute to 2.33. On non-wearable devices, the value of this attribute needs to be 1.33 or greater. On wearable devices, it must be 1.0 or greater. Otherwise, the system ignores the set value.
+    /// `Note:` This attribute is ignored if the activity has `resizeableActivity` set to true, since that means your activity supports any size.
+    #[serde(rename = "android:maxAspectRatio")]
+    pub max_aspect_ratio: Option<f32>,
+    /// Whether an instance of the activity can be launched into the process of the component that started it — "true" if it can be, and "false" if not. The default value is "false".
+    /// Normally, a new instance of an activity is launched into the process of the application that defined it, so all instances of the activity run in the same process. However, if this flag is set to "true", instances of the
+    /// activity can run in multiple processes, allowing the system to create instances wherever they are used (provided permissions allow it), something that is almost never necessary or desirable.
+    #[serde(rename = "android:multiprocess")]
+    pub multiprocess: Option<bool>,
+    /// The name of the class that implements the activity, a subclass of Activity. The attribute value should be a fully qualified class name (such as, "com.example.project.ExtracurricularActivity"). However, as a
+    /// shorthand, if the first character of the name is a period (for example, ".ExtracurricularActivity"), it is appended to the package name specified in the <manifest> element.
+    /// Once you publish your application, you should not change this name (unless you've set android:exported="false").
+    /// There is no default. The name must be specified.
+    #[serde(rename = "android:name")]
+    pub name: Option<String>,
+    /// Whether or not the activity should be removed from the activity stack and finished (its finish() method called) when the user navigates away from
+    /// it and it's no longer visible on screen — "true" if it should be finished, and "false" if not. The default value is "false".
+    /// A value of "true" means that the activity will not leave a historical trace. It will not remain in the activity stack for the task, so the user will not be able to return to it.
+    /// In this case, onActivityResult() is never called if you start another activity for a result from this activity.
+    /// This attribute was introduced in API Level 3.
+    #[serde(rename = "android:noHistory")]
+    pub no_history: Option<bool>,
+    /// The class name of the logical parent of the activity. The name here must match the class name given to the corresponding <activity> element's android:name attribute.
+    /// The system reads this attribute to determine which activity should be started when the user presses the Up button in the action bar. The system can also use this information to synthesize a back stack of activities with TaskStackBuilder.
+    /// To support API levels 4 - 16, you can also declare the parent activity with a <meta-data> element that specifies a value for "android.support.PARENT_ACTIVITY".
+    #[serde(rename = "android:parentActivityName")]
+    pub parent_activity_name: Option<String>,
+    /// Defines how an instance of an activity is preserved within a containing task across device restarts.
+    /// If the root activity of a task sets this attribute's value to persistRootOnly, then only the root activity is preserved.
+    /// Otherwise, the activities that are higher up the task's back stack are examined; any of these activities that set this attribute's value to `persistAcrossReboots` are preserved
+    #[serde(rename = "android:persistableMode")]
+    pub persistable_mode: Option<PersistableMode>,
+    /// The name of a permission that clients must have to launch the activity or otherwise get it to respond to an intent. 
+    /// If a caller of startActivity() or startActivityForResult() has not been granted the specified permission, its intent will not be delivered to the activity.
+    /// If this attribute is not set, the permission set by the <application> element's permission attribute applies to the activity. If neither attribute is set, the activity is not protected by a permission.
+    /// For more information on permissions, see the Permissions section in the introduction and another document, Security and Permissions.
+    #[serde(rename = "android:permission")]
+    pub permission: Option<String>,
+    /// The name of the process in which the activity should run. Normally, all components of an application run in a default process name created for the application and you do not need to use this attribute. But if necessary,
+    /// you can override the default process name with this attribute, allowing you to spread your app components across multiple processes.
+    /// If the name assigned to this attribute begins with a colon (':'), a new process, private to the application, is created when it's needed and the activity runs in that process. If the process name begins with a lowercase
+    /// character, the activity will run in a global process of that name, provided that it has permission to do so. This allows components in different applications to share a process, reducing resource usage.
+    /// The `<application>` element's `process` attribute can set a different default process name for all components.
+    #[serde(rename = "android:process")]
+    pub process: Option<String>,
+    /// Whether or not the activity relinquishes its task identifiers to an activity above it in the task stack. A task whose root activity has this attribute set to `"true"` replaces the base Intent with that of the next activity in the
+    /// task. If the next activity also has this attribute set to `"true"` then it will yield the base Intent to any activity that it launches in the same task. 
+    /// This continues for each activity until an activity is encountered which has this attribute set to `"false"`. The default value is `"false"`.
+    /// This attribute set to `"true"` also permits the activity's use of the `ActivityManager.TaskDescription` to change labels, colors and icons in the `overview screen`.
+    #[serde(rename = "android:relinquishTaskIdentity")]
+    pub relinquish_task_identity: Option<bool>,
+    /// Specifies whether the app supports multi-window display. You can set this attribute in either the <activity> or <application> element.
+    /// If you set this attribute to true, the user can launch the activity in split-screen and freeform modes. If you set the attribute to false, the activity does not support multi-window mode.
+    /// If this value is false, and the user attempts to launch the activity in multi-window mode, the activity takes over the full screen.
+    /// If your app targets API level 24 or higher, but you do not specify a value for this attribute, the attribute's value defaults to true.
+    /// This attribute was added in API level 24.
+    #[serde(rename = "android:resizeableActivity")]
+    pub resizeable_activity: Option<bool>,
+    /// The orientation of the activity's display on the device. The system ignores this attribute if the activity is running in multi-window mode.
+    #[serde(rename = "android:creenOrientation")]
+    pub resizeable_activity: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
@@ -160,4 +266,96 @@ pub enum DocumentLaunchMode{
     /// displays a single task for the app, which resumes from whatever activity the user last invoked.
     Never,
     /// Note: For values other than `"none"` and `"never"` the activity must be defined with `launchMode="standard"`. If this attribute is not specified, `documentLaunchMode="none"` is used.
+}
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum LaunchMode{
+    /// Default. The system always creates a new instance of the activity in the target task and routes the intent to it.
+    Standard,
+    /// If an instance of the activity already exists at the top of the target task, the system routes the intent to that instance through a call to its onNewIntent() method, rather than creating a new instance of the activity.
+    SingleTop,
+    /// The system creates the activity at the root of a new task and routes the intent to it. However, if an instance of the activity already exists,
+    /// the system routes the intent to existing instance through a call to its onNewIntent() method, rather than creating a new one.
+    SingleTask,
+    ///	Same as "singleTask", except that the system doesn't launch any other activities into the task holding the instance. 
+    /// The activity is always the single and only member of its task.
+    SingleInstance,
+}
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum LockTaskMode {
+    /// Default value. This is the default value. Tasks don't launch into lock task mode but can be placed there by calling `startLockTask()`.
+    Normal,
+    /// Tasks don't launch into lockTask mode, and the device user can't pin these tasks from the overview screen.
+    /// `Note:` This mode is only available to system and privileged applications. Non-privileged apps with this value are treated as normal
+    Never,
+    /// Tasks rooted at this activity always launch into lock task mode. If the system is already in lock task mode when this task is launched then the new task are launched on top of the current task. 
+    /// Tasks launched in this mode can exit lock task mode by calling finish().
+    /// Note: This mode is only available to system and privileged applications. Non-privileged apps with this value are treated as normal.
+    Always,
+    /// If the DPC authorizes this package using `DevicePolicyManager`.`setLockTaskPackages()`, then this mode is identical to always, except that the activity needs to call `stopLockTask()` before being
+    /// able to finish if it is the last locked task. If the DPC does not authorize this package then this mode is identical to normal.
+    #[serde(rename = "if_whitelisted")]
+    IfWhitelisted,
+}
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum PersistableMode {
+    ///	Default value. When the system restarts, the activity task is preserved, but only the root activity's launching intent is used.
+    /// When your app's launching intent loads your app's root activity, the activity doesn't receive a PersistableBundle object.
+    /// Therefore, don't use onSaveInstanceState() to preserve the state of your app's root activity across a device restart.
+    /// Note: This attribute value affects your app's behavior only if it's set on your app's root activity.
+    PersistRootOnly,
+    /// This activity's state is preserved, along with the state of each activity higher up the back stack that has its own persistableMode attribute set to persistAcrossReboots. If an
+    /// activity doesn't have a persistableMode attribute that is set to persistAcrossReboots, or if it's launched using the
+    /// Intent.FLAG_ACTIVITY_NEW_DOCUMENT flag, then that activity, along with all activities higher up the back stack, aren't preserved.
+    /// When an intent loads an activity whose persistableMode attribute is set to persistAcrossReboots in your app, the activity receives a PersistableBundle object
+    /// in its onCreate() method. Therefore, you can use onSaveInstanceState() to preserve the state of an activity across a device restart as long as its persistableMode attribute is set to persistAcrossReboots.
+    /// Note: This attribute value affects your app's behavior even if it's set on an activity other than your app's root activity
+    PersistAcrossReboots,
+    /// The activity's state isn't preserved.
+    /// `Note:` This attribute value affects your app's behavior only if it's set on your app's root activity.
+    PersistNever,
+}
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum ScreenOrientation{
+    ///	The default value. The system chooses the orientation. The policy it uses, and therefore the choices made in specific contexts, may differ from device to device.
+    Unspecified,
+    /// The same orientation as the activity that's immediately beneath it in the activity stack.
+    Behind,
+    /// Landscape orientation (the display is wider than it is tall).
+    Landscape,
+    /// Portrait orientation (the display is taller than it is wide).
+    Portrait,
+    /// Landscape orientation in the opposite direction from normal landscape. Added in API level 9.
+    ReverseLandscape,
+    /// Portrait orientation in the opposite direction from normal portrait. Added in API level 9.
+    ReversePortrait,
+    /// Landscape orientation, but can be either normal or reverse landscape based on the device sensor. The sensor is used even if the user has locked sensor-based rotation. Added in API level 9.
+    SensorLandscape,
+    /// Portrait orientation, but can be either normal or reverse portrait based on the device sensor. The sensor is used even if the user has locked sensor-based rotation. Added in API level 9.
+    SensorPortrait,
+    /// Landscape orientation, but can be either normal or reverse landscape based on the device sensor and the user's preference. Added in API level 18.
+    UserLandscape,
+    /// Portrait orientation, but can be either normal or reverse portrait based on the device sensor and the user's preference. Added in API level 18.
+    UserPortrait, 
+    /// The orientation is determined by the device orientation sensor. The orientation of the display depends on how the user is holding the device; it changes when the user rotates the device.
+    /// Some devices, though, will not rotate to all four possible orientations, by default. To allow all four orientations, use "fullSensor" The sensor is used even if the user locked sensor-based rotation.
+    Sensor,
+    /// The orientation is determined by the device orientation sensor for any of the 4 orientations. This is similar to "sensor" except this allows any of the 4 possible screen orientations, regardless
+    /// of what the device will normally do (for example, some devices won't normally use reverse portrait or reverse landscape, but this enables those). Added in API level 9.
+    FullSensor,
+    /// The orientation is determined without reference to a physical orientation sensor. The sensor is ignored, so the display will not rotate based on how the user moves the device.
+    Nosensor,
+    /// The user's current preferred orientation.
+    User,
+    /// If the user has locked sensor-based rotation, this behaves the same as user, otherwise it behaves the same as fullSensor and allows any of the 4 possible screen orientations. Added in API level 18.
+    FullUser,
+    /// Locks the orientation to its current rotation, whatever that is. Added in API level 18.
+    Locked, 
 }
