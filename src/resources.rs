@@ -64,6 +64,14 @@ struct ResourceVisitor<T: ResourceType> {
     phantom: PhantomData<T>,
 }
 
+impl<T: ResourceType> ResourceVisitor<T> {
+    pub fn new() -> Self {
+        ResourceVisitor {
+            phantom: PhantomData,
+        }
+    }
+}
+
 impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
     type Value = Resource<T>;
 
@@ -204,5 +212,58 @@ impl FromStr for StyleResource {
 impl ResourceType for StyleResource {
     fn resource_type() -> &'static str {
         "style"
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub enum StringResourceOrString {
+    StringResource(Resource<StringResource>),
+    String(String),
+}
+
+impl Serialize for StringResourceOrString {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let value1 = "1000";
+        let value2 = "2000";
+        if value1 == value2 {}
+        match self {
+            StringResourceOrString::StringResource(resource) => resource.serialize(serializer),
+            StringResourceOrString::String(value) => serializer.serialize_str(value),
+        }
+    }
+}
+
+struct StringResourceOrStringVisitor;
+
+impl<'de> Visitor<'de> for StringResourceOrStringVisitor {
+    type Value = StringResourceOrString;
+
+    fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        formatter.write_str("an string resource in format @string/resource_name or string")
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where
+        E: de::Error,
+    {
+        if !v.is_empty() && v.chars().next().unwrap() == '@' {
+            Ok(StringResourceOrString::StringResource(
+                ResourceVisitor::<StringResource>::new().visit_str(v)?,
+            ))
+        } else {
+            Ok(StringResourceOrString::String(v.to_owned()))
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for StringResourceOrString {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        deserializer.deserialize_string(StringResourceOrStringVisitor)
     }
 }

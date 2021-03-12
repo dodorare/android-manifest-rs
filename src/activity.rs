@@ -1,49 +1,47 @@
-mod resources;
-
-pub use resources::*;
+use super::resources::{DrawableResource, Resource, StringResource};
 use serde::{Deserialize, Serialize};
 
 /// Declares an activity (an `Activity` subclass) that implements part of the application's visual user interface.
-/// All activities must be represented by `<activity>` elements in the manifest file. 
-/// Any that are not declared there will not be seen by the system and will never be run. 
+/// All activities must be represented by `<activity>` elements in the manifest file.
+/// Any that are not declared there will not be seen by the system and will never be run.
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "activity")]
 pub struct Activity {
-    /// Indicate that the activity can be launched as the embedded child of another activity. Particularly in the case where the child lives in a container such as a 
-    /// Display owned by another activity. For example, activities that are used for Wear custom notifications must declare this so Wear can display the activity in it's context 
-    /// stream, which resides in another process. 
-    /// The default value of this attribute is `false`. 
+    /// Indicate that the activity can be launched as the embedded child of another activity. Particularly in the case where the child lives in a container such as a
+    /// Display owned by another activity. For example, activities that are used for Wear custom notifications must declare this so Wear can display the activity in it's context
+    /// stream, which resides in another process.
+    /// The default value of this attribute is `false`.
     #[serde(rename = "android:allowEmbedded")]
     pub allow_embedded: Option<bool>,
     /// Whether or not the activity can move from the task that started it to the task it has an affinity for when that task is next brought to the front — `"true"`
-    /// f it can move, and `"false"` if it must remain with the task where it started. 
+    /// f it can move, and `"false"` if it must remain with the task where it started.
     /// If this attribute is not set, the value set by the corresponding `allowTaskReparenting` attribute of the `<application>` element applies to the activity.
     /// The default value is `"false"`.
     #[serde(rename = "android:allowTaskReparenting")]
     pub allow_task_reparenting: Option<bool>,
     /// Whether or not the state of the task that the activity is in will always be maintained by the system — `"true"` if it will be, and `"false"`
-    /// if the system is allowed to reset the task to its initial state in certain situations. The default value is `"false"`. 
-    /// This attribute is meaningful only for the root activity of a task; it's ignored for all other activities. 
+    /// if the system is allowed to reset the task to its initial state in certain situations. The default value is `"false"`.
+    /// This attribute is meaningful only for the root activity of a task; it's ignored for all other activities.
     /// Normally, the system clears a task (removes all activities from the stack above the root activity) in certain situations when the user re-selects that task from the home screen.
-    /// Typically, this is done if the user hasn't visited the task for a certain amount of time, such as 30 minutes. 
+    /// Typically, this is done if the user hasn't visited the task for a certain amount of time, such as 30 minutes.
     #[serde(rename = "android:alwaysRetainTaskState")]
     pub always_retain_task_state: Option<bool>,
-    /// Whether or not tasks launched by activities with this attribute remains in the overview screen until the last activity in the task is completed. 
+    /// Whether or not tasks launched by activities with this attribute remains in the overview screen until the last activity in the task is completed.
     /// If true, the task is automatically removed from the `overview screen.` This overrides the caller's use of `FLAG_ACTIVITY_RETAIN_IN_RECENTS`.
     /// It must be a boolean value, either `"true"` or `"false"`.
     #[serde(rename = "android:autoRemoveFromRecents")]
     pub auto_remove_from_recents: Option<bool>,
     /// A drawable resource providing an extended graphical banner for its associated item. Use with the `<activity>` tag to supply a default banner for a specific activity,
-    /// or with the `<application>` tag to supply a banner for all application activities. 
-    /// The system uses the banner to represent an app in the Android TV home screen. Since the banner is displayed only in the home screen, 
+    /// or with the `<application>` tag to supply a banner for all application activities.
+    /// The system uses the banner to represent an app in the Android TV home screen. Since the banner is displayed only in the home screen,
     /// it should only be specified by applications with an activity that handles the `CATEGORY_LEANBACK_LAUNCHER` intent.
-    /// This attribute must be set as a reference to a drawable resource containing the image (for example `"@drawable/banner"`). There is no default banner. 
-    /// See Provide a home screen banner in Get Started with TV Apps for more information. 
+    /// This attribute must be set as a reference to a drawable resource containing the image (for example `"@drawable/banner"`). There is no default banner.
+    /// See Provide a home screen banner in Get Started with TV Apps for more information.
     #[serde(rename = "android:banner")]
     pub banner: Option<Resource<DrawableResource>>,
     /// Whether or not all activities will be removed from the task, except for the root activity, whenever it is re-launched from the home screen — `"true"`
-    /// if the task is always stripped down to its root activity, and `"false"` if not. The default value is `"false"`. 
-    /// This attribute is meaningful only for activities that start a new task (the root activity); it's ignored for all other activities in the task. 
+    /// if the task is always stripped down to its root activity, and `"false"` if not. The default value is `"false"`.
+    /// This attribute is meaningful only for activities that start a new task (the root activity); it's ignored for all other activities in the task.
     /// If this attribute and allowTaskReparenting are both `"true"`, any activities that can be re-parented are moved to the task they share an affinity with; the remaining activities are then dropped, as described above.
     /// This attribute is ignored if `FLAG_ACTIVITY_RESET_TASK_IF_NEEDED` is not set.  
     #[serde(rename = "android:clearTaskOnLaunch")]
@@ -53,8 +51,8 @@ pub struct Activity {
     /// For more information about rendering in wide color mode, see `Enhancing Graphics with Wide Color Content`.
     #[serde(rename = "android:colorMode")]
     pub color_mode: Option<ColorMode>,
-    /// Lists configuration changes that the activity will handle itself. When a configuration change occurs at runtime, the activity is shut down and restarted by default, 
-    /// but declaring a configuration with this attribute will prevent the activity from being restarted. Instead, the activity remains running and its `onConfigurationChanged()` method is called. 
+    /// Lists configuration changes that the activity will handle itself. When a configuration change occurs at runtime, the activity is shut down and restarted by default,
+    /// but declaring a configuration with this attribute will prevent the activity from being restarted. Instead, the activity remains running and its `onConfigurationChanged()` method is called.
     /// `Note:` Using this attribute should be avoided and used only as a last resort. Please read Handling Runtime Changes for more information about how to properly handle a restart due to a configuration change.
     #[serde(rename = "android:configChanges")]
     pub config_changes: Option<ColorMode>,
@@ -63,31 +61,31 @@ pub struct Activity {
     /// The default value is "false".
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
-    /// Specifies how a new instance of an activity should be added to a task each time it is launched. This attribute permits the user to have multiple documents from the same application appear in the overview screen. 
+    /// Specifies how a new instance of an activity should be added to a task each time it is launched. This attribute permits the user to have multiple documents from the same application appear in the overview screen.
     #[serde(rename = "android:documentLaunchMode")]
     pub document_launch_mode: Option<DocumentLaunchMode>,
-    /// Whether or not the activity can be instantiated by the system — `"true"` if it can be, and `"false"` if not. The default value is `"true"`. 
-    /// The `<application>` element has its own `enabled` attribute that applies to all application components, including activities. 
-    /// The `<application>` and `<activity>` attributes must both be `"true"` (as they both are by default) for the system to be able to instantiate the activity. If either is `"false"`, it cannot be instantiated. 
+    /// Whether or not the activity can be instantiated by the system — `"true"` if it can be, and `"false"` if not. The default value is `"true"`.
+    /// The `<application>` element has its own `enabled` attribute that applies to all application components, including activities.
+    /// The `<application>` and `<activity>` attributes must both be `"true"` (as they both are by default) for the system to be able to instantiate the activity. If either is `"false"`, it cannot be instantiated.
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
-    /// Whether or not the task initiated by this activity should be excluded from the list of recently used applications, the `overview screen`. 
+    /// Whether or not the task initiated by this activity should be excluded from the list of recently used applications, the `overview screen`.
     /// That is, when this activity is the root activity of a new task, this attribute determines whether the task should not appear in the list of recent apps.
-    /// Set `"true"` if the task should be excluded from the list; set `"false"` if it should be included. The default value is `"false"`. 
+    /// Set `"true"` if the task should be excluded from the list; set `"false"` if it should be included. The default value is `"false"`.
     #[serde(rename = "android:excludeFromRecents")]
     pub exclude_from_recents: Option<bool>,
-    /// This element sets whether the activity can be launched by components of other applications — "true" if it can be, and "false" if not. 
-    /// If "false", the activity can be launched only by components of the same application or applications with the same user ID. 
+    /// This element sets whether the activity can be launched by components of other applications — "true" if it can be, and "false" if not.
+    /// If "false", the activity can be launched only by components of the same application or applications with the same user ID.
     /// If you are using intent filters, you should not set this element "false". If you do so, and an app tries to call the activity, system throws an ActivityNotFoundException.
-    /// Instead, you should prevent other apps from calling the activity by not setting intent filters for it. 
+    /// Instead, you should prevent other apps from calling the activity by not setting intent filters for it.
     /// If you do not have intent filters, the default value for this element is "false". If you set the element "true", the activity is accessible to any app that knows its exact class name,
     /// but does not resolve when the system tries to match an implicit intent. This attribute is not the only way to limit an activity's exposure to other applications.
-    /// You can also use a permission to limit the external entities that can invoke the activity (see the permission attribute). 
+    /// You can also use a permission to limit the external entities that can invoke the activity (see the permission attribute).
     #[serde(rename = "android:exported")]
     pub exported: Option<bool>,
     /// Whether or not an existing instance of the activity should be shut down (finished) whenever the user again launches its task (chooses the task on the home screen) — "true"
-    /// if it should be shut down, and "false" if not. The default value is "false". 
-    /// If this attribute and allowTaskReparenting are both "true", this attribute trumps the other. The affinity of the activity is ignored. The activity is not re-parented, but destroyed. 
+    /// if it should be shut down, and "false" if not. The default value is "false".
+    /// If this attribute and allowTaskReparenting are both "true", this attribute trumps the other. The affinity of the activity is ignored. The activity is not re-parented, but destroyed.
     #[serde(rename = "android:finishOnTaskLaunch")]
     pub finish_on_task_launch: Option<bool>,
     /// Whether or not hardware-accelerated rendering should be enabled for this Activity — `"true"` if it should be enabled, and "false" if not. The default value is `"false".
@@ -110,16 +108,16 @@ pub struct Activity {
     /// A user-readable label for the activity. The label is displayed on-screen when the activity must be represented to the user. It's often displayed along with the activity icon.
     /// If this attribute is not set, the label set for the application as a whole is used instead (see the <application> element's label attribute).
     /// The activity's label — whether set here or by the <application> element — is also the default label for all the activity's intent filters (see the <intent-filter> element's label attribute).
-    /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface. 
+    /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
     /// However, as a convenience while you're developing the application, it can also be set as a raw string.
     #[serde(rename = "android:label")]
     pub label: Option<Resource<StringResource>>,
     /// An instruction on how the activity should be launched. There are four modes that work in conjunction
     /// with activity flags (`FLAG_ACTIVITY_*` constants) in `Intent` objects to determine what should happen when the activity is called upon to handle an intent.
     /// The default mode is "standard".
-    /// As shown in the table below, the modes fall into two main groups, with "standard" and "singleTop" activities on one side, and "singleTask" and "singleInstance" activities on the other. 
-    /// An activity with the "standard" or "singleTop" launch mode can be instantiated multiple times. 
-    /// The instances can belong to any task and can be located anywhere in the activity stack. 
+    /// As shown in the table below, the modes fall into two main groups, with "standard" and "singleTop" activities on one side, and "singleTask" and "singleInstance" activities on the other.
+    /// An activity with the "standard" or "singleTop" launch mode can be instantiated multiple times.
+    /// The instances can belong to any task and can be located anywhere in the activity stack.
     /// Typically, they're launched into the task that called startActivity() (unless the Intent object contains a FLAG_ACTIVITY_NEW_TASK instruction, in which case a different task is chosen — see the taskAffinity attribute).
     #[serde(rename = "android:launchMode")]
     pub launch_mode: Option<LaunchMode>,
@@ -129,7 +127,7 @@ pub struct Activity {
     /// System and privileged apps, however, can run in lock task mode without being allowlisted.
     #[serde(rename = "android:lockTaskMode")]
     pub lock_task_mode: Option<LockTaskMode>,
-    /// The maximum number of tasks rooted at this activity in the overview screen. When this number of entries is reached, the system removes the least-recently used instance from the overview screen. 
+    /// The maximum number of tasks rooted at this activity in the overview screen. When this number of entries is reached, the system removes the least-recently used instance from the overview screen.
     /// Valid values are 1 through 50 (25 on low memory devices); zero is invalid. This must be an integer value, such as 50. The default value is 16.
     #[serde(rename = "android:maxRecents")]
     pub max_recents: Option<i32>,
@@ -167,7 +165,7 @@ pub struct Activity {
     /// Otherwise, the activities that are higher up the task's back stack are examined; any of these activities that set this attribute's value to `persistAcrossReboots` are preserved
     #[serde(rename = "android:persistableMode")]
     pub persistable_mode: Option<PersistableMode>,
-    /// The name of a permission that clients must have to launch the activity or otherwise get it to respond to an intent. 
+    /// The name of a permission that clients must have to launch the activity or otherwise get it to respond to an intent.
     /// If a caller of startActivity() or startActivityForResult() has not been granted the specified permission, its intent will not be delivered to the activity.
     /// If this attribute is not set, the permission set by the <application> element's permission attribute applies to the activity. If neither attribute is set, the activity is not protected by a permission.
     /// For more information on permissions, see the Permissions section in the introduction and another document, Security and Permissions.
@@ -181,7 +179,7 @@ pub struct Activity {
     #[serde(rename = "android:process")]
     pub process: Option<String>,
     /// Whether or not the activity relinquishes its task identifiers to an activity above it in the task stack. A task whose root activity has this attribute set to `"true"` replaces the base Intent with that of the next activity in the
-    /// task. If the next activity also has this attribute set to `"true"` then it will yield the base Intent to any activity that it launches in the same task. 
+    /// task. If the next activity also has this attribute set to `"true"` then it will yield the base Intent to any activity that it launches in the same task.
     /// This continues for each activity until an activity is encountered which has this attribute set to `"false"`. The default value is `"false"`.
     /// This attribute set to `"true"` also permits the activity's use of the `ActivityManager.TaskDescription` to change labels, colors and icons in the `overview screen`.
     #[serde(rename = "android:relinquishTaskIdentity")]
@@ -193,9 +191,9 @@ pub struct Activity {
     /// This attribute was added in API level 24.
     #[serde(rename = "android:resizeableActivity")]
     pub resizeable_activity: Option<bool>,
-    /// The orientation of the activity's display on the device. The system ignores this attribute if the activity is running in multi-window mode.
-    #[serde(rename = "android:creenOrientation")]
-    pub resizeable_activity: Option<bool>,
+    // /// The orientation of the activity's display on the device. The system ignores this attribute if the activity is running in multi-window mode.
+    // #[serde(rename = "android:creenOrientation")]
+    // pub resizeable_activity: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
@@ -226,17 +224,17 @@ pub enum ConfigChanges {
     ScreenLayout,
     /// The font scaling factor has changed — the user has selected a new global font size.
     FontScale,
-    /// The user interface mode has changed — the user has placed the device into a desk or car dock, or the night mode has changed. For more information about the different UI modes, see UiModeManager. 
+    /// The user interface mode has changed — the user has placed the device into a desk or car dock, or the night mode has changed. For more information about the different UI modes, see UiModeManager.
     /// Added in API level 8.
     UiMode,
-    /// The screen orientation has changed — the user has rotated the device. 
-    /// `Note:` If your application targets Android 3.2 (API level 13) or higher, then you should also declare the `"screenSize"` and `"screenLayout"` configurations, 
+    /// The screen orientation has changed — the user has rotated the device.
+    /// `Note:` If your application targets Android 3.2 (API level 13) or higher, then you should also declare the `"screenSize"` and `"screenLayout"` configurations,
     /// because they might also change when a device switches between portrait and landscape orientations.
     Orientation,
-    /// The display density has changed — the user might have specified a different display scale, or a different display might now be active. 
+    /// The display density has changed — the user might have specified a different display scale, or a different display might now be active.
     /// Added in API level 24.
     Density,
-    /// The current available screen size has changed. 
+    /// The current available screen size has changed.
     /// This represents a change in the currently available size, relative to the current aspect ratio, so will change when the user switches between landscape and portrait.
     /// Added in API level 13.
     ScreenSize,
@@ -248,29 +246,29 @@ pub enum ConfigChanges {
 }
 
 /// This attribute has four values which produce the following effects when the user opens a document with the application:
+/// Note: For values other than `"none"` and `"never"` the activity must be defined with `launchMode="standard"`. If this attribute is not specified, `documentLaunchMode="none"` is used.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
-pub enum DocumentLaunchMode{
+pub enum DocumentLaunchMode {
     /// The system searches for a task whose base intent's ComponentName and data URI match those of the launching intent.
-    /// If the system finds such a task, the system clears the task, and restarts with the root activity receiving a call to `onNewIntent(android.content.Intent)`. 
+    /// If the system finds such a task, the system clears the task, and restarts with the root activity receiving a call to `onNewIntent(android.content.Intent)`.
     /// If the system does not find such a task, the system creates a new task.
     IntoExisting,
-    /// The activity creates a new task for the document, even if the document is already opened. 
+    /// The activity creates a new task for the document, even if the document is already opened.
     /// This is the same as setting both the `FLAG_ACTIVITY_NEW_DOCUMENT` and `FLAG_ACTIVITY_MULTIPLE_TASK` flags
     Always,
-    /// The activity does not create a new task for the activity. This is the default value, which creates a new task only when FLAG_ACTIVITY_NEW_TASK is set. 
+    /// The activity does not create a new task for the activity. This is the default value, which creates a new task only when FLAG_ACTIVITY_NEW_TASK is set.
     /// The overview screen treats the activity as it would by default: it displays a single task for the app, which resumes from whatever activity the user last invoked.
     None,
-    /// This activity is not launched into a new document even if the Intent contains FLAG_ACTIVITY_NEW_DOCUMENT. 
+    /// This activity is not launched into a new document even if the Intent contains FLAG_ACTIVITY_NEW_DOCUMENT.
     /// Setting this overrides the behavior of the FLAG_ACTIVITY_NEW_DOCUMENT and FLAG_ACTIVITY_MULTIPLE_TASK flags, if either of these are set in the activity, and the overview screen
     /// displays a single task for the app, which resumes from whatever activity the user last invoked.
     Never,
-    /// Note: For values other than `"none"` and `"never"` the activity must be defined with `launchMode="standard"`. If this attribute is not specified, `documentLaunchMode="none"` is used.
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
-pub enum LaunchMode{
+pub enum LaunchMode {
     /// Default. The system always creates a new instance of the activity in the target task and routes the intent to it.
     Standard,
     /// If an instance of the activity already exists at the top of the target task, the system routes the intent to that instance through a call to its onNewIntent() method, rather than creating a new instance of the activity.
@@ -278,7 +276,7 @@ pub enum LaunchMode{
     /// The system creates the activity at the root of a new task and routes the intent to it. However, if an instance of the activity already exists,
     /// the system routes the intent to existing instance through a call to its onNewIntent() method, rather than creating a new one.
     SingleTask,
-    ///	Same as "singleTask", except that the system doesn't launch any other activities into the task holding the instance. 
+    ///	Same as "singleTask", except that the system doesn't launch any other activities into the task holding the instance.
     /// The activity is always the single and only member of its task.
     SingleInstance,
 }
@@ -291,7 +289,7 @@ pub enum LockTaskMode {
     /// Tasks don't launch into lockTask mode, and the device user can't pin these tasks from the overview screen.
     /// `Note:` This mode is only available to system and privileged applications. Non-privileged apps with this value are treated as normal
     Never,
-    /// Tasks rooted at this activity always launch into lock task mode. If the system is already in lock task mode when this task is launched then the new task are launched on top of the current task. 
+    /// Tasks rooted at this activity always launch into lock task mode. If the system is already in lock task mode when this task is launched then the new task are launched on top of the current task.
     /// Tasks launched in this mode can exit lock task mode by calling finish().
     /// Note: This mode is only available to system and privileged applications. Non-privileged apps with this value are treated as normal.
     Always,
@@ -323,7 +321,7 @@ pub enum PersistableMode {
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
-pub enum ScreenOrientation{
+pub enum ScreenOrientation {
     ///	The default value. The system chooses the orientation. The policy it uses, and therefore the choices made in specific contexts, may differ from device to device.
     Unspecified,
     /// The same orientation as the activity that's immediately beneath it in the activity stack.
@@ -343,7 +341,7 @@ pub enum ScreenOrientation{
     /// Landscape orientation, but can be either normal or reverse landscape based on the device sensor and the user's preference. Added in API level 18.
     UserLandscape,
     /// Portrait orientation, but can be either normal or reverse portrait based on the device sensor and the user's preference. Added in API level 18.
-    UserPortrait, 
+    UserPortrait,
     /// The orientation is determined by the device orientation sensor. The orientation of the display depends on how the user is holding the device; it changes when the user rotates the device.
     /// Some devices, though, will not rotate to all four possible orientations, by default. To allow all four orientations, use "fullSensor" The sensor is used even if the user locked sensor-based rotation.
     Sensor,
@@ -357,5 +355,5 @@ pub enum ScreenOrientation{
     /// If the user has locked sensor-based rotation, this behaves the same as user, otherwise it behaves the same as fullSensor and allows any of the 4 possible screen orientations. Added in API level 18.
     FullUser,
     /// Locks the orientation to its current rotation, whatever that is. Added in API level 18.
-    Locked, 
+    Locked,
 }
