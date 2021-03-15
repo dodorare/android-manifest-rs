@@ -1,40 +1,30 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
 
-/// Declares a service (a `Service` subclass) as one of the application's components. Unlike activities, services lack a visual user interface.
-/// They're used to implement long-running background operations or a rich communications API that can be called by other applications.
-/// All services must be represented by `<service>` elements in the manifest file. Any that are not declared there will not be seen by the system and will never be run.
-/// Note: On Android 8.0 (API level 26) and higher, the system places limitations on what your app can do while it's running in the background.
-/// For more information, see the guides that discuss background execution limits and background location limits.
+/// Declares a broadcast receiver (a `BroadcastReceiver` subclass) as one of the application's components.
+/// Broadcast receivers enable applications to receive intents that are broadcast by the system or by other applications, even when other components of the application are not running.
+/// There are two ways to make a broadcast receiver known to the system: One is declare it in the manifest file with this element. The other is to create the receiver dynamically in code and register it with the
+/// `Context.registerReceiver()` method. For more information about how to dynamically create receivers, see the `BroadcastReceiver` class description.
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "service")]
-pub struct Service {
-    /// A string that describes the service to users. The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
-    #[serde(rename = "android:description")]
-    pub description: Option<Resource<StringResource>>,
-    /// Whether or not the service is direct-boot aware; that is, whether or not it can run before the user unlocks the device.
-    /// Note: During Direct Boot, a service in your application can only access the data that is stored in device protected storage.
-    /// The default value is `"false"`.
+#[serde(rename = "receiver")]
+pub struct Receiver {
+    /// Whether or not the broadcast `receiver` is direct-boot aware; that is, whether or not it can run before the user unlocks the device.
+    /// `Note:` During Direct Boot, a broadcast `receiver` in your application can only access the data that is stored in device protected storage.
+    /// The default value is "false".
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
-    /// Whether or not the service can be instantiated by the system — `"true"` if it can be, and `"false"` if not. The default value is `"true"`.
-    /// The `<application>` element has its own enabled attribute that applies to all application components, including services.
-    /// The `<application>` and <service> attributes must both be `"true"` (as they both are by default) for the service to be enabled. If either is `"false"`, the service is disabled; it cannot be instantiated.
+    /// Whether or not the broadcast receiver can be instantiated by the system — `"true"` if it can be, and `"false"` if not. The default value is `"true"`.
+    /// The `<application>` element has its own `enabled` attribute that applies to all application components, including broadcast receivers.
+    /// The `<application>` and <receiver> attributes must both be `"true"` for the broadcast receiver to be enabled. If either is `"false`", it is disabled; it cannot be instantiated.
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
-    /// Whether or not components of other applications can invoke the service or interact with it — `"true"` if they can, and `"false"` if not.
-    /// When the value is "false", only components of the same application or applications with the same user ID can start the service or bind to it.
-    /// The default value depends on whether the service contains intent filters. The absence of any filters means that it can be invoked only by specifying its exact class name.
-    /// This implies that the service is intended only for application-internal use (since others would not know the class name).So in this case, the default value is "false".
-    /// On the other hand, the presence of at least one filter implies that the service is intended for external use, so the default value is "true".  
-    /// This attribute is not the only way to limit the exposure of a service to other applications.
-    /// You can also use a permission to limit the external entities that can interact with the service (see the `permission` attribute).
+    /// Whether the broadcast receiver can receive messages from non-system sources outside its application — `"true"` if it can, and `"false"` if not.
+    /// If `"false"`, the only messages the broadcast receiver can receive are those sent by the system, components of the same application, or applications with the same user ID.
+    /// If unspecified, the default value depends on whether the broadcast receiver contains intent filters. If the receiver contains at least one intent filter, then the default value is `"true"`
+    /// Otherwise, the default value is `"false"`.
+    /// This attribute is not the only way to limit a broadcast receiver's external exposure.
+    /// You can also use a permission to limit the external entities that can send it messages (see the permission attribute).
     #[serde(rename = "android:exported")]
     pub exported: Option<bool>,
-    /// Specify that the service is a `foreground service` that satisfies a particular use case. For example, a foreground service type of "location"
-    /// indicates that an app is getting the device's current location, usually to `continue a user-initiated action` related to device location.
-    /// You can assign multiple foreground service types to a particular service.
-    #[serde(rename = "android:foregroundServiceType")]
-    pub exported: Option<ForegroundServiceType>,
     /// An icon representing the service. This attribute must be set as a reference to a drawable resource containing the image definition.
     /// If it is not set, the icon specified for the application as a whole is used instead (see the <application> element's icon attribute).
     /// The service's icon — whether set here or by the `<application>` element — is also the default icon for all the service's intent filters (see the `<intent-filter>` element's icon attribute).
@@ -71,17 +61,4 @@ pub struct Service {
     /// This allows components in different applications to share a process, reducing resource usage.
     #[serde(rename = "android:process")]
     pub process: Option<String>,
-}
-
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
-pub enum ForegroundServiceType {
-    Camera,
-    ConnectedDevice,
-    DataSync,
-    Location,
-    MediaPlayback,
-    MediaProjection,
-    Microphone,
-    PhoneCall,
 }
