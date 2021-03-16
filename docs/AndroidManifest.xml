@@ -53,7 +53,13 @@
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
         <provider
                 android:name="TelephonyProvider"
-                android:authorities="telephony; sms"
+                android:authorities="telephony"
+                android:exported="true"
+                android:singleUser="true"
+                android:multiprocess="false" />
+        <provider
+                android:name="SmsProvider"
+                android:authorities="sms"
                 android:exported="true"
                 android:singleUser="true"
                 android:multiprocess="false" />

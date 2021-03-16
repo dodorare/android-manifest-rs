@@ -236,17 +236,12 @@ pub struct Application {
     #[serde(rename = "android:vmSafeMode")]
     pub vm_safe_mode: Option<bool>,
 
-    pub activity: Option<Activity>,
-
-    pub service: Option<Service>,
-
-    pub receiver: Option<Receiver>,
-
-    pub provider: Option<Provider>,
-
+    pub activities: Option<Vec<Activity>>,
+    pub servicies: Option<Vec<Service>>,
+    pub receivers: Option<Vec<Receiver>>,
+    pub providers: Option<Vec<Provider>>,
     pub activity_alias: Option<ActivityAlias>,
-
-    pub meta_data: Option<MetaData>,
+    pub meta_datas: Option<Vec<MetaData>>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
