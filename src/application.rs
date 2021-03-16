@@ -1,4 +1,6 @@
 use super::activity::Activity;
+use super::activity_alias::ActivityAlias;
+use super::meta_data::MetaData;
 use super::provider::Provider;
 use super::receiver::Receiver;
 use super::resources::{
@@ -241,6 +243,10 @@ pub struct Application {
     pub receiver: Option<Receiver>,
 
     pub provider: Option<Provider>,
+
+    pub activity_alias: Option<ActivityAlias>,
+
+    pub meta_data: Option<MetaData>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
