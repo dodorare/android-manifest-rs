@@ -1,4 +1,5 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use serde::{Deserialize, Serialize};
 
 /// Declares a broadcast receiver (a `BroadcastReceiver` subclass) as one of the application's components.
 /// Broadcast receivers enable applications to receive intents that are broadcast by the system or by other applications, even when other components of the application are not running.
@@ -39,7 +40,7 @@ pub struct Receiver {
     /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
     /// However, as a convenience while you're developing the application, it can also be set as a raw string.
     #[serde(rename = "android:label")]
-    pub label: Option<Resource<StringResourceOrString>>,
+    pub label: Option<StringResourceOrString>,
     /// The name of the `Service` subclass that implements the service. This should be a fully qualified class name (such as, `"com.example.project.RoomService"`).
     /// However, as a shorthand, if the first character of the name is a period (for example, `".RoomService"`), it is appended to the package name specified in the `<manifest>` element.
     /// Once you publish your application, you should not change this name (unless you've set `android:exported="false"`).

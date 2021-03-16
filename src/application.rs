@@ -1,6 +1,10 @@
+use super::activity::Activity;
+use super::provider::Provider;
+use super::receiver::Receiver;
 use super::resources::{
     DrawableResource, Resource, StringResource, StringResourceOrString, StyleResource, XmlResource,
 };
+use super::service::Service;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
@@ -229,6 +233,14 @@ pub struct Application {
     /// This attribute was adapted in API level 22 where a value of "true" disabled the ART ahead-of-time (AOT) compiler.
     #[serde(rename = "android:vmSafeMode")]
     pub vm_safe_mode: Option<bool>,
+
+    pub activity: Option<Activity>,
+
+    pub service: Option<Service>,
+
+    pub receiver: Option<Receiver>,
+
+    pub provider: Option<Provider>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]

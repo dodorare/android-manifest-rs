@@ -1,4 +1,5 @@
-use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::resources::{DrawableResource, Resource};
+use serde::{Deserialize, Serialize};
 
 /// Declares a content provider component. A content provider is a subclass of `ContentProvider` that supplies structured access to data managed by the application.
 /// All content providers in your application must be defined in a `<provider>` element in the manifest file; otherwise, the system is unaware of them and doesn't run them.
@@ -13,8 +14,8 @@ pub struct Provider {
     /// To avoid conflicts, authority names should use a Java-style naming convention (such as com.example.provider.cartoonprovider).
     /// Typically, it's the name of the ContentProvider subclass that implements the provider
     /// There is no default. At least one authority must be specified.
-    #[serde(rename = "android:authorities")]
-    pub authorities: Option<Vec<String>>,
+    #[serde(rename = "android:authorities", with = "authorities")]
+    pub authorities: Vec<String>,
     /// Whether or not the service can be instantiated by the system — `"true"` if it can be, and `"false"` if not. The default value is `"true"`.
     /// The `<application>` element has its own enabled attribute that applies to all application components, including services.
     /// The `<application>` and <service> attributes must both be `"true"` (as they both are by default) for the service to be enabled. If either is `"false"`, the service is disabled; it cannot be instantiated.
@@ -50,4 +51,58 @@ pub struct Provider {
     /// If it is not set, the icon specified for the application as a whole is used instead (see the `<application>` element's `icon` attribute).
     #[serde(rename = "android:icon")]
     pub icon: Option<Resource<DrawableResource>>,
+}
+
+mod authorities {
+    use serde::{
+        de::{self, Visitor},
+        ser::Error,
+        Deserializer, Serializer,
+    };
+    use std::fmt;
+
+    pub fn serialize<S>(authorities: &Vec<String>, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        if authorities.is_empty() {
+            return Err(S::Error::custom("there is no default `android::authorities`. at least one authority must be specified"));
+        };
+        serializer.serialize_str(&authorities.join(";"))
+    }
+
+    struct AuthoritiesVisitor;
+
+    impl<'de> Visitor<'de> for AuthoritiesVisitor {
+        type Value = Vec<String>;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str(&format!(
+                "an authorities list in format 'authority1' or 'authority1;authority2;authority3'"
+            ))
+        }
+
+        fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            if v.is_empty() {
+                return Err(E::custom(
+                    "there is no default `android::authorities`. at least one authority must be specified"));
+            };
+            let authorities: Vec<String> = v
+                .replace(" ", "")
+                .split(';')
+                .map(|s| s.to_owned())
+                .collect();
+            Ok(authorities)
+        }
+    }
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Vec<String>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        deserializer.deserialize_string(AuthoritiesVisitor)
+    }
 }
