@@ -1,4 +1,4 @@
-use super::resources::{DrawableResource, Resource};
+use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Declares a content provider component. A content provider is a subclass of `ContentProvider` that supplies structured access to data managed by the application.
@@ -51,6 +51,53 @@ pub struct Provider {
     /// If it is not set, the icon specified for the application as a whole is used instead (see the `<application>` element's `icon` attribute).
     #[serde(rename = "android:icon")]
     pub icon: Option<Resource<DrawableResource>>,
+    /// The order in which the content provider should be instantiated, relative to other content providers hosted by the same process.
+    /// When there are dependencies among content providers, setting this attribute for each of them ensures that they are created in the order required by those dependencies.
+    /// The value is a simple integer, with higher numbers being initialized first.
+    #[serde(rename = "android:initOrder")]
+    pub init_order: Option<i32>,
+    /// A user-readable label for the content provided. If this attribute is not set, the label set for the application as a whole is used instead (see the `<application>` element's `label` attribute).
+    /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
+    /// However, as a convenience while you're developing the application, it can also be set as a raw string.
+    #[serde(rename = "android:label")]
+    pub label: Option<StringResourceOrString>,
+    /// If the app runs in multiple processes, this attribute determines whether multiple instances of the content provider are created.
+    /// If true, each of the app's processes has its own content provider object. If false, the app's processes share only one content provider object. The default value is false.
+    /// Setting this flag to true may improve performance by reducing the overhead of interprocess communication, but it also increases the memory footprint of each process.
+    #[serde(rename = "android:multiprocess")]
+    pub multiprocess: Option<bool>,
+    /// The name of the class that implements the content provider, a subclass of `ContentProvider`. This should be a fully qualified class name (such as, `"com.example.project.TransportationProvider"`).
+    /// However, as a shorthand, if the first character of the name is a period, it is appended to the package name specified in the `<manifest>` element.
+    /// There is no default. The name must be specified.
+    #[serde(rename = "android:name")]
+    pub name: String,
+    /// The name of a permission that clients must have to read or write the content provider's data. This attribute is a convenient way of setting a single permission for both reading and writing. However, the `readPermission,`
+    /// `writePermission`, and `grantUriPermissions` attributes take precedence over this one. If the `readPermission` attribute is also set, it controls access for querying the content provider. And if the
+    /// `writePermission` attribute is set, it controls access for modifying the provider's data.
+    /// For more information on permissions, see the `Permissions` section in the introduction and a separate document, `Security and Permissions`.
+    #[serde(rename = "android:permission")]
+    pub permission: Option<String>,
+    /// The name of the process in which the content provider should run. Normally, all components of an application run in the default process created for the application. It has the same name as the application package.
+    /// The `<application>` element's `process` attribute can set a different default for all components. But each
+    /// component can override the default with its own `process` attribute, allowing you to spread your application across multiple processes.
+    /// If the name assigned to this attribute begins with a colon (':'), a new process, private to the application, is created when it's needed and the activity runs in that process. If the process name begins with a lowercase
+    /// character, the activity will run in a global process of that name, provided that it has permission to do so. This allows components in different applications to share a process, reducing resource usage.
+    #[serde(rename = "android:process")]
+    pub process: Option<String>,
+    /// A permission that clients must have to query the content provider.
+    /// If the provider sets `android:grantUriPermissions` to true, or if a given client satisfies the conditions of a `<grant-uri-permission>` subelement, the client can gain temporary read access to the content provider's data.
+    /// See also the `permission` and `writePermission` attributes.
+    #[serde(rename = "android:readPermission")]
+    pub read_permission: Option<String>,
+    /// Whether or not the data under the content provider's control is to be synchronized with data on a server — `"true"` if it is to be synchronized, and `"false"` if not.
+    #[serde(rename = "android:syncable")]
+    pub syncable: Option<bool>,
+    /// A permission that clients must have to make changes to the data controlled by the content provider.
+    /// If the provider sets `android:grantUriPermission`s to true, or if a given client satisfies the conditions of a `<grant-uri-permission>` subelement
+    /// the client can gain temporary write access to modify the content provider's data.
+    /// See also the `permission` and `readPermission` attributes.
+    #[serde(rename = "android:writePermission")]
+    pub write_permission: Option<String>,
 }
 
 mod authorities {

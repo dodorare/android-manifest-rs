@@ -46,7 +46,7 @@ pub struct Receiver {
     /// Once you publish your application, you should not change this name (unless you've set `android:exported="false"`).
     /// There is no default. The name must be specified.
     #[serde(rename = "android:name")]
-    pub name: Option<String>,
+    pub name: String,
     /// The name of a permission that an entity must have in order to launch the service or bind to it. If a caller of `startService()`, `bindService()`, or `stopService()`
     /// has not been granted this permission, the method will not work and the Intent object will not be delivered to the service.
     /// If this attribute is not set, the permission set by the `<application>` element's `permission` attribute applies to the service.

@@ -33,7 +33,7 @@ pub struct Application {
     /// However, as a shorthand, if the first character of the name is a period (for example, `".MyBackupAgent"`),
     /// it is appended to the package name specified in the `<manifest>` element.
     #[serde(rename = "android:backupAgent")]
-    pub backup_agent: Option<String>,
+    pub backup_agent: String,
     /// Indicates that Auto Backup operations may be performed on this app even if the app is in a foreground-equivalent state.
     /// The system shuts down an app during auto backup operation, so use this attribute with caution.
     /// Setting this flag to true can impact app behavior while the app is active.

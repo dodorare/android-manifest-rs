@@ -147,7 +147,7 @@ pub struct Activity {
     /// Once you publish your application, you should not change this name (unless you've set android:exported="false").
     /// There is no default. The name must be specified.
     #[serde(rename = "android:name")]
-    pub name: Option<String>,
+    pub name: String,
     /// Whether or not the activity should be removed from the activity stack and finished (its finish() method called) when the user navigates away from
     /// it and it's no longer visible on screen — "true" if it should be finished, and "false" if not. The default value is "false".
     /// A value of "true" means that the activity will not leave a historical trace. It will not remain in the activity stack for the task, so the user will not be able to return to it.
