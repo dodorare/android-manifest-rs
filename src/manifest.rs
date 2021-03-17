@@ -1,4 +1,8 @@
 use super::application::Application;
+use super::compatible_screens::CompatibleScreensy;
+use super::instrumentation::Instrumentation;
+use super::permission::Permission;
+use super::permission_group::PermissionGroup;
 use super::resources::{Resource, StringResource};
 use serde::{Deserialize, Serialize};
 
@@ -46,6 +50,14 @@ pub struct Manifest {
     pub install_location: Option<InstallLocation>,
 
     pub application: Application,
+
+    pub compatible_screens: CompatibleScreensy,
+
+    pub instrumentation: Instrumentation,
+
+    pub permission: Permission,
+
+    pub permission_group: PermissionGroup,
 }
 
 /// The default install location for the app.

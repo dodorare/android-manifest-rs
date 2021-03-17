@@ -7,6 +7,7 @@ use super::resources::{
     DrawableResource, Resource, StringResource, StringResourceOrString, StyleResource, XmlResource,
 };
 use super::service::Service;
+use super::uses_library::UsesLibrary;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
@@ -242,6 +243,7 @@ pub struct Application {
     pub providers: Option<Vec<Provider>>,
     pub activity_alias: Option<ActivityAlias>,
     pub meta_datas: Option<Vec<MetaData>>,
+    pub uses_library: Option<UsesLibrary>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
