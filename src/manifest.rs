@@ -3,7 +3,15 @@ use super::compatible_screens::CompatibleScreensy;
 use super::instrumentation::Instrumentation;
 use super::permission::Permission;
 use super::permission_group::PermissionGroup;
+use super::permission_tree::PermissionTree;
 use super::resources::{Resource, StringResource};
+use super::supports_gl_texture::SupportsGlTexture;
+use super::supports_screens::SupportsScreens;
+use super::uses_configuration::UsesConfiguration;
+use super::uses_feature::UsesFeature;
+use super::uses_permission::UsesPermission;
+use super::uses_permission_sdk_23::UsesPermissionSdk23;
+use super::uses_sdk::UsesSdk;
 use serde::{Deserialize, Serialize};
 
 /// The root element of the AndroidManifest.xml file.
@@ -58,6 +66,22 @@ pub struct Manifest {
     pub permission: Permission,
 
     pub permission_group: PermissionGroup,
+
+    pub permission_tree: PermissionTree,
+
+    pub supports_gl_texture: SupportsGlTexture,
+
+    pub supports_screens: SupportsScreens,
+
+    pub uses_configuration: UsesConfiguration,
+
+    pub uses_feature: UsesFeature,
+
+    pub uses_permission: UsesPermission,
+
+    pub uses_permission_sdk_23: UsesPermissionSdk23,
+
+    pub uses_sdk: UsesSdk,
 }
 
 /// The default install location for the app.

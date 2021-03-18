@@ -1,1 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="rust.myapp" android:sharedUserLabel="@string/resource_name"><application/></manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="rust.myapp" android:sharedUserLabel="@string/resource_name"><application/><compatible_screens><screen/></compatible_screens><instrumentation/><permission/><permission_group/><permission_tree/><supports_gl_texture/><supports_screens/><uses_configuration/><uses_feature/><uses_permission/><uses_permission_sdk_23/><uses_sdk/></manifest>

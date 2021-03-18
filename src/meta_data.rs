@@ -1,4 +1,4 @@
-use super::resources::AnyResource;
+use super::resources::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
