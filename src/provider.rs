@@ -1,4 +1,8 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::path_permission::PathPermission;
+use super::intent_filter::IntentFilter;
+use super::meta_data::MetaData;
+use super::grant_uri_permission::GrantUriPermission;
 use serde::{Deserialize, Serialize};
 
 /// Declares a content provider component. A content provider is a subclass of `ContentProvider` that supplies structured access to data managed by the application.
@@ -98,6 +102,15 @@ pub struct Provider {
     /// See also the `permission` and `readPermission` attributes.
     #[serde(rename = "android:writePermission")]
     pub write_permission: Option<String>,
+ 
+    pub path_permission: Option<PathPermission>,
+
+    pub grant_uri_permission: Option<GrantUriPermission>,
+
+    pub intent_filter: Option<IntentFilter>,
+
+    pub meta_data: Option<MetaData>,
+
 }
 
 mod authorities {

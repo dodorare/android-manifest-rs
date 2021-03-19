@@ -1,4 +1,6 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString, StyleResource};
+use super::intent_filter::IntentFilter;
+use super::meta_data::MetaData;
 use serde::{Deserialize, Serialize};
 
 /// Declares an activity (an `Activity` subclass) that implements part of the application's visual user interface.
@@ -236,6 +238,10 @@ pub struct Activity {
     /// The setting must be one of the values listed in the following table, or a combination of one `"state..."` value plus one `"adjust..."` value.
     #[serde(rename = "android:windowSoftInputMode")]
     pub window_soft_input_mode: Option<WindowSoftInputMode>,
+
+    pub intent_filter: Option<IntentFilter>,
+
+    pub meta_data: Option<MetaData>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]

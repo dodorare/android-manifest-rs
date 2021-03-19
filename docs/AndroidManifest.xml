@@ -185,5 +185,55 @@
                 android:permission="llkkkj"
                 android:targetActivity="AAWadsdad"        
         ></activity_alias>
+        <meta_data
+                android:name= "com.example.project"
+                android:resource="@drawable/jamba"
+                android:value="ASDAsx"
+        ></meta_data>
+        <service
+                android:description="@string/badawqqq"
+                android:directBootAware="false"
+                android:enabled="true"
+                android:exported="false"
+                android:foregroundServiceType="Camera"
+                android:icon="@drawable/trrqd"
+                android:isolatedProcess="false"
+                android:label="auygdy"
+                android:name="aosdhua"
+                android:permission="Llaoda"
+                android:process="asdjiqwuyq"
+        ></service>
+        <receiver
+                android:directBootAware="true"
+                android:enabled="false"
+                android:exported="true"
+                android:icon="@drawable/ppoohh"
+                android:isolatedProcess="false"    
+                android:label="adhqweq"
+                android:name="aqeqeqwsssa"
+                android:permission="Wqeqsdq"   
+                android:process="adwaxxzqwqd"
+        ></receiver>
+        <provider
+                android:authorities="authority1;authority2;authority3"    
+                android:enabled="false"
+                android:directBootAware="false"
+                android:exported="false"
+                android:grantUriPermissions="true"
+                android:icon="@drawable/fjhqeifg"
+                android:initOrder="22"
+                android:label="fjjw"
+                android:multiprocess="true"
+                android:name="asdada"
+                android:permission="aqqew"
+                android:process="kjgfg"
+                android:readPermission="ddskkj"
+                android:syncable="false"
+                android:writePermission="asdallsa"
+        ></provider>
+        <uses_library
+                android:name="afsfdw"
+                android:required="false"
+        ></uses_library>
     </application>
 </manifest>

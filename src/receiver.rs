@@ -1,4 +1,6 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::intent_filter::IntentFilter;
+use super::meta_data::MetaData;
 use serde::{Deserialize, Serialize};
 
 /// Declares a broadcast receiver (a `BroadcastReceiver` subclass) as one of the application's components.
@@ -62,4 +64,8 @@ pub struct Receiver {
     /// This allows components in different applications to share a process, reducing resource usage.
     #[serde(rename = "android:process")]
     pub process: Option<String>,
+
+    pub intent_filter: Option<IntentFilter>,
+
+    pub meta_data: Option<MetaData>,
 }

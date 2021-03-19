@@ -59,29 +59,29 @@ pub struct Manifest {
 
     pub application: Application,
 
-    pub compatible_screens: CompatibleScreensy,
+    pub compatible_screens: Option<Vec<CompatibleScreensy>>,
 
-    pub instrumentation: Instrumentation,
+    pub instrumentation: Option<Vec<Instrumentation>>,
 
-    pub permission: Permission,
+    pub permission: Option<Permission>,
 
-    pub permission_group: PermissionGroup,
+    pub permission_group: Option<PermissionGroup>,
 
-    pub permission_tree: PermissionTree,
+    pub permission_tree: Option<PermissionTree>,
 
-    pub supports_gl_texture: SupportsGlTexture,
+    pub supports_gl_texture: Option<SupportsGlTexture>,
 
-    pub supports_screens: SupportsScreens,
+    pub supports_screens: Option<SupportsScreens>,
 
-    pub uses_configuration: UsesConfiguration,
+    pub uses_configuration: Option<UsesConfiguration>,
 
-    pub uses_feature: UsesFeature,
+    pub uses_feature: Option<UsesFeature>,
 
-    pub uses_permission: UsesPermission,
+    pub uses_permission: Option<UsesPermission>,
 
-    pub uses_permission_sdk_23: UsesPermissionSdk23,
+    pub uses_permission_sdk_23: Option<UsesPermissionSdk23>,
 
-    pub uses_sdk: UsesSdk,
+    pub uses_sdk: Option<UsesSdk>,
 }
 
 /// The default install location for the app.

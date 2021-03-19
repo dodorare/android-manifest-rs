@@ -1,4 +1,6 @@
 use super::resources::{DrawableResource, Resource, StringResource};
+use super::intent_filter::IntentFilter;
+use super::meta_data::MetaData;
 use serde::{Deserialize, Serialize};
 
 /// An alias for an activity, named by the targetActivity attribute. The target must be in the same application as the alias and it must be declared before the alias in the manifest.
@@ -39,4 +41,8 @@ pub struct ActivityAlias {
     /// The name of the activity that can be activated through the alias. This name must match the name attribute of an `<activity>` element that precedes the alias in the manifest.
     #[serde(rename = "android:targetActivity")]
     pub target_activity: Option<String>,
+
+    pub intent_filter: Option<IntentFilter>,
+
+    pub meta_data: Option<MetaData>,
 }
