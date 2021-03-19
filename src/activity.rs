@@ -55,7 +55,7 @@ pub struct Activity {
     /// but declaring a configuration with this attribute will prevent the activity from being restarted. Instead, the activity remains running and its `onConfigurationChanged()` method is called.
     /// `Note:` Using this attribute should be avoided and used only as a last resort. Please read Handling Runtime Changes for more information about how to properly handle a restart due to a configuration change.
     #[serde(rename = "android:configChanges")]
-    pub config_changes: Option<ColorMode>,
+    pub config_changes: Option<ConfigChanges>,
     /// Whether or not the activity is direct-boot aware; that is, whether or not it can run before the user unlocks the device.
     /// Note: During Direct Boot, an activity in your application can only access the data that is stored in device protected storage.
     /// The default value is "false".

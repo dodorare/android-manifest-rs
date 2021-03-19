@@ -8,6 +8,78 @@
         android:versionName="0.3.8"
         android:sharedUserLabel="@string/resource_name"
         android:installLocation="internalOnly">
+        <compatible_screens>
+                <screen
+                android:screenSize="normal"
+                android:screenDensity="xhdpi"></screen>
+        </compatible_screens>
+     <instrumentation
+         android:functionalTest="false"
+         android:handleProfiling="true"
+         android:icon="@drawable/ic_la"
+         android:label="testLabel"
+         android:name="dasd"
+         android:targetPackage="com.asdada"
+         android:targetProcesses="asdaad" >
+     </instrumentation>  
+    <permission
+        android:description="@string/asdawdasd"
+        android:icon="@drawable/ic_ladfsdsd"
+        android:label="asdasd"
+        android:name="qqqew"
+        android:permissionGroup="AAAAAA"
+        android:protectionLevel="normal">
+    </permission>
+    <permission_group
+        android:description="@string/re"
+        android:icon="@drawable/iasdw"
+        android:label="@string/rqweqweqsad"
+        android:name="ADDDD"
+    ></permission_group>
+    <permission_tree
+        android:icon="@drawable/ddaladfs"
+        android:label="@string/fdffdde"
+        android:name="GGGGG"
+    ></permission_tree>
+    <supports_gl_texture
+        android:name="FFFFFa"
+    ></supports_gl_texture>
+     <supports_screens
+                android:resizeable="false"
+                android:smallScreens="true"
+                android:normalScreens="false"
+                android:largeScreens="false"
+                android:xlargeScreens="false"
+                android:anyDensity="false"
+                android:requiresSmallestWidthDp="2131"
+                android:compatibleWidthLimitDp="123"
+                android:largestWidthLimitDp="4444"
+     ></supports_screens>
+     <uses_configuration
+                android:reqFiveWayNav="false"
+                android:reqHardKeyboard="true"
+                android:reqKeyboardType="Nokeys"
+                android:reqNavigation="Dpad"
+                android:reqTouchScreen="Notouch"
+     ></uses_configuration>
+        <uses_feature
+                android:name="LLLLLL"
+                android:required="false"
+                android:glEsVersion="3321"
+        ></uses_feature>
+        <uses_permission
+                android:name="NNNN"
+                android:maxSdkVersion="4123"
+        ></uses_permission>
+        <uses_permission_sdk_23
+                android:name="AADDWQ"
+                android:maxSdkVersion="67"
+        ></uses_permission_sdk_23>
+        <uses_sdk
+                android:minSdkVersion="332"
+                android:targetSdkVersion="436"
+                android:maxSdkVersion="500"
+        ></uses_sdk>
     <application
             android:hasCode="false"
             android:allowTaskReparenting="true"
@@ -51,7 +123,7 @@
             android:debuggable="true"
             android:icon="@drawable/ic_launcher"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
-        <provider
+ <provider
                 android:name="TelephonyProvider"
                 android:authorities="telephony"
                 android:exported="true"
@@ -63,5 +135,55 @@
                 android:exported="true"
                 android:singleUser="true"
                 android:multiprocess="false" />
+           <activity
+                android:allowEmbedded="false"
+                android:allowTaskReparenting="false"
+                android:alwaysRetainTaskState="false"
+                android:autoRemoveFromRecents="false"
+                android:banner="@drawable/ffdalau"
+                android:clearTaskOnLaunch="true"
+                android:colorMode="Hdr"
+                android:configChanges="Mcc"
+                android:directBootAware="true"
+                android:documentLaunchMode="Never"
+                android:enabled="false"
+                android:excludeFromRecents="true"
+                android:exported="true"
+                android:finishOnTaskLaunch="false"
+                android:hardwareAccelerated="true"
+                android:icon="@drawable/oooiaa"
+                android:immersive="false"
+                android:label="@string/bbnsa"
+                android:launchMode="Standard"
+                android:lockTaskMode="Normal"
+                android:maxRecents="2231"
+                android:maxAspectRatio="3.7_f32"
+                android:multiprocess="true"
+                android:name="Adoka"
+                android:noHistory="false"
+                android:parentActivityName="DMBHJ"
+                android:persistableMode="PersistNever"
+                android:permission="GFFJK"
+                android:process="ffeww"
+                android:relinquishTaskIdentity="false"
+                android:resizeableActivity="true"
+                android:screenOrientation="User"
+                android:showForAllUsers="true"
+                android:stateNotNeeded="false"
+                android:supportsPictureInPicture="true"
+                android:taskAffinity="ATTRE"
+                android:theme="@style/red"
+                android:uiOptions="AREQWESDS"
+                android:windowSoftInputMode="StateUnchanged"
+           ></activity> 
+        <activity_alias
+                android:enabled="false"
+                android:exported="true"
+                android:icon="@drawable/koejf"
+                android:label="@string/reeqw"
+                android:name="adadwq"
+                android:permission="llkkkj"
+                android:targetActivity="AAWadsdad"        
+        ></activity_alias>
     </application>
 </manifest>
