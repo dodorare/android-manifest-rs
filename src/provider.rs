@@ -5,28 +5,56 @@ use super::meta_data::MetaData;
 use super::grant_uri_permission::GrantUriPermission;
 use serde::{Deserialize, Serialize};
 
-/// Declares a content provider component. A content provider is a subclass of `ContentProvider` that supplies structured access to data managed by the application.
-/// All content providers in your application must be defined in a `<provider>` element in the manifest file; otherwise, the system is unaware of them and doesn't run them.
-/// You only declare content providers that are part of your application. Content providers in other applications that you use in your application should not be declared.
-/// The Android system stores references to content providers according to an authority string, part of the provider's content URI.
-/// For example, suppose you want to access a content provider that stores information about health care professionals.
-/// To do this, you call the method `ContentResolver.query()`, which among other arguments takes a URI that identifies the provider:
+/// Declares a content provider component.
+///
+/// A content provider is a subclass of `ContentProvider` that
+/// supplies structured access to data managed by the application.
+/// All content providers in your application must be defined in a `<provider>`
+/// element in the manifest file; otherwise, the system is unaware of them and doesn't run them.
+/// You only declare content providers that are part of your application. 
+/// Content providers in other applications that you use in your application should not be declared.
+/// The Android system stores references to content providers according to
+/// an authority string, part of the provider's content URI.
+/// For example, suppose you want to access a content provider 
+/// that stores information about health care professionals.
+/// To do this, you call the method `ContentResolver.query()`, 
+/// which among other arguments takes a URI that identifies the provider:
+///
+/// ## Example
+/// ```xml
+/// content://com.example.project.healthcareprovider/nurses/rn
+/// ```
+///
+/// The `content:` `scheme` identifies the URI as a content URI pointing to an Android content provider. 
+/// The authority `com.example.project.healthcareprovider` identifies the provider itself;
+/// the Android system looks up the authority in its list of known providers and their authorities.
+/// The substring `nurses/rn` is a `path`, which the content provider can use to identify subsets of the provider data.
+/// Notice that when you define your provider in the `<provider>` element
+/// you don't include the scheme or the path in the `android:name` argument, only the authority.
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "provider")]
 pub struct Provider {
-    /// A list of one or more URI authorities that identify data offered by the content provider. Multiple authorities are listed by separating their names with a semicolon.
-    /// To avoid conflicts, authority names should use a Java-style naming convention (such as com.example.provider.cartoonprovider).
+    /// A list of one or more URI authorities that identify data offered by the content provider.
+    /// Multiple authorities are listed by separating their names with a semicolon.
+    /// To avoid conflicts, authority names should use a
+    /// Java-style naming convention (such as com.example.provider.cartoonprovider).
     /// Typically, it's the name of the ContentProvider subclass that implements the provider
     /// There is no default. At least one authority must be specified.
     #[serde(rename = "android:authorities", with = "authorities")]
     pub authorities: Vec<String>,
-    /// Whether or not the service can be instantiated by the system — `"true"` if it can be, and `"false"` if not. The default value is `"true"`.
-    /// The `<application>` element has its own enabled attribute that applies to all application components, including services.
-    /// The `<application>` and <service> attributes must both be `"true"` (as they both are by default) for the service to be enabled. If either is `"false"`, the service is disabled; it cannot be instantiated.
+    /// Whether or not the service can be instantiated by the system — `"true"`
+    /// if it can be, and `"false"` if not. The default value is `"true"`.
+    /// The `<application>` element has its own enabled attribute
+    /// that applies to all application components, including services.
+    /// The `<application>` and <service> attributes must both be `"true"` 
+    /// (as they both are by default) for the service to be enabled. If either is `"false"`,
+    /// the service is disabled; it cannot be instantiated.
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
-    /// Whether or not the service is direct-boot aware; that is, whether or not it can run before the user unlocks the device.
-    /// Note: During Direct Boot, a service in your application can only access the data that is stored in device protected storage.
+    /// Whether or not the service is direct-boot aware; that is,
+    /// whether or not it can run before the user unlocks the device.
+    /// Note: During Direct Boot, a service in your application 
+    /// can only access the data that is stored in device protected storage.
     /// The default value is `"false"`.
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
