@@ -123,7 +123,8 @@ impl<'de, T: ResourceType> Deserialize<'de> for Resource<T> {
     }
 }
 
-// Parses a resource string in format @[package:]resource_type/resource_name into three parts
+// Parses a resource string in format @[package:]resource_type/resource_name
+// into three parts
 fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), &str> {
     let split_str: Vec<_> = resource.split('/').collect();
     if split_str.len() != 2 {
