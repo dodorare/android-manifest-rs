@@ -1,19 +1,19 @@
 use serde::{Deserialize, Serialize};
 
-/// ## contained in:
-/// `<intent-filter>`
+/// Adds a data specification to an intent filter.
 ///
-/// ## description:
-/// Adds a data specification to an intent filter. The specification can be just
-/// a data type (the mimeType attribute), just a URI, or both a data type and a
-/// URI. A URI is specified by separate attributes for each of its parts:
+/// The specification can be just a data type (the mimeType attribute),
+/// just a URI, or both a data type and a URI. A URI is specified
+/// by separate attributes for each of its parts:
 ///
 /// ```xml
 /// <scheme>://<host>:<port>[<path>|<pathPrefix>|<pathPattern>]
 /// ```
 ///
-/// ## Examples
+/// ## Contained in:
+/// [`<intent-filter>`](crate::IntentFilter)
 ///
+/// ## Examples
 /// These attributes that specify the URL format are optional, but also mutually
 /// dependent:
 /// * If a scheme is not specified for the intent filter, all the other URI
@@ -52,7 +52,6 @@ pub struct Data {
     /// but no scheme, the `content:` and `file:` schemes are assumed.
     ///
     /// ## Note
-    ///
     /// Scheme matching in the Android framework is case-sensitive, unlike the
     /// RFC. As a result, you should always specify schemes using lowercase
     /// letters.
@@ -67,7 +66,8 @@ pub struct Data {
     /// `google.co.` is invalid because the asterisk wildcard is not the first
     /// character.
     ///
-    /// `Note:` host name matching in the Android framework is case-sensitive,
+    /// ## Note
+    /// host name matching in the Android framework is case-sensitive,
     /// unlike the formal RFC. As a result, you should always specify host names
     /// using lowercase letters.
     #[serde(rename = "android:host")]
@@ -120,7 +120,8 @@ pub struct Data {
     /// matches. It's common for an intent filter to declare a `<data>` that
     /// includes only the android:mimeType attribute.
     ///
-    /// `Note:` MIME type matching in the Android framework is case-sensitive,
+    /// ## Note
+    /// MIME type matching in the Android framework is case-sensitive,
     /// unlike formal RFC MIME types. As a result, you should always specify
     /// MIME types using lowercase letters.
     #[serde(rename = "android:mimeType")]

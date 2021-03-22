@@ -3,8 +3,8 @@ use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResourceOrString, StyleResource};
 use serde::{Deserialize, Serialize};
 
-/// Declares an activity (an `Activity` subclass) that implements part of the
-/// application's visual user interface.
+/// Declares an activity (an [`Activity`](https://developer.android.com/reference/android/app/Activity)
+/// subclass) that implements part of the application's visual user interface.
 ///
 /// All activities must be represented by `<activity>` elements in the manifest
 /// file. Any that are not declared there will not be seen by the system and
@@ -96,17 +96,22 @@ pub struct Activity {
     /// restarted by default, but declaring a configuration with this
     /// attribute will prevent the activity from being restarted. Instead, the
     /// activity remains running and its `onConfigurationChanged()` method is
-    /// called. `Note:` Using this attribute should be avoided and used only
+    /// called.
+    ///
+    /// ## Note
+    /// Using this attribute should be avoided and used only
     /// as a last resort. Please read Handling Runtime Changes for more
     /// information about how to properly handle a restart due to a
     /// configuration change.
     #[serde(rename = "android:configChanges")]
     pub config_changes: Option<ConfigChanges>,
     /// Whether or not the activity is direct-boot aware; that is, whether or
-    /// not it can run before the user unlocks the device. Note: During
-    /// Direct Boot, an activity in your application can only access the data
-    /// that is stored in device protected storage. The default value is
-    /// "false".
+    /// not it can run before the user unlocks the device.
+    ///
+    /// ## Note
+    /// During Direct Boot, an activity in your application can only access
+    /// the data that is stored in device protected storage. The default
+    /// value is "false".
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
     /// Specifies how a new instance of an activity should be added to a task
@@ -280,9 +285,10 @@ pub struct Activity {
     /// the value of this attribute needs to be 1.33 or greater. On wearable
     /// devices, it must be 1.0 or greater. Otherwise, the system ignores the
     /// set value.
-    /// * `Note:` This attribute is ignored if the activity has
-    ///   `resizeableActivity` set to true, since that means your activity
-    ///   supports any size.
+    ///
+    /// ## Note
+    /// This attribute is ignored if the activity has `resizeableActivity`
+    /// set to true, since that means your activity supports any size.
     #[serde(rename = "android:maxAspectRatio")]
     pub max_aspect_ratio: Option<f32>,
     /// Whether an instance of the activity can be launched into the process of
@@ -526,7 +532,9 @@ pub enum ConfigChanges {
     /// Added in API level 8.
     UiMode,
     /// The screen orientation has changed — the user has rotated the device.
-    /// `Note:` If your application targets Android 3.2 (API level 13) or
+    ///
+    /// ## Note
+    /// If your application targets Android 3.2 (API level 13) or
     /// higher, then you should also declare the `"screenSize"` and
     /// `"screenLayout"` configurations, because they might also change when
     /// a device switches between portrait and landscape orientations.
@@ -550,7 +558,7 @@ pub enum ConfigChanges {
 }
 
 /// This attribute has four values which produce the following effects when the
-/// user opens a document with the application: Note: For values other than
+/// user opens a document with the application: For values other than
 /// `"none"` and `"never"` the activity must be defined with
 /// `launchMode="standard"`. If this attribute is not specified,
 /// `documentLaunchMode="none"` is used.
@@ -611,16 +619,20 @@ pub enum LockTaskMode {
     /// task mode but can be placed there by calling `startLockTask()`.
     Normal,
     /// Tasks don't launch into lockTask mode, and the device user can't pin
-    /// these tasks from the overview screen. `Note:` This mode is only
-    /// available to system and privileged applications. Non-privileged apps
-    /// with this value are treated as normal
+    /// these tasks from the overview screen.
+    ///
+    /// ## Note
+    /// This mode is only available to system and privileged applications.
+    /// Non-privileged apps with this value are treated as normal
     Never,
     /// Tasks rooted at this activity always launch into lock task mode. If the
     /// system is already in lock task mode when this task is launched then the
     /// new task are launched on top of the current task. Tasks launched in
-    /// this mode can exit lock task mode by calling finish(). Note: This
-    /// mode is only available to system and privileged applications.
-    /// Non-privileged apps with this value are treated as normal.
+    /// this mode can exit lock task mode by calling finish().
+    ///
+    /// ## Note
+    /// This mode is only available to system and privileged
+    /// applications. Non-privileged apps with this value are treated as normal.
     Always,
     /// If the DPC authorizes this package using
     /// `DevicePolicyManager`.`setLockTaskPackages()`, then this mode is
@@ -639,45 +651,57 @@ pub enum PersistableMode {
     /// but only the root activity's launching intent is used.
     /// When your app's launching intent loads your app's root activity, the
     /// activity doesn't receive a PersistableBundle object. Therefore,
-    /// don't use onSaveInstanceState() to preserve the state of your app's root
-    /// activity across a device restart. Note: This attribute value affects
-    /// your app's behavior only if it's set on your app's root activity.
+    /// don't use `onSaveInstanceState()` to preserve the state of your app's
+    /// root activity across a device restart.
+    ///
+    /// ## Note
+    /// This attribute value affects your app's behavior only
+    /// if it's set on your app's root activity.
     PersistRootOnly,
     /// This activity's state is preserved, along with the state of each
     /// activity higher up the back stack that has its own persistableMode
     /// attribute set to persistAcrossReboots. If an activity doesn't have a
     /// persistableMode attribute that is set to persistAcrossReboots, or if
-    /// it's launched using the Intent.FLAG_ACTIVITY_NEW_DOCUMENT flag, then
+    /// it's launched using the `Intent.FLAG_ACTIVITY_NEW_DOCUMENT` flag, then
     /// that activity, along with all activities higher up the back stack,
     /// aren't preserved. When an intent loads an activity whose
-    /// persistableMode attribute is set to persistAcrossReboots in your app,
-    /// the activity receives a PersistableBundle object in its onCreate()
-    /// method. Therefore, you can use onSaveInstanceState() to preserve the
+    /// persistableMode attribute is set to `persistAcrossReboots` in your app,
+    /// the activity receives a `PersistableBundle` object in its `onCreate()`
+    /// method. Therefore, you can use `onSaveInstanceState()` to preserve the
     /// state of an activity across a device restart as long as its
-    /// persistableMode attribute is set to persistAcrossReboots. Note: This
-    /// attribute value affects your app's behavior even if it's set on an
-    /// activity other than your app's root activity
+    /// persistableMode attribute is set to `persistAcrossReboots`.
+    ///
+    /// ## Note
+    /// This attribute value affects your app's behavior even if it's
+    /// set on an activity other than your app's root activity
     PersistAcrossReboots,
     /// The activity's state isn't preserved.
-    /// `Note:` This attribute value affects your app's behavior only if it's
+    ///
+    /// ## Note
+    /// This attribute value affects your app's behavior only if it's
     /// set on your app's root activity.
     PersistNever,
 }
 
-/// Note: When you declare one of the landscape or portrait values, it is
+/// When you declare one of the landscape or portrait values, it is
 /// considered a hard requirement for the orientation in which the activity
 /// runs. As such, the value you declare enables filtering by services such as
 /// Google Play so your application is available only to devices that support
 /// the orientation required by your activities. For example, if you declare
-/// either "landscape", "reverseLandscape", or "sensorLandscape", then
+/// either `"landscape"`, `"reverseLandscape"`, or `"sensorLandscape"`, then
 /// your application will be available only to devices that support landscape
 /// orientation. However, you should also explicitly declare that your
 /// application requires either portrait or landscape orientation with the
-/// <uses-feature> element. For example, <uses-feature
-/// android:name="android.hardware.screen.portrait"/>. This is purely a
-/// filtering behavior provided by Google Play (and other services that support
-/// it) and the platform itself does not control whether your app can be
-/// installed when a device supports only certain orientations.
+/// `<uses-feature>` element.
+///
+/// ## XML Example
+/// ```xml
+/// <uses-feature android:name="android.hardware.screen.portrait"/>.
+/// ```
+/// This is purely a filtering behavior provided by Google Play
+/// (and other services that support it) and the platform itself does
+/// not control whether your app can be installed when a device supports
+/// only certain orientations.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenOrientation {

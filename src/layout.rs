@@ -1,7 +1,17 @@
 use serde::{Deserialize, Serialize};
 
+/// Affect how an activity behaves in multi-window mode.
+///
 /// With Android 7.0, the `<layout>` manifest element supports several
-/// attributes that affect how an activity behaves in multi-window mode:
+/// attributes:
+/// * `default_width`
+/// * `default_height`
+/// * `gravity`
+/// * `min_height`
+/// * `min_width`
+///
+/// ## Contained in:
+/// [`<activity>`](crate::Activity)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "layout")]
 pub struct Layout {
@@ -11,7 +21,7 @@ pub struct Layout {
     /// Default height of the activity when launched in freeform mode.
     #[serde(rename = "android:defaultHeight")]
     pub default_height: Option<i32>,
-    ///Initial placement of the activity when launched in freeform mode. See
+    /// Initial placement of the activity when launched in freeform mode. See
     /// the Gravity reference for suitable values.
     #[serde(rename = "android:gravity")]
     pub gravity: Option<Gravity>,
@@ -21,9 +31,16 @@ pub struct Layout {
     /// crops the activity to the size the user requests.
     #[serde(rename = "android:minHeight")]
     pub min_height: Option<i32>,
+    /// Minimum height and minimum width for the activity in both split-screen
+    /// and freeform modes. If the user moves the divider in split-screen mode
+    /// to make an activity smaller than the specified minimum, the system
+    /// crops the activity to the size the user requests.
     #[serde(rename = "android:minWidth")]
     pub min_width: Option<i32>,
 }
+
+/// Standard constants and tools for placing an object within a potentially
+/// larger container.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Gravity {

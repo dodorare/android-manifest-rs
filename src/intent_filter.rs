@@ -4,6 +4,34 @@ use super::data::Data;
 use super::resources::{DrawableResource, Resource, StyleResource};
 use serde::{Deserialize, Serialize};
 
+/// Specifies the types of intents that an activity, service, or broadcast
+/// receiver can respond to.
+///
+/// An intent filter declares the capabilities of its
+/// parent component — what an activity or service can do and what types of
+/// broadcasts a receiver can handle. It opens the component to receiving
+/// intents of the advertised type, while filtering out those that are not
+/// meaningful for the component. Most of the contents of the filter are
+/// described by its `<action>`, `<category>`, and `<data>` subelements.
+///
+/// For a more detailed discussion of filters, see the separate [`Intents and
+/// Intent Filters`](https://developer.android.com/guide/components/intents-filters)
+/// document, as well as the [`Intents Filters`](https://developer.android.com/guide/topics/manifest/manifest-intro#ifs)
+/// section in the introduction.
+///
+/// ## Contained in:
+/// [`<activity>`](crate::Activity)
+/// [`<activity-alias>`](crate::ActivityAlias)
+/// [`<service>`](crate::Service)
+/// [`<receiver>`](crate::Receiver)
+/// [`<provider>`](crate::Provider)
+///
+/// ## Must contain:
+/// [`<action>`](crate::Action)
+///
+/// ## Can contain:
+/// [`<category>`](crate::Category)
+/// [`<data>`](crate::Data)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "intent-filter")]
 pub struct IntentFilter {
@@ -46,8 +74,8 @@ pub struct IntentFilter {
     /// "100". Higher numbers have a higher priority. The default value is 0
     /// In certain circumstances the requested priority is ignored and the value
     /// is capped to 0. This occurs when: A non-privileged application
-    /// requests any priority >0 A privileged application requests a
-    /// priority >0 for ACTION_VIEW, ACTION_SEND, ACTION_SENDTO or
+    /// requests any priority > 0 A privileged application requests a
+    /// priority > 0 for ACTION_VIEW, ACTION_SEND, ACTION_SENDTO or
     /// ACTION_SEND_MULTIPLE
     #[serde(rename = "android:priority")]
     pub priority: Option<i32>,

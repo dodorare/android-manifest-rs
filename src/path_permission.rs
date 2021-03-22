@@ -1,8 +1,13 @@
 use serde::{Deserialize, Serialize};
 
 /// Defines the path and required permissions for a specific subset of data
-/// within a content provider. This element can be specified multiple times to
+/// within a content provider. 
+/// 
+/// This element can be specified multiple times to
 /// supply multiple paths.
+///
+/// ## Contained in:
+/// [<provider>](crate::Provider)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "path-permission")]
 pub struct PathPermission {

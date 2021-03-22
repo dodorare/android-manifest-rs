@@ -1,5 +1,5 @@
 use super::application::Application;
-use super::compatible_screens::CompatibleScreensy;
+use super::compatible_screens::CompatibleScreens;
 use super::instrumentation::Instrumentation;
 use super::permission::Permission;
 use super::permission_group::PermissionGroup;
@@ -14,9 +14,27 @@ use super::uses_permission_sdk_23::UsesPermissionSdk23;
 use super::uses_sdk::UsesSdk;
 use serde::{Deserialize, Serialize};
 
-/// The root element of the AndroidManifest.xml file.
+/// The root element of the `AndroidManifest.xml` file.
+/// 
 /// It must contain an `<application>` element and specify `xmlns:android` and
 /// `package` attributes.
+///
+/// ## Must contain:
+/// [`<application>`](crate::Application)
+///
+/// ## Can contain:
+/// * [`<compatible-screens>`](crate::CompatibleScreens)
+/// * [`<instrumentation>`](crate::Instrumentation)
+/// * [`<permission>`](crate::Permission)
+/// * [`<permission-group>`](crate::PermissionGroup)
+/// * [`<permission-tree>`](crate::PermissionTree)
+/// * [`<supports-gl-texture>`](crate::SupportsGlTexture)
+/// * [`<supports-screens>`](crate::SupportsScreens)
+/// * [`<uses-configuration>`](crate::UsesConfiguration)
+/// * [`<uses-feature>`](crate::UsesFeature)
+/// * [`<uses-permission>`](crate::UsesPermission)
+/// * [`<uses-permission-sdk-23>`](crate::UsesPermissionSdk23)
+/// * [`<uses-sdk>`](crate::UsesSdk)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "manifest")]
 pub struct Manifest {
@@ -74,7 +92,7 @@ pub struct Manifest {
 
     pub application: Application,
 
-    pub compatible_screens: Option<Vec<CompatibleScreensy>>,
+    pub compatible_screens: Option<CompatibleScreens>,
 
     pub instrumentation: Option<Vec<Instrumentation>>,
 

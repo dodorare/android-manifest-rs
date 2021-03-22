@@ -1,7 +1,7 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
-/// Declares the base name for a tree of permissions
+/// Declares the base name for a tree of permissions.
 ///
 /// The application takes ownership of all names within the tree.
 /// It can dynamically add new permissions to the tree by calling
@@ -17,6 +17,9 @@ use serde::{Deserialize, Serialize};
 /// Note that this element does not declare a permission itself, only a
 /// namespace in which further permissions can be placed. See the `<permission>`
 /// element for information on declaring permissions.
+/// 
+/// ## Contained in:
+/// [<manifest>](crate::Manifest)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "permission-tree")]
 pub struct PermissionTree {

@@ -1,12 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-/// # contained in:
-/// `<provider>`
+/// Specifies the subsets of app data that parent content provider can access
 ///
-/// # description:
-/// Specifies the subsets of app data that the parent content provider has
-/// permission to access. Data subsets are indicated by the path part of a
-/// `content:` URI. (The authority part of the URI identifies the content
+/// Data subsets are indicated by the path part of a `content:` URI.
+/// (The authority part of the URI identifies the content
 /// provider.) Granting permission is a way of enabling clients of the provider
 /// that don't normally have permission to access its data to overcome that
 /// restriction on a one-time basis. If a content provider's
@@ -16,6 +13,9 @@ use serde::{Deserialize, Serialize};
 /// by this element. A provider can contain any number of
 /// `<grant-uri-permission>` elements. Each one can specify only one path (only
 /// one of the three possible attributes).
+///
+/// ## Contained in:
+/// [`<provider>`](crate::Provider)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "grant-uri-permission")]
 pub struct GrantUriPermission {
