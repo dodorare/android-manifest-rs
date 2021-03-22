@@ -1,5 +1,19 @@
 use serde::{Deserialize, Serialize};
 
+/// Lets you express an application's compatibility with one or more versions of
+/// the Android platform, by means of an API Level integer.
+///
+/// The API Level expressed by an application will be compared to the API Level
+/// of a given Android system, which may vary among different Android devices.
+
+/// Despite its name, this element is used to specify the API Level, not the
+/// version number of the SDK (software development kit) or Android platform.
+/// The API Level is always a single integer. You cannot derive the API Level
+/// from its associated Android version number (for example, it is not the same
+/// as the major version or the sum of the major and minor versions).
+///
+/// ## Contained in:
+/// [`<manifest>`](crate::Manifest)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-sdk")]
 pub struct UsesSdk {
@@ -7,7 +21,9 @@ pub struct UsesSdk {
     /// application to run. The Android system will prevent the user from
     /// installing the application if the system's API Level is lower than
     /// the value specified in this attribute. You should always declare this
-    /// attribute. Caution: If you do not declare this attribute, the system
+    /// attribute.
+    /// ## `Caution:`
+    /// If you do not declare this attribute, the system
     /// assumes a default value of "1", which indicates that your application is
     /// compatible with all versions of Android. If your application is not
     /// compatible with all versions (for instance, it uses APIs introduced in
@@ -66,7 +82,8 @@ pub struct UsesSdk {
     /// own API Level (6) is now higher than the maximum supported by the
     /// application (5). The system prevents the application from being
     /// visible to the user, in effect removing it from the device.
-    /// `Warning:` Declaring this attribute is not recommended. First, there is
+    /// ## `Warning:`
+    /// Declaring this attribute is not recommended. First, there is
     /// no need to set the attribute as means of blocking deployment of your
     /// application onto new versions of the Android platform as they are
     /// released. By design, new versions of the platform are fully

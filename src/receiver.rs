@@ -3,8 +3,9 @@ use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
-/// Declares a broadcast receiver (a `BroadcastReceiver` subclass) as one of the
-/// application's components. Broadcast receivers enable applications to receive
+/// Declares a broadcast receiver  as one of the application's components.
+///
+/// Broadcast receivers enable applications to receive
 /// intents that are broadcast by the system or by other applications, even when
 /// other components of the application are not running. There are two ways to
 /// make a broadcast receiver known to the system: One is declare it in the
@@ -12,6 +13,20 @@ use serde::{Deserialize, Serialize};
 /// dynamically in code and register it with the `Context.registerReceiver()`
 /// method. For more information about how to dynamically create receivers, see
 /// the `BroadcastReceiver` class description.
+///
+/// ## Warning:
+/// Limit how many broadcast receivers you set in your app.
+/// Having too many broadcast receivers can affect your app's performance and
+/// the battery life of users' devices. For more information about APIs you can
+/// use instead of the BroadcastReceiver class for scheduling background work,
+/// see Background Optimizations.
+///
+/// ## Contained in:
+/// [`<application>`](crate::Application)
+///
+/// ## Can contain:
+/// * [`<intent-filter>`](crate::IntentFilter)
+/// * [`<meta-data>`](crate::MetaData)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "receiver")]
 pub struct Receiver {
@@ -62,10 +77,10 @@ pub struct Receiver {
     pub isolated_process: Option<bool>,
     /// A name for the service that can be displayed to users. If this attribute
     /// is not set, the label set for the application as a whole is used instead
-    /// (see the <application> element's label attribute). The service's
+    /// (see the `<application>` element's label attribute). The service's
     /// label — whether set here or by the <application> element — is also the
     /// default label for all the service's intent filters (see the
-    /// <intent-filter> element's label attribute). The label should be set
+    /// `<intent-filter>` element's label attribute). The label should be set
     /// as a reference to a string resource, so that it can be localized like
     /// other strings in the user interface. However, as a convenience while
     /// you're developing the application, it can also be set as a raw string.
@@ -100,7 +115,7 @@ pub struct Receiver {
     /// default for all components. But component can override the default
     /// with its own process attribute, allowing you to spread your application
     /// across multiple processes. If the name assigned to this attribute
-    /// begins with a colon (':'), a new process, private to the application, is
+    /// begins with a colon `(':')`, a new process, private to the application, is
     /// created when it's needed and the service runs in that process.
     /// If the process name begins with a lowercase character, the service will
     /// run in a global process of that name, provided that it has permission to

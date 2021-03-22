@@ -3,16 +3,25 @@ use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
-/// Declares a service (a `Service` subclass) as one of the application's
-/// components. Unlike activities, services lack a visual user interface.
+/// Declares a service as one of the application's components.
+///
+/// Unlike activities, services lack a visual user interface.
 /// They're used to implement long-running background operations or a rich
 /// communications API that can be called by other applications. All services
 /// must be represented by `<service>` elements in the manifest file. Any that
 /// are not declared there will not be seen by the system and will never be run.
-/// Note: On Android 8.0 (API level 26) and higher, the system places
+/// ## Note:
+/// On Android 8.0 (API level 26) and higher, the system places
 /// limitations on what your app can do while it's running in the background.
 /// For more information, see the guides that discuss background execution
 /// limits and background location limits.
+///
+/// ## Contained in:
+/// [`<application>`](crate::Application)
+///
+/// ## Can contain:
+/// * [`<intent-filter>`](crate::IntentFilter)
+/// * [`<meta-data>`](crate::MetaData)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "service")]
 pub struct Service {
@@ -38,15 +47,15 @@ pub struct Service {
     pub enabled: Option<bool>,
     /// Whether or not components of other applications can invoke the service
     /// or interact with it — `"true"` if they can, and `"false"` if not.
-    /// When the value is "false", only components of the same application or
+    /// When the value is `"false"`, only components of the same application or
     /// applications with the same user ID can start the service or bind to it.
     /// The default value depends on whether the service contains intent
     /// filters. The absence of any filters means that it can be invoked only by
     /// specifying its exact class name. This implies that the service is
     /// intended only for application-internal use (since others would not know
-    /// the class name).So in this case, the default value is "false".
+    /// the class name).So in this case, the default value is `"false"`.
     /// On the other hand, the presence of at least one filter implies that the
-    /// service is intended for external use, so the default value is "true".
+    /// service is intended for external use, so the default value is `"true"`.
     /// This attribute is not the only way to limit the exposure of a service to
     /// other applications. You can also use a permission to limit the
     /// external entities that can interact with the service (see the
@@ -55,7 +64,7 @@ pub struct Service {
     pub exported: Option<bool>,
     /// Specify that the service is a `foreground service` that satisfies a
     /// particular use case. For example, a foreground service type of
-    /// "location" indicates that an app is getting the device's current
+    /// `"location"` indicates that an app is getting the device's current
     /// location, usually to `continue a user-initiated action` related to
     /// device location. You can assign multiple foreground service types to
     /// a particular service.
@@ -78,10 +87,10 @@ pub struct Service {
     pub isolated_process: Option<bool>,
     /// A name for the service that can be displayed to users. If this attribute
     /// is not set, the label set for the application as a whole is used instead
-    /// (see the <application> element's label attribute). The service's
-    /// label — whether set here or by the <application> element — is also the
+    /// (see the `<application>` element's label attribute). The service's
+    /// label — whether set here or by the `<application>` element — is also the
     /// default label for all the service's intent filters (see the
-    /// <intent-filter> element's label attribute). The label should be set
+    /// `<intent-filter>` element's label attribute). The label should be set
     /// as a reference to a string resource, so that it can be localized like
     /// other strings in the user interface. However, as a convenience while
     /// you're developing the application, it can also be set as a raw string.
@@ -116,8 +125,8 @@ pub struct Service {
     /// default for all components. But component can override the default
     /// with its own process attribute, allowing you to spread your application
     /// across multiple processes. If the name assigned to this attribute
-    /// begins with a colon (':'), a new process, private to the application, is
-    /// created when it's needed and the service runs in that process.
+    /// begins with a colon `(':')`, a new process, private to the application,
+    /// is created when it's needed and the service runs in that process.
     /// If the process name begins with a lowercase character, the service will
     /// run in a global process of that name, provided that it has permission to
     /// do so. This allows components in different applications to share a

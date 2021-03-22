@@ -15,6 +15,25 @@ use serde::{Deserialize, Serialize};
 /// ```xml
 /// <meta-data android:name="zoo" android:value="@string/kangaroo" />
 /// ```
+/// On the other hand, using the resource attribute would assign `"zoo"` the
+/// numeric ID of the resource, not the value stored in the resource:
+///
+/// ## Example
+/// ```xml
+/// <meta-data android:name="zoo" android:resource="@string/kangaroo" />
+/// ```
+///
+/// It is highly recommended that you avoid supplying related data as multiple
+/// separate `<meta-data>` entries. Instead, if you have complex data to associate
+/// with a component, store it as a `resource` and use the resource attribute to
+/// inform the component of its ID.
+///
+/// * [`<activity>`](crate::Activity)
+/// * [`<activity-alias>`](crate::ActivityAlias)
+/// * [`<applocation>`](crate::Application)
+/// * [`<service>`](crate::Service)
+/// * [`<receiver>`](crate::Receiver)
+/// * [`<provider>`](crate::Provider)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "meta-data")]
 pub struct MetaData {

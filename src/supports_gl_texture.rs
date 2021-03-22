@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Declares a single GL texture compression format that the app supports.
+///
 /// An application "supports" a GL texture compression format if it is capable
 /// of providing texture assets that are compressed in that format, once the
 /// application is installed on a device. The application can provide the
@@ -9,9 +10,33 @@ use serde::{Deserialize, Serialize};
 /// exactly one supported texture compression format, specified as the value of
 /// a android:name attribute. If your application supports multiple texture
 /// compression formats, you can declare multiple <supports-gl-texture>
-/// elements. For example: <supports-gl-texture
-/// android:name="GL_OES_compressed_ETC1_RGB8_texture" /> <supports-gl-texture
-/// android:name="GL_OES_compressed_paletted_texture" />
+/// elements.
+///
+/// ## Example:
+/// ```xml
+/// <supports-gl-texture
+///     android:name="GL_OES_compressed_ETC1_RGB8_texture" />
+/// <supports-gl-texture
+///     android:name="GL_OES_compressed_paletted_texture" />
+/// ```
+///
+/// Declared <supports-gl-texture> elements are informational, meaning that
+/// the Android system itself does not examine the elements at install time
+/// to ensure matching support on the device. However, other services (such as
+/// Google Play) or applications can check your application's
+/// <supports-gl-texture> declarations as part of handling or interacting with
+/// your application.  For this reason, it's very important that you declare all
+/// of the texture compression formats (from the list below) that your
+/// application is capable of supporting. Applications and devices typically
+/// declare their supported GL texture compression formats using the same set of
+/// well-known strings, as listed below. The set of format strings may grow over
+/// time, as needed, and since the values are strings, applications are free to
+/// declare other formats as needed. Assuming that the application is built with
+/// SDK Platform Tools r3 or higher, filtering based on the
+/// <supports-gl-texture> element is activated for all API levels.
+///
+/// ## Contained in:
+/// [`<manifest>`](crate::Manifest)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "supports-gl-texture")]
 pub struct SupportsGlTexture {

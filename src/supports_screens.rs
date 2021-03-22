@@ -1,5 +1,58 @@
 use serde::{Deserialize, Serialize};
 
+/// Lets you specify the screen sizes your application supports and enable
+/// screen compatibility mode for screens larger than what your application
+/// supports.
+///
+/// It's important that you always use this element in your application to
+/// specify the screen sizes your application supports.
+///
+/// ## `Note:`
+/// Screen compatibility mode is not a mode in which you should want your
+/// application to run—it causes pixelation and blurring in your UI, due to
+/// zooming. The proper way to make your application work well on large screens
+/// is to follow the guide to Supporting Multiple Screens and provide
+/// alternative layouts for different screen sizes.
+///
+/// An application `"supports"` a given screen size if it resizes properly to
+/// fill the entire screen. Normal resizing applied by the system works well for
+/// most applications and you don't have to do any extra work to make your
+/// application work on screens larger than a handset device. However, it's
+/// often important that you optimize your application's UI for different screen
+/// sizes by providing alternative layout resources. For instance, you might
+/// want to modify the layout of an activity when it is on a tablet compared to
+/// when running on a handset device.
+/// However, if your application does not work well when resized to fit
+/// different screen sizes, you can use the attributes of the
+/// `<supports-screens>` element to control whether your application should be
+/// distributed to smaller screens or have its UI scaled up `("zoomed")` to fit
+/// larger screens using the system's screen compatibility mode. When you have
+/// not designed for larger screen sizes and the normal resizing does not
+/// achieve the appropriate results, screen compatibility mode will scale your
+/// UI by emulating a normal size screen and medium density, then zooming in so
+/// that it fills the entire screen. Beware that this causes pixelation and
+/// blurring of your UI, so it's better if you optimize your UI for large
+/// screens.
+/// ## `Note:`
+/// Android 3.2 introduces new attributes: `android:requiresSmallestWidthDp`,
+/// `android:compatibleWidthLimitDp`, and `android:largestWidthLimitDp`. If
+/// you're developing your application for Android 3.2 and higher, you should
+/// use these attributes to declare your screen size support, instead of the
+/// attributes based on generalized screen sizes.
+/// ## `About screen compatibility mode`
+/// Screen compatibility mode is a last resort for apps that are not properly
+/// designed to take advantage of larger screen sizes. This is not a mode you
+/// should want your app to run in since it offers a suboptimal user experience.
+/// There are two different versions of screen compatibility mode based on the
+/// device version the app is running on. On Android versions 1.6 to 3.1 the
+/// system runs your application in a `"postage stamp"` window. It emulates a
+/// 320dp x 480dp screen with a black border that fills the remaining area of
+/// the screen. On Android 3.2 and up the system draws the layout as it would on
+/// a 320dp x 480dp screen then scales it up to fill the screen. This will often
+/// cause artifacts such as blurring and pixelation in your UI.
+///
+/// ## Contained in:
+/// [`<manifest>`](crate::Manifest)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "supports-screens")]
 pub struct SupportsScreens {
