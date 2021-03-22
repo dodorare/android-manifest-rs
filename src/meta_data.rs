@@ -1,6 +1,15 @@
 use super::resources::*;
 use serde::{Deserialize, Serialize};
 
+/// A name-value pair for an item of additional, arbitrary data that can be supplied to the parent component. A component element can contain any number of `<meta-data>` subelements.
+/// The values from all of them are collected in a single `Bundle` object and made available to the component as the `PackageItemInfo.metaData` field.
+/// Ordinary values are specified through the value attribute. However, to assign a resource ID as the value, use the resource attribute instead. 
+/// For example, the following code assigns whatever value is stored in the @string/kangaroo resource to the `"zoo"` name:
+///
+/// ```
+/// <meta-data android:name="zoo" android:value="@string/kangaroo" />
+/// ```
+///
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "meta-data")]
 pub struct MetaData {

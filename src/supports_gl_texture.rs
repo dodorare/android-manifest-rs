@@ -26,6 +26,7 @@ pub struct SupportsGlTexture {
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "snake_case")]
 pub enum Name {
     /// Ericsson texture compression. Specified in OpenGL ES 2.0 and available in all Android-powered devices that support OpenGL ES 2.0.
     GLOEScompressedETC1RGB8texture,

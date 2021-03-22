@@ -10,24 +10,47 @@ use super::service::Service;
 use super::uses_library::UsesLibrary;
 use serde::{Deserialize, Serialize};
 
+/// # contained in:
+/// `<manifest>`
+///
+/// # can contain:
+///* `<activity>` 
+///* `<activity-alias>`
+///* `<meta-data>`
+///* `<service>`
+///* `<receiver>`
+///* `<provider>`
+///* `<uses-library>`
+///
+/// # description:
+/// The declaration of the application. This element contains subelements that declare each of the application's components and has attributes that can affect all the components. 
+/// Many of these attributes (such as `icon`, `label`, `permission`, `process`, `taskAffinity`, and `allowTaskReparenting`) set default values for corresponding attributes of the component elements.
+/// Others (such as `debuggable`, `enabled`, `description`, and `allowClearUserData`) set values for the application as a whole and cannot be overridden by the components.
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "application")]
 pub struct Application {
+    /// Whether or not activities that the application defines can move from the task that started them to the task they have an affinity for when that task is next brought to the front — `"true"`
+    /// if they can move, and `"false"` if they must remain with the task where they started. The default value is `"false"`.
     /// The `<activity>` element has its own `allowTaskReparenting` attribute that can override the value set here. See that attribute for more information.
+    ///
+    /// `Note:` If your app targets Android 11 (API level 30) or higher, you cannot disable device-to-device migration of your app's files. The system automatically allows this functionality.
+    /// You can still disable cloud-based backup and restore of your app's files by setting this attribute to false, even if your app targets Android 11 (API level 30) or higher.
     #[serde(rename = "android:allowTaskReparenting")]
     pub allow_task_reparenting: Option<bool>,
     /// Whether to allow the application to participate in the backup and restore infrastructure. If this attribute is set
-    /// to false, no backup or restore of the application will ever be performed, even by a full-system backup that would otherwise cause all application data to be saved via adb.
-    /// The default value of this attribute is true.
+    /// to `false`, no backup or restore of the application will ever be performed, even by a full-system backup that would otherwise cause all application data to be saved via adb.
+    /// The default value of this attribute is `true`.
     #[serde(rename = "android:allowBackup")]
     pub allow_backup: Option<bool>,
     /// Whether to allow the application to reset user data.
     /// This data includes flags—such as whether the user has seen introductory tooltips—as well as user-customizable settings and preferences.
     /// The default value of this attribute is true
-    /// Note: Only apps that are part of the system image can declare this attribute explicitly. Third-party apps cannot include this attribute in their manifest files.
+    ///
+    /// `Note:` Only apps that are part of the system image can declare this attribute explicitly. Third-party apps cannot include this attribute in their manifest files.
     #[serde(rename = "android:allowClearUserData")]
     pub allow_clear_user_data: Option<bool>,
     /// Whether or not the app has the Heap pointer tagging feature enabled. The default value of this attribute is `true`.
+    ///
     /// `Note:` Disabling this feature does not address the underlying code health issue. Future hardware devices may not support this manifest tag.
     #[serde(rename = "android:allowNativeHeapPointerTagging")]
     pub allow_native_heap_pointer_tagging: Option<bool>,
@@ -35,17 +58,21 @@ pub struct Application {
     /// The attribute value should be a fully qualified class name (such as, `"com.example.project.MyBackupAgent"`).
     /// However, as a shorthand, if the first character of the name is a period (for example, `".MyBackupAgent"`),
     /// it is appended to the package name specified in the `<manifest>` element.
+    /// There is no default. The name must be specified.
     #[serde(rename = "android:backupAgent")]
     pub backup_agent: String,
     /// Indicates that Auto Backup operations may be performed on this app even if the app is in a foreground-equivalent state.
     /// The system shuts down an app during auto backup operation, so use this attribute with caution.
     /// Setting this flag to true can impact app behavior while the app is active.
-    /// The default value is false, which means that the OS will avoid backing up the app while it is running in the foreground
-    /// (such as a music app that is actively playing music via a service in the startForeground() state).
+    /// The default value is `false`, which means that the OS will avoid backing up the app while it is running in the foreground
+    /// (such as a music app that is actively playing music via a service in the `startForeground()` state).
     #[serde(rename = "android:backupInForeground")]
     pub backup_in_foreground: Option<bool>,
     /// A drawable resource providing an extended graphical banner for its associated item. Use with the
     /// `<application>` tag to supply a default banner for all application activities, or with the `<activity>` tag to supply a banner for a specific activity.
+    /// The system uses the banner to represent an app in the Android TV home screen. Since the banner is displayed only in the home screen,
+    /// it should only be specified by applications with an activity that handles the `CATEGORY_LEANBACK_LAUNCHER` intent.
+    /// This attribute must be set as a reference to a drawable resource containing the image (for example `"@drawable/banner"`). There is no default banner.
     #[serde(rename = "android:banner")]
     pub banner: Option<Resource<DrawableResource>>,
     /// Whether or not the application can be debugged, even when running on a device in user mode — `"true"` if it can be, and `"false"` if not. The default value is `"false"`.
@@ -58,7 +85,8 @@ pub struct Application {
     /// Whether or not the application is direct-boot aware; that is, whether or not it can run before the user unlocks the device.
     /// If you're using a custom subclass of `Application`, and if any component inside your application
     /// is direct-boot aware, then your entire custom applicationis considered to be direct-boot aware.
-    /// Note: During Direct Boot, your application can only access the data that is stored in device protected storage.
+    ///
+    /// `Note:` During Direct Boot, your application can only access the data that is stored in device protected storage.
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
     /// Whether or not the Android system can instantiate components of the application — `"true"` if it can, and
@@ -68,11 +96,11 @@ pub struct Application {
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
     /// Whether or not the package installer extracts native libraries from the APK to the filesystem. If set to
-    /// "false", then your native libraries must be page aligned and stored uncompressed in the APK. Although
+    /// `"false"`, then your native libraries must be page aligned and stored uncompressed in the APK. Although
     /// your APK might be larger, your application should load faster because the libraries are directly loaded from the APK at runtime. On the other hand, if set to
-    /// "true", native libraries in the APK can be compressed. During installation, the installer decompresses the libraries, and
+    /// `"true"`, native libraries in the APK can be compressed. During installation, the installer decompresses the libraries, and
     /// the linker loads the decompressed libraries at runtime; in this case, the APK would be smaller, but installation time might be slightly longe
-    /// The default value is "true" if extractNativeLibs is not configured in AndroidManifest.xml.
+    /// The default value is `"true"` if extractNativeLibs is not configured in `AndroidManifest.xml`.
     #[serde(rename = "android:extractNativeLibs")]
     pub extract_native_libs: Option<bool>,
     /// This attribute points to an XML file that contains full backup rules for Auto Backup.
@@ -97,9 +125,10 @@ pub struct Application {
     /// When the user uninstalls an app, whether or not to show the user a prompt to keep the app's data. The default value is `"false"`.
     #[serde(rename = "android:hasFragileUserData")]
     pub has_fragile_user_data: Option<bool>,
-    /// Whether or not hardware-accelerated rendering should be enabled for all activities and views in this application — "true" if it should be enabled, and "false" if not.
-    /// The default value is "true" if you've set either minSdkVersion or targetSdkVersion to "14" or higher; otherwise, it's "false".
-    /// Note that not all of the OpenGL 2D operations are accelerated. If you enable the hardware-accelerated renderer, test your application to ensure that it
+    /// Whether or not hardware-accelerated rendering should be enabled for all activities and views in this application — `"true"` if it should be enabled, and `"false"` if not.
+    /// The default value is `"true"` if you've set either minSdkVersion or targetSdkVersion to "14" or higher; otherwise, it's `"false"`.
+    ///
+    /// `Note` that not all of the OpenGL 2D operations are accelerated. If you enable the hardware-accelerated renderer, test your application to ensure that it
     /// can make use of the renderer without errors.
     #[serde(rename = "android:hardwareAccelerated")]
     pub hardware_accelerateda: Option<bool>,
@@ -109,7 +138,7 @@ pub struct Application {
     #[serde(rename = "android:icon")]
     pub icon: Option<Resource<DrawableResource>>,
     /// Whether or not the application is a game. The system may group together applications classifed as games or display them separately from other applications.
-    /// The default is false.
+    /// The default is `false`.
     #[serde(rename = "android:isGame")]
     pub is_game: Option<bool>,
     /// Whether the application in question should be terminated after its settings have been restored during a full-system restore operation.
@@ -156,7 +185,7 @@ pub struct Application {
     /// For more information on permissions, see the Permissions section in the introduction and another document, Security and Permissions.
     #[serde(rename = "android:permission")]
     pub permission: Option<String>,
-    /// Whether or not the application should remain running at all times — "true" if it should, and "false" if not. The default value is "false".
+    /// Whether or not the application should remain running at all times — `"true"` if it should, and `"false"` if not. The default value is `"false"`.
     /// Applications should not normally set this flag; persistence mode is intended only for certain system applications.
     #[serde(rename = "android:persistent")]
     pub persistent: Option<bool>,
@@ -168,10 +197,11 @@ pub struct Application {
     /// Indicates that the application is prepared to attempt a restore of any backed-up data set, even if the backup was stored by a newer version
     /// of the application than is currently installed on the device. Setting this attribute to `true` will permit the Backup Manager to attempt restore
     /// even when a version mismatch suggests that the data are incompatible. Use with caution!
-    /// The default value of this attribute is false.
+    /// The default value of this attribute is `false`.
     #[serde(rename = "android:restoreAnyVersion")]
     pub restore_any_version: Option<bool>,
     /// Whether or not the application wants to opt out of scoped storage.
+    /// 
     /// `Note:` Depending on changes related to policy or app compatibility, the system might not honor this opt-out request.
     #[serde(rename = "android:requestLegacyExternalStorage")]
     pub request_legacy_external_storage: Option<bool>,
@@ -192,9 +222,10 @@ pub struct Application {
     pub resizeable_activity: Option<bool>,
     /// Specifies the account type required by this application and indicates that restricted profiles are allowed to access such accounts that belong to the owner user.
     /// If your app requires an `Account` and restricted profiles are allowed to access the primary user's accounts,the value for this attribute must correspond to the account
-    /// authenticator type used by your app (as defined by `AuthenticatorDescription`), such as "com.google".
+    /// authenticator type used by your app (as defined by `AuthenticatorDescription`), such as `"com.google"`.
     /// The default value is null and indicates that the application can work without any accounts.
-    /// Caution: Specifying this attribute allows restricted profiles to use your app with accounts that belong to the owner user, which may reveal personally identifiable information.
+    ///
+    /// `Caution:` Specifying this attribute allows restricted profiles to use your app with accounts that belong to the owner user, which may reveal personally identifiable information.
     /// If the account may reveal personal details, you should not use this attribute and you should instead declare    
     /// the android:requiredAccountType attribute to make your app unavailable to restricted profiles. This attribute was added in API level 18.
     #[serde(rename = "android:restrictedAccountType")]
@@ -231,7 +262,7 @@ pub struct Application {
     /// `Note`: WebView honors this attribute for applications targeting API level 26 and higher.
     #[serde(rename = "android:usesCleartextTraffic")]
     pub uses_cleartext_traffic: Option<bool>,
-    /// Indicates whether the app would like the virtual machine (VM) to operate in safe mode. The default value is "false".
+    /// Indicates whether the app would like the virtual machine (VM) to operate in safe mode. The default value is `"false"`.
     /// This attribute was added in API level 8 where a value of "true" disabled the Dalvik just-in-time (JIT) compiler.
     /// This attribute was adapted in API level 22 where a value of "true" disabled the ART ahead-of-time (AOT) compiler.
     #[serde(rename = "android:vmSafeMode")]

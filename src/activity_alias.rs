@@ -3,11 +3,19 @@ use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
 use serde::{Deserialize, Serialize};
 
+/// # contained in:
+/// `<application>`
+///
+/// # can contain:
+///* `<intent-filter>`
+///* `<meta-data>`
+///
+/// # description:
 /// An alias for an activity, named by the targetActivity attribute. The target must be in the same application as the alias and it must be declared before the alias in the manifest.
 /// The alias presents the target activity as an independent entity. It can have its own set of intent filters, and they, rather than the intent filters on the target activity itself, determine which intents can activate the target through the
-/// alias and how the system treats the alias. For example, the intent filters on the alias may specify the "android.intent.action.MAIN" and "android.intent.category.LAUNCHER" flags, causing it to be represented in
+/// alias and how the system treats the alias. For example, the intent filters on the alias may specify the `"android.intent.action.MAIN"` and `"android.intent.category.LAUNCHER"` flags, causing it to be represented in
 /// the application launcher, even though none of the filters on the target activity itself set these flags.
-/// With the exception of targetActivity, <activity-alias> attributes are a subset of <activity> attributes. For attributes in the subset, none of the values set for the target carry over to the alias.
+/// With the exception of `targetActivity`, `<activity-alias>` attributes are a subset of `<activity>` attributes. For attributes in the subset, none of the values set for the target carry over to the alias.
 /// However, for attributes not in the subset, the values set for the target activity also apply to the alias.
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "activity-alias")]

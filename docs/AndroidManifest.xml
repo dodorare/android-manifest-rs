@@ -123,7 +123,7 @@
             android:debuggable="true"
             android:icon="@drawable/ic_launcher"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
- <provider
+        <provider
                 android:name="TelephonyProvider"
                 android:authorities="telephony"
                 android:exported="true"

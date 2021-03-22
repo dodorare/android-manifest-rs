@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// With Android 7.0, the `<layout>` manifest element supports several attributes that affect how an activity behaves in multi-window mode:
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "layout")]
 pub struct Layout {
@@ -19,60 +20,61 @@ pub struct Layout {
     #[serde(rename = "android:minWidth")]
     pub min_width: Option<i32>,
 }
-
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Gravity {
     /// Raw bit controlling whether the right/bottom edge is clipped to its container, based on the gravity direction being applied.
-    AXIS_CLIP,
+    AxisClip, 
     /// Raw bit controlling how the right/bottom edge is placed.
-    AXIS_PULL_AFTER,
+    AxisPullAfter,
     /// Raw bit controlling how the left/top edge is placed.
-    AXIS_PULL_BEFORE,
+    AxisPullBefore,
     /// Raw bit indicating the gravity for an axis has been specified.
-    AXIS_SPECIFIED,
+    AxisSpecified,
     /// Bits defining the horizontal axis.
-    AXIS_X_SHIFT,
+    AxisXShift,
     /// Bits defining the vertical axis.
-    AXIS_Y_SHIFT,
+    AxisYShift,
     /// Push object to the bottom of its container, not changing its size.
-    BOTTOM,
+    Bottom,
     /// Place the object in the center of its container in both the vertical and horizontal axis, not changing its size.
-    CENTER,
+    Center,
     /// Place object in the horizontal center of its container, not changing its size.
-    CENTER_HORIZONTAL,
+    CenterHorizontal,
     /// Place object in the vertical center of its container, not changing its size.
-    CENTER_VERTICAL,
+    CenterVertical,
     /// Flag to clip the edges of the object to its container along the horizontal axis.
-    CLIP_HORIZONTAL,
+    ClipHorizontal,
     /// Flag to clip the edges of the object to its container along the vertical axis.
-    CLIP_VERTICAL,
+    ClipVertical,
     /// Special constant to enable clipping to an overall display along the horizontal dimension.
-    DISPLAY_CLIP_HORIZONTAL,
+    DisplayClipHorizontal,
     /// Special constant to enable clipping to an overall display along the vertical dimension.
-    DISPLAY_CLIP_VERTICAL,
+    DisplayClipVertical,
     /// Push object to x-axis position at the end of its container, not changing its size.
-    END,
+    End,
     /// Grow the horizontal and vertical size of the object if needed so it completely fills its container.
-    FILL,
+    Fill,
     /// Grow the horizontal size of the object if needed so it completely fills its container.
-    FILL_HORIZONTAL,
+    FillHorizontal,
     /// Grow the vertical size of the object if needed so it completely fills its container.
-    FILL_VERTICAL,
+    FillVertical,
     /// Binary mask to get the absolute horizontal gravity of a gravity.
-    HORIZONTAL_GRAVITY_MASK,
+    HorizontalGravityMask,
     /// Push object to the left of its container, not changing its size.
-    LEFT,
+    Left,
     /// Constant indicating that no gravity has been set *
-    NO_GRAVITY,
+    NoGravity,
     /// Binary mask for the horizontal gravity and script specific direction bit.
-    RELATIVE_HORIZONTAL_GRAVITY_MASK,
+    RelativeHorizontalGravityMask,
     /// Raw bit controlling whether the layout direction is relative or not (START/END instead of absolute LEFT/RIGHT).
-    RELATIVE_LAYOUT_DIRECTION,
+    RelativeLayoutDirection,
     /// Push object to the right of its container, not changing its size.
-    RIGHT,
+    Right,
     /// Push object to x-axis position at the start of its container, not changing its size.
-    START,
+    Start,
     /// Push object to the top of its container, not changing its size.
-    TOP,
+    Top,
     /// Binary mask to get the vertical gravity of a gravity.
-    VERTICAL_GRAVITY_MASK,
+    VerticalGravityMask,
 }

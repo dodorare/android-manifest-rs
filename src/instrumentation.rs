@@ -1,6 +1,7 @@
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
+/// Declares an `Instrumentation` class that enables you to monitor an application's interaction with the system. The Instrumentation object is instantiated before any of the application's components.
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "instrumentation")]
 pub struct Instrumentation {

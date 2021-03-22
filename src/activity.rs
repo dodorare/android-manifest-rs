@@ -3,6 +3,15 @@ use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
 use serde::{Deserialize, Serialize};
 
+/// # contained in:
+/// `<application>`
+///
+/// # can contain:
+///* `<intent-filter>`
+///* `<meta-data>`
+///* `<layout>`
+///
+/// # description:
 /// Declares an activity (an `Activity` subclass) that implements part of the application's visual user interface.
 /// All activities must be represented by `<activity>` elements in the manifest file.
 /// Any that are not declared there will not be seen by the system and will never be run.
@@ -85,42 +94,58 @@ pub struct Activity {
     /// You can also use a permission to limit the external entities that can invoke the activity (see the permission attribute).
     #[serde(rename = "android:exported")]
     pub exported: Option<bool>,
-    /// Whether or not an existing instance of the activity should be shut down (finished) whenever the user again launches its task (chooses the task on the home screen) — "true"
-    /// if it should be shut down, and "false" if not. The default value is "false".
-    /// If this attribute and allowTaskReparenting are both "true", this attribute trumps the other. The affinity of the activity is ignored. The activity is not re-parented, but destroyed.
+    /// Whether or not an existing instance of the activity should be shut down (finished) whenever the user again launches its task (chooses the task on the home screen) — `"true"`
+    /// if it should be shut down, and `"false"` if not. The default value is `"false"`.
+    /// If this attribute and `allowTaskReparenting` are both `"true"`, this attribute trumps the other. The affinity of the activity is ignored. The activity is not re-parented, but destroyed.
     #[serde(rename = "android:finishOnTaskLaunch")]
     pub finish_on_task_launch: Option<bool>,
-    /// Whether or not hardware-accelerated rendering should be enabled for this Activity — `"true"` if it should be enabled, and "false" if not. The default value is `"false".
+    /// Whether or not hardware-accelerated rendering should be enabled for this Activity — `"true"` if it should be enabled, and `"false"` if not. The default value is `"false".
     /// Starting from Android 3.0, a hardware-accelerated OpenGL renderer is available to applications, to improve performance for many common 2D graphics operations.
     /// When the hardware-accelerated renderer is enabled, most operations in Canvas, Paint, Xfermode, ColorFilter, Shader, and Camera are accelerated.
     /// Note that not all of the OpenGL 2D operations are accelerated. If you enable the hardware-accelerated renderer, test your application to ensure that it can make use of the renderer without errors.
     #[serde(rename = "android:hardwareAccelerated")]
     pub hardware_accelerated: Option<bool>,
     /// An icon representing the activity. The icon is displayed to users when a representation of the activity is required on-screen.
-    /// For example, icons for activities that initiate tasks are displayed in the launcher window. The icon is often accompanied by a label (see the android:label attribute).
+    /// For example, icons for activities that initiate tasks are displayed in the launcher window. The icon is often accompanied by a label (see the `android:label` attribute).
     /// This attribute must be set as a reference to a drawable resource containing the image definition. If it is not set, the icon specified for the application
-    /// as a whole is used instead (see the <application> element's icon attribute). The activity's icon — whether set here or by the <application> element — is also the default icon for all
-    /// the activity's intent filters (see the `<intent-filter>` element's icon attribute).
+    /// as a whole is used instead (see the `<application>` element's `icon` attribute). The activity's icon — whether set here or by the `<application>` element — is also the default icon for all
+    /// the activity's intent filters (see the `<intent-filter>` element's `icon` attribute).
     #[serde(rename = "android:icon")]
     pub icon: Option<Resource<DrawableResource>>,
-    /// Sets the immersive mode setting for the current activity. If the android:immersive attribute is set to true in the app's manifest entry for this activity, the ActivityInfo.flags
-    /// member always has its `FLAG_IMMERSIVE` bit set, even if the immersive mode is changed at runtime using the setImmersive() method.
+    /// Sets the immersive mode setting for the current activity. If the `android:immersive` attribute is set to true in the app's manifest entry for this activity, the `ActivityInfo.flags`
+    /// member always has its `FLAG_IMMERSIVE` bit set, even if the immersive mode is changed at runtime using the `setImmersive()` method.
     #[serde(rename = "android:immersive")]
     pub immersive: Option<bool>,
     /// A user-readable label for the activity. The label is displayed on-screen when the activity must be represented to the user. It's often displayed along with the activity icon.
-    /// If this attribute is not set, the label set for the application as a whole is used instead (see the <application> element's label attribute).
-    /// The activity's label — whether set here or by the <application> element — is also the default label for all the activity's intent filters (see the <intent-filter> element's label attribute).
+    /// If this attribute is not set, the label set for the application as a whole is used instead (see the `<application>` element's `label` attribute).
+    /// The activity's label — whether set here or by the `<application>` element — is also the default label for all the activity's intent filters (see the `<intent-filter>` element's `label` attribute).
     /// The label should be set as a reference to a string resource, so that it can be localized like other strings in the user interface.
     /// However, as a convenience while you're developing the application, it can also be set as a raw string.
     #[serde(rename = "android:label")]
     pub label: Option<StringResourceOrString>,
     /// An instruction on how the activity should be launched. There are four modes that work in conjunction
-    /// with activity flags (`FLAG_ACTIVITY_*` constants) in `Intent` objects to determine what should happen when the activity is called upon to handle an intent.
-    /// The default mode is "standard".
-    /// As shown in the table below, the modes fall into two main groups, with "standard" and "singleTop" activities on one side, and "singleTask" and "singleInstance" activities on the other.
-    /// An activity with the "standard" or "singleTop" launch mode can be instantiated multiple times.
+    /// with activity flags (`FLAG_ACTIVITY_*` constants) in `Intent` objects to determine what should happen when the activity is called upon to handle an intent. They are:
+    ///
+    ///* `"standard"`
+    ///* `"singleTop"`
+    ///* `"singleTask"`
+    ///* `"singleInstance"`
+    ///
+    /// The default mode is `"standard"`.
+    /// As shown in the table below, the modes fall into two main groups, with `"standard"` and `"singleTop"`activities on one side, and "singleTask" and "singleInstance" activities on the other. 
+    /// An activity with the `"standard"` or "singleTop" launch mode can be instantiated multiple times.
     /// The instances can belong to any task and can be located anywhere in the activity stack.
-    /// Typically, they're launched into the task that called startActivity() (unless the Intent object contains a FLAG_ACTIVITY_NEW_TASK instruction, in which case a different task is chosen — see the taskAffinity attribute).
+    /// Typically, they're launched into the task that called `startActivity()` (unless the Intent object contains a `FLAG_ACTIVITY_NEW_TASK` instruction, in which case a different task is chosen — see the `taskAffinity` attribute).
+    /// In contrast, `"singleTask"` and `"singleInstance"` activities can only begin a task. They are always at the root of the activity stack. 
+    /// Moreover, the device can hold only one instance of the activity at a time — only one such task.
+    /// The `"standard"` and `"singleTop"` modes differ from each other in just one respect: Every time there's a new intent for a `"standard"` activity, a new instance of the class is created to respond to that intent.
+    /// Each instance handles a single intent. Similarly, a new instance of a `"singleTop"` activity may also be created to handle a new intent.
+    /// However, if the target task already has an existing instance of the activity at the top of its stack, that instance will receive the new intent (in an `onNewIntent()` call); a new instance is not created.
+    /// In other circumstances — for example, if an existing instance of the `"singleTop"` activity is in the target task, but not at the top of the stack, or if it's at the
+    /// top of a stack, but not in the target task — a new instance would be created and pushed on the stack.
+    /// Similarly, if you navigate up to an activity on the current stack, the behavior is determined by the parent activity's launch mode. If the parent activity has launch mode `singleTop` (or the up intent contains
+    /// `FLAG_ACTIVITY_CLEAR_TOP`), the parent is brought to the top of the stack, and its state is preserved. The navigation intent is received by the parent activity's `onNewIntent()` method. If the parent activity has launch
+    /// mode standard (and the up intent does not contain `FLAG_ACTIVITY_CLEAR_TOP`), the current activity and its parent are both popped off the stack, and a new instance of the parent activity is created to receive the navigation intent.
     #[serde(rename = "android:launchMode")]
     pub launch_mode: Option<LaunchMode>,
     /// Determines how the system presents this activity when the device is running in lock task mode.
@@ -136,40 +161,51 @@ pub struct Activity {
     /// The maximum aspect ratio the activity supports. If the app runs on a device with a wider aspect ratio, the system automatically letterboxes the app, leaving portions of the screen unused so the app can run at its
     /// specified maximum aspect ratio. Maximum aspect ratio is expressed as the decimal form of the quotient of the device's longer dimension divided by its shorter dimension. For example, if the maximum aspect ratio is
     /// 7:3, set the value of this attribute to 2.33. On non-wearable devices, the value of this attribute needs to be 1.33 or greater. On wearable devices, it must be 1.0 or greater. Otherwise, the system ignores the set value.
-    /// `Note:` This attribute is ignored if the activity has `resizeableActivity` set to true, since that means your activity supports any size.
+    ///* `Note:` This attribute is ignored if the activity has `resizeableActivity` set to true, since that means your activity supports any size.
     #[serde(rename = "android:maxAspectRatio")]
     pub max_aspect_ratio: Option<f32>,
-    /// Whether an instance of the activity can be launched into the process of the component that started it — "true" if it can be, and "false" if not. The default value is "false".
-    /// Normally, a new instance of an activity is launched into the process of the application that defined it, so all instances of the activity run in the same process. However, if this flag is set to "true", instances of the
+    /// Whether an instance of the activity can be launched into the process of the component that started it — `"true"` if it can be, and `"false"` if not. The default value is `"false"`.
+    /// Normally, a new instance of an activity is launched into the process of the application that defined it, so all instances of the activity run in the same process. However, if this flag is set to `"true"`, instances of the
     /// activity can run in multiple processes, allowing the system to create instances wherever they are used (provided permissions allow it), something that is almost never necessary or desirable.
     #[serde(rename = "android:multiprocess")]
     pub multiprocess: Option<bool>,
-    /// The name of the class that implements the activity, a subclass of Activity. The attribute value should be a fully qualified class name (such as, "com.example.project.ExtracurricularActivity"). However, as a
-    /// shorthand, if the first character of the name is a period (for example, ".ExtracurricularActivity"), it is appended to the package name specified in the <manifest> element.
-    /// Once you publish your application, you should not change this name (unless you've set android:exported="false").
+    /// The name of the class that implements the activity, a subclass of Activity. The attribute value should be a fully qualified class name (such as, `"com.example.project.ExtracurricularActivity"`). However, as a
+    /// shorthand, if the first character of the name is a period (for example,` ".ExtracurricularActivity"`), it is appended to the package name specified in the `<manifest>` element.
+    /// Once you publish your application, you should not change this name (unless you've set `android:exported="false"`).
     /// There is no default. The name must be specified.
     #[serde(rename = "android:name")]
     pub name: String,
-    /// Whether or not the activity should be removed from the activity stack and finished (its finish() method called) when the user navigates away from
-    /// it and it's no longer visible on screen — "true" if it should be finished, and "false" if not. The default value is "false".
-    /// A value of "true" means that the activity will not leave a historical trace. It will not remain in the activity stack for the task, so the user will not be able to return to it.
-    /// In this case, onActivityResult() is never called if you start another activity for a result from this activity.
+    /// Whether or not the activity should be removed from the activity stack and finished (its `finish()` method called) when the user navigates away from
+    /// it and it's no longer visible on screen — `"true"` if it should be finished, and `"false"` if not. The default value is `"false"`.
+    /// A value of `"true"` means that the activity will not leave a historical trace. It will not remain in the activity stack for the task, so the user will not be able to return to it.
+    /// In this case, `onActivityResult()` is never called if you start another activity for a result from this activity.
     /// This attribute was introduced in API Level 3.
     #[serde(rename = "android:noHistory")]
     pub no_history: Option<bool>,
-    /// The class name of the logical parent of the activity. The name here must match the class name given to the corresponding <activity> element's android:name attribute.
-    /// The system reads this attribute to determine which activity should be started when the user presses the Up button in the action bar. The system can also use this information to synthesize a back stack of activities with TaskStackBuilder.
-    /// To support API levels 4 - 16, you can also declare the parent activity with a <meta-data> element that specifies a value for "android.support.PARENT_ACTIVITY".
+    /// The class name of the logical parent of the activity. The name here must match the class name given to the corresponding `<activity>` element's `android:name` attribute.
+    /// The system reads this attribute to determine which activity should be started when the user presses the Up button in the action bar. The system can also use this information to synthesize a back stack of activities with `TaskStackBuilder`.
+    /// To support API levels 4 - 16, you can also declare the parent activity with a `<meta-data>` element that specifies a value for `"android.support.PARENT_ACTIVITY"`. For example:
+    /// ```
+    /// <activity
+    ///     android:name="com.example.app.ChildActivity"
+    ///     android:label="@string/title_child_activity"
+    ///     android:parentActivityName="com.example.app.MainActivity" >
+    /// <!-- Parent activity meta-data to support API level 4+ -->
+    ///      <meta-data
+    ///         android:name="android.support.PARENT_ACTIVITY"
+    ///         android:value="com.example.app.MainActivity" />
+    /// </activity>
+    /// ```
     #[serde(rename = "android:parentActivityName")]
     pub parent_activity_name: Option<String>,
     /// Defines how an instance of an activity is preserved within a containing task across device restarts.
-    /// If the root activity of a task sets this attribute's value to persistRootOnly, then only the root activity is preserved.
+    /// If the root activity of a task sets this attribute's value to `persistRootOnly`, then only the root activity is preserved.
     /// Otherwise, the activities that are higher up the task's back stack are examined; any of these activities that set this attribute's value to `persistAcrossReboots` are preserved
     #[serde(rename = "android:persistableMode")]
     pub persistable_mode: Option<PersistableMode>,
     /// The name of a permission that clients must have to launch the activity or otherwise get it to respond to an intent.
-    /// If a caller of startActivity() or startActivityForResult() has not been granted the specified permission, its intent will not be delivered to the activity.
-    /// If this attribute is not set, the permission set by the <application> element's permission attribute applies to the activity. If neither attribute is set, the activity is not protected by a permission.
+    /// If a caller of `startActivity()` or `startActivityForResult()` has not been granted the specified permission, its intent will not be delivered to the activity.
+    /// If this attribute is not set, the permission set by the `<application>` element's permission attribute applies to the activity. If neither attribute is set, the activity is not protected by a permission.
     /// For more information on permissions, see the Permissions section in the introduction and another document, Security and Permissions.
     #[serde(rename = "android:permission")]
     pub permission: Option<String>,
@@ -186,7 +222,7 @@ pub struct Activity {
     /// This attribute set to `"true"` also permits the activity's use of the `ActivityManager.TaskDescription` to change labels, colors and icons in the `overview screen`.
     #[serde(rename = "android:relinquishTaskIdentity")]
     pub relinquish_task_identity: Option<bool>,
-    /// Specifies whether the app supports multi-window display. You can set this attribute in either the <activity> or <application> element.
+    /// Specifies whether the app supports multi-window display. You can set this attribute in either the `<activity>` or `<application>` element.
     /// If you set this attribute to true, the user can launch the activity in split-screen and freeform modes. If you set the attribute to false, the activity does not support multi-window mode.
     /// If this value is false, and the user attempts to launch the activity in multi-window mode, the activity takes over the full screen.
     /// If your app targets API level 24 or higher, but you do not specify a value for this attribute, the attribute's value defaults to true.
@@ -197,15 +233,15 @@ pub struct Activity {
     #[serde(rename = "android:screenOrientation")]
     pub screen_orientation: Option<ScreenOrientation>,
     /// Whether or not the activity is shown when the device's current user is different than the user who launched the activity.
-    /// You can set this attribute to a literal value—"true" or "false"—or you can set the attribute to a resource or theme attribute that contains a boolean value.
+    /// You can set this attribute to a literal `value—"true"` or `"false"—or` you can set the attribute to a resource or theme attribute that contains a boolean value.
     /// This attribute was added in API level 23.
     #[serde(rename = "android:showForAllUsers")]
     pub show_for_all_users: Option<bool>,
-    /// Whether or not the activity can be killed and successfully restarted without having saved its state — "true" if
-    /// it can be restarted without reference to its previous state, and "false" if its previous state is required. The default value is "false".
-    /// Normally, before an activity is temporarily shut down to save resources, its onSaveInstanceState() method is called. This method stores the current state of the activity in a Bundle object, which is then passed to
-    /// onCreate() when the activity is restarted. If this attribute is set to "true", onSaveInstanceState() may not be called and onCreate() will be passed null instead of the Bundle — just as it was when the activity started for the first time.
-    /// A "true" setting ensures that the activity can be restarted in the absence of retained state. For example, the activity that displays the home screen uses this setting
+    /// Whether or not the activity can be killed and successfully restarted without having saved its state — `"true"` if
+    /// it can be restarted without reference to its previous state, and `"false"` if its previous state is required. The default value is `"false"`.
+    /// Normally, before an activity is temporarily shut down to save resources, its `onSaveInstanceState()` method is called. This method stores the current state of the activity in a Bundle object, which is then passed to
+    /// `onCreate()` when the activity is restarted. If this attribute is set to `"true"`, `onSaveInstanceState()` may not be called and `onCreate()` will be passed null instead of the Bundle — just as it was when the activity started for the first time.
+    /// A `"true"` setting ensures that the activity can be restarted in the absence of retained state. For example, the activity that displays the home screen uses this setting
     /// to make sure that it does not get removed if it crashes for some reason.
     #[serde(rename = "android:stateNotNeeded")]
     pub state_not_needed: Option<bool>,
@@ -213,18 +249,18 @@ pub struct Activity {
     /// This attribute was added in API level 24.
     #[serde(rename = "android:supportsPictureInPicture")]
     pub supports_picture_in_picture: Option<bool>,
-    /// The task that the activity has an affinity for. Activities with the same affinity conceptually belong to the same task (to the same "application" from the user's perspective).
+    /// The task that the activity has an affinity for. Activities with the same affinity conceptually belong to the same task (to the same `"application"` from the user's perspective).
     /// The affinity of a task is determined by the affinity of its root activity.
-    /// The affinity determines two things — the task that the activity is re-parented to (see the allowTaskReparenting attribute) and the task that will house the activity when it is launched with the FLAG_ACTIVITY_NEW_TASK flag.
+    /// The affinity determines two things — the task that the activity is re-parented to (see the `allowTaskReparenting` attribute) and the task that will house the activity when it is launched with the `FLAG_ACTIVITY_NEW_TASK` flag.
     /// By default, all activities in an application have the same affinity. You can set this attribute to group them differently, and even place activities defined in different applications within the same task.
     /// To specify that the activity does not have an affinity for any task, set it to an empty string.
-    /// If this attribute is not set, the activity inherits the affinity set for the application (see the <application> element's taskAffinity attribute).
-    /// The name of the default affinity for an application is the package name set by the <manifest> element.
+    /// If this attribute is not set, the activity inherits the affinity set for the application (see the `<application>` element's taskAffinity attribute).
+    /// The name of the default affinity for an application is the package name set by the `<manifest>` element.
     #[serde(rename = "android:taskAffinity")]
     pub task_affinity: Option<String>,
-    /// A reference to a style resource defining an overall theme for the activity. This automatically sets the activity's context to use this theme (see setTheme()
-    /// and may also cause "starting" animations prior to the activity being launched (to better match what the activity actually looks like).
-    /// If this attribute is not set, the activity inherits the theme set for the application as a whole — from the <application> element's theme attribute.
+    /// A reference to a style resource defining an overall theme for the activity. This automatically sets the activity's context to use this theme (see `setTheme()`
+    /// and may also cause `"starting"` animations prior to the activity being launched (to better match what the activity actually looks like).
+    /// If this attribute is not set, the activity inherits the theme set for the application as a whole — from the `<application>` element's theme attribute.
     /// If that attribute is also not set, the default system theme is used. For more information, see the Styles and Themes developer guide.
     #[serde(rename = "android:theme")]
     pub theme: Option<Resource<StyleResource>>,
@@ -233,8 +269,10 @@ pub struct Activity {
     #[serde(rename = "android:uiOptions")]
     pub ui_options: Option<String>,
     /// How the main window of the activity interacts with the window containing the on-screen soft keyboard. The setting for this attribute affects two things:
-    /// The state of the soft keyboard — whether it is hidden or visible — when the activity becomes the focus of user attention.
-    /// The adjustment made to the activity's main window — whether it is resized smaller to make room for the soft keyboard or whether its contents pan to make the current focus visible when part of the window is covered by the soft keyboard.
+    ///
+    ///* The state of the soft keyboard — whether it is hidden or visible — when the activity becomes the focus of user attention.
+    ///* The adjustment made to the activity's main window — whether it is resized smaller to make room for the soft keyboard or whether its contents pan to make the current focus visible when part of the window is covered by the soft keyboard.
+    ///
     /// The setting must be one of the values listed in the following table, or a combination of one `"state..."` value plus one `"adjust..."` value.
     #[serde(rename = "android:windowSoftInputMode")]
     pub window_soft_input_mode: Option<WindowSoftInputMode>,
