@@ -184,8 +184,11 @@ pub struct Activity {
     pub no_history: Option<bool>,
     /// The class name of the logical parent of the activity. The name here must match the class name given to the corresponding `<activity>` element's `android:name` attribute.
     /// The system reads this attribute to determine which activity should be started when the user presses the Up button in the action bar. The system can also use this information to synthesize a back stack of activities with `TaskStackBuilder`.
-    /// To support API levels 4 - 16, you can also declare the parent activity with a `<meta-data>` element that specifies a value for `"android.support.PARENT_ACTIVITY"`. For example:
-    /// ```
+    /// To support API levels 4 - 16, you can also declare the parent activity with a `<meta-data>` element that specifies a value for `"android.support.PARENT_ACTIVITY"`. 
+    /// 
+    /// ## Example
+    /// 
+    /// ```xml
     /// <activity
     ///     android:name="com.example.app.ChildActivity"
     ///     android:label="@string/title_child_activity"

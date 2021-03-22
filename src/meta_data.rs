@@ -6,10 +6,11 @@ use serde::{Deserialize, Serialize};
 /// Ordinary values are specified through the value attribute. However, to assign a resource ID as the value, use the resource attribute instead. 
 /// For example, the following code assigns whatever value is stored in the @string/kangaroo resource to the `"zoo"` name:
 ///
-/// ```
+/// ## Example
+///
+/// ```xml
 /// <meta-data android:name="zoo" android:value="@string/kangaroo" />
 /// ```
-///
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "meta-data")]
 pub struct MetaData {

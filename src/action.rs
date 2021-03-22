@@ -13,9 +13,12 @@ pub struct Action{
     /// The name of the action. Some standard actions are defined in the Intent class as ACTION_string constants. 
     /// To assign one of these actions to this attribute, `prepend "android.intent.action."`
     /// o the string that follows `ACTION_`. For example, for ACTION_MAIN, use `"android.intent.action.MAIN"` and for `ACTION_WEB_SEARCH`, use `"android.intent.action.WEB_SEARCH"`.
-    /// For actions you define, it's best to use your app's package name as a prefix to ensure uniqueness. For example, a `TRANSMOGRIFY` action might be specified as follows:
+    /// For actions you define, it's best to use your app's package name as a prefix to ensure uniqueness.
     ///
-    /// ```
+    /// ## Example
+    ///
+    /// A `TRANSMOGRIFY` action might be specified as follows:
+    /// ```xml
     /// <action android:name="com.example.project.TRANSMOGRIFY" />
     /// ```
     #[serde(rename = "android:name")]

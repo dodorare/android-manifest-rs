@@ -42,7 +42,7 @@
         android:name="GGGGG"
     ></permission_tree>
     <supports_gl_texture
-        android:name="FFFFFa"
+        android:name="GL_OES_compressed_ETC1_RGB8_texture"
     ></supports_gl_texture>
      <supports_screens
                 android:resizeable="false"
@@ -58,9 +58,9 @@
      <uses_configuration
                 android:reqFiveWayNav="false"
                 android:reqHardKeyboard="true"
-                android:reqKeyboardType="Nokeys"
-                android:reqNavigation="Dpad"
-                android:reqTouchScreen="Notouch"
+                android:reqKeyboardType="nokeys"
+                android:reqNavigation="dpad"
+                android:reqTouchScreen="notouch"
      ></uses_configuration>
         <uses_feature
                 android:name="LLLLLL"

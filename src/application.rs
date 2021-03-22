@@ -10,22 +10,23 @@ use super::service::Service;
 use super::uses_library::UsesLibrary;
 use serde::{Deserialize, Serialize};
 
-/// # contained in:
-/// `<manifest>`
+/// The declaration of the application.
 ///
-/// # can contain:
-///* `<activity>` 
-///* `<activity-alias>`
-///* `<meta-data>`
-///* `<service>`
-///* `<receiver>`
-///* `<provider>`
-///* `<uses-library>`
-///
-/// # description:
-/// The declaration of the application. This element contains subelements that declare each of the application's components and has attributes that can affect all the components. 
+/// This element contains subelements that declare each of the application's components and has attributes that can affect all the components. 
 /// Many of these attributes (such as `icon`, `label`, `permission`, `process`, `taskAffinity`, and `allowTaskReparenting`) set default values for corresponding attributes of the component elements.
 /// Others (such as `debuggable`, `enabled`, `description`, and `allowClearUserData`) set values for the application as a whole and cannot be overridden by the components.
+///
+/// ## Contained in: 
+/// [`<manifest>`](crate::Manifest)
+///
+/// ## Can contain:
+/// * [`<activity>`](crate::Activity)
+/// * [`<activity-alias>`](crate::ActivityAlias)
+/// * [`<meta-data>`](crate::MetaData)
+/// * [`<service>`](crate::Service)
+/// * [`<receiver>`](crate::Receiver)
+/// * [`<provider>`](crate::Provider)
+/// * [`<uses-library>`](crate::UsesLibrary)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "application")]
 pub struct Application {

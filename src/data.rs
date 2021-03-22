@@ -1,33 +1,35 @@
 use serde::{Deserialize, Serialize};
 
-/// # contained in:
+/// ## contained in:
 /// `<intent-filter>`
 ///
-/// # description:
+/// ## description:
 /// Adds a data specification to an intent filter. The specification can be just a data type (the mimeType attribute), just a URI, or both a data type and a URI. A URI is specified by separate attributes for each of its parts:
 ///
-/// ```
+/// ```xml
 /// <scheme>://<host>:<port>[<path>|<pathPrefix>|<pathPattern>]
 /// ```
 ///
+/// ## Examples
+/// 
 /// These attributes that specify the URL format are optional, but also mutually dependent:
-///* If a scheme is not specified for the intent filter, all the other URI attributes are ignored.
-///* If a host is not specified for the filter, the port attribute and all the path attributes are ignored. 
+/// * If a scheme is not specified for the intent filter, all the other URI attributes are ignored.
+/// * If a host is not specified for the filter, the port attribute and all the path attributes are ignored. 
 ///
 /// All the `<data>` elements contained within the same `<intent-filter>` element contribute to the same filter. So, for example, the following filter specification,
 ///
-/// ```
-/// <intent-filter . . . >
+/// ```xml
+/// <intent-filter ...>
 ///     <data android:scheme="something" android:host="project.example.com" />
-///   . . .
+///   ...
 /// </intent-filter>
 /// ```
 /// is equivalent to this one:
-/// ```
-/// <intent-filter . . . >
+/// ```xml
+/// <intent-filter ...>
 ///     <data android:scheme="something" />
 ///     <data android:host="project.example.com" />
-///   . . .
+///   ...
 /// </intent-filter>
 /// ```
 /// You can place any number of <data> elements inside an `<intent-filter>` to give it multiple data options. None of its attributes have default values.
@@ -38,7 +40,9 @@ pub struct Data {
     /// A scheme is specified without the trailing colon (for example, http, rather than http:).
     /// If the filter has a data type set (the `mimeType` attribute) but no scheme, the `content:` and `file:` schemes are assumed.
     ///
-    /// `Note:` Scheme matching in the Android framework is case-sensitive, unlike the RFC. As a result, you should always specify schemes using lowercase letters.
+    /// ## Note
+    ///
+    /// Scheme matching in the Android framework is case-sensitive, unlike the RFC. As a result, you should always specify schemes using lowercase letters.
     #[serde(rename = "android:scheme")]
     pub scheme: Option<String>,
     /// The host part of a URI authority. This attribute is meaningless unless a scheme attribute is also specified for the filter. 
