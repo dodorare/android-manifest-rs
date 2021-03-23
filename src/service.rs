@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 /// ## Note:
 /// On Android 8.0 (API level 26) and higher, the system places
 /// limitations on what your app can do while it's running in the background.
-/// For more information, see the guides that discuss [`background execution limits`] 
+/// For more information, see the guides that discuss [`background execution limits`]
 /// and [`background location limits`].
 ///
 /// ## Contained in:
@@ -47,9 +47,9 @@ pub struct Service {
     /// The [`<application>`] and <service> attributes must both be `"true"` (as
     /// they both are by default) for the service to be enabled. If either is
     /// `"false"`, the service is disabled; it cannot be instantiated.
-    /// 
+    ///
     /// [`<application>`]: crate::Application
-    /// [`enabled`]: crate::Application#structfield.enabled 
+    /// [`enabled`]: crate::Application#structfield.enabled
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
     /// Whether or not components of other applications can invoke the service
@@ -68,7 +68,7 @@ pub struct Service {
     /// external entities that can interact with the service (see the
     /// [`permission`] attribute).
     ///
-    /// [`permission`]: crate::Service#structfield.enabled 
+    /// [`permission`]: crate::Service#structfield.enabled
     #[serde(rename = "android:exported")]
     pub exported: Option<bool>,
     /// Specify that the service is a [`foreground service`] that satisfies a
@@ -85,16 +85,15 @@ pub struct Service {
     /// An icon representing the service. This attribute must be set as a
     /// reference to a drawable resource containing the image definition. If
     /// it is not set, the icon specified for the application as a whole is used
-    /// instead (see the [`<application>`] element's [`icon`] attribute).
-    ///
-    /// [`icon`]: crate::Application#structfield.icon
+    /// instead (see the [`<application>`] element's
+    /// [`icon`](crate::Application#structfield.icon) attribute).
     ///
     /// The service's icon — whether set here or by the [`<application>`] element
     /// — is also the default icon for all the service's intent filters (see the
-    /// [`<intent-filter>`] element's [`icon`] attribute).
+    /// [`<intent-filter>`] element's [`icon`](crate::IntentFilter#structfield.icon)
+    /// attribute).
     ///
     /// [`<application>`]: crate::Application
-    /// [`icon`]: crate::IntentFilte#structfield.icon
     /// [`<intent-filter>`]: crate::IntentFilter
     #[serde(rename = "android:icon")]
     pub icon: Option<Resource<DrawableResource>>,
@@ -124,7 +123,7 @@ pub struct Service {
     /// `"com.example.project.RoomService"`). However, as a shorthand, if
     /// the first character of the name is a period (for example,
     /// `".RoomService"`), it is appended to the package name specified in the
-    /// [`<manifest>`] element. Once you publish your application, you 
+    /// [`<manifest>`] element. Once you publish your application, you
     /// [`should not change this name`] (unless you've set [`android:exported="false"`]).
     /// There is no default. The name must be specified.
     ///

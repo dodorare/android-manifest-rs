@@ -3,7 +3,7 @@ use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
-/// Declares a broadcast receiver (a [`BroadcastReceiver`] subclass) as one of the 
+/// Declares a broadcast receiver (a [`BroadcastReceiver`] subclass) as one of the
 /// application's components.
 ///
 /// Broadcast receivers enable applications to receive
@@ -36,7 +36,7 @@ use serde::{Deserialize, Serialize};
 pub struct Receiver {
     /// Whether or not the broadcast `receiver` is direct-boot aware; that is,
     /// whether or not it can run before the user unlocks the device.
-    /// ## Note: 
+    /// ## Note:
     /// During [`Direct Boot`], a broadcast `receiver` in your application
     /// can only access the data that is stored in device protected storage.
     /// The default value is "false".

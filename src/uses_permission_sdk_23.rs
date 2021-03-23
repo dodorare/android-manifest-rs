@@ -36,7 +36,7 @@ pub struct UsesPermissionSdk23 {
     /// with the [`<permission>`] element, it can be a permission defined by another
     /// app, or it can be one of the standard system permissions, such as
     /// [`android.permission.CAMERA`] or [`android.permission.READ_CONTACTS`].
-    /// 
+    ///
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS

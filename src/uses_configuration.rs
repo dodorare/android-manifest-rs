@@ -22,7 +22,6 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`](crate::Manifest)
 ///
 /// [`<uses-feature>`]: crate::UsesFeature
-/// 
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-configuration")]
 pub struct UsesConfiguration {
@@ -36,7 +35,7 @@ pub struct UsesConfiguration {
     /// [`reqNavigation`] attribute. However, if it requires a particular type
     /// of directional control, it can ignore this attribute and set
     /// `reqNavigation` instead.
-    /// 
+    ///
     /// [`reqNavigation`]: crate::UsesConfiguration#structfield.req_navigation
     #[serde(rename = "android:reqFiveWayNav")]
     pub req_five_way_nav: Option<bool>,

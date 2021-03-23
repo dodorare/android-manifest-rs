@@ -153,8 +153,8 @@ pub struct SupportsScreens {
     /// If your application properly resizes for smaller screen sizes (down to
     /// the small size or a minimum width of 320dp), you do not need to use this
     /// attribute. Otherwise, you should use a value for this attribute that
-    /// matches the smallest value used by your application for the [`smallest screen width qualifier`] (sw<N>dp).
-    /// ## Caution: 
+    /// matches the smallest value used by your application for the [`smallest screen
+    /// width qualifier`] (sw<N>dp). ## Caution:
     /// The Android system does
     /// not pay attention to this attribute, so it does not affect how your
     /// application behaves at runtime. Instead, it is used to enable filtering
@@ -176,8 +176,8 @@ pub struct SupportsScreens {
     /// button is available in the system bar that allows the user to toggle
     /// screen compatibility mode on and off. If your application is
     /// compatible with all screen sizes and its layout properly resizes, you do
-    /// not need to use this attribute. 
-    /// ## Note: 
+    /// not need to use this attribute.
+    /// ## Note:
     /// Currently, screen
     /// compatibility mode emulates only handset screens with a 320dp width, so
     /// screen compatibility mode is not applied if your value for
@@ -197,14 +197,15 @@ pub struct SupportsScreens {
     /// attribute. You should use the android:largestWidthLimitDp attribute only
     /// when your application is functionally broken when resized for larger
     /// screens and screen compatibility mode is the only way that users should
-    /// use your application. 
+    /// use your application.
     /// ## Note:
     /// Currently, screen compatibility mode
     /// emulates only handset screens with a 320dp width, so screen
     /// compatibility mode is not applied if your value for
     /// [`android:largestWidthLimitDp`] is larger than 320.
     ///
-    /// [`android:largestWidthLimitDp`]: crate::SupportsScreens#structfield.compatible_width_limit_dp
+    /// [`android:largestWidthLimitDp`]:
+    /// crate::SupportsScreens#structfield.compatible_width_limit_dp
     #[serde(rename = "android:largestWidthLimitDp")]
     pub largest_width_limit_dp: Option<i32>,
 }
