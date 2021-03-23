@@ -202,8 +202,7 @@ pub struct SupportsScreens {
     /// compatibility mode is not applied if your value for
     /// [`android:largestWidthLimitDp`] is larger than 320.
     ///
-    /// [`android:largestWidthLimitDp`]:
-    /// crate::SupportsScreens#structfield.largest_width_limit_d
+    /// [`android:largestWidthLimitDp`]: crate::SupportsScreens#structfield.compatible_width_limit_dp
     #[serde(rename = "android:largestWidthLimitDp")]
     pub largest_width_limit_dp: Option<i32>,
 }

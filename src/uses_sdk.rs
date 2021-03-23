@@ -5,7 +5,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// The API Level expressed by an application will be compared to the API Level of a given
 /// Android system, which may vary among different Android devices.
-
 /// Despite its name, this element is used to specify the API Level, not the version
 /// number of the SDK (software development kit) or Android platform. The API Level is
 /// always a single integer. You cannot derive the API Level from its associated Android
@@ -55,16 +54,20 @@ pub struct UsesSdk {
     /// a new default theme (Holo) to your app when running on Android 3.0
     /// or higher and also disables [`screen compatibility mode`] when running on
     /// larger screens (because support for API level 11 implicitly supports
-    /// larger screens). There are many compatibility behaviors that the
-    /// system may enable based on the value you set for this attribute.
-    /// Several of these behaviors are described by the corresponding platform
-    /// versions in the [`Build.VERSION_CODES`] reference. To maintain your
-    /// application along with each Android release, you should increase the
-    /// value of this attribute to match the latest API level, then thoroughly
+    /// larger screens).
+    ///
+    /// There are many compatibility behaviors that the system may enable based on the
+    /// value you set for this attribute. Several of these behaviors are described by
+    /// the corresponding platform versions in the [`Build.VERSION_CODES`] reference.
+    ///
+    /// To maintain your application along with each Android release, you should increase
+    /// the value of this attribute to match the latest API level, then thoroughly
     /// test your application on the corresponding platform version.
     ///
-    /// [`Build.VERSION_CODES`]: https://developer.android.com/reference/android/os/Build.VERSION_CODES
+    /// Introduced in: API Level 4
+    ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
+    /// [`Build.VERSION_CODES`]: https://developer.android.com/reference/android/os/Build.VERSION_CODES
     #[serde(rename = "android:targetSdkVersion")]
     pub target_sdk_version: Option<i32>,
     /// An integer designating the maximum API Level on which the application is designed
@@ -74,9 +77,12 @@ pub struct UsesSdk {
     /// maxSdkVersion attribute is lower than the API Level used by the system itself,
     /// then the system will not allow the application to be installed. In the case of
     /// re-validation after system update, this effectively removes your application
-    /// from the device. To illustrate how this attribute can affect your application
-    /// after system updates, consider the following example: An application
-    /// declaring maxSdkVersion="5" in its manifest is published on Google Play.
+    /// from the device. 
+    ///
+    /// To illustrate how this attribute can affect your application
+    /// after system updates, consider the following example: 
+    ///
+    /// An application declaring maxSdkVersion="5" in its manifest is published on Google Play.
     /// A user whose device is running Android 1.6 (API Level 4) downloads and
     /// installs the app. After a few weeks, the user receives an
     /// over-the-air system update to Android 2.0 (API Level 5). After the

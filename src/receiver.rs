@@ -38,8 +38,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "receiver")]
 pub struct Receiver {
-    /// Whether or not the broadcast `receiver` is direct-boot aware; that is, whether or
-    /// not it can run before the user unlocks the device. ## Note:
+    /// Whether or not the broadcast `receiver` is direct-boot aware; that is,
+    /// whether or not it can run before the user unlocks the device.
+    /// ## Note:
     /// During [`Direct Boot`], a broadcast `receiver` in your application
     /// can only access the data that is stored in device protected storage.
     /// The default value is "false".
