@@ -15,7 +15,7 @@ use super::uses_sdk::UsesSdk;
 use serde::{Deserialize, Serialize};
 
 /// The root element of the `AndroidManifest.xml` file.
-/// 
+///
 /// It must contain an `<application>` element and specify `xmlns:android` and
 /// `package` attributes.
 ///

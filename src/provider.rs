@@ -20,7 +20,7 @@ use serde::{Deserialize, Serialize};
 /// To do this, you call the method `ContentResolver.query()`,
 /// which among other arguments takes a URI that identifies the provider:
 ///
-/// ## Example
+/// ## XML Example
 /// ```xml
 /// content://com.example.project.healthcareprovider/nurses/rn
 /// ```
@@ -43,7 +43,12 @@ pub struct Provider {
     /// com.example.provider.cartoonprovider). Typically, it's the name of
     /// the ContentProvider subclass that implements the provider
     /// There is no default. At least one authority must be specified.
-    #[serde(rename = "android:authorities", with = "authorities")]
+    #[serde(
+        rename = "android:authorities",
+        with = "crate::list_serde::semicolon_list",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub authorities: Vec<String>,
     /// Whether or not the service can be instantiated by the system — `"true"`
     /// if it can be, and `"false"` if not. The default value is `"true"`.
@@ -200,58 +205,4 @@ pub struct Provider {
     pub intent_filter: Option<IntentFilter>,
 
     pub meta_data: Option<MetaData>,
-}
-
-mod authorities {
-    use serde::{
-        de::{self, Visitor},
-        ser::Error,
-        Deserializer, Serializer,
-    };
-    use std::fmt;
-
-    pub fn serialize<S>(authorities: &Vec<String>, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        if authorities.is_empty() {
-            return Err(S::Error::custom("there is no default `android::authorities`. at least one authority must be specified"));
-        };
-        serializer.serialize_str(&authorities.join(";"))
-    }
-
-    struct AuthoritiesVisitor;
-
-    impl<'de> Visitor<'de> for AuthoritiesVisitor {
-        type Value = Vec<String>;
-
-        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-            formatter.write_str(&format!(
-                "an authorities list in format 'authority1' or 'authority1;authority2;authority3'"
-            ))
-        }
-
-        fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
-        where
-            E: de::Error,
-        {
-            if v.is_empty() {
-                return Err(E::custom(
-                    "there is no default `android::authorities`. at least one authority must be specified"));
-            };
-            let authorities: Vec<String> = v
-                .replace(" ", "")
-                .split(';')
-                .map(|s| s.to_owned())
-                .collect();
-            Ok(authorities)
-        }
-    }
-
-    pub fn deserialize<'de, D>(deserializer: D) -> Result<Vec<String>, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        deserializer.deserialize_string(AuthoritiesVisitor)
-    }
 }

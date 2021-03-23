@@ -13,13 +13,13 @@ use serde::{Deserialize, Serialize};
 /// ## Contained in:
 /// [`<intent-filter>`](crate::IntentFilter)
 ///
-/// ## Examples
+/// ## XML Examples
 /// These attributes that specify the URL format are optional, but also mutually
 /// dependent:
-/// * If a scheme is not specified for the intent filter, all the other URI
+/// * If a scheme is not specified for the intent filter, all the other URI attributes are
+///   ignored.
+/// * If a host is not specified for the filter, the port attribute and all the path
 ///   attributes are ignored.
-/// * If a host is not specified for the filter, the port attribute and all the
-///   path attributes are ignored.
 ///
 /// All the `<data>` elements contained within the same `<intent-filter>`
 /// element contribute to the same filter. So, for example, the following filter
@@ -87,8 +87,8 @@ pub struct Data {
     /// can contain the following wildcards:
     /// * An asterisk `('*')` matches a sequence of 0 to many occurrences of the
     ///   immediately preceding character.
-    /// * A period followed by an asterisk `(".*")` matches any sequence of 0 to
-    ///   many characters.
+    /// * A period followed by an asterisk `(".*")` matches any sequence of 0 to many
+    ///   characters.
     pub port: Option<String>,
     /// The path part of a URI which must begin with a /. The path attribute
     /// specifies a complete path that is matched against the complete path in

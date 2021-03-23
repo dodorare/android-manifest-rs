@@ -29,8 +29,8 @@ pub struct GrantUriPermission {
     ///
     /// * An asterisk `('*')` matches a sequence of 0 to many occurrences of the
     ///   immediately preceding character.
-    /// * A period followed by an asterisk `(".*")` matches any sequence of 0 to
-    ///   many characters.
+    /// * A period followed by an asterisk `(".*")` matches any sequence of 0 to many
+    ///   characters.
     ///
     /// Because `'\'` is used as an escape character when the string is read
     /// from XML (before it is parsed as a pattern), you will need to

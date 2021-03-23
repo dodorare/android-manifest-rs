@@ -5,6 +5,7 @@ use serde::{
 };
 use std::fmt;
 
+/// Enum used when the value can be `StringResource` or just a mormal string.
 #[derive(Debug, PartialEq)]
 pub enum StringResourceOrString {
     StringResource(Resource<StringResource>),

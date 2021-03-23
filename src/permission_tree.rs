@@ -17,7 +17,7 @@ use serde::{Deserialize, Serialize};
 /// Note that this element does not declare a permission itself, only a
 /// namespace in which further permissions can be placed. See the `<permission>`
 /// element for information on declaring permissions.
-/// 
+///
 /// ## Contained in:
 /// [<manifest>](crate::Manifest)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]

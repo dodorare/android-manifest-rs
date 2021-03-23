@@ -8,6 +8,7 @@ use serde::{
 };
 use std::fmt;
 
+/// Enum used when the value can be any of available resources.
 #[derive(Debug, PartialEq)]
 pub enum AnyResource {
     String(Resource<StringResource>),
@@ -48,13 +49,15 @@ impl<'de> Visitor<'de> for AnyResourceVisitor {
         };
         let (package, resource_type, name) = parse_resource(v).map_err(|e| E::custom(e))?;
         let any = if StringResource::resource_type() == resource_type {
-            AnyResource::String(Resource::<StringResource>::new(name, package))
+            AnyResource::String(Resource::<StringResource>::new_with_package(name, package))
         } else if DrawableResource::resource_type() == resource_type {
-            AnyResource::Drawable(Resource::<DrawableResource>::new(name, package))
+            AnyResource::Drawable(Resource::<DrawableResource>::new_with_package(
+                name, package,
+            ))
         } else if XmlResource::resource_type() == resource_type {
-            AnyResource::Xml(Resource::<XmlResource>::new(name, package))
+            AnyResource::Xml(Resource::<XmlResource>::new_with_package(name, package))
         } else if StyleResource::resource_type() == resource_type {
-            AnyResource::Style(Resource::<StyleResource>::new(name, package))
+            AnyResource::Style(Resource::<StyleResource>::new_with_package(name, package))
         } else {
             return Err(E::custom(format!(
                 "unsuported resource type: {}",

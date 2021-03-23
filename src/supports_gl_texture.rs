@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 /// compression formats, you can declare multiple <supports-gl-texture>
 /// elements.
 ///
-/// ## Example:
+/// ## XML Example
 /// ```xml
 /// <supports-gl-texture
 ///     android:name="GL_OES_compressed_ETC1_RGB8_texture" />

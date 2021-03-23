@@ -69,12 +69,12 @@ pub struct UsesFeature {
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the
     /// feature specified in `android:name`.
-    /// * When you declare `android:required="true"` for a feature, you are
-    ///   specifying that the
+    /// * When you declare `android:required="true"` for a feature, you are specifying
+    ///   that the
     /// application cannot function, or is not designed to function, when the
     /// specified feature is not present on the device.
-    /// * When you declare `android:required="false"` for a feature, it means
-    ///   that the application
+    /// * When you declare `android:required="false"` for a feature, it means that the
+    ///   application
     /// prefers to use the feature if present on the device, but that it is
     /// designed to function without the specified feature, if necessary.
     ///

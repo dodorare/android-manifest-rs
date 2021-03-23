@@ -13,7 +13,9 @@ use std::marker::PhantomData;
 use std::str::FromStr;
 pub use types::*;
 
+/// Trait implemented by types that can be used as resource.
 pub trait ResourceType: FromStr {
+    /// Creates new instance of [`Resource`](crate::Resource).
     fn new(name: &str, package: Option<String>) -> Resource<Self> {
         Resource {
             name: name.to_owned(),
@@ -21,9 +23,11 @@ pub trait ResourceType: FromStr {
             phantom: PhantomData,
         }
     }
+    /// Returns string representation of the `resource_type`.
     fn resource_type() -> &'static str;
 }
 
+/// Generic resource type.
 #[derive(Debug, PartialEq)]
 pub struct Resource<T: ResourceType> {
     name: String,
@@ -32,7 +36,15 @@ pub struct Resource<T: ResourceType> {
 }
 
 impl<T: ResourceType> Resource<T> {
-    pub fn new(name: String, package: Option<String>) -> Self {
+    pub fn new(name: String) -> Self {
+        Self {
+            name,
+            package: None,
+            phantom: PhantomData,
+        }
+    }
+
+    pub fn new_with_package(name: String, package: Option<String>) -> Self {
         Self {
             name,
             package,
@@ -123,8 +135,8 @@ impl<'de, T: ResourceType> Deserialize<'de> for Resource<T> {
     }
 }
 
-// Parses a resource string in format @[package:]resource_type/resource_name
-// into three parts
+/// Parses a resource string in format
+/// `@[package:]resource_type/resource_name` into three parts
 fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), &str> {
     let split_str: Vec<_> = resource.split('/').collect();
     if split_str.len() != 2 {

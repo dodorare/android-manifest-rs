@@ -1,110 +1,194 @@
 use super::intent_filter::IntentFilter;
+use super::layout::Layout;
 use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResourceOrString, StyleResource};
 use serde::{Deserialize, Serialize};
 
-/// Declares an activity (an [`Activity`](https://developer.android.com/reference/android/app/Activity)
-/// subclass) that implements part of the application's visual user interface.
+/// Declares an activity (an [`Activity`] subclass) that implements part of the
+/// application's visual user interface.
 ///
-/// All activities must be represented by `<activity>` elements in the manifest
-/// file. Any that are not declared there will not be seen by the system and
-/// will never be run.
+/// All activities must be represented by `<activity>` elements in the manifest file. Any
+/// that are not declared there will not be seen by the system and will never be run.
 ///
 /// ## Contained in:
-/// [`<application>`](crate::Application)
+/// * [`<application>`]
 ///
 /// ## Can contain:
-/// * [`<intent-filter>`](crate::IntentFilter)
-/// * [`<meta-data>`](crate::MetaData)
-/// * [`<layout>`](crate::Layout)
+/// * [`<intent-filter>`]
+/// * [`<meta-data>`]
+/// * [`<layout>`]
+///
+/// ## Introduced in:
+/// API Level 1 for all attributes except for [`noHistory`] and [`windowSoftInputMode`],
+/// which were added in API Level 3.
+///
+/// [`Activity`]: https://developer.android.com/reference/android/app/Activity
+/// [`<application>`]: crate::Application
+/// [`<intent-filter>`]: crate::IntentFilter
+/// [`<meta-data>`]: crate::MetaData
+/// [`<layout>`]: crate::Layout
+/// [`noHistory`]: crate::Activity#structfield.no_history
+/// [`windowSoftInputMode`]: crate::Activity#structfield.window_soft_input_mode
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "activity")]
 pub struct Activity {
-    /// Indicate that the activity can be launched as the embedded child
-    /// of another activity. Particularly in the case where the child lives
-    /// in a container such as a Display owned by another activity. For example,
-    /// activities that are used for Wear custom notifications must declare
-    /// this so Wear can display the activity in it's context stream,
-    /// which resides in another process. The default value of this attribute is
-    /// `false`.
+    /// Indicate that the activity can be launched as the embedded child of another
+    /// activity. Particularly in the case where the child lives in a container such
+    /// as a Display owned by another activity. For example, activities that are used
+    /// for Wear custom notifications must declare this so Wear can display the
+    /// activity in it's context stream, which resides in another process. The default
+    /// value of this attribute is "`false`".
     #[serde(rename = "android:allowEmbedded")]
     pub allow_embedded: Option<bool>,
-    /// Whether or not the activity can move from the task that started it
-    /// to the task it has an affinity for when that task is next brought
-    /// to the front — `"true"` if it can move, and `"false"` if it must
-    /// remain with the task where it started. If this attribute is not set,
-    /// the value set by the corresponding `allowTaskReparenting` attribute
-    /// of the `<application>` element applies to the activity.
-    /// The default value is `"false"`.
+    /// Whether or not the activity can move from the task that started it to the task it
+    /// has an affinity for when that task is next brought to the front — "`true`" if
+    /// it can move, and "`false`" if it must remain with the task where it started.
+    ///
+    /// If this attribute is not set, the value set by the corresponding
+    /// [`allowTaskReparenting`] attribute of the [`<application>`] element
+    /// applies to the activity. The default value is "`false`".
+    ///
+    /// Normally when an activity is started, it's associated with the task of the
+    /// activity that started it and it stays there for its entire lifetime. You can use
+    /// this attribute to force it to be re-parented to the task it has an affinity for
+    /// when its current task is no longer displayed. Typically, it's used to cause the
+    /// activities of an application to move to the main task associated with that
+    /// application.
+    ///
+    /// For example, if an e-mail message contains a link to a web page, clicking the link
+    /// brings up an activity that can display the page. That activity is defined by the
+    /// browser application, but is launched as part of the e-mail task. If it's
+    /// reparented to the browser task, it will be shown when the browser next comes to
+    /// the front, and will be absent when the e-mail task again comes forward.
+    ///
+    /// The affinity of an activity is defined by the [`taskAffinity`] attribute. The
+    /// affinity of a task is determined by reading the affinity of its root activity.
+    /// Therefore, by definition, a root activity is always in a task with the same
+    /// affinity. Since activities with "`singleTask`" or "`singleInstance`" launch
+    /// modes can only be at the root of a task, re-parenting is limited to the
+    /// "`standard`" and "`singleTop`" modes. (See also the [`launchMode`] attribute.)
+    ///
+    /// [`allowTaskReparenting`]: crate::Application#structfield.allow_task_reparenting
+    /// [`<application>`]: crate::Application
+    /// [`taskAffinity`]: crate::Activity#structfield.task_affinity
+    /// [`launchMode`]: crate::Activity#structfield.launch_mode
     #[serde(rename = "android:allowTaskReparenting")]
     pub allow_task_reparenting: Option<bool>,
-    /// Whether or not the state of the task that the activity is in will
-    /// always be maintained by the system — `"true"` if it will be, and
-    /// `"false"` if the system is allowed to reset the task to its initial
-    /// state in certain situations. The default value is `"false"`. This
-    /// attribute is meaningful only for the root activity of a task; it's
-    /// ignored for all other activities. Normally, the system clears a task
-    /// (removes all activities from the stack above the root activity)
-    /// in certain situations when the user re-selects that task from
-    /// the home screen. Typically, this is done if the user hasn't
-    /// visited the task for a certain amount of time, such as 30 minutes.
+    /// Whether or not the state of the task that the activity is in will always be
+    /// maintained by the system — "`true`" if it will be, and "`false`" if the system
+    /// is allowed to reset the task to its initial state in certain situations. The
+    /// default value is "`false`". This attribute is meaningful only for the root
+    /// activity of a task; it's ignored for all other activities.
+    ///
+    /// Normally, the system clears a task (removes all activities from the stack above
+    /// the root activity) in certain situations when the user re-selects that task
+    /// from the home screen. Typically, this is done if the user hasn't visited the
+    /// task for a certain amount of time, such as 30 minutes.
+    ///
+    /// However, when this attribute is "`true`", users will always return to the task in
+    /// its last state, regardless of how they get there. This is useful, for example, in
+    /// an application like the web browser where there is a lot of state (such as
+    /// multiple open tabs) that users would not like to lose.
     #[serde(rename = "android:alwaysRetainTaskState")]
     pub always_retain_task_state: Option<bool>,
-    /// Whether or not tasks launched by activities with this attribute remains
-    /// in the overview screen until the last activity in the task is completed.
-    /// If true, the task is automatically removed from the `overview screen.`
-    /// This overrides the caller's use of `FLAG_ACTIVITY_RETAIN_IN_RECENTS`.
-    /// It must be a boolean value, either `"true"` or `"false"`.
+    /// Whether or not tasks launched by activities with this attribute remains in the
+    /// [`overview screen`] until the last activity in the task is completed. If true, the
+    /// task is automatically removed from the `overview screen.` This overrides the
+    /// caller's use of [`FLAG_ACTIVITY_RETAIN_IN_RECENTS`]. It must be a boolean value,
+    /// either "`true`" or "`false`".
+    ///
+    /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
+    /// [`FLAG_ACTIVITY_RETAIN_IN_RECENTS`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_RETAIN_IN_RECENTS
     #[serde(rename = "android:autoRemoveFromRecents")]
     pub auto_remove_from_recents: Option<bool>,
-    /// A drawable resource providing an extended graphical banner for its
-    /// associated item. Use with the `<activity>` tag to supply a default
-    /// banner for a specific activity, or with the `<application>` tag to
-    /// supply a banner for all application activities. The system uses the
-    /// banner to represent an app in the Android TV home screen. Since the
-    /// banner is displayed only in the home screen, it should only be
+    /// A [`drawable resource`] providing an extended graphical banner for its associated
+    /// item. Use with the `<activity>` tag to supply a default banner for a specific
+    /// activity, or with the [`<application>`] tag to supply a banner for all
+    /// application activities.
+    ///
+    /// The system uses the banner to represent an app in the Android TV home screen.
+    /// Since the banner is displayed only in the home screen, it should only be
     /// specified by applications with an activity that handles the
-    /// `CATEGORY_LEANBACK_LAUNCHER` intent. This attribute must be set as a
-    /// reference to a drawable resource containing the image (for example
-    /// `"@drawable/banner"`). There is no default banner. See Provide a
-    /// home screen banner in Get Started with TV Apps for more information.
+    /// [`CATEGORY_LEANBACK_LAUNCHER`] intent.
+    ///
+    /// This attribute must be set as a reference to a drawable resource containing the
+    /// image (for example "`@drawable/banner`"). There is no default banner.
+    ///
+    /// See [`Provide a home screen banner`] in Get Started with TV Apps for more
+    /// information.
+    ///
+    /// [`drawable resource`]: https://developer.android.com/guide/topics/resources/drawable-resource
+    /// [`<application>`]: crate::Application
+    /// [`CATEGORY_LEANBACK_LAUNCHER`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_LEANBACK_LAUNCHER
+    /// [`Provide a home screen banner`]: https://developer.android.com/training/tv/start/start#banner
     #[serde(rename = "android:banner")]
     pub banner: Option<Resource<DrawableResource>>,
-    /// Whether or not all activities will be removed from the task, except for
-    /// the root activity, whenever it is re-launched from the home screen —
-    /// `"true"` if the task is always stripped down to its root activity,
-    /// and `"false"` if not. The default value is `"false"`. This attribute
-    /// is meaningful only for activities that start a new task (the root
-    /// activity); it's ignored for all other activities in the task.
-    /// If this attribute and allowTaskReparenting are both `"true"`, any
-    /// activities that can be re-parented are moved to the task they share an
-    /// affinity with; the remaining activities are then dropped, as described
-    /// above. This attribute is ignored if
-    /// `FLAG_ACTIVITY_RESET_TASK_IF_NEEDED` is not set.
+    /// Whether or not all activities will be removed from the task, except for the root
+    /// activity, whenever it is re-launched from the home screen — "`true`" if the
+    /// task is always stripped down to its root activity, and "`false`" if not. The
+    /// default value is "`false`". This attribute is meaningful only for activities
+    /// that start a new task (the root activity); it's ignored for all other
+    /// activities in the task.
+    ///
+    /// When the value is "`true`", every time users start the task again, they are
+    /// brought to its root activity regardless of what they were last doing in the
+    /// task and regardless of whether they used the Back or Home button to leave it.
+    /// When the value is "`false`", the task may be cleared of activities in some
+    /// situations (see the [`alwaysRetainTaskState`] attribute), but not always.
+    ///
+    /// Suppose, for example, that someone launches activity P from the home screen, and
+    /// from there goes to activity Q. The user next presses Home, and then returns to
+    /// activity P. Normally, the user would see activity Q, since that is what they were
+    /// last doing in P's task. However, if P set this flag to "`true`", all of the
+    /// activities on top of it (Q in this case) would be removed when the user launched
+    /// activity P from the home screen. So the user would see only P when returning to
+    /// the task.
+    ///
+    /// If this attribute and [`allowTaskReparenting`] are both "`true`", any activities
+    /// that can be re-parented are moved to the task they share an affinity with; the
+    /// remaining activities are then dropped, as described above.
+    ///
+    /// This attribute is ignored if [`FLAG_ACTIVITY_RESET_TASK_IF_NEEDED`] is not set.
+    ///
+    /// [`alwaysRetainTaskState`]: crate::Activity#structfield.always_retain_task_state
+    /// [`allowTaskReparenting`]: crate::Activity#structfield.allow_task_reparenting
+    /// [`FLAG_ACTIVITY_RESET_TASK_IF_NEEDED`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
     #[serde(rename = "android:clearTaskOnLaunch")]
     pub clear_task_on_launch: Option<bool>,
-    /// Requests the activity to be displayed in wide color gamut mode on
-    /// compatible devices. In wide color gamut mode, a window can render
-    /// outside of the `SRGB` gamut to display more vibrant colors.
-    /// If the device doesn't support wide color gamut rendering, this attribute
-    /// has no effect. For more information about rendering in wide color
-    /// mode, see `Enhancing Graphics with Wide Color Content`.
+    /// Requests the activity to be displayed in wide color gamut mode on compatible
+    /// devices. In wide color gamut mode, a window can render outside of the [`SRGB`]
+    /// gamut to display more vibrant colors. If the device doesn't support wide color
+    /// gamut rendering, this attribute has no effect. For more information about
+    /// rendering in wide color mode, see [`Enhancing Graphics with Wide Color Content`].
+    ///
+    /// [`Enhancing Graphics with Wide Color Content`]: https://developer.android.com/training/wide-color-gamut
+    /// [`SRGB`]: https://developer.android.com/reference/android/graphics/ColorSpace.Named#SRGB
     #[serde(rename = "android:colorMode")]
     pub color_mode: Option<ColorMode>,
     /// Lists configuration changes that the activity will handle itself. When a
     /// configuration change occurs at runtime, the activity is shut down and
     /// restarted by default, but declaring a configuration with this
     /// attribute will prevent the activity from being restarted. Instead, the
-    /// activity remains running and its `onConfigurationChanged()` method is
+    /// activity remains running and its [`onConfigurationChanged()`] method is
     /// called.
     ///
+    /// Any or all of the following strings are valid values for this attribute. Multiple
+    /// values are separated by '`|`' — for example: "`locale|navigation|orientation`".
+    ///
     /// ## Note
-    /// Using this attribute should be avoided and used only
-    /// as a last resort. Please read Handling Runtime Changes for more
-    /// information about how to properly handle a restart due to a
-    /// configuration change.
-    #[serde(rename = "android:configChanges")]
-    pub config_changes: Option<ConfigChanges>,
+    /// Using this attribute should be avoided and used only as a last resort. Please read
+    /// [`Handling Runtime Changes`] for more information about how to properly handle a
+    /// restart due to a configuration change.
+    ///
+    /// [`Handling Runtime Changes`]: https://developer.android.com/guide/topics/resources/runtime-changes
+    /// [`onConfigurationChanged()`]: https://developer.android.com/reference/android/app/Activity#onConfigurationChanged(android.content.res.Configuration)
+    #[serde(
+        rename = "android:configChanges",
+        with = "crate::list_serde::vertical_bar_list",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
+    pub config_changes: Vec<ConfigChanges>,
     /// Whether or not the activity is direct-boot aware; that is, whether or
     /// not it can run before the user unlocks the device.
     ///
@@ -120,22 +204,22 @@ pub struct Activity {
     /// screen.
     #[serde(rename = "android:documentLaunchMode")]
     pub document_launch_mode: Option<DocumentLaunchMode>,
-    /// Whether or not the activity can be instantiated by the system — `"true"`
-    /// if it can be, and `"false"` if not. The default value is `"true"`.
+    /// Whether or not the activity can be instantiated by the system — "`true`"
+    /// if it can be, and "`false`" if not. The default value is "`true`".
     /// The `<application>` element has its own `enabled` attribute that applies
     /// to all application components, including activities.
-    /// The `<application>` and `<activity>` attributes must both be `"true"`
+    /// The `<application>` and `<activity>` attributes must both be "`true`"
     /// (as they both are by default) for the system to be able to instantiate
-    /// the activity. If either is `"false"`, it cannot be instantiated.
+    /// the activity. If either is "`false`", it cannot be instantiated.
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
     /// Whether or not the task initiated by this activity should be excluded
     /// from the list of recently used applications, the `overview screen`.
     /// That is, when this activity is the root activity of a new task, this
     /// attribute determines whether the task should not appear in the list of
-    /// recent apps. Set `"true"` if the task should be excluded from the
-    /// list; set `"false"` if it should be included. The default value is
-    /// `"false"`.
+    /// recent apps. Set "`true`" if the task should be excluded from the
+    /// list; set "`false`" if it should be included. The default value is
+    /// "`false`".
     #[serde(rename = "android:excludeFromRecents")]
     pub exclude_from_recents: Option<bool>,
     /// This element sets whether the activity can be launched by components of
@@ -157,15 +241,15 @@ pub struct Activity {
     pub exported: Option<bool>,
     /// Whether or not an existing instance of the activity should be shut down
     /// (finished) whenever the user again launches its task (chooses the task
-    /// on the home screen) — `"true"` if it should be shut down, and
-    /// `"false"` if not. The default value is `"false"`. If this attribute
-    /// and `allowTaskReparenting` are both `"true"`, this attribute trumps the
+    /// on the home screen) — "`true`" if it should be shut down, and
+    /// "`false`" if not. The default value is "`false`". If this attribute
+    /// and `allowTaskReparenting` are both "`true`", this attribute trumps the
     /// other. The affinity of the activity is ignored. The activity is not
     /// re-parented, but destroyed.
     #[serde(rename = "android:finishOnTaskLaunch")]
     pub finish_on_task_launch: Option<bool>,
     /// Whether or not hardware-accelerated rendering should be enabled for this
-    /// Activity — `"true"` if it should be enabled, and `"false"` if not. The
+    /// Activity — "`true`" if it should be enabled, and "`false`" if not. The
     /// default value is `"false". Starting from Android 3.0, a
     /// hardware-accelerated OpenGL renderer is available to applications, to
     /// improve performance for many common 2D graphics operations. When the
@@ -212,9 +296,8 @@ pub struct Activity {
     /// An instruction on how the activity should be launched. There are four
     /// modes that work in conjunction with activity flags
     /// (`FLAG_ACTIVITY_*` constants) in `Intent` objects to determine what
-    /// should happen when the activity is called upon to handle an intent. They
-    /// are:
-    ///
+    /// should happen when the activity is called upon to handle an intent.
+    /// They are:
     /// * `"standard"`
     /// * `"singleTop"`
     /// * `"singleTask"`
@@ -292,11 +375,11 @@ pub struct Activity {
     #[serde(rename = "android:maxAspectRatio")]
     pub max_aspect_ratio: Option<f32>,
     /// Whether an instance of the activity can be launched into the process of
-    /// the component that started it — `"true"` if it can be, and `"false"` if
-    /// not. The default value is `"false"`. Normally, a new instance of an
+    /// the component that started it — "`true`" if it can be, and "`false`" if
+    /// not. The default value is "`false`". Normally, a new instance of an
     /// activity is launched into the process of the application that defined
     /// it, so all instances of the activity run in the same process. However,
-    /// if this flag is set to `"true"`, instances of the activity can run
+    /// if this flag is set to "`true`", instances of the activity can run
     /// in multiple processes, allowing the system to create instances wherever
     /// they are used (provided permissions allow it), something that is almost
     /// never necessary or desirable.
@@ -315,9 +398,9 @@ pub struct Activity {
     pub name: String,
     /// Whether or not the activity should be removed from the activity stack
     /// and finished (its `finish()` method called) when the user navigates away
-    /// from it and it's no longer visible on screen — `"true"` if it should
-    /// be finished, and `"false"` if not. The default value is `"false"`. A
-    /// value of `"true"` means that the activity will not leave a historical
+    /// from it and it's no longer visible on screen — "`true`" if it should
+    /// be finished, and "`false`" if not. The default value is "`false`". A
+    /// value of "`true`" means that the activity will not leave a historical
     /// trace. It will not remain in the activity stack for the task, so the
     /// user will not be able to return to it. In this case,
     /// `onActivityResult()` is never called if you start another activity for a
@@ -335,7 +418,7 @@ pub struct Activity {
     /// with a `<meta-data>` element that specifies a value for
     /// `"android.support.PARENT_ACTIVITY"`.
     ///
-    /// ## Example
+    /// ## XML Example
     /// ```xml
     /// <activity
     ///     android:name="com.example.app.ChildActivity"
@@ -385,12 +468,12 @@ pub struct Activity {
     pub process: Option<String>,
     /// Whether or not the activity relinquishes its task identifiers to an
     /// activity above it in the task stack. A task whose root activity has this
-    /// attribute set to `"true"` replaces the base Intent with that of the next
+    /// attribute set to "`true`" replaces the base Intent with that of the next
     /// activity in the task. If the next activity also has this attribute
-    /// set to `"true"` then it will yield the base Intent to any activity that
+    /// set to "`true`" then it will yield the base Intent to any activity that
     /// it launches in the same task. This continues for each activity until
-    /// an activity is encountered which has this attribute set to `"false"`.
-    /// The default value is `"false"`. This attribute set to `"true"` also
+    /// an activity is encountered which has this attribute set to "`false`".
+    /// The default value is "`false`". This attribute set to "`true`" also
     /// permits the activity's use of the `ActivityManager.TaskDescription` to
     /// change labels, colors and icons in the `overview screen`.
     #[serde(rename = "android:relinquishTaskIdentity")]
@@ -419,16 +502,16 @@ pub struct Activity {
     #[serde(rename = "android:showForAllUsers")]
     pub show_for_all_users: Option<bool>,
     /// Whether or not the activity can be killed and successfully restarted
-    /// without having saved its state — `"true"` if it can be restarted
-    /// without reference to its previous state, and `"false"` if its previous
-    /// state is required. The default value is `"false"`. Normally, before
+    /// without having saved its state — "`true`" if it can be restarted
+    /// without reference to its previous state, and "`false`" if its previous
+    /// state is required. The default value is "`false`". Normally, before
     /// an activity is temporarily shut down to save resources, its
     /// `onSaveInstanceState()` method is called. This method stores the current
     /// state of the activity in a Bundle object, which is then passed to
     /// `onCreate()` when the activity is restarted. If this attribute is set to
-    /// `"true"`, `onSaveInstanceState()` may not be called and `onCreate()`
+    /// "`true`", `onSaveInstanceState()` may not be called and `onCreate()`
     /// will be passed null instead of the Bundle — just as it was when the
-    /// activity started for the first time. A `"true"` setting ensures that
+    /// activity started for the first time. A "`true`" setting ensures that
     /// the activity can be restarted in the absence of retained state. For
     /// example, the activity that displays the home screen uses this setting
     /// to make sure that it does not get removed if it crashes for some reason.
@@ -474,23 +557,38 @@ pub struct Activity {
     /// the on-screen soft keyboard. The setting for this attribute affects two
     /// things:
     ///
-    /// * The state of the soft keyboard — whether it is hidden or visible —
-    ///   when the activity becomes the focus of user attention.
-    /// * The adjustment made to the activity's main window — whether it is
-    ///   resized smaller to make room for the soft keyboard or whether its
-    ///   contents pan to make the current focus visible when part of the window
-    ///   is covered by the soft keyboard.
+    /// * The state of the soft keyboard — whether it is hidden or visible — when the
+    ///   activity becomes the focus of user attention.
+    /// * The adjustment made to the activity's main window — whether it is resized
+    ///   smaller to make room for the soft keyboard or whether its contents pan to make
+    ///   the current focus visible when part of the window is covered by the soft
+    ///   keyboard.
     ///
     /// The setting must be one of the values listed in the following table, or
     /// a combination of one `"state..."` value plus one `"adjust..."` value.
-    #[serde(rename = "android:windowSoftInputMode")]
-    pub window_soft_input_mode: Option<WindowSoftInputMode>,
-
+    /// Setting multiple values in either group — multiple `"state..."` values,
+    /// for example — has undefined results. Individual values are separated
+    /// by a vertical bar (`|`).
+    ///
+    /// ## Example
+    /// ```xml
+    /// <activity android:windowSoftInputMode="stateVisible|adjustResize" ... >
+    /// ```
+    #[serde(
+        rename = "android:windowSoftInputMode",
+        with = "crate::list_serde::vertical_bar_list",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
+    pub window_soft_input_mode: Vec<WindowSoftInputMode>,
     pub intent_filter: Option<IntentFilter>,
-
-    pub meta_data: Option<MetaData>,
+    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    pub meta_datas: Vec<MetaData>,
+    pub layout: Option<Layout>,
 }
 
+/// Requests the activity to be displayed in wide color gamut mode on compatible
+/// devices.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ColorMode {
@@ -498,63 +596,68 @@ pub enum ColorMode {
     WideColorGamut,
 }
 
+/// Lists configuration changes that the `activity` will handle itself.
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ConfigChanges {
-    /// The IMSI mobile country code (MCC) has changed — a SIM has been detected
-    /// and updated the MCC.
-    Mcc,
-    /// The IMSI mobile network code (MNC) has changed — a SIM has been detected
-    /// and updated the MNC.
-    Mnc,
-    /// The locale has changed — the user has selected a new language that text
-    /// should be displayed in.
-    Locale,
-    /// The touchscreen has changed. (This should never normally happen.)
-    Touchscreen,
-    /// The keyboard type has changed — for example, the user has plugged in an
-    /// external keyboard.
+    /// The display density has changed — the user might have specified a different
+    /// display scale, or a different display might now be active. Added in API level
+    /// 24.
+    Density,
+    /// The font scaling factor has changed — the user has selected a new global font
+    /// size.
+    FontScale,
+    /// The keyboard type has changed — for example, the user has plugged in an external
+    /// keyboard.
     Keyboard,
-    /// The keyboard accessibility has changed — for example, the user has
-    /// revealed the hardware keyboard.
+    /// The keyboard accessibility has changed — for example, the user hasrevealed the
+    /// hardware keyboard.
     KeyboardHidden,
+    /// The layout direction has changed — for example, changing from left-to-right (LTR)
+    /// to right-to-left (RTL). Added in API level 17.
+    LayoutDiraction,
+    /// The locale has changed — the user has selected a new language that text should be
+    /// displayed in.
+    Locale,
+    /// The IMSI mobile country code (MCC) has changed — a SIM has been detected and
+    /// updated the MCC.
+    Mcc,
+    /// The IMSI mobile network code (MNC) has changed — a SIM has been detected and
+    /// updated the MNC.
+    Mnc,
     /// The navigation type (trackball/dpad) has changed. (This should never
     /// normally happen.)
     Navigation,
-    /// The screen layout has changed — a different display might now be active.
-    ScreenLayout,
-    /// The font scaling factor has changed — the user has selected a new global
-    /// font size.
-    FontScale,
-    /// The user interface mode has changed — the user has placed the device
-    /// into a desk or car dock, or the night mode has changed. For more
-    /// information about the different UI modes, see UiModeManager.
-    /// Added in API level 8.
-    UiMode,
     /// The screen orientation has changed — the user has rotated the device.
     ///
     /// ## Note
-    /// If your application targets Android 3.2 (API level 13) or
-    /// higher, then you should also declare the `"screenSize"` and
-    /// `"screenLayout"` configurations, because they might also change when
-    /// a device switches between portrait and landscape orientations.
+    /// If your application targets Android 3.2 (API level 13) or higher, then you should
+    /// also declare the "`screenSize`" and "`screenLayout`" configurations, because
+    /// they might also change when a device switches between portrait and landscape
+    /// orientations.
     Orientation,
-    /// The display density has changed — the user might have specified a
-    /// different display scale, or a different display might now be active.
-    /// Added in API level 24.
-    Density,
-    /// The current available screen size has changed.
-    /// This represents a change in the currently available size, relative to
-    /// the current aspect ratio, so will change when the user switches between
-    /// landscape and portrait. Added in API level 13.
+    /// The screen layout has changed — a different display might now be active.
+    ScreenLayout,
+    /// The current available screen size has changed. This represents a change in the
+    /// currently available size, relative to the current aspect ratio, so will change
+    /// when the user switches between landscape and portrait. Added in API level 13.
     ScreenSize,
-    /// The physical screen size has changed.
-    /// This represents a change in size regardless of orientation, so will only
-    /// change when the actual physical screen size has changed such as
-    /// switching to an external display. A change to this configuration
-    /// corresponds to a change in the smallestWidth configuration. Added in
-    /// API level 13
+    /// The physical screen size has changed. This represents a change in size regardless
+    /// of orientation, so will only change when the actual physical screen size has
+    /// changed such as switching to an external display. A change to this
+    /// configuration corresponds to a change in the [`smallestWidth configuration`].
+    /// Added in API level 13
+    ///
+    /// [`smallestWidth configuration`]: https://developer.android.com/guide/topics/resources/providing-resources#SmallestScreenWidthQualifier
     SmallestScreenSize,
+    /// The touchscreen has changed. (This should never normally happen.)
+    Touchscreen,
+    /// The user interface mode has changed — the user has placed the device into a desk
+    /// or car dock, or the night mode has changed. For more information about the
+    /// different UI modes, see [`UiModeManager`]. Added in API level 8.
+    ///
+    /// [`UiModeManager`]: https://developer.android.com/reference/android/app/UiModeManager
+    UiMode,
 }
 
 /// This attribute has four values which produce the following effects when the

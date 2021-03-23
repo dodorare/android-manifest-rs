@@ -83,7 +83,7 @@ pub struct Application {
     /// name specified in the `<manifest>` element. There is no default. The
     /// name must be specified.
     #[serde(rename = "android:backupAgent")]
-    pub backup_agent: String,
+    pub backup_agent: Option<String>,
     /// Indicates that Auto Backup operations may be performed on this app even
     /// if the app is in a foreground-equivalent state. The system shuts
     /// down an app during auto backup operation, so use this attribute with
@@ -399,13 +399,17 @@ pub struct Application {
     /// compiler.
     #[serde(rename = "android:vmSafeMode")]
     pub vm_safe_mode: Option<bool>,
-
-    pub activities: Option<Vec<Activity>>,
-    pub servicies: Option<Vec<Service>>,
-    pub receivers: Option<Vec<Receiver>>,
-    pub providers: Option<Vec<Provider>>,
+    #[serde(rename = "activity", skip_serializing_if = "Vec::is_empty", default)]
+    pub activities: Vec<Activity>,
+    #[serde(rename = "service", skip_serializing_if = "Vec::is_empty", default)]
+    pub services: Vec<Service>,
+    #[serde(rename = "receiver", skip_serializing_if = "Vec::is_empty", default)]
+    pub receivers: Vec<Receiver>,
+    #[serde(rename = "provider", skip_serializing_if = "Vec::is_empty", default)]
+    pub providers: Vec<Provider>,
     pub activity_alias: Option<ActivityAlias>,
-    pub meta_datas: Option<Vec<MetaData>>,
+    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    pub meta_datas: Vec<MetaData>,
     pub uses_library: Option<UsesLibrary>,
 }
 

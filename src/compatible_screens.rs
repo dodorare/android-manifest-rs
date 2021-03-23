@@ -39,9 +39,19 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename = "compatible-screens")]
 pub struct CompatibleScreens {
-    screen: Vec<Screen>,
+    pub screen: Vec<Screen>,
 }
 
+/// Specifies a single screen configuration with which the application is
+/// compatible.
+///
+/// At least one instance of this element must be placed inside the
+/// `<compatible-screens>` element. This element must include both the
+/// `android:screenSize` and `android:screenDensity` attributes (if you do not
+/// declare both attributes, then the element is ignored).
+///
+/// Contained in:
+/// [`<compatible-screens>`](crate::CompatibleScreens)
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename = "screen")]
 pub struct Screen {

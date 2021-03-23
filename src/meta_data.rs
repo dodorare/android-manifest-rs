@@ -2,8 +2,8 @@ use super::resources::*;
 use serde::{Deserialize, Serialize};
 
 /// A name-value pair for an item of additional, arbitrary data that can be
-/// supplied to the parent component. 
-/// 
+/// supplied to the parent component.
+///
 /// A component element can contain any number
 /// of `<meta-data>` subelements. The values from all of them are collected in a
 /// single `Bundle` object and made available to the component as the
@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 /// resource attribute instead. For example, the following code assigns whatever
 /// value is stored in the @string/kangaroo resource to the `"zoo"` name:
 ///
-/// ## Example
+/// ## XML Examples
 ///
 /// ```xml
 /// <meta-data android:name="zoo" android:value="@string/kangaroo" />
@@ -20,16 +20,16 @@ use serde::{Deserialize, Serialize};
 /// On the other hand, using the resource attribute would assign `"zoo"` the
 /// numeric ID of the resource, not the value stored in the resource:
 ///
-/// ## Example
 /// ```xml
 /// <meta-data android:name="zoo" android:resource="@string/kangaroo" />
 /// ```
 ///
 /// It is highly recommended that you avoid supplying related data as multiple
-/// separate `<meta-data>` entries. Instead, if you have complex data to associate
-/// with a component, store it as a `resource` and use the resource attribute to
-/// inform the component of its ID.
+/// separate `<meta-data>` entries. Instead, if you have complex data to
+/// associate with a component, store it as a `resource` and use the resource
+/// attribute to inform the component of its ID.
 ///
+/// ## Contained in:
 /// * [`<activity>`](crate::Activity)
 /// * [`<activity-alias>`](crate::ActivityAlias)
 /// * [`<applocation>`](crate::Application)

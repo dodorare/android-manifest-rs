@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
 /// Defines the path and required permissions for a specific subset of data
-/// within a content provider. 
-/// 
+/// within a content provider.
+///
 /// This element can be specified multiple times to
 /// supply multiple paths.
 ///

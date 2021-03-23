@@ -1,6 +1,7 @@
 use super::ResourceType;
 use std::str::FromStr;
 
+/// String resource type.
 #[derive(Debug, PartialEq)]
 pub struct StringResource;
 
@@ -22,6 +23,7 @@ impl ResourceType for StringResource {
     }
 }
 
+/// Drawable resource type.
 #[derive(Debug, PartialEq)]
 pub struct DrawableResource;
 
@@ -43,6 +45,7 @@ impl ResourceType for DrawableResource {
     }
 }
 
+/// Xml resource type.
 #[derive(Debug, PartialEq)]
 pub struct XmlResource;
 
@@ -64,6 +67,7 @@ impl ResourceType for XmlResource {
     }
 }
 
+/// Style resource type.
 #[derive(Debug, PartialEq)]
 pub struct StyleResource;
 

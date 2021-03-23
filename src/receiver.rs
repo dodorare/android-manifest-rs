@@ -115,8 +115,8 @@ pub struct Receiver {
     /// default for all components. But component can override the default
     /// with its own process attribute, allowing you to spread your application
     /// across multiple processes. If the name assigned to this attribute
-    /// begins with a colon `(':')`, a new process, private to the application, is
-    /// created when it's needed and the service runs in that process.
+    /// begins with a colon `(':')`, a new process, private to the application,
+    /// is created when it's needed and the service runs in that process.
     /// If the process name begins with a lowercase character, the service will
     /// run in a global process of that name, provided that it has permission to
     /// do so. This allows components in different applications to share a

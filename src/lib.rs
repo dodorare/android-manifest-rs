@@ -9,6 +9,7 @@ mod grant_uri_permission;
 mod instrumentation;
 mod intent_filter;
 mod layout;
+mod list_serde;
 mod manifest;
 mod meta_data;
 mod path_permission;
