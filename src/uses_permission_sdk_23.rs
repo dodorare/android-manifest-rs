@@ -22,13 +22,18 @@ use serde::{Deserialize, Serialize};
 /// permissions defined by the base platform is available at
 /// [`android.Manifest.permission`].
 ///
+/// ## introduced in:
+/// API Level 23
+/// 
 /// ## Contained in:
+/// [`<manifest>`]
+///
 /// [`API level`]: https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels
 /// [`runtime permissions model`]: https://developer.android.com/training/permissions/requesting
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`System Permissions`]: https://developer.android.com/guide/topics/permissions/overview
 /// [`android.Manifest.permission`]: https://developer.android.com/reference/android/Manifest.permission
-/// [`<manifest>`](crate::Manifest)
+/// [`<manifest>`]: crate::Manifest
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-permission-sdk-23")]
 pub struct UsesPermissionSdk23 {
@@ -36,7 +41,7 @@ pub struct UsesPermissionSdk23 {
     /// with the [`<permission>`] element, it can be a permission defined by another
     /// app, or it can be one of the standard system permissions, such as
     /// [`android.permission.CAMERA`] or [`android.permission.READ_CONTACTS`].
-    /// 
+    ///
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
