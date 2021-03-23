@@ -61,7 +61,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Contained in:
 /// [`<manifest>`]
-/// 
+///
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManagers
 /// [`Features Reference`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#features-reference
 /// [`glEsVersion`]: crate::UsesFeature#structfield.gl_es_version

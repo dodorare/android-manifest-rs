@@ -7,11 +7,11 @@ use serde::{Deserialize, Serialize};
 
 /// Declares a content provider component.
 ///
-/// A content provider is a subclass of [`ContentProvider`] that supplies structured access
-/// to data managed by the application. All content providers in your application must be
-/// defined in a `<provider>` element in the manifest file; otherwise, the system is
-/// unaware of them and doesn't run them. You only declare content providers that are part
-/// of your application. Content providers in other applications that you use in your
+/// A content provider is a subclass of [`ContentProvider`] that supplies structured
+/// access to data managed by the application. All content providers in your application
+/// must be defined in a `<provider>` element in the manifest file; otherwise, the system
+/// is unaware of them and doesn't run them. You only declare content providers that are
+/// part of your application. Content providers in other applications that you use in your
 /// application should not be declared. The Android system stores references to
 /// content providers according to an authority string, part of the provider's
 /// content URI. For example, suppose you want to access a content provider
@@ -32,7 +32,8 @@ use serde::{Deserialize, Serialize};
 /// you define your provider in the `<provider>` element you don't include the
 /// scheme or the path in the `android:name` argument, only the authority.
 ///
-/// For information on using and developing content providers, see the API Guide, [`Content Providers`].
+/// For information on using and developing content providers, see the API Guide,
+/// [`Content Providers`].
 ///
 /// ## introduced in:
 /// API Level 1
@@ -80,7 +81,7 @@ pub struct Provider {
     /// enabled. If either is `"false"`, the service is disabled; it cannot be
     /// instantiated.
     ///
-    /// [`<application>`]: crate::Applications
+    /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
@@ -88,16 +89,17 @@ pub struct Provider {
     /// run before the user unlocks the device.
     ///
     /// ## Note:
-    /// During [`Direct Boot`], a service in your application can only access the data that is
-    /// stored in device protected storage. The default value is `"false"`.
+    /// During [`Direct Boot`], a service in your application can only access the data
+    /// that is stored in device protected storage. The default value is `"false"`.
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
-    /// Whether the content provider is available for other applications to use: 
-    /// * `true:` The provider is available to other applications. Any application can use the
+    /// Whether the content provider is available for other applications to use:
+    /// * `true:` The provider is available to other applications. Any application can use
+    ///   the
     /// provider's content URI to access it, subject to the permissions specified for
-    /// the provider. 
+    /// the provider.
     /// * `false:` The provider is not available to other applications.
     /// Set `android:exported="false"` to limit access to the provider to your
     /// applications. Only applications that have the same user ID (UID) as the

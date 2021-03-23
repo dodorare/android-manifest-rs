@@ -5,7 +5,7 @@ use serde::{
 };
 use std::fmt;
 
-/// Enum used when the value can be `StringResource` or just a mormal string.
+/// Enum used when the value can be string resource or just a row string.
 #[derive(Debug, PartialEq)]
 pub enum StringResourceOrString {
     StringResource(Resource<StringResource>),
@@ -38,7 +38,7 @@ impl<'de> Visitor<'de> for StringResourceOrStringVisitor {
         E: de::Error,
     {
         if v.is_empty() {
-            return Err(E::custom("value is empty"));
+            return Err(E::custom("value of attribute is empty"));
         };
         if v.chars().next().unwrap() == '@' {
             Ok(StringResourceOrString::StringResource(

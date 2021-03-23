@@ -21,14 +21,27 @@ use serde::{Deserialize, Serialize};
 /// the target carry over to the alias. However, for attributes not in the subset, the
 /// values set for the target activity also apply to the alias.
 ///
-/// ## Contained in:
+/// ## XML Syntax
+/// ```xml
+/// <activity-alias android:enabled=["true"|"false"]
+///                 android:exported=["true"|"false"]
+///                 android:icon="drawable resource"
+///                 android:label="string resource"
+///                 android:name="string"
+///                 android:permission="string"
+///                 android:targetActivity="string" >
+///     ...
+/// </activity-alias>
+/// ```
+///
+/// ## Contained in
 /// * [`<application>`]
 ///
-/// ## Can contain:
+/// ## Can contain
 /// * [`<intent-filter>`]
 /// * [`<meta-data>`]
 ///
-/// ## Introduced in:
+/// ## Introduced in
 /// API Level 1
 ///
 /// [`<application>`]: crate::Application
@@ -53,7 +66,7 @@ pub struct ActivityAlias {
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     /// [`<activity-alias>`]: crate::ActivityAlias
-    #[serde(rename = "android:enabled", default = "default_enabled")]
+    #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
     /// Whether the broadcast receiver can receive messages from non-system sources
     /// outside its application — "`true`" if it can, and "`false`" if
@@ -116,8 +129,4 @@ pub struct ActivityAlias {
 
     pub intent_filter: Option<IntentFilter>,
     pub meta_data: Option<MetaData>,
-}
-
-fn default_enabled() -> Option<bool> {
-    Some(true)
 }

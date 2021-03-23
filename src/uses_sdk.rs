@@ -5,19 +5,22 @@ use serde::{Deserialize, Serialize};
 ///
 /// The API Level expressed by an application will be compared to the API Level of a given
 /// Android system, which may vary among different Android devices.
+///
 /// Despite its name, this element is used to specify the API Level, not the version
 /// number of the SDK (software development kit) or Android platform. The API Level is
 /// always a single integer. You cannot derive the API Level from its associated Android
 /// version number (for example, it is not the same as the major version or the sum of the
-/// major and minor versions). [`Versioning Your Applications.`]
+/// major and minor versions).
+///
+/// Also read the document about [`Versioning Your Applications`].
 ///
 /// ## introduced in:
 /// API Level 1
 ///
 /// ## Contained in:
-/// [`<manifest>`]
+/// * [`<manifest>`]
 ///
-/// [`Versioning Your Applications.`]: https://developer.android.com/studio/publish/versioning
+/// [`Versioning Your Applications`]: https://developer.android.com/studio/publish/versioning
 /// [`<manifest>`]: crate::Manifest
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-sdk")]
@@ -27,30 +30,32 @@ pub struct UsesSdk {
     /// the system's API Level is lower than the value specified in this attribute.
     /// You should always declare this attribute.
     ///
-    /// ## `Caution:`
+    /// ## Caution
     /// If you do not declare this attribute, the system assumes a default value of "1",
     /// which indicates that your application is compatible with all versions of
     /// Android. If your application is not compatible with all versions (for
     /// instance, it uses APIs introduced in API Level 3) and you have not declared
-    /// the proper minSdkVersion, then when installed on a system with an API Level
+    /// the proper `minSdkVersion`, then when installed on a system with an API Level
     /// less than 3, the application will crash during runtime when attempting to
     /// access the unavailable APIs. For this reason, be certain to declare the
-    /// appropriate API Level in the minSdkVersion attribute.
+    /// appropriate API Level in the `minSdkVersion` attribute.
     #[serde(rename = "android:minSdkVersion")]
     pub min_sdk_version: Option<i32>,
     /// An integer designating the API Level that the application targets. If not set, the
-    /// default value equals that given to minSdkVersion. This attribute informs the
-    /// system that you have tested against the target version and the system should
-    /// not enable any compatibility behaviors to maintain your app's
-    /// forward-compatibility with the target version. The application is still able
-    /// to run on older versions (down to minSdkVersion). As Android evolves with each
-    /// new version, some behaviors and even appearances might change. However, if the
-    /// API level of the platform is higher than the version declared by your app's
-    /// targetSdkVersion the system may enable compatibility behaviors to
-    /// ensure that your app continues to work the way you expect.You can
-    /// disable such compatibility behaviors by specifying targetSdkVersion
-    /// to match the API level of the platform on which it's running. For
-    /// example, setting this value to "11" or higher allows the system to apply
+    /// default value equals that given to `minSdkVersion`.
+    ///
+    /// This attribute informs the system that you have tested against the target version
+    /// and the system should not enable any compatibility behaviors to maintain your
+    /// app's forward-compatibility with the target version. The application is still
+    /// able to run on older versions (down to minSdkVersion).
+    ///
+    /// As Android evolves with each new version, some behaviors and even appearances
+    /// might change. However, if the API level of the platform is higher than the
+    /// version declared by your app's targetSdkVersion the system may enable
+    /// compatibility behaviors to ensure that your app continues to work the way you
+    /// expect.You can disable such compatibility behaviors by specifying
+    /// targetSdkVersion to match the API level of the platform on which it's running.
+    /// For example, setting this value to "11" or higher allows the system to apply
     /// a new default theme (Holo) to your app when running on Android 3.0
     /// or higher and also disables [`screen compatibility mode`] when running on
     /// larger screens (because support for API level 11 implicitly supports
@@ -74,16 +79,16 @@ pub struct UsesSdk {
     /// to run. In Android 1.5, 1.6, 2.0, and 2.0.1, the system checks the value of
     /// this attribute when installing an application and when re-validating the
     /// application after a system update. In either case, if the application's
-    /// maxSdkVersion attribute is lower than the API Level used by the system itself,
+    /// `maxSdkVersion` attribute is lower than the API Level used by the system itself,
     /// then the system will not allow the application to be installed. In the case of
     /// re-validation after system update, this effectively removes your application
-    /// from the device. 
+    /// from the device.
     ///
     /// To illustrate how this attribute can affect your application
-    /// after system updates, consider the following example: 
+    /// after system updates, consider the following example:
     ///
-    /// An application declaring maxSdkVersion="5" in its manifest is published on Google Play.
-    /// A user whose device is running Android 1.6 (API Level 4) downloads and
+    /// An application declaring maxSdkVersion="5" in its manifest is published on Google
+    /// Play. A user whose device is running Android 1.6 (API Level 4) downloads and
     /// installs the app. After a few weeks, the user receives an
     /// over-the-air system update to Android 2.0 (API Level 5). After the
     /// update is installed, the system checks the application's maxSdkVersion
@@ -95,7 +100,9 @@ pub struct UsesSdk {
     /// application (5). The system prevents the application from being
     /// visible to the user, in effect removing it from the device.
     ///
-    /// ## `Warning:`
+    /// Introduced in: API Level 4
+    ///
+    /// ## Warning
     /// Declaring this attribute is not recommended. First, there is no need to set the
     /// attribute as means of blocking deployment of your application onto new
     /// versions of the Android platform as they are released. By design, new versions
@@ -107,6 +114,12 @@ pub struct UsesSdk {
     /// which your application is likely to be installed will receive periodic
     /// system updates over the air, so you should consider their effect on your
     /// application before setting this attribute.
+    ///
+    /// ## Note
+    /// Future versions of Android (beyond Android 2.0.1) will no longer check or enforce
+    /// the `maxSdkVersion` attribute during installation or re-validation. Google Play
+    /// will continue to use the attribute as a filter, however, when presenting users
+    /// with applications available for download.
     #[serde(rename = "android:maxSdkVersion")]
     pub max_sdk_version: Option<i32>,
 }

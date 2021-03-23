@@ -82,7 +82,7 @@ pub struct Receiver {
     /// [`<application>`] element's [`icon`](crate::Application#structfield.icon)
     /// attribute). The service's icon — whether set here or by the [`<application>`]
     /// element — is also the default icon for all the service's intent filters (see
-    /// the [`<intent-filter>`] element's [`icon`](crate::IntentFilter#structfield.icon) 
+    /// the [`<intent-filter>`] element's [`icon`](crate::IntentFilter#structfield.icon)
     /// attribute).
     ///
     /// [`<application>`]: crate::Application
@@ -122,10 +122,11 @@ pub struct Receiver {
     pub name: String,
     /// The name of a permission that broadcasters must have to send a message to the
     /// broadcast receiver. If this attribute is not set, the permission set by the
-    /// [`<application>`] element's [`permission`] attribute applies to the broadcast receiver. If
-    /// neither attribute is set, the receiver is not protected by a permission.
-    /// For more information on permissions, see the [`Permissions`] section in the
-    /// introduction and a separate document, [`Security and Permissions`].
+    /// [`<application>`] element's [`permission`] attribute applies to the broadcast
+    /// receiver. If neither attribute is set, the receiver is not protected by a
+    /// permission. For more information on permissions, see the [`Permissions`]
+    /// section in the introduction and a separate document, [`Security and
+    /// Permissions`].
     ///
     /// [`<application>`]: crate::Application
     /// [`permission`]: crate::Application#structfield.permission

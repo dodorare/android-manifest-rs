@@ -45,7 +45,7 @@ impl<'de> Visitor<'de> for AnyResourceVisitor {
         E: de::Error,
     {
         if v.is_empty() {
-            return Err(E::custom("value is empty"));
+            return Err(E::custom("value of attribute is empty"));
         };
         let (package, resource_type, name) = parse_resource(v).map_err(|e| E::custom(e))?;
         let any = if StringResource::resource_type() == resource_type {

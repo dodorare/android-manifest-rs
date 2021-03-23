@@ -109,13 +109,15 @@ pub struct Service {
     pub isolated_process: Option<bool>,
     /// A name for the service that can be displayed to users. If this attribute is not
     /// set, the label set for the application as a whole is used instead
-    /// (see the [`<application>`] element's [`label`](crate::Application#structfield.label) attribute). The service's
+    /// (see the [`<application>`] element's
+    /// [`label`](crate::Application#structfield.label) attribute). The service's
     /// label — whether set here or by the [`<application>`] element — is also the
     /// default label for all the service's intent filters (see the
-    /// [`<intent-filter>`] element's [`label`](crate::IntentFilter#structfield.label) attribute). The label should be set
-    /// as a reference to a string resource, so that it can be localized like
-    /// other strings in the user interface. However, as a convenience while
-    /// you're developing the application, it can also be set as a raw string.
+    /// [`<intent-filter>`] element's [`label`](crate::IntentFilter#structfield.label)
+    /// attribute). The label should be set as a reference to a string resource, so
+    /// that it can be localized like other strings in the user interface. However, as
+    /// a convenience while you're developing the application, it can also be set as a
+    /// raw string.
     ///
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter

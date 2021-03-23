@@ -7,10 +7,15 @@ use serde::{Deserialize, Serialize};
 /// [`Intent`] objects. See [`Intents and Intent Filters`] for details on intent filters
 /// and the role of action specifications within a filter.
 ///
-/// ## Contained in:
+/// ## XML Syntax
+/// ```xml
+/// <action android:name="string" />
+/// ```
+///
+/// ## Contained in
 /// * [`<intent-filter>`]
 ///
-/// ## Introduced in:
+/// ## Introduced in
 /// API Level 1
 ///
 /// [`<intent-filter>`]: crate::IntentFilter
@@ -28,7 +33,7 @@ pub struct Action {
     /// For actions you define, it's best to use your app's package name as a prefix to
     /// ensure uniqueness.
     ///
-    /// ## XML Example
+    /// ## XML Examples
     /// A `TRANSMOGRIFY` action might be specified as follows:
     /// ```xml
     /// <action android:name="com.example.project.TRANSMOGRIFY" />
