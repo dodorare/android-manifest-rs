@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 /// Screen compatibility mode is not a mode in which you should want your
 /// application to run—it causes pixelation and blurring in your UI, due to
 /// zooming. The proper way to make your application work well on large screens
-/// is to follow the guide to Supporting Multiple Screens and provide
+/// is to follow the guide to [`Supporting Multiple Screens`] and provide
 /// alternative layouts for different screen sizes.
 ///
 /// An application `"supports"` a given screen size if it resizes properly to
@@ -19,7 +19,7 @@ use serde::{Deserialize, Serialize};
 /// most applications and you don't have to do any extra work to make your
 /// application work on screens larger than a handset device. However, it's
 /// often important that you optimize your application's UI for different screen
-/// sizes by providing alternative layout resources. For instance, you might
+/// sizes by providing [`alternative layout resources`]. For instance, you might
 /// want to modify the layout of an activity when it is on a tablet compared to
 /// when running on a handset device.
 /// However, if your application does not work well when resized to fit
@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 /// distributed to smaller screens or have its UI scaled up `("zoomed")` to fit
 /// larger screens using the system's screen compatibility mode. When you have
 /// not designed for larger screen sizes and the normal resizing does not
-/// achieve the appropriate results, screen compatibility mode will scale your
+/// achieve the appropriate results, [`screen compatibility mode`] will scale your
 /// UI by emulating a normal size screen and medium density, then zooming in so
 /// that it fills the entire screen. Beware that this causes pixelation and
 /// blurring of your UI, so it's better if you optimize your UI for large
@@ -50,18 +50,26 @@ use serde::{Deserialize, Serialize};
 /// the screen. On Android 3.2 and up the system draws the layout as it would on
 /// a 320dp x 480dp screen then scales it up to fill the screen. This will often
 /// cause artifacts such as blurring and pixelation in your UI.
+/// For more information read [`Supporting Multiple Screens`].
+
 ///
 /// ## Contained in:
 /// [`<manifest>`](crate::Manifest)
+///
+/// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
+/// [`alternative layout resources`]: https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources
+/// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "supports-screens")]
 pub struct SupportsScreens {
     /// Indicates whether the application is resizeable for different screen
     /// sizes. This attribute is true, by default. If set false, the system
-    /// will run your application in screen compatibility mode on large screens.
+    /// will run your application in [`screen compatibility mode`] on large screens.
     /// This attribute is deprecated. It was introduced to help applications
     /// transition from Android 1.5 to 1.6, when support for multiple screens
     /// was first introduced. You should not use it.
+    ///
+    /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[serde(rename = "android:resizeable")]
     pub resizeable: Option<bool>,
     /// Indicates whether the application supports smaller screen form-factors.
@@ -86,10 +94,11 @@ pub struct SupportsScreens {
     /// resizing by the system to fill the screen. The default value for
     /// this actually varies between some versions, so it's better if you
     /// explicitly declare this attribute at all times. Beware that setting
-    /// it "false" will generally enable screen compatibility mode.
+    /// it "false" will generally enable [`screen compatibility mode`].
+    ///
+    /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[serde(rename = "android:largeScreens")]
     pub large_screens: Option<bool>,
-
     /// Indicates whether the application supports extra large screen
     /// form-factors. An xlarge screen is defined as a screen that is
     /// significantly larger than a "large" screen, such as a tablet (or
@@ -98,8 +107,10 @@ pub struct SupportsScreens {
     /// system to fill the screen. The default value for this actually
     /// varies between some versions, so it's better if you explicitly declare
     /// this attribute at all times. Beware that setting it "false" will
-    /// generally enable screen compatibility mode. This attribute was
+    /// generally enable [`screen compatibility mode`]. This attribute was
     /// introduced in API level 9.
+    ///
+    /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[serde(rename = "android:xlargeScreens")]
     pub xlarge_screens: Option<bool>,
     /// Indicates whether the application includes resources to accommodate any
@@ -108,7 +119,9 @@ pub struct SupportsScreens {
     /// "false" unless you're absolutely certain that it's necessary for
     /// your application to work. The only time it might be necessary to
     /// disable this is if your app directly manipulates bitmaps (see the
-    /// Supporting Multiple Screens document for more information).
+    /// [`Supporting Multiple Screens`] document for more information).
+    ///
+    /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
     #[serde(rename = "android:anyDensity")]
     pub any_density: Option<bool>,
     /// Specifies the minimum smallestWidth required. The smallestWidth is the
@@ -140,17 +153,20 @@ pub struct SupportsScreens {
     /// If your application properly resizes for smaller screen sizes (down to
     /// the small size or a minimum width of 320dp), you do not need to use this
     /// attribute. Otherwise, you should use a value for this attribute that
-    /// matches the smallest value used by your application for the smallest
-    /// screen width qualifier (sw<N>dp). Caution: The Android system does
+    /// matches the smallest value used by your application for the [`smallest screen width qualifier`] (sw<N>dp).
+    /// ## Caution: 
+    /// The Android system does
     /// not pay attention to this attribute, so it does not affect how your
     /// application behaves at runtime. Instead, it is used to enable filtering
     /// for your application on services such as Google Play.
     /// However, Google Play currently does not support this attribute for
     /// filtering (on Android 3.2), so you should continue using the other size
     /// attributes if your application does not support small screens.
+    ///
+    /// [`smallest screen width qualifier`]: https://developer.android.com/guide/topics/resources/providing-resources#SmallestScreenWidthQualifier
     #[serde(rename = "android:requiresSmallestWidthDp")]
     pub requires_smallest_width_dp: Option<i32>,
-    /// This attribute allows you to enable screen compatibility mode as a
+    /// This attribute allows you to enable [`screen compatibility mode`] as a
     /// user-optional feature by specifying the maximum "smallest screen width"
     /// for which your application is designed. If the smallest side of a
     /// device's available screen is greater than your value here, users can
@@ -160,10 +176,14 @@ pub struct SupportsScreens {
     /// button is available in the system bar that allows the user to toggle
     /// screen compatibility mode on and off. If your application is
     /// compatible with all screen sizes and its layout properly resizes, you do
-    /// not need to use this attribute. `Note:` Currently, screen
+    /// not need to use this attribute. 
+    /// ## Note: 
+    /// Currently, screen
     /// compatibility mode emulates only handset screens with a 320dp width, so
     /// screen compatibility mode is not applied if your value for
     /// android:compatibleWidthLimitDp is larger than 320.
+    ///
+    /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode`
     #[serde(rename = "android:compatibleWidthLimitDp")]
     pub compatible_width_limit_dp: Option<i32>,
     /// This attribute allows you to force-enable screen compatibility mode by
@@ -177,10 +197,14 @@ pub struct SupportsScreens {
     /// attribute. You should use the android:largestWidthLimitDp attribute only
     /// when your application is functionally broken when resized for larger
     /// screens and screen compatibility mode is the only way that users should
-    /// use your application. `Note:` Currently, screen compatibility mode
+    /// use your application. 
+    /// ## Note:
+    /// Currently, screen compatibility mode
     /// emulates only handset screens with a 320dp width, so screen
     /// compatibility mode is not applied if your value for
-    /// android:largestWidthLimitDp is larger than 320.
+    /// [`android:largestWidthLimitDp`] is larger than 320.
+    ///
+    /// [`android:largestWidthLimitDp`]: crate::SupportsScreens#structfield.compatible_width_limit_dp
     #[serde(rename = "android:largestWidthLimitDp")]
     pub largest_width_limit_dp: Option<i32>,
 }

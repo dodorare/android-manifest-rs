@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 /// and support devices that provide d-pad input in addition to or instead of
 /// touch. information about how to support d-pad input in your app, read
 /// Enabling Focus Navigation. If your app absolutely cannot function without a
-/// touchscreen, then instead use the `<uses-feature>` tag to declare the
+/// touchscreen, then instead use the [`<uses-feature>`] tag to declare the
 /// required touchscreen type, ranging from `"android.hardware.faketouch"` for
 /// basic touch-style events to more advanced touch types such as
 /// `"android.hardware.touchscreen.multitouch.jazzhand"` for distinct input from
@@ -20,6 +20,9 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Contained in:
 /// [`<manifest>`](crate::Manifest)
+///
+/// [`<uses-feature>`]: crate::UsesFeature
+/// 
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-configuration")]
 pub struct UsesConfiguration {
@@ -30,9 +33,11 @@ pub struct UsesConfiguration {
     /// D-pad (directional pad), trackball, or other device. If an
     /// application requires a directional control, but not a control of a
     /// particular type, it can set this attribute to "true" and ignore the
-    /// reqNavigation attribute. However, if it requires a particular type
+    /// [`reqNavigation`] attribute. However, if it requires a particular type
     /// of directional control, it can ignore this attribute and set
-    /// reqNavigation instead.
+    /// `reqNavigation` instead.
+    /// 
+    /// [`reqNavigation`]: crate::UsesConfiguration#structfield.req_navigation
     #[serde(rename = "android:reqFiveWayNav")]
     pub req_five_way_nav: Option<bool>,
     /// Whether or not the application requires a hardware keyboard — `"true"`
@@ -71,8 +76,10 @@ pub enum ReqKeyboardType {
 }
 
 /// If an application requires a navigational control, but the exact type of
-/// control doesn't matter, it can set the reqFiveWayNav attribute to "true"
+/// control doesn't matter, it can set the [`reqFiveWayNav`] attribute to "true"
 /// rather than set this one.
+///
+/// [`reqFiveWayNav`]: crate::UsesConfiguration#structfield.req_five_way_nav
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ReqNavigation {
@@ -91,9 +98,11 @@ pub enum ReqNavigation {
 
 /// ## `Note:`
 /// If some type of touch input is required for your app, you should
-/// instead use the `<uses-feature>` tag to declare the required touchscreen
+/// instead use the [`<uses-feature>`] tag to declare the required touchscreen
 /// type, beginning with `"android.hardware.faketouch"` for basic touch-style
 /// events.
+///
+/// [`<uses-feature>`]: crate::UsesFeature
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ReqTouchScreen {

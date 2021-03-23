@@ -3,16 +3,17 @@ use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
-/// Declares a broadcast receiver  as one of the application's components.
+/// Declares a broadcast receiver (a [`BroadcastReceiver`] subclass) as one of the 
+/// application's components.
 ///
 /// Broadcast receivers enable applications to receive
 /// intents that are broadcast by the system or by other applications, even when
 /// other components of the application are not running. There are two ways to
 /// make a broadcast receiver known to the system: One is declare it in the
 /// manifest file with this element. The other is to create the receiver
-/// dynamically in code and register it with the `Context.registerReceiver()`
+/// dynamically in code and register it with the [`Context.registerReceiver()`]
 /// method. For more information about how to dynamically create receivers, see
-/// the `BroadcastReceiver` class description.
+/// the [`BroadcastReceiver`] class description.
 ///
 /// ## Warning:
 /// Limit how many broadcast receivers you set in your app.
@@ -27,23 +28,32 @@ use serde::{Deserialize, Serialize};
 /// ## Can contain:
 /// * [`<intent-filter>`](crate::IntentFilter)
 /// * [`<meta-data>`](crate::MetaData)
+///
+/// [`BroadcastReceiver`]: https://developer.android.com/reference/android/content/BroadcastReceiver
+/// [`Context.registerReceiver()`]: https://developer.android.com/reference/android/content/Context#registerReceiver(android.content.BroadcastReceiver,%20android.content.IntentFilter)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "receiver")]
 pub struct Receiver {
     /// Whether or not the broadcast `receiver` is direct-boot aware; that is,
     /// whether or not it can run before the user unlocks the device.
-    /// `Note:` During Direct Boot, a broadcast `receiver` in your application
+    /// ## Note: 
+    /// During [`Direct Boot`], a broadcast `receiver` in your application
     /// can only access the data that is stored in device protected storage.
     /// The default value is "false".
+    ///
+    /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
     /// Whether or not the broadcast receiver can be instantiated by the system
     /// — `"true"` if it can be, and `"false"` if not. The default value is
-    /// `"true"`. The `<application>` element has its own `enabled`
+    /// `"true"`. The [`<application>`] element has its own [`enabled`]
     /// attribute that applies to all application components, including
-    /// broadcast receivers. The `<application>` and <receiver> attributes
+    /// broadcast receivers. The [`<application>`] and <receiver> attributes
     /// must both be `"true"` for the broadcast receiver to be enabled. If
     /// either is `"false`", it is disabled; it cannot be instantiated.
+    ///
+    /// [`<application>`]: crate::Application
+    /// [`enabled`]: crate::Application#structfield.enabled
     #[serde(rename = "android:enabled")]
     pub enabled: Option<bool>,
     /// Whether the broadcast receiver can receive messages from non-system
@@ -56,34 +66,38 @@ pub struct Receiver {
     /// then the default value is `"true"` Otherwise, the default value is
     /// `"false"`. This attribute is not the only way to limit a broadcast
     /// receiver's external exposure. You can also use a permission to limit
-    /// the external entities that can send it messages (see the permission
+    /// the external entities that can send it messages (see the [`permission`]
     /// attribute).
+    ///
+    /// [`permission`]: crate::Receiver#structfield.permission
     #[serde(rename = "android:exported")]
     pub exported: Option<bool>,
     /// An icon representing the service. This attribute must be set as a
     /// reference to a drawable resource containing the image definition. If
     /// it is not set, the icon specified for the application as a whole is used
-    /// instead (see the <application> element's icon attribute).
-    /// The service's icon — whether set here or by the `<application>` element
+    /// instead (see the [`<application>`] element's [`icon`] attribute).
+    /// The service's icon — whether set here or by the [`<application>`] element
     /// — is also the default icon for all the service's intent filters (see the
-    /// `<intent-filter>` element's icon attribute).
+    /// [`<intent-filter>`] element's [`icon`] attribute).
+    ///
+    /// [`<application>`]: crate::Application
+    /// [`<intent-filter>`]: crate::IntentFilter
+    /// [`icon`]: crate::Application#structfield.icon
     #[serde(rename = "android:icon")]
     pub icon: Option<Resource<DrawableResource>>,
-    /// If set to true, this service will run under a special process that is
-    /// isolated from the rest of the system and has no permissions of its own.
-    /// The only communication with it is through the Service API (binding and
-    /// starting).
-    #[serde(rename = "android:isolatedProcess")]
-    pub isolated_process: Option<bool>,
     /// A name for the service that can be displayed to users. If this attribute
     /// is not set, the label set for the application as a whole is used instead
-    /// (see the `<application>` element's label attribute). The service's
+    /// (see the [`<application>`] element's [`label`] attribute). The service's
     /// label — whether set here or by the <application> element — is also the
     /// default label for all the service's intent filters (see the
-    /// `<intent-filter>` element's label attribute). The label should be set
+    /// [`<intent-filter>`] element's [`label`] attribute). The label should be set
     /// as a reference to a string resource, so that it can be localized like
     /// other strings in the user interface. However, as a convenience while
     /// you're developing the application, it can also be set as a raw string.
+    ///
+    /// [`<application>`]: crate::Application
+    /// [`<intent-filter>`]: crate::IntentFilter
+    /// [`label`]: crate::Application#structfield.label
     #[serde(rename = "android:label")]
     pub label: Option<StringResourceOrString>,
     /// The name of the `Service` subclass that implements the service. This

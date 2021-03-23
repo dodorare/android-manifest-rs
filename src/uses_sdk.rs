@@ -11,8 +11,10 @@ use serde::{Deserialize, Serialize};
 /// The API Level is always a single integer. You cannot derive the API Level
 /// from its associated Android version number (for example, it is not the same
 /// as the major version or the sum of the major and minor versions).
+/// [`Versioning Your Applications.`]
 ///
 /// ## Contained in:
+/// [`Versioning Your Applications.`]: https://developer.android.com/studio/publish/versioning
 /// [`<manifest>`](crate::Manifest)
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-sdk")]
@@ -33,7 +35,7 @@ pub struct UsesSdk {
     /// unavailable APIs. For this reason, be certain to declare the
     /// appropriate API Level in the minSdkVersion attribute.
     #[serde(rename = "android:minSdkVersion")]
-    pub name: Option<i32>,
+    pub min_sdk_version: Option<i32>,
     /// An integer designating the API Level that the application targets. If
     /// not set, the default value equals that given to minSdkVersion.
     /// This attribute informs the system that you have tested against the
@@ -49,15 +51,18 @@ pub struct UsesSdk {
     /// to match the API level of the platform on which it's running. For
     /// example, setting this value to "11" or higher allows the system to apply
     /// a new default theme (Holo) to your app when running on Android 3.0
-    /// or higher and also disables screen compatibility mode when running on
+    /// or higher and also disables [`screen compatibility mode`] when running on
     /// larger screens (because support for API level 11 implicitly supports
     /// larger screens). There are many compatibility behaviors that the
     /// system may enable based on the value you set for this attribute.
     /// Several of these behaviors are described by the corresponding platform
-    /// versions in the Build.VERSION_CODES reference. To maintain your
+    /// versions in the [`Build.VERSION_CODES`] reference. To maintain your
     /// application along with each Android release, you should increase the
     /// value of this attribute to match the latest API level, then thoroughly
     /// test your application on the corresponding platform version.
+    ///
+    /// [`Build.VERSION_CODES`]: https://developer.android.com/reference/android/os/Build.VERSION_CODES
+    /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[serde(rename = "android:targetSdkVersion")]
     pub target_sdk_version: Option<i32>,
     /// An integer designating the maximum API Level on which the application is

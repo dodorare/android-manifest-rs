@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 /// Specifies a shared library that the application must be linked against.
 ///
 /// This element tells the system to include the library's code in the class
-/// loader for the package. All of the android packages (such as `android.app`,
-/// `android.content`, `android.view`, and `android.widget`) are in the default
+/// loader for the package. All of the android packages (such as [`android.app`],
+/// [`android.content`], [`android.view`], and [`android.widget`]) are in the default
 /// library that all applications are automatically linked against. However,
 /// some packages (such as maps) are in separate libraries that are not
 /// automatically linked. Consult the documentation for the packages you're
@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Installation
 /// If this element is present and its android:required attribute is set to
-/// true, the PackageManager framework won't let the user install the
+/// true, the [`PackageManager`] framework won't let the user install the
 /// application unless the library is present on the user's device.
 ///
 /// The `android:required` attribute is described in detail in the following
@@ -22,6 +22,12 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Contained in:
 /// [`<manifest>`](crate::Manifest)
+///
+/// [`android.app`]: https://developer.android.com/reference/android/app/package-summary
+/// [`android.content`]: https://developer.android.com/reference/android/content/package-summary
+/// [`android.view`]: https://developer.android.com/reference/android/view/package-summary
+/// [`android.widget`]: https://developer.android.com/reference/android/widget/package-summary
+/// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-library")]
 pub struct UsesLibrary {

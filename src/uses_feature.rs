@@ -13,8 +13,8 @@ use serde::{Deserialize, Serialize};
 /// describe the device-variable features that it uses.
 
 /// The set of available features that your application declares corresponds to
-/// the set of feature constants made available by the Android `PackageManager`,
-/// which are listed for convenience in the `Features Reference` sections at the
+/// the set of feature constants made available by the Android [`PackageManager`],
+/// which are listed for convenience in the [`Features Reference`] sections at the
 /// bottom of this document.
 
 /// You must specify each feature in a separate `<uses-feature>` element, so if
@@ -40,12 +40,12 @@ use serde::{Deserialize, Serialize};
 
 /// For some features, there may exist a specific attribute that allows you to
 /// define a version of the feature, such as the version of Open GL used
-/// (declared with `glEsVersion`). Other features that either do or do not exist
-/// for a device, such as a camera, are declared using the `name` attribute.
+/// (declared with [`glEsVersion`]). Other features that either do or do not exist
+/// for a device, such as a camera, are declared using the [`name`] attribute.
 
 /// Although the <uses-feature> element is only activated for devices running
 /// API Level 4 or higher, it is recommended to include these elements for all
-/// applications, even if the `minSdkVersion` is "3" or lower. Devices running
+/// applications, even if the [`minSdkVersion`] is "3" or lower. Devices running
 /// older versions of the platform will simply ignore the element.
 ///
 /// ## `Note:`
@@ -58,13 +58,22 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Contained in:
 /// [`<manifest>`](crate::Manifest)
+///
+/// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManagers
+/// [`Features Reference`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#features-reference
+/// [`glEsVersion`]: crate::UsesFeature#structfield.gl_es_version
+/// [`name`]: crate::UsesFeature#structfield.name
+/// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-feature")]
 pub struct UsesFeature {
     /// Specifies a single hardware or software feature used by the application,
     /// as a descriptor string. Valid attribute values are listed in the
-    /// Hardware features and Software features sections. These attribute
+    /// [`Hardware features`] and [`Software features`] sections. These attribute
     /// values are case-sensitive.
+    ///
+    /// [`Hardware features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#hw-features
+    /// [`Software features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#sw-features
     #[serde(rename = "android:name")]
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the
@@ -98,6 +107,10 @@ pub struct UsesFeature {
     /// requires OpenGL ES 2.0. An application that can work with any of
     /// several OpenGL ES versions should only specify the numerically lowest
     /// version of OpenGL ES that it requires.
+    /// For more information about using OpenGL ES, including how to check the
+    /// supported OpenGL ES version at runtime, see the [`OpenGL ES API guide`].
+    ///
+    /// [`OpenGL ES API guide`]: https://developer.android.com/guide/topics/graphics/opengl
     #[serde(rename = "android:glEsVersion")]
     pub gl_es_version: Option<i32>,
 }
