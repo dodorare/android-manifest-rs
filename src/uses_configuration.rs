@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /// particular navigation device, like a trackball. The specification is used to avoid
 /// installing the application on devices where it will not work.
 ///
-/// ## `Note:`
+/// ## Note
 /// Most apps should not use this manifest tag. You should always support input with a
 /// directional pad (d-pad) in order to assist sight-impaired users and support devices
 /// that provide d-pad input in addition to or instead of touch. information about how to
@@ -17,11 +17,11 @@ use serde::{Deserialize, Serialize};
 /// types such as `"android.hardware.touchscreen.multitouch.jazzhand"` for distinct input
 /// from multiple fingers.
 ///
-/// ## introduced in:
-/// API Level 3
+/// ## Contained in
+/// * [`<manifest>`]
 ///
-/// ## Contained in:
-/// [`<manifest>`]
+/// ## Introduced in
+/// API Level 3
 ///
 /// [`<uses-feature>`]: crate::UsesFeature
 /// [`<manifest>`]: crate::Manifest

@@ -22,10 +22,10 @@ use serde::{Deserialize, Serialize};
 /// permissions defined by the base platform is available at
 /// [`android.Manifest.permission`].
 ///
-/// ## Introduced in:
+/// ## Introduced in
 /// API Level 23
 ///
-/// ## Contained in:
+/// ## Contained in
 /// * [`<manifest>`]
 ///
 /// [`API level`]: https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels

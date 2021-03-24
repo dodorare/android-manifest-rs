@@ -56,11 +56,11 @@ use serde::{Deserialize, Serialize};
 /// while declaring the features used by your application ensures proper device
 /// compatibility.
 ///
-/// ## introduced in:
+/// ## Introduced in
 /// API Level 4
 ///
-/// ## Contained in:
-/// [`<manifest>`]
+/// ## Contained in
+/// * [`<manifest>`]
 ///
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManagers
 /// [`Features Reference`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#features-reference

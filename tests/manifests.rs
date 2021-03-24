@@ -22,7 +22,7 @@ fn test_simple_android_manifest_serialize() {
         package: "rust.myapp".to_owned(),
         shared_user_label: Some(StringResource::new("resource_name", None)),
         application: Application {
-            activities: Vec::from([Activity::default()]),
+            activity: Vec::from([Activity::default()]),
             ..Default::default()
         },
         ..Default::default()

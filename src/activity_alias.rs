@@ -23,8 +23,8 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## XML Syntax
 /// ```xml
-/// <activity-alias android:enabled=["true"|"false"]
-///                 android:exported=["true"|"false"]
+/// <activity-alias android:enabled=["true" | "false"]
+///                 android:exported=["true" | "false"]
 ///                 android:icon="drawable resource"
 ///                 android:label="string resource"
 ///                 android:name="string"

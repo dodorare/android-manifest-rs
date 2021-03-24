@@ -27,11 +27,11 @@ use serde::{Deserialize, Serialize};
 /// For a list of permissions that imply hardware features, see the documentation for the
 /// [`<uses-feature>`] element.
 ///
-/// ## Introduced in:
-/// API Level 1
-///
-/// ## Contained in:
+/// ## Contained in
 /// * [`<manifest>`]
+///
+/// ## Introduced in
+/// API Level 1
 ///
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`System Permissions`]: https://developer.android.com/guide/topics/permissions/overview

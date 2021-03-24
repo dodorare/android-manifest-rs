@@ -14,10 +14,10 @@ use serde::{Deserialize, Serialize};
 ///
 /// Also read the document about [`Versioning Your Applications`].
 ///
-/// ## introduced in:
+/// ## introduced in
 /// API Level 1
 ///
-/// ## Contained in:
+/// ## Contained in
 /// * [`<manifest>`]
 ///
 /// [`Versioning Your Applications`]: https://developer.android.com/studio/publish/versioning

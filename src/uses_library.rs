@@ -20,10 +20,10 @@ use serde::{Deserialize, Serialize};
 /// The `android:required` attribute is described in detail in the following
 /// section.
 ///
-/// ## introduced in:
+/// ## introduced in
 /// API Level 1
 ///
-/// ## Contained in:
+/// ## Contained in
 /// [`<manifest>`]
 ///
 /// [`android.app`]: https://developer.android.com/reference/android/app/package-summary

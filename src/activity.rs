@@ -2,6 +2,7 @@ use super::intent_filter::IntentFilter;
 use super::layout::Layout;
 use super::meta_data::MetaData;
 use super::resources::{DrawableResource, Resource, StringResourceOrString, StyleResource};
+use super::ui_options::UiOptions;
 use serde::{Deserialize, Serialize};
 
 /// Declares an activity (an [`Activity`] subclass) that implements part of the
@@ -12,58 +13,58 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## XML Syntax
 /// ```xml
-/// <activity android:allowEmbedded=["true"|"false"]
-///           android:allowTaskReparenting=["true"|"false"]
-///           android:alwaysRetainTaskState=["true"|"false"]
-///           android:autoRemoveFromRecents=["true"|"false"]
+/// <activity android:allowEmbedded=["true" | "false"]
+///           android:allowTaskReparenting=["true" | "false"]
+///           android:alwaysRetainTaskState=["true" | "false"]
+///           android:autoRemoveFromRecents=["true" | "false"]
 ///           android:banner="drawable resource"
-///           android:clearTaskOnLaunch=["true"|"false"]
-///           android:colorMode=["hdr"|"wideColorGamut"]
+///           android:clearTaskOnLaunch=["true" | "false"]
+///           android:colorMode=["hdr" | "wideColorGamut"]
 ///           android:configChanges=["mcc", "mnc", "locale",
 ///                                  "touchscreen", "keyboard", "keyboardHidden",
 ///                                  "navigation", "screenLayout", "fontScale",
 ///                                  "uiMode", "orientation", "density",
 ///                                  "screenSize", "smallestScreenSize"]
-///           android:directBootAware=["true"|"false"]
-///           android:documentLaunchMode=["intoExisting"|"always"|
-///                                       "none"|"never"]
-///           android:enabled=["true"|"false"]
-///           android:excludeFromRecents=["true"|"false"]
-///           android:exported=["true"|"false"]
-///           android:finishOnTaskLaunch=["true"|"false"]
-///           android:hardwareAccelerated=["true"|"false"]
+///           android:directBootAware=["true" | "false"]
+///           android:documentLaunchMode=["intoExisting" | "always" |
+///                                       "none" | "never"]
+///           android:enabled=["true" | "false"]
+///           android:excludeFromRecents=["true" | "false"]
+///           android:exported=["true" | "false"]
+///           android:finishOnTaskLaunch=["true" | "false"]
+///           android:hardwareAccelerated=["true" | "false"]
 ///           android:icon="drawable resource"
-///           android:immersive=["true"|"false"]
+///           android:immersive=["true" | "false"]
 ///           android:label="string resource"
-///           android:launchMode=["standard"|"singleTop"|
-///                               "singleTask"|"singleInstance"]
-///           android:lockTaskMode=["normal"|"never"|
-///                                 "if_whitelisted"|"always"]
+///           android:launchMode=["standard" | "singleTop"|
+///                               "singleTask" | "singleInstance"]
+///           android:lockTaskMode=["normal" | "never" |
+///                                 "if_whitelisted" | "always"]
 ///           android:maxRecents="integer"
 ///           android:maxAspectRatio="float"
-///           android:multiprocess=["true"|"false"]
+///           android:multiprocess=["true" | "false"]
 ///           android:name="string"
-///           android:noHistory=["true"|"false"]  
+///           android:noHistory=["true" | "false"]  
 ///           android:parentActivityName="string"
-///           android:persistableMode=["persistRootOnly"|
-///                                    "persistAcrossReboots"|"persistNever"]
+///           android:persistableMode=["persistRootOnly" |
+///                                    "persistAcrossReboots" | "persistNever"]
 ///           android:permission="string"
 ///           android:process="string"
-///           android:relinquishTaskIdentity=["true"|"false"]
-///           android:resizeableActivity=["true"|"false"]
-///           android:screenOrientation=["unspecified"|"behind"|
-///                                      "landscape"|"portrait"|
-///                                      "reverseLandscape"|"reversePortrait"|
-///                                      "sensorLandscape"|"sensorPortrait"|
-///                                      "userLandscape"|"userPortrait"|
-///                                      "sensor"|"fullSensor"|"nosensor" |
-///                                      "user"|"fullUser"|"locked"]
-///           android:showForAllUsers=["true"|"false"]
-///           android:stateNotNeeded=["true"|"false"]
-///           android:supportsPictureInPicture=["true"|"false"]
+///           android:relinquishTaskIdentity=["true" | "false"]
+///           android:resizeableActivity=["true" | "false"]
+///           android:screenOrientation=["unspecified" | "behind" |
+///                                      "landscape" | "portrait" |
+///                                      "reverseLandscape" | "reversePortrait" |
+///                                      "sensorLandscape" | "sensorPortrait" |
+///                                      "userLandscape" | "userPortrait" |
+///                                      "sensor" | "fullSensor"|"nosensor" |
+///                                      "user" | "fullUser" | "locked"]
+///           android:showForAllUsers=["true" | "false"]
+///           android:stateNotNeeded=["true" | "false"]
+///           android:supportsPictureInPicture=["true" | "false"]
 ///           android:taskAffinity="string"
 ///           android:theme="resource or theme"
-///           android:uiOptions=["none"|"splitActionBarWhenNarrow"]
+///           android:uiOptions=["none" | "splitActionBarWhenNarrow"]
 ///           android:windowSoftInputMode=["stateUnspecified",
 ///                                        "stateUnchanged", "stateHidden",
 ///                                        "stateAlwaysHidden", "stateVisible",
@@ -784,14 +785,13 @@ pub struct Activity {
         default
     )]
     pub window_soft_input_mode: Vec<WindowSoftInputMode>,
-    /// Specifies the types of intents that an activity, service, or broadcast receiver
-    /// can respond to.
+    /// List of `<intent-filter>` tags.
+    #[serde(rename = "intent-filter")]
     pub intent_filter: Option<IntentFilter>,
-    /// List of name-value pair for an item of additional, arbitrary data that can be
-    /// supplied to the parent component.
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    /// List of `<meta-data>` tags.
+    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
     pub meta_data: Vec<MetaData>,
-    /// Affect how an activity behaves in multi-window mode.
+    /// A `<layout>` tag.
     pub layout: Option<Layout>,
 }
 
@@ -1192,24 +1192,6 @@ pub enum ScreenOrientation {
     ///
     /// Added in API level 18.
     Locked,
-}
-
-/// Extra options for an activity's UI.
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
-pub enum UiOptions {
-    ///	No extra UI options. This is the default
-    None,
-    /// Add a bar at the bottom of the screen to display action items in the app
-    /// bar (also known as the action bar), when constrained for horizontal
-    /// space (such as when in portrait mode on a handset). Instead of a
-    /// small number of action items appearing in the app bar at the top of the
-    /// screen, the app bar is split into the top navigation section and the
-    /// bottom bar for action items. This ensures a reasonable amount of
-    /// space is made available not only for the action items, but also for
-    /// navigation and title elements at the top. Menu items are not split
-    /// across the two bars; they always appear together.
-    SplitActionBarWhenNarrow,
 }
 
 /// How the main window of the activity interacts with the window containing the on-screen
