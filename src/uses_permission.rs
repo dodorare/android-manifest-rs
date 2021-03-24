@@ -27,6 +27,12 @@ use serde::{Deserialize, Serialize};
 /// For a list of permissions that imply hardware features, see the documentation for the
 /// [`<uses-feature>`] element.
 ///
+/// ## XML Syntax
+/// ```xml
+/// <uses-permission android:name="string"
+///          android:maxSdkVersion="integer" />
+/// ```
+///
 /// ## Contained in
 /// * [`<manifest>`]
 ///
@@ -63,6 +69,7 @@ pub struct UsesPermission {
     /// directories provided by [`getExternalFilesDir()`]). However, the permission is
     /// required for API level 18 and lower. So you can declare that this permission
     /// is needed only up to API level 18 with a declaration such as this:
+    ///
     /// ```xml
     /// <uses-permission
     ///     android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -70,6 +77,8 @@ pub struct UsesPermission {
     /// ```
     /// This way, beginning with API level 19, the system will no longer grant your app
     /// the [`WRITE_EXTERNAL_STORAGE`] permission.
+    ///
+    /// This attribute was added in API level 19.
     ///
     /// [`WRITE_EXTERNAL_STORAGE`]: https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
     /// [`getExternalFilesDir()`]: https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)

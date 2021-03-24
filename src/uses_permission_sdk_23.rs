@@ -13,23 +13,28 @@ use serde::{Deserialize, Serialize};
 /// feature is minor enough, you may prefer to disable the feature altogether on
 /// those devices, so the user does not have to grant additional permissions to
 /// update the app. By using the `<uses-permission-sdk-23>` element instead of
-/// [`<uses-permission>`], you can request the permission only if the app is running
+/// `<uses-permission>`, you can request the permission only if the app is running
 /// on platforms that support the [`runtime permissions model`] in which the user
 /// grants permissions to the app while it is running.
-///
+
 /// For more information on permissions, see the [`Permissions`] section in the
 /// introduction and the separate [`System Permissions`] API guide. A list of
 /// permissions defined by the base platform is available at
 /// [`android.Manifest.permission`].
 ///
-/// ## Introduced in
-/// API Level 23
+/// ## XML Syntax
+/// ```xml
+///  <uses-permission-sdk-23 android:name="string"
+///           android:maxSdkVersion="integer" />
+/// ```
 ///
 /// ## Contained in
-/// * [`<manifest>`]
+/// [`<manifest>`]
+///
+/// ## introduced in:
+/// API Level 23
 ///
 /// [`API level`]: https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels
-/// [`<uses-permission>`]: crate::UsesPermission
 /// [`runtime permissions model`]: https://developer.android.com/training/permissions/requesting
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`System Permissions`]: https://developer.android.com/guide/topics/permissions/overview

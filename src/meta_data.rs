@@ -30,12 +30,19 @@ use serde::{Deserialize, Serialize};
 /// attribute to inform the component of its ID.
 ///
 /// ## Contained in:
-/// * [`<activity>`](crate::Activity)
-/// * [`<activity-alias>`](crate::ActivityAlias)
-/// * [`<applocation>`](crate::Application)
-/// * [`<service>`](crate::Service)
-/// * [`<receiver>`](crate::Receiver)
-/// * [`<provider>`](crate::Provider)
+/// * [`<activity>`]
+/// * [`<activity-alias>`]
+/// * [`<applocation>`]
+/// * [`<service>`]
+/// * [`<receiver>`]
+/// * [`<provider>`]
+///
+/// [`<activity>`]: crate::Activity
+/// [`<activity-alias>`]: crate::ActivityAlias
+/// [`<applocation>`]: crate::Application
+/// [`<service>`]: crate::Service
+/// [`<receiver>`]: crate::Receiver
+/// [`<provider>`]: crate::Provider
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "meta-data")]
 pub struct MetaData {

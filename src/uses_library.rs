@@ -20,18 +20,25 @@ use serde::{Deserialize, Serialize};
 /// The `android:required` attribute is described in detail in the following
 /// section.
 ///
-/// ## introduced in
-/// API Level 1
+/// ## XML Syntax
+/// ```xml
+/// <uses-library
+///      android:name="string"
+///      android:required=["true" | "false"] />
+/// ```
 ///
 /// ## Contained in
-/// [`<manifest>`]
+/// [`<application>`]
+///
+/// ## introduced in
+/// API Level 1
 ///
 /// [`android.app`]: https://developer.android.com/reference/android/app/package-summary
 /// [`android.content`]: https://developer.android.com/reference/android/content/package-summary
 /// [`android.view`]: https://developer.android.com/reference/android/view/package-summary
 /// [`android.widget`]: https://developer.android.com/reference/android/widget/package-summary
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
-/// [`<manifest>`]: crate::Manifest
+/// [`<application>`]: crate::Application
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-library")]
 pub struct UsesLibrary {

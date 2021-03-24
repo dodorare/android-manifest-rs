@@ -23,6 +23,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// Bluetooth and camera features in the device would declare these two
 /// elements:
+///
 /// ```xml
 /// <uses-feature android:name="android.hardware.bluetooth" />
 /// <uses-feature android:name="android.hardware.camera" />
@@ -48,7 +49,7 @@ use serde::{Deserialize, Serialize};
 /// applications, even if the [`minSdkVersion`] is "3" or lower. Devices running
 /// older versions of the platform will simply ignore the element.
 ///
-/// ## `Note:`
+/// ## Note
 /// When declaring a feature, remember that you must also request permissions as
 /// appropriate. For example, you must still request the `CAMERA` permission
 /// before your application can access the camera API. Requesting the permission
@@ -56,17 +57,37 @@ use serde::{Deserialize, Serialize};
 /// while declaring the features used by your application ensures proper device
 /// compatibility.
 ///
-/// ## Introduced in
-/// API Level 4
+/// ## Important
+/// Google Play uses the <uses-feature> elements declared in your app manifest to filter
+/// your app from devices that do not meet its hardware and software feature requirements.
+///
+/// By specifying the features that your application requires, you enable Google Play to
+/// present your application only to users whose devices meet the application's feature
+/// requirements, rather than presenting it to all users.s
+///
+/// For important information about how Google Play uses features as the basis for
+/// filtering, please read [`Google Play and Feature-Based Filtering`], below.
+///
+/// ## XML Syntax
+/// ```xml
+/// <uses-feature
+///     android:name="string"
+///     android:required=["true" | "false"]
+///     android:glEsVersion="integer" />
+/// ```
 ///
 /// ## Contained in
 /// * [`<manifest>`]
+///
+/// ## Introduced in
+/// API Level 4
 ///
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManagers
 /// [`Features Reference`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#features-reference
 /// [`glEsVersion`]: crate::UsesFeature#structfield.gl_es_version
 /// [`name`]: crate::UsesFeature#structfield.name
 /// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
+/// [`Google Play and Feature-Based Filtering`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#market-feature-filtering
 /// [`<manifest>`]: crate::Manifest
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "uses-feature")]
@@ -82,6 +103,7 @@ pub struct UsesFeature {
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the feature
     /// specified in `android:name`.
+    ///
     /// * When you declare `android:required="true"` for a feature, you are specifying
     ///   that the
     /// application cannot function, or is not designed to function, when the
@@ -98,18 +120,23 @@ pub struct UsesFeature {
     /// the major number and the lower 16 bits represent the minor number. For
     /// example, to specify OpenGL ES version 2.0, you would set the value as
     /// "0x00020000", or to specify OpenGL ES 3.2, you would set the value as
-    /// "0x00030002". An application should specify at most one android:glEsVersion
+    /// "0x00030002". An application should specify at most one `android:glEsVersion`
     /// attribute in its manifest. If it specifies more than one, the android:
-    /// glEsVersion with the numerically highest value is used and any other values
-    /// are ignored. If an application does not specify an android:glEsVersion
+    /// glEsVersion` with the numerically highest value is used and any other values
+    /// are ignored.
+    ///
+    /// If an application does not specify an android:glEsVersion
     /// attribute, then it is assumed that the application requires only OpenGL ES
-    /// 1.0, which is supported by all Android-powered devices. An application can
-    /// assume that if a platform supports a given OpenGL ES version, it also supports
-    /// all numerically lower OpenGL ES versions. Therefore, an application that
-    /// requires both OpenGL ES 1.0 and OpenGL ES 2.0 must specify that it
-    /// requires OpenGL ES 2.0. An application that can work with any of
-    /// several OpenGL ES versions should only specify the numerically lowest
-    /// version of OpenGL ES that it requires.
+    /// 1.0, which is supported by all Android-powered devices.
+    ///
+    /// An application can assume that if a platform supports a given OpenGL ES version,
+    /// it also supports all numerically lower OpenGL ES versions. Therefore, an
+    /// application that requires both OpenGL ES 1.0 and OpenGL ES 2.0 must specify
+    /// that it requires OpenGL ES 2.0.
+    ///
+    /// An application that can work with any of several OpenGL ES versions should only
+    /// specify the numerically lowest version of OpenGL ES that it requires.
+    ///
     /// For more information about using OpenGL ES, including how to check the
     /// supported OpenGL ES version at runtime, see the [`OpenGL ES API guide`].
     ///

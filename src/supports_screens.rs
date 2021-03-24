@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /// It's important that you always use this element in your application to specify the
 /// screen sizes your application supports.
 ///
-/// ## `Note:`
+/// ## Note
 /// Screen compatibility mode is not a mode in which you should want your application to
 /// run—it causes pixelation and blurring in your UI, due to zooming. The proper way to
 /// make your application work well on large screens is to follow the guide to
@@ -20,6 +20,7 @@ use serde::{Deserialize, Serialize};
 /// application's UI for different screen sizes by providing [`alternative layout
 /// resources`]. For instance, you might want to modify the layout of an activity when it
 /// is on a tablet compared to when running on a handset device.
+///
 /// However, if your application does not work well when resized to fit
 /// different screen sizes, you can use the attributes of the
 /// `<supports-screens>` element to control whether your application should be
@@ -32,30 +33,50 @@ use serde::{Deserialize, Serialize};
 /// blurring of your UI, so it's better if you optimize your UI for large
 /// screens.
 ///
-/// ## `Note:`
+/// ## Note
 /// Android 3.2 introduces new attributes: `android:requiresSmallestWidthDp`,
 /// `android:compatibleWidthLimitDp`, and `android:largestWidthLimitDp`. If
 /// you're developing your application for Android 3.2 and higher, you should
 /// use these attributes to declare your screen size support, instead of the
 /// attributes based on generalized screen sizes.
-/// ## `About screen compatibility mode`
+///
+/// ## About screen compatibility mode
 /// Screen compatibility mode is a last resort for apps that are not properly
 /// designed to take advantage of larger screen sizes. This is not a mode you
 /// should want your app to run in since it offers a suboptimal user experience.
 /// There are two different versions of screen compatibility mode based on the
-/// device version the app is running on. On Android versions 1.6 to 3.1 the
-/// system runs your application in a `"postage stamp"` window. It emulates a
-/// 320dp x 480dp screen with a black border that fills the remaining area of
-/// the screen. On Android 3.2 and up the system draws the layout as it would on
+/// device version the app is running on.
+///
+/// On Android versions 1.6 to 3.1 the system runs your application in a `"postage stamp"`
+/// window. It emulates a 320dp x 480dp screen with a black border that fills the
+/// remaining area of the screen.
+///
+/// On Android 3.2 and up the system draws the layout as it would on
 /// a 320dp x 480dp screen then scales it up to fill the screen. This will often
 /// cause artifacts such as blurring and pixelation in your UI.
-/// For more information read [`Supporting Multiple Screens`].
 ///
-/// ## introduced in:
-/// API Level 4
+/// For more information about how to properly support different screen sizes so that you
+/// can avoid using screen compatibility mode with your application,read [`Supporting
+/// Multiple Screens`].
+///
+/// ## XML Syntax
+/// ```xml
+/// <supports-screens android:resizeable=["true"| "false"]
+///     android:smallScreens=["true" | "false"]
+///     android:normalScreens=["true" | "false"]
+///     android:largeScreens=["true" | "false"]
+///     android:xlargeScreens=["true" | "false"]
+///     android:anyDensity=["true" | "false"]
+///     android:requiresSmallestWidthDp="integer"
+///     android:compatibleWidthLimitDp="integer"
+///     android:largestWidthLimitDp="integer"/>
+/// ```
 ///
 /// ## Contained in:
 /// [`<manifest>`]
+///
+/// ## introduced in:
+/// API Level 4
 ///
 /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
 /// [`alternative layout resources`]: https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources

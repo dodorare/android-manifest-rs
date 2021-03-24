@@ -10,12 +10,22 @@ use serde::{Deserialize, Serialize};
 /// Most apps should not use this manifest tag. You should always support input with a
 /// directional pad (d-pad) in order to assist sight-impaired users and support devices
 /// that provide d-pad input in addition to or instead of touch. information about how to
-/// support d-pad input in your app, read Enabling Focus Navigation. If your app
+/// support d-pad input in your app, read [`Enabling Focus Navigation`]. If your app
 /// absolutely cannot function without a touchscreen, then instead use the
 /// [`<uses-feature>`] tag to declare the required touchscreen type, ranging from
 /// `"android.hardware.faketouch"` for basic touch-style events to more advanced touch
 /// types such as `"android.hardware.touchscreen.multitouch.jazzhand"` for distinct input
 /// from multiple fingers.
+///
+/// ## XML Syntax
+/// ```xml
+/// <uses-configuration
+///  android:reqFiveWayNav=["true" | "false"]
+///  android:reqHardKeyboard=["true" | "false"]
+///  android:reqKeyboardType=["undefined" | "nokeys" | "qwerty" | "twelvekey"]
+///  android:reqNavigation=["undefined" | "nonav" | "dpad" | "trackball" | "wheel"]
+///  android:reqTouchScreen=["undefined" | "notouch" | "stylus" | "finger"] />
+/// ```
 ///
 /// ## Contained in
 /// * [`<manifest>`]
@@ -23,6 +33,7 @@ use serde::{Deserialize, Serialize};
 /// ## Introduced in
 /// API Level 3
 ///
+/// [`Enabling Focus Navigation`]: https://developer.android.com/guide/topics/ui/accessibility/apps#focus-nav
 /// [`<uses-feature>`]: crate::UsesFeature
 /// [`<manifest>`]: crate::Manifest
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
@@ -32,7 +43,9 @@ pub struct UsesConfiguration {
     /// if it does, and `"false"` if not. A five-way control is one that can move the
     /// selection up, down, right, or left, and also provides a way of invoking the
     /// current selection. It could be a D-pad (directional pad), trackball, or other
-    /// device. If an application requires a directional control, but not a control of
+    /// device.
+    ///
+    /// If an application requires a directional control, but not a control of
     /// a particular type, it can set this attribute to "true" and ignore the
     /// [`reqNavigation`] attribute. However, if it requires a particular type
     /// of directional control, it can ignore this attribute and set
@@ -97,7 +110,7 @@ pub enum ReqNavigation {
     Wheel,
 }
 
-/// ## `Note:`
+/// ## Note
 /// If some type of touch input is required for your app, you should
 /// instead use the [`<uses-feature>`] tag to declare the required touchscreen
 /// type, beginning with `"android.hardware.faketouch"` for basic touch-style
