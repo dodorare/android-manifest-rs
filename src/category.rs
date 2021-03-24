@@ -25,5 +25,5 @@ pub struct Category {
     /// your activity. Custom categories should use the package name as a
     /// prefix, to ensure that they are unique.
     #[serde(rename = "android:name")]
-    pub name: Option<bool>,
+    pub name: Option<String>,
 }
