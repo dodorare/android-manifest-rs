@@ -11,20 +11,39 @@ use serde::{Deserialize, Serialize};
 /// manifest file. Any that are not declared there will not be seen by the system and will
 /// never be run.
 ///
-/// ## Note:
+/// ## Note
 /// On Android 8.0 (API level 26) and higher, the system places limitations on what your
 /// app can do while it's running in the background. For more information, see the guides
 /// that discuss [`background execution limits`] and [`background location limits`].
 ///
-/// ## introduced in:
-/// API Level 1
+/// ## XML Syntax
+/// ```xml
+/// <service android:description="string resource"
+///          android:directBootAware=["true" | "false"]
+///          android:enabled=["true" | "false"]
+///          android:exported=["true" | "false"]
+///          android:foregroundServiceType=["camera" | "connectedDevice" |
+///                                        "dataSync" | "location" | "mediaPlayback" |
+///                                        "mediaProjection" | "microphone" | "phoneCall"]
+///          android:icon="drawable resource"
+///          android:isolatedProcess=["true" | "false"]
+///          android:label="string resource"
+///          android:name="string"
+///          android:permission="string"
+///          android:process="string" >
+///             ...
+/// </service>
+/// ```
 ///
-/// ## Contained in:
-/// [`<application>`]
+/// ## Contained in
+/// * [`<application>`]
 ///
-/// ## Can contain:
+/// ## Can contain
 /// * [`<intent-filter>`]
 /// * [`<meta-data>`]
+///
+/// ## introduced in
+/// API Level 1
 ///
 /// [`Service`]: https://developer.android.com/reference/android/app/Service
 /// [`background execution limits`]: https://developer.android.com/about/versions/oreo/background
@@ -41,9 +60,15 @@ pub struct Service {
     #[serde(rename = "android:description")]
     pub description: Option<Resource<StringResource>>,
     /// Whether or not the service is direct-boot aware; that is, whether or not it can
-    /// run before the user unlocks the device. Note: During Direct Boot, a service in
-    /// your application can only access the data that is stored in device protected
-    /// storage. The default value is `"false"`.
+    /// run before the user unlocks the device.
+    ///
+    /// ## Note
+    /// During [`Direct Boot`], a service in your application can only access the data that is
+    /// stored in device protected storage. 
+    ///
+    /// The default value is `"false"`.
+    ///
+    /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[serde(rename = "android:directBootAware")]
     pub direct_boot_aware: Option<bool>,
     /// Whether or not the service can be instantiated by the system — `"true"` if it can

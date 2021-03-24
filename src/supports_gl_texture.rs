@@ -5,11 +5,12 @@ use serde::{Deserialize, Serialize};
 /// An application "supports" a GL texture compression format if it is capable of
 /// providing texture assets that are compressed in that format, once the application is
 /// installed on a device. The application can provide the compressed assets locally, from
-/// inside the .apk, or it can download them from a server at runtime. Each
-/// <supports-gl-texture> element declares exactly one supported texture compression
-/// format, specified as the value of a android:name attribute. If your application
-/// supports multiple texture compression formats, you can declare multiple
-/// <supports-gl-texture> elements.
+/// inside the .apk, or it can download them from a server at runtime.
+///
+/// Each `<supports-gl-texture>` element declares exactly one supported texture
+/// compression format, specified as the value of a `android:name` attribute. If your
+/// application supports multiple texture compression formats, you can declare multiple
+/// `<supports-gl-texture>` elements.
 ///
 /// ## XML Example
 /// ```xml
@@ -25,17 +26,38 @@ use serde::{Deserialize, Serialize};
 /// your application's <supports-gl-texture> declarations as part of handling or
 /// interacting with your application.  For this reason, it's very important that you
 /// declare all of the texture compression formats (from the list below) that your
-/// application is capable of supporting. Applications and devices typically
-/// declare their supported GL texture compression formats using the same set of
-/// well-known strings, as listed below. The set of format strings may grow over
-/// time, as needed, and since the values are strings, applications are free to
-/// declare other formats as needed. Assuming that the application is built with
-/// SDK Platform Tools r3 or higher, filtering based on the
-/// <supports-gl-texture> element is activated for all API levels.
+/// application is capable of supporting.
 ///
-/// ## Contained in:
-/// [`<manifest>`]
+/// Applications and devices typically declare their supported GL texture compression
+/// formats using the same set of well-known strings, as listed below. The set of format
+/// strings may grow over time, as needed, and since the values are strings, applications
+/// are free to declare other formats as needed.
 ///
+/// Assuming that the application is built with SDK Platform Tools r3 or higher, filtering
+/// based on the `<supports-gl-texture>` element is activated for all API levels.
+///
+/// ## Note
+/// Google Play filters applications according to the texture compression formats that
+/// they support, to ensure that they can be installed only on devices that can handle
+/// their textures properly. You can use texture compression filtering as a way of
+/// targeting specific device types, based on GPU platform.
+///
+/// For important information about how Google Play uses [`<supports-gl-texture>`]
+/// elements as the basis for filtering, read [`Google Play and texture compression
+/// filtering`], below.
+///
+/// ## XML Syntax
+/// ```xml
+/// <supports-gl-texture
+///   android:name="string" />
+/// ```
+///
+/// ## Contained in
+/// * [`<manifest>`]
+///
+///
+/// [`<supports-gl-texture>`]: crate::SupportsGlTexture
+/// [`Google Play and texture compression filtering`]: https://developer.android.com/guide/topics/manifest/supports-gl-texture-element#market-texture-filtering
 /// [`<manifest>`]: crate::Manifest
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "supports-gl-texture")]

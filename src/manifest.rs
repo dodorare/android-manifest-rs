@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 /// </manifest>
 /// ```
 ///
-/// ## Must contain:
+/// ## Must contain
 /// * [`<application>`]
 ///
 /// ## Can contain:
@@ -202,7 +202,7 @@ pub struct Manifest {
     #[serde(rename = "android:versionName")]
     pub version_name: Option<String>,
     /// When an app is installed on the external storage:  
-    /// 
+    ///
     /// * The `.apk` file is saved to the external storage, but any app data (such as
     ///   databases) is still saved on the internal device memory.
     /// * The container in which the `.apk` file is saved is encrypted with a key that
