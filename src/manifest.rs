@@ -276,7 +276,12 @@ pub struct Manifest {
         default
     )]
     pub uses_permission: Vec<UsesPermission>,
-    pub uses_permission_sdk_23: Option<UsesPermissionSdk23>,
+    #[serde(
+        rename = "uses-permission-sdk-23",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
+    pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
     pub uses_sdk: Option<UsesSdk>,
 }
 

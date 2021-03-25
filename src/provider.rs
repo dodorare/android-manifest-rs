@@ -307,13 +307,12 @@ pub struct Provider {
     /// [`readPermission`]: crate::Provider#structfield.write_permission
     #[serde(rename = "android:writePermission")]
     pub write_permission: Option<String>,
-
-    pub path_permission: Option<PathPermission>,
-
+    #[serde(rename = "path-permission", skip_serializing_if = "Vec::is_empty", default)]
+    pub path_permission: Vec<PathPermission>,
     pub grant_uri_permission: Option<GrantUriPermission>,
     
     #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
     pub intent_filter: Vec<IntentFilter>,
-
-    pub meta_data: Option<MetaData>,
+    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    pub meta_data: Vec<MetaData>,
 }

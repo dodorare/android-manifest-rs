@@ -126,7 +126,9 @@ pub struct ActivityAlias {
     /// [`<activity>`]: crate::Activity
     #[serde(rename = "android:targetActivity")]
     pub target_activity: Option<String>,
-
-    pub intent_filter: Option<Vec<IntentFilter>>,
-    pub meta_data: Option<MetaData>,
+    
+    #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
+    pub intent_filter: Vec<IntentFilter>,
+    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    pub meta_data: Vec<MetaData>,
 }

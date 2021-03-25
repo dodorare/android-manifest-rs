@@ -143,6 +143,6 @@ pub struct IntentFilter {
 
     #[serde( skip_serializing_if = "Vec::is_empty", default)]
     pub category: Vec<Category>,
-
-    pub data: Option<Data>,
+    #[serde( skip_serializing_if = "Vec::is_empty", default)]
+    pub data: Vec<Data>,
 }
