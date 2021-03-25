@@ -127,6 +127,6 @@ pub struct ActivityAlias {
     #[serde(rename = "android:targetActivity")]
     pub target_activity: Option<String>,
 
-    pub intent_filter: Option<IntentFilter>,
+    pub intent_filter: Option<Vec<IntentFilter>>,
     pub meta_data: Option<MetaData>,
 }

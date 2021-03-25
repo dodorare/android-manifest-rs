@@ -138,9 +138,11 @@ pub struct IntentFilter {
     #[serde(rename = "android:order")]
     pub ordery: Option<i32>,
 
-    pub action: Action,
+    #[serde( skip_serializing_if = "Vec::is_empty", default)]
+    pub action: Vec<Action>,
 
-    pub category: Option<Category>,
+    #[serde( skip_serializing_if = "Vec::is_empty", default)]
+    pub category: Vec<Category>,
 
     pub data: Option<Data>,
 }

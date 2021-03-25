@@ -311,8 +311,9 @@ pub struct Provider {
     pub path_permission: Option<PathPermission>,
 
     pub grant_uri_permission: Option<GrantUriPermission>,
-
-    pub intent_filter: Option<IntentFilter>,
+    
+    #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
+    pub intent_filter: Vec<IntentFilter>,
 
     pub meta_data: Option<MetaData>,
 }

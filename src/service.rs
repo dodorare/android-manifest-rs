@@ -213,9 +213,11 @@ pub struct Service {
     #[serde(rename = "android:process")]
     pub process: Option<String>,
 
-    pub intent_filter: Option<IntentFilter>,
+    #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
+    pub intent_filter: Vec<IntentFilter>,
 
-    pub meta_data: Option<MetaData>,
+    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    pub meta_data: Vec<MetaData>,
 }
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]

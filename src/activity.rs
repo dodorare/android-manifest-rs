@@ -786,8 +786,8 @@ pub struct Activity {
     )]
     pub window_soft_input_mode: Vec<WindowSoftInputMode>,
     /// List of `<intent-filter>` tags.
-    #[serde(rename = "intent-filter")]
-    pub intent_filter: Option<IntentFilter>,
+    #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
+    pub intent_filter: Vec<IntentFilter>,
     /// List of `<meta-data>` tags.
     #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
     pub meta_data: Vec<MetaData>,
