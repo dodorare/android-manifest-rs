@@ -2,16 +2,13 @@ use serde::{Deserialize, Serialize};
 
 /// Affect how an activity behaves in multi-window mode.
 ///
-/// With Android 7.0, the `<layout>` manifest element supports several
-/// attributes:
-/// * `default_width`
-/// * `default_height`
-/// * `gravity`
-/// * `min_height`
-/// * `min_width`
+/// With Android 7.0, the <layout> manifest element supports several attributes that
+/// affect how an activity behaves in multi-window mode:
 ///
-/// ## Contained in:
-/// [`<activity>`](crate::Activity)
+/// ## Contained in
+/// * [`<activity>`]
+///
+/// [`<activity>`]: crate::Activity
 #[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 #[serde(rename = "layout")]
 pub struct Layout {
@@ -21,20 +18,31 @@ pub struct Layout {
     /// Default height of the activity when launched in freeform mode.
     #[serde(rename = "android:defaultHeight")]
     pub default_height: Option<i32>,
-    /// Initial placement of the activity when launched in freeform mode. See
-    /// the Gravity reference for suitable values.
+    /// Initial placement of the activity when launched in freeform mode. See the Gravity
+    /// reference for suitable values.
     #[serde(rename = "android:gravity")]
     pub gravity: Option<Gravity>,
-    /// Minimum height and minimum width for the activity in both split-screen
-    /// and freeform modes. If the user moves the divider in split-screen mode
-    /// to make an activity smaller than the specified minimum, the system
-    /// crops the activity to the size the user requests.
+    /// Minimum height and minimum width for the activity in both split-screen and
+    /// freeform modes. If the user moves the divider in split-screen mode to make an
+    /// activity smaller than the specified minimum, the system crops the activity to
+    /// the size the user requests.
+    ///
+    /// For example, the following code shows how to specify an activity's default size
+    /// and location, and its minimum size, when the activity is displayed in freeform
+    /// mode:
+    ///
+    /// ## XML Example
+    /// ```xml
+    /// <activity android:name=".MyActivity">
+    ///    <layout android:defaultHeight="500dp"
+    ///         android:defaultWidth="600dp"
+    ///         android:gravity="top|end"
+    ///         android:minHeight="450dp"
+    ///         android:minWidth="300dp" />
+    /// </activity>
+    /// ```
     #[serde(rename = "android:minHeight")]
     pub min_height: Option<i32>,
-    /// Minimum height and minimum width for the activity in both split-screen
-    /// and freeform modes. If the user moves the divider in split-screen mode
-    /// to make an activity smaller than the specified minimum, the system
-    /// crops the activity to the size the user requests.
     #[serde(rename = "android:minWidth")]
     pub min_width: Option<i32>,
 }
