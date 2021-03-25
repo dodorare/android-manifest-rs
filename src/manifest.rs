@@ -202,7 +202,7 @@ pub struct Manifest {
     #[serde(rename = "android:versionName")]
     pub version_name: Option<String>,
     /// When an app is installed on the external storage:  
-    /// 
+    ///
     /// * The `.apk` file is saved to the external storage, but any app data (such as
     ///   databases) is still saved on the internal device memory.
     /// * The container in which the `.apk` file is saved is encrypted with a key that
@@ -223,41 +223,60 @@ pub struct Manifest {
     /// [`App Install Location`]: https://developer.android.com/guide/topics/data/install-location
     #[serde(rename = "android:installLocation")]
     pub install_location: Option<InstallLocation>,
-
     pub application: Application,
-    
-    #[serde(rename = "compatible-screens", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "compatible-screens",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub compatible_screens: Vec<CompatibleScreens>,
-    
-    #[serde( skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub instrumentation: Vec<Instrumentation>,
-
-    #[serde( skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub permission: Vec<Permission>,
-
-    #[serde(rename = "permission-group", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "permission-group",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub permission_group: Vec<PermissionGroup>,
-
-    #[serde(rename = "permission-tree", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "permission-tree",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub permission_tree: Vec<PermissionTree>,
-
-    #[serde(rename = "supports-gl-texture", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "supports-gl-texture",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub supports_gl_texture: Vec<SupportsGlTexture>,
-
-    #[serde(rename = "supports-screens", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "supports-screens",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub supports_screens: Vec<SupportsScreens>,
-
-    #[serde(rename = "uses-configuration", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "uses-configuration",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub uses_configuration: Vec<UsesConfiguration>,
-
-    #[serde(rename = "uses-feature", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "uses-feature",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub uses_feature: Vec<UsesFeature>,
-
-    #[serde(rename = "uses-permission", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(
+        rename = "uses-permission",
+        skip_serializing_if = "Vec::is_empty",
+        default
+    )]
     pub uses_permission: Vec<UsesPermission>,
-
     pub uses_permission_sdk_23: Option<UsesPermissionSdk23>,
-
     pub uses_sdk: Option<UsesSdk>,
 }
 
