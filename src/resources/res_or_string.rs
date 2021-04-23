@@ -1,9 +1,11 @@
-use super::{Resource, ResourceVisitor, StringResource};
+use super::{parse_resource_with_type, Resource, ResourceVisitor, StringResource};
 use serde::{
     de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
 };
 use std::fmt;
+use std::io::{Read, Write};
+use yaserde::{YaDeserialize, YaSerialize};
 
 /// Enum used when the value can be string resource or just a row string.
 #[derive(Debug, PartialEq)]
@@ -18,9 +20,39 @@ impl Serialize for StringResourceOrString {
         S: Serializer,
     {
         match self {
-            StringResourceOrString::StringResource(resource) => resource.serialize(serializer),
+            StringResourceOrString::StringResource(resource) => {
+                Serialize::serialize(&resource, serializer)
+            }
             StringResourceOrString::String(value) => serializer.serialize_str(value),
         }
+    }
+}
+
+impl YaSerialize for StringResourceOrString {
+    fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
+        match self {
+            StringResourceOrString::StringResource(resource) => {
+                YaSerialize::serialize(resource, writer)?;
+            }
+            StringResourceOrString::String(value) => {
+                let _ret = writer.write(xml::writer::XmlEvent::characters(value));
+            }
+        }
+        Ok(())
+    }
+
+    fn serialize_attributes(
+        &self,
+        attributes: Vec<xml::attribute::OwnedAttribute>,
+        namespace: xml::namespace::Namespace,
+    ) -> Result<
+        (
+            Vec<xml::attribute::OwnedAttribute>,
+            xml::namespace::Namespace,
+        ),
+        String,
+    > {
+        Ok((attributes, namespace))
     }
 }
 
@@ -56,5 +88,31 @@ impl<'de> Deserialize<'de> for StringResourceOrString {
         D: Deserializer<'de>,
     {
         deserializer.deserialize_string(StringResourceOrStringVisitor)
+    }
+}
+
+impl YaDeserialize for StringResourceOrString {
+    fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
+        loop {
+            match reader.next_event()? {
+                xml::reader::XmlEvent::StartElement { .. } => {}
+                xml::reader::XmlEvent::Characters(text_content) => {
+                    if text_content.is_empty() {
+                        return Err("value of attribute is empty".to_string());
+                    };
+                    if text_content.chars().next().unwrap() == '@' {
+                        return Ok(StringResourceOrString::StringResource(
+                            parse_resource_with_type(&text_content)?,
+                        ));
+                    } else {
+                        return Ok(StringResourceOrString::String(text_content));
+                    }
+                }
+                _ => {
+                    break;
+                }
+            }
+        }
+        Err("Unable to parse attribute".to_string())
     }
 }

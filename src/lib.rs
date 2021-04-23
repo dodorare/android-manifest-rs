@@ -1,7 +1,11 @@
+#[macro_use]
+extern crate yaserde_derive;
+
 mod action;
 mod activity;
 mod activity_alias;
 mod application;
+mod attribute_list;
 mod category;
 mod compatible_screens;
 mod data;
@@ -9,7 +13,6 @@ mod grant_uri_permission;
 mod instrumentation;
 mod intent_filter;
 mod layout;
-mod list_serde;
 mod manifest;
 mod meta_data;
 mod path_permission;
@@ -60,3 +63,75 @@ pub use uses_library::*;
 pub use uses_permission::*;
 pub use uses_permission_sdk_23::*;
 pub use uses_sdk::*;
+
+// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+// #[yaserde(
+//     rename = "manifest",
+//     namespace = "html: http://schemas.android.com/apk/res/android"
+// )]
+// pub struct TestManifest {
+//     pub application: TestApplication,
+//     #[serde(skip_serializing_if = "Vec::is_empty", default)]
+//     #[yaserde(rename = "compatible-screens")]
+//     pub compatible_screens: Vec<TestCompatibleScreens>,
+// }
+
+// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+// pub struct TestApplication {
+//     #[yaserde(attribute, prefix = "android", rename = "allowTaskReparenting")]
+//     pub allow_task_reparenting: Option<bool>,
+//     #[yaserde(attribute, prefix = "android", rename = "allowBackup")]
+//     pub allow_backup: Option<bool>,
+// }
+
+// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+// pub struct TestCompatibleScreens {
+//     pub screen: Vec<TestScreen>,
+// }
+
+// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+// #[yaserde(prefix = "android")]
+// pub struct TestScreen {
+//     #[yaserde(attribute, prefix = "android", rename = "screenSize")]
+//     pub screen_size: TestScreenSize,
+//     #[yaserde(attribute, prefix = "android", rename = "screenDensity")]
+//     pub screen_density: TestScreenDensity,
+// }
+
+// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+// #[serde(rename_all = "camelCase")]
+// pub enum TestScreenSize {
+//     Small,
+//     Normal,
+//     Large,
+//     Xlarge,
+// }
+
+// impl Default for TestScreenSize {
+//     fn default() -> TestScreenSize {
+//         TestScreenSize::Small
+//     }
+// }
+
+// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+// #[serde(rename_all = "camelCase")]
+// pub enum TestScreenDensity {
+//     /// "ldpi" (approximately 120 dpi)
+//     Ldpi,
+//     /// "mdpi" (approximately 160 dpi)
+//     Mdpi,
+//     /// "hdpi" (approximately 240 dpi)
+//     Hdpi,
+//     /// "xhdpi" (approximately 320 dpi)
+//     Xhdpi,
+//     /// "xxhdpi" (approximately 480 dpi)
+//     Xxhdpi,
+//     /// "xxxhdpi" (approximately 560-640 dpi)
+//     Xxxhdpi,
+// }
+
+// impl Default for TestScreenDensity {
+//     fn default() -> TestScreenDensity {
+//         TestScreenDensity::Xhdpi
+//     }
+// }

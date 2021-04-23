@@ -21,8 +21,7 @@ use serde::{Deserialize, Serialize};
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`Intent`]: https://developer.android.com/reference/android/content/Intent
 /// [`Intents and Intent Filters`]: https://developer.android.com/guide/components/intents-filters
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "action")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct Action {
     /// The name of the action. Some standard actions are defined in the [`Intent`] class
     /// as `ACTION_string` constants. To assign one of these actions to this
@@ -40,6 +39,6 @@ pub struct Action {
     /// ```
     ///
     /// [`Intent`]: https://developer.android.com/reference/android/content/Intent
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub icon: Option<String>,
 }

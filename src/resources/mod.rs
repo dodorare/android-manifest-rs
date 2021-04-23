@@ -9,9 +9,11 @@ use serde::{
     Deserialize, Deserializer, Serialize, Serializer,
 };
 use std::fmt;
+use std::io::{Read, Write};
 use std::marker::PhantomData;
 use std::str::FromStr;
 pub use types::*;
+use yaserde::{YaDeserialize, YaSerialize};
 
 /// Trait implemented by types that can be used as resource.
 pub trait ResourceType: FromStr {
@@ -79,6 +81,40 @@ impl<T: ResourceType> Serialize for Resource<T> {
     }
 }
 
+impl<T: ResourceType> YaSerialize for Resource<T> {
+    fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
+        if let Some(package) = &self.package {
+            let _ret = writer.write(xml::writer::XmlEvent::characters(&format!(
+                "@{}:{}/{}",
+                package,
+                T::resource_type(),
+                self.name
+            )));
+        } else {
+            let _ret = writer.write(xml::writer::XmlEvent::characters(&format!(
+                "@{}/{}",
+                T::resource_type(),
+                self.name
+            )));
+        }
+        Ok(())
+    }
+
+    fn serialize_attributes(
+        &self,
+        attributes: Vec<xml::attribute::OwnedAttribute>,
+        namespace: xml::namespace::Namespace,
+    ) -> Result<
+        (
+            Vec<xml::attribute::OwnedAttribute>,
+            xml::namespace::Namespace,
+        ),
+        String,
+    > {
+        Ok((attributes, namespace))
+    }
+}
+
 struct ResourceVisitor<T: ResourceType> {
     phantom: PhantomData<T>,
 }
@@ -106,21 +142,7 @@ impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
     where
         E: de::Error,
     {
-        let (package, resource_type, resource_name) =
-            parse_resource(v).map_err(|e| E::custom(e))?;
-        if resource_type != T::resource_type() {
-            return Err(E::custom(format!(
-                "a wrong resource type, expected @[package:]{}/{}, found {}",
-                T::resource_type(),
-                resource_name,
-                v
-            )));
-        };
-        Ok(Resource {
-            name: resource_name,
-            package: package,
-            phantom: PhantomData,
-        })
+        parse_resource_with_type(v).map_err(|e| E::custom(e))
     }
 }
 
@@ -129,22 +151,38 @@ impl<'de, T: ResourceType> Deserialize<'de> for Resource<T> {
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_string(ResourceVisitor {
-            phantom: PhantomData,
-        })
+        deserializer.deserialize_string(ResourceVisitor::new())
+    }
+}
+
+impl<T: ResourceType> YaDeserialize for Resource<T> {
+    fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
+        loop {
+            match reader.next_event()? {
+                xml::reader::XmlEvent::StartElement { .. } => {}
+                xml::reader::XmlEvent::Characters(ref text_content) => {
+                    return parse_resource_with_type(text_content);
+                }
+                _ => {
+                    break;
+                }
+            }
+        }
+        Err("Unable to parse attribute".to_string())
     }
 }
 
 /// Parses a resource string in format
 /// `@[package:]resource_type/resource_name` into three parts
-fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), &str> {
+fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), String> {
     if resource.is_empty() {
-        return Err("value of attribute is empty");
+        return Err("value of attribute is empty".to_string());
     };
     let split_str: Vec<_> = resource.split('/').collect();
     if split_str.len() != 2 {
         return Err(
-            "a wrong resource format, expected format @[package:]resource_type/resource_name",
+            "a wrong resource format, expected format @[package:]resource_type/resource_name"
+                .to_string(),
         );
     };
     let first_part = split_str.get(0).unwrap();
@@ -161,4 +199,22 @@ fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), &s
         resource_type.to_string(),
         resource_name.to_string(),
     ))
+}
+
+/// Parses a resource string into given `Resource<ResourceType>`
+fn parse_resource_with_type<T: ResourceType>(resource: &str) -> Result<Resource<T>, String> {
+    let (package, resource_type, resource_name) = parse_resource(resource)?;
+    if resource_type != T::resource_type() {
+        return Err(format!(
+            "a wrong resource type, expected @[package:]{}/{}, found {}",
+            T::resource_type(),
+            resource_name,
+            resource
+        ));
+    };
+    Ok(Resource {
+        name: resource_name,
+        package: package,
+        phantom: PhantomData,
+    })
 }

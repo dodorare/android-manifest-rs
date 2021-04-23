@@ -51,13 +51,12 @@ use serde::{Deserialize, Serialize};
 /// [`<application>`]: crate::Application
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<meta-data>`]: crate::MetaData
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "service")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct Service {
     /// A string that describes the service to users. The label should be set as a
     /// reference to a string resource, so that it can be localized like other strings
     /// in the user interface.
-    #[serde(rename = "android:description")]
+    #[yaserde(attribute, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
     /// Whether or not the service is direct-boot aware; that is, whether or not it can
     /// run before the user unlocks the device.
@@ -69,7 +68,7 @@ pub struct Service {
     /// The default value is `"false"`.
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
-    #[serde(rename = "android:directBootAware")]
+    #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<bool>,
     /// Whether or not the service can be instantiated by the system — `"true"` if it can
     /// be, and `"false"` if not. The default value is `"true"`.
@@ -82,7 +81,7 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[serde(rename = "android:enabled")]
+    #[yaserde(attribute, prefix = "android")]
     pub enabled: Option<bool>,
     /// Whether or not components of other applications can invoke the service or interact
     /// with it — `"true"` if they can, and `"false"` if not. When the value is
@@ -103,7 +102,7 @@ pub struct Service {
     /// [`permission`] attribute).
     ///
     /// [`permission`]: crate::Service#structfield.enabled
-    #[serde(rename = "android:exported")]
+    #[yaserde(attribute, prefix = "android")]
     pub exported: Option<bool>,
     /// Specify that the service is a [`foreground service`] that satisfies a particular
     /// use case. For example, a foreground service type of `"location"` indicates
@@ -114,7 +113,7 @@ pub struct Service {
     ///
     /// [`foreground service`]: https://developer.android.com/guide/components/services
     /// [`continue a user-initiated action`]: https://developer.android.com/training/location/background#continue-user-initiated-action
-    #[serde(rename = "android:foregroundServiceType")]
+    #[yaserde(attribute, prefix = "android", rename = "foregroundServiceType")]
     pub foreground_service_type: Option<ForegroundServiceType>,
     /// An icon representing the service. This attribute must be set as a reference to a
     /// drawable resource containing the image definition. If it is not set, the icon
@@ -129,13 +128,13 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
-    #[serde(rename = "android:icon")]
+    #[yaserde(attribute, prefix = "android")]
     pub icon: Option<Resource<DrawableResource>>,
     /// If set to true, this service will run under a special process that is isolated
     /// from the rest of the system and has no permissions of its own.
     /// The only communication with it is through the Service API (binding and
     /// starting).
-    #[serde(rename = "android:isolatedProcess")]
+    #[yaserde(attribute, prefix = "android", rename = "isolatedProcess")]
     pub isolated_process: Option<bool>,
     /// A name for the service that can be displayed to users. If this attribute is not
     /// set, the label set for the application as a whole is used instead
@@ -153,7 +152,7 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
-    #[serde(rename = "android:label")]
+    #[yaserde(attribute, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name of the [`Service`] subclass that implements the service. This should be a
     /// fully qualified class name (such as, `"com.example.project.RoomService"`).
@@ -170,7 +169,7 @@ pub struct Service {
     /// [`<manifest>`]: crate::Manifest
     /// [`should not change this name`]: https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
     /// [`android:exported="false"`]: crate::Service#structfield.exported
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: String,
     /// The name of a permission that an entity must have in order to launch the service
     /// or bind to it. If a caller of [`startService()`], [`bindService()`],
@@ -192,7 +191,7 @@ pub struct Service {
     /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
     /// [`permission`]: crate::Application#structfield.permission
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
-    #[serde(rename = "android:permission")]
+    #[yaserde(attribute, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the process where the service is to run. Normally, all components of
     /// an application run in the default process created for the application. It has
@@ -210,25 +209,39 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`process`]: crate::Application#structfield.process
-    #[serde(rename = "android:process")]
+    #[yaserde(attribute, prefix = "android")]
     pub process: Option<String>,
-
-    #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[yaserde(rename = "intent-filter")]
     pub intent_filter: Vec<IntentFilter>,
-
-    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[yaserde(rename = "meta-data")]
     pub meta_data: Vec<MetaData>,
 }
 
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ForegroundServiceType {
+    #[yaserde(rename = "camera")]
     Camera,
+    #[yaserde(rename = "connectedDevice")]
     ConnectedDevice,
+    #[yaserde(rename = "dataSync")]
     DataSync,
+    #[yaserde(rename = "location")]
     Location,
+    #[yaserde(rename = "mediaPlayback")]
     MediaPlayback,
+    #[yaserde(rename = "mediaProjection")]
     MediaProjection,
+    #[yaserde(rename = "microphone")]
     Microphone,
+    #[yaserde(rename = "phoneCall")]
     PhoneCall,
+}
+
+impl Default for ForegroundServiceType {
+    fn default() -> Self {
+        ForegroundServiceType::Camera
+    }
 }

@@ -65,14 +65,12 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-permission>`]: crate::UsesPermission
 /// [`<uses-permission-sdk-23>`]: crate::UsesPermissionSdk23
 /// [`<uses-sdk>`]: crate::UsesSdk
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "manifest")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[yaserde(
+    rename = "manifest",
+    namespace = "android: http://schemas.android.com/apk/res/android"
+)]
 pub struct Manifest {
-    /// Defines the Android namespace. This attribute should always be set to
-    ///
-    /// `http://schemas.android.com/apk/res/android`.
-    #[serde(rename = "xmlns:android")]
-    pub xmlns: String,
     /// A full Java-language-style package name for the Android app. The name may contain
     /// uppercase or lowercase letters ('A' through 'Z'), numbers, and underscores
     /// ('_'). However, individual package name parts may only start with letters.
@@ -124,6 +122,7 @@ pub struct Manifest {
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinitys
     /// [`Google Play`]: https://developer.android.com/distribute/google-play
     /// [`how to set the application ID`]: https://developer.android.com/studio/build/application-id
+    #[yaserde(attribute)]
     pub package: String,
     /// ## Caution
     /// `This constant was deprecated in API level 29.`
@@ -139,7 +138,7 @@ pub struct Manifest {
     /// set to the same value for two or more apps, they will all share the same ID —
     /// provided that their certificate sets are identical. Apps with the same user ID
     /// can access each other's data and, if desired, run in the same process.
-    #[serde(rename = "android:sharedUserId")]
+    #[yaserde(attribute, prefix = "android", rename = "sharedUserId")]
     pub shared_user_id: Option<String>,
     /// The higher the sandbox version number, the higher the level of security. Its
     /// default value is 1; you can also set it to 2. Setting this attribute
@@ -162,7 +161,7 @@ pub struct Manifest {
     /// value. To downgrade the target sandbox value, you must uninstall the app and
     /// replace it with a version whose manifest contains a lower value for this
     /// attribute.
-    #[serde(rename = "android:targetSandboxVersion")]
+    #[yaserde(attribute, prefix = "android", rename = "targetSandboxVersion")]
     pub target_sandbox_version: Option<String>,
     /// ## Caution
     /// `This constant was deprecated in API level 29`. Shared user IDs cause
@@ -180,7 +179,7 @@ pub struct Manifest {
     /// [`sharedUserId`] attribute is also set.
     ///
     /// [`sharedUserId`]: crate::Manifest#structfield.shared_user_id
-    #[serde(rename = "android:sharedUserLabel")]
+    #[yaserde(attribute, prefix = "android", rename = "sharedUserLabel")]
     pub shared_user_label: Option<Resource<StringResource>>,
     /// An internal version number. This number is used only to determine whether one
     /// version is more recent than another, with higher numbers indicating more
@@ -193,13 +192,13 @@ pub struct Manifest {
     /// translate a version number in "x.y" format to an integer by encoding the "x" and
     /// "y" separately in the lower and upper 16 bits. Or you could simply increase the
     /// number by one each time a new version is released.
-    #[serde(rename = "android:versionCode")]
+    #[yaserde(attribute, prefix = "android", rename = "versionCode")]
     pub version_code: Option<i32>,
     /// The version number shown to users. This attribute can be set as a raw string or as
     /// a reference to a string resource. The string has no other purpose than to be
     /// displayed to users. The `versionCode` attribute holds the significant version
     /// number used internally.
-    #[serde(rename = "android:versionName")]
+    #[yaserde(attribute, prefix = "android", rename = "versionName")]
     pub version_name: Option<String>,
     /// When an app is installed on the external storage:  
     ///
@@ -221,72 +220,72 @@ pub struct Manifest {
     /// Introduced in: API Level 8.
     ///
     /// [`App Install Location`]: https://developer.android.com/guide/topics/data/install-location
-    #[serde(rename = "android:installLocation")]
+    #[yaserde(attribute, prefix = "android", rename = "installLocation")]
     pub install_location: Option<InstallLocation>,
     pub application: Application,
-    #[serde(
-        rename = "compatible-screens",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub compatible_screens: Vec<CompatibleScreens>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    pub instrumentation: Vec<Instrumentation>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    pub permission: Vec<Permission>,
-    #[serde(
-        rename = "permission-group",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub permission_group: Vec<PermissionGroup>,
-    #[serde(
-        rename = "permission-tree",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub permission_tree: Vec<PermissionTree>,
-    #[serde(
-        rename = "supports-gl-texture",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub supports_gl_texture: Vec<SupportsGlTexture>,
-    #[serde(
-        rename = "supports-screens",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub supports_screens: Vec<SupportsScreens>,
-    #[serde(
-        rename = "uses-configuration",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub uses_configuration: Vec<UsesConfiguration>,
-    #[serde(
-        rename = "uses-feature",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub uses_feature: Vec<UsesFeature>,
-    #[serde(
-        rename = "uses-permission",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub uses_permission: Vec<UsesPermission>,
-    #[serde(
-        rename = "uses-permission-sdk-23",
-        skip_serializing_if = "Vec::is_empty",
-        default
-    )]
-    pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
-    pub uses_sdk: Option<UsesSdk>,
+    // #[serde(
+    //     rename = "compatible-screens",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub compatible_screens: Vec<CompatibleScreens>,
+    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    // pub instrumentation: Vec<Instrumentation>,
+    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    // pub permission: Vec<Permission>,
+    // #[serde(
+    //     rename = "permission-group",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub permission_group: Vec<PermissionGroup>,
+    // #[serde(
+    //     rename = "permission-tree",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub permission_tree: Vec<PermissionTree>,
+    // #[serde(
+    //     rename = "supports-gl-texture",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub supports_gl_texture: Vec<SupportsGlTexture>,
+    // #[serde(
+    //     rename = "supports-screens",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub supports_screens: Vec<SupportsScreens>,
+    // #[serde(
+    //     rename = "uses-configuration",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub uses_configuration: Vec<UsesConfiguration>,
+    // #[serde(
+    //     rename = "uses-feature",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub uses_feature: Vec<UsesFeature>,
+    // #[serde(
+    //     rename = "uses-permission",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub uses_permission: Vec<UsesPermission>,
+    // #[serde(
+    //     rename = "uses-permission-sdk-23",
+    //     skip_serializing_if = "Vec::is_empty",
+    //     default
+    // )]
+    // pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
+    // pub uses_sdk: Option<UsesSdk>,
 }
 
 /// The default install location for the app.
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum InstallLocation {
     /// The app may be installed on the external storage, but the system will install the
@@ -294,16 +293,25 @@ pub enum InstallLocation {
     /// the system will install it on the external storage. Once installed, the user
     /// can move the app to either internal or external storage through the system
     /// settings.
+    #[yaserde(rename = "auto")]
     Auto,
     /// The app must be installed on the internal device storage only. If this is set, the
     /// app will never be installed on the external storage. If the internal storage
     /// is full, then the system will not install the app. This is also the default
     /// behavior if you do not define android:installLocation.
+    #[yaserde(rename = "internalOnly")]
     InternalOnly,
     /// The app prefers to be installed on the external storage (SD card). There is no
     /// guarantee that the system will honor this request. The app might be installed
     /// on internal storage if the external media is unavailable or full. Once
     /// installed, the user can move the app to either internal or external storage
     /// through the system settings.
+    #[yaserde(rename = "preferExternal")]
     PreferExternal,
+}
+
+impl Default for InstallLocation {
+    fn default() -> InstallLocation {
+        InstallLocation::InternalOnly
+    }
 }
