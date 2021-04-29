@@ -44,8 +44,7 @@ use serde::{Deserialize, Serialize};
 /// [`android.Manifest.permission`]: https://developer.android.com/reference/android/Manifest.permission
 /// [`<uses-feature>`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#permissions-features
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "uses-permission")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct UsesPermission {
     /// The name of the permission. It can be a permission defined by theapplication with
     /// the [`<permission>`] element, a permission defined by another application, or
@@ -56,7 +55,7 @@ pub struct UsesPermission {
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
     /// The highest API level at which this permission should be granted to your app.
     /// Setting this attribute is useful if the permission your app requires is no
@@ -71,9 +70,8 @@ pub struct UsesPermission {
     /// is needed only up to API level 18 with a declaration such as this:
     ///
     /// ```xml
-    /// <uses-permission
-    ///     android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-    ///     android:maxSdkVersion="18" />
+    /// <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    ///                  android:maxSdkVersion="18" />
     /// ```
     /// This way, beginning with API level 19, the system will no longer grant your app
     /// the [`WRITE_EXTERNAL_STORAGE`] permission.
@@ -82,6 +80,6 @@ pub struct UsesPermission {
     ///
     /// [`WRITE_EXTERNAL_STORAGE`]: https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
     /// [`getExternalFilesDir()`]: https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)
-    #[serde(rename = "android:maxSdkVersion")]
+    #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<i32>,
 }

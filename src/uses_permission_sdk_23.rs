@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 /// ## XML Syntax
 /// ```xml
 ///  <uses-permission-sdk-23 android:name="string"
-///           android:maxSdkVersion="integer" />
+///                          android:maxSdkVersion="integer" />
 /// ```
 ///
 /// ## Contained in
@@ -40,8 +40,7 @@ use serde::{Deserialize, Serialize};
 /// [`System Permissions`]: https://developer.android.com/guide/topics/permissions/overview
 /// [`android.Manifest.permission`]: https://developer.android.com/reference/android/Manifest.permission
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "uses-permission-sdk-23")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct UsesPermissionSdk23 {
     /// The name of the permission. This permission can be defined by the app
     /// with the [`<permission>`] element, it can be a permission defined by another
@@ -51,12 +50,12 @@ pub struct UsesPermissionSdk23 {
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
     /// The highest API level at which this permission should be granted to your
     /// app. If the app is installed on a device with a later API level, the
     /// app is not granted the permission and cannot use any related
     /// functionality.
-    #[serde(rename = "android:maxSdkVersion")]
+    #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<i32>,
 }

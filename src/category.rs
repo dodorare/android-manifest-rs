@@ -18,8 +18,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Intents and Intent Filters`]: https://developer.android.com/guide/components/intents-filters
 /// [`<intent-filter>`]: crate::IntentFilter
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "category")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct Category {
     /// The name of the category. Standard categories are defined in the [`Intent`]
     /// class as CATEGORY_name constants. The name assigned here can be derived
@@ -42,6 +41,6 @@ pub struct Category {
     /// [`CATEGORY_DEFAULT`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_DEFAULT
     /// [`startActivity()`]: https://developer.android.com/reference/android/app/Activity#startActivity(android.content.Intent)
     /// [`startActivityForResult()`]: https://developer.android.com/reference/android/app/Activity#startActivityForResult(android.content.Intent,%20int)
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
 }

@@ -23,18 +23,17 @@ use serde::{Deserialize, Serialize};
 /// API Level 4
 ///
 /// [`<provider>`]: crate::Provider
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "path-permission")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct PathPermission {
     /// A complete URI path for a subset of content provider data. Permission can be
     /// granted only to the particular data identified by this path. When used to
     /// provide search suggestion content, it must be appended with
     /// "/search_suggest_query".
-    #[serde(rename = "android:path")]
+    #[yaserde(attribute, prefix = "android")]
     pub path: Option<String>,
     /// The initial part of a URI path for a subset of content provider data. Permission
     /// can be granted to all data subsets with paths that share this initial part.
-    #[serde(rename = "android:pathPrefix")]
+    #[yaserde(attribute, prefix = "android", rename = "pathPrefix")]
     pub path_prefix: Option<String>,
     /// A complete URI path for a subset of content provider data, but one that
     /// can use the following wildcards:
@@ -58,19 +57,19 @@ pub struct PathPermission {
     /// [`PATTERN_PREFIX`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_PREFIX
     /// [`PATTERN_SIMPLE_GLOB`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB
     /// [`PatternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
-    #[serde(rename = "android:pathPattern")]
+    #[yaserde(attribute, prefix = "android", rename = "pathPattern")]
     pub path_pattern: Option<String>,
     /// The name of a permission that clients must have in order to read or write the
     /// content provider's data. This attribute is a convenient way of setting a
     /// single permission for both reading and writing. However, the `readPermission`
     /// and `writePermission` attributes take precedence over this one.
-    #[serde(rename = "android:permission")]
+    #[yaserde(attribute, prefix = "android")]
     pub permission: Option<String>,
     /// A permission that clients must have in order to query the content provider.
-    #[serde(rename = "android:readPermission")]
+    #[yaserde(attribute, prefix = "android", rename = "readPermission")]
     pub read_permission: Option<String>,
     /// A permission that clients must have in order to make changes to the data
     /// controlled by the content provider.
-    #[serde(rename = "android:writePermission")]
+    #[yaserde(attribute, prefix = "android", rename = "writePermission")]
     pub write_permission: Option<String>,
 }

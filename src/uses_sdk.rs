@@ -32,8 +32,7 @@ use serde::{Deserialize, Serialize};
 /// [`Versioning Your Applications.`]: https://developer.android.com/studio/publish/versioning
 /// [`Google Play filters`]: https://developer.android.com/google/play/filters
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "uses-sdk")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct UsesSdk {
     /// An integer designating the minimum API Level required for the application to run.
     /// The Android system will prevent the user from installing the application if
@@ -49,7 +48,7 @@ pub struct UsesSdk {
     /// less than 3, the application will crash during runtime when attempting to
     /// access the unavailable APIs. For this reason, be certain to declare the
     /// appropriate API Level in the minSdkVersion attribute.
-    #[serde(rename = "android:minSdkVersion")]
+    #[yaserde(attribute, prefix = "android", rename = "minSdkVersion")]
     pub min_sdk_version: Option<i32>,
     /// An integer designating the API Level that the application targets. If not set, the
     /// default value equals that given to `minSdkVersion`. This attribute informs the
@@ -81,7 +80,7 @@ pub struct UsesSdk {
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     /// [`Build.VERSION_CODES`]: https://developer.android.com/reference/android/os/Build.VERSION_CODES
-    #[serde(rename = "android:targetSdkVersion")]
+    #[yaserde(attribute, prefix = "android", rename = "targetSdkVersion")]
     pub target_sdk_version: Option<i32>,
     /// An integer designating the maximum API Level on which the application is designed
     /// to run. In Android 1.5, 1.6, 2.0, and 2.0.1, the system checks the value of
@@ -120,6 +119,6 @@ pub struct UsesSdk {
     /// which your application is likely to be installed will receive periodic
     /// system updates over the air, so you should consider their effect on your
     /// application before setting this attribute.
-    #[serde(rename = "android:maxSdkVersion")]
+    #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<i32>,
 }

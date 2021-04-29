@@ -62,14 +62,14 @@ use serde::{Deserialize, Serialize};
 /// ## XML Syntax
 /// ```xml
 /// <supports-screens android:resizeable=["true"| "false"]
-///     android:smallScreens=["true" | "false"]
-///     android:normalScreens=["true" | "false"]
-///     android:largeScreens=["true" | "false"]
-///     android:xlargeScreens=["true" | "false"]
-///     android:anyDensity=["true" | "false"]
-///     android:requiresSmallestWidthDp="integer"
-///     android:compatibleWidthLimitDp="integer"
-///     android:largestWidthLimitDp="integer"/>
+///                   android:smallScreens=["true" | "false"]
+///                   android:normalScreens=["true" | "false"]
+///                   android:largeScreens=["true" | "false"]
+///                   android:xlargeScreens=["true" | "false"]
+///                   android:anyDensity=["true" | "false"]
+///                   android:requiresSmallestWidthDp="integer"
+///                   android:compatibleWidthLimitDp="integer"
+///                   android:largestWidthLimitDp="integer" />
 /// ```
 ///
 /// ## Contained in:
@@ -82,8 +82,7 @@ use serde::{Deserialize, Serialize};
 /// [`alternative layout resources`]: https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources
 /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "supports-screens")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct SupportsScreens {
     /// Indicates whether the application is resizeable for different screen sizes. This
     /// attribute is true, by default. If set false, the system will run your
@@ -94,7 +93,7 @@ pub struct SupportsScreens {
     /// introduced. You should not use it.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[serde(rename = "android:resizeable")]
+    #[yaserde(attribute, prefix = "android")]
     pub resizeable: Option<bool>,
     /// Indicates whether the application supports smaller screen form-factors. A small
     /// screen is defined as one with a smaller aspect ratio than the `"normal"`
@@ -102,13 +101,13 @@ pub struct SupportsScreens {
     /// will not be available for small screen devices from external services (such as
     /// Google Play), because there is little the platform can do to make such an
     /// application work on a smaller screen. This is `"true"` by default.
-    #[serde(rename = "android:smallScreens")]
+    #[yaserde(attribute, prefix = "android", rename = "smallScreens")]
     pub small_screens: Option<bool>,
     /// Indicates whether an application supports the "normal" screen form-factors.
     /// Traditionally this is an HVGA medium density screen, but WQVGA low density and
     /// WVGA high density are also considered to be normal. This attribute is "true"
     /// by default.
-    #[serde(rename = "android:normalScreens")]
+    #[yaserde(attribute, prefix = "android", rename = "normalScreens")]
     pub normal_screens: Option<bool>,
     /// Indicates whether the application supports larger screen form-factors. A large
     /// screen is defined as a screen that is significantly larger than a "normal"
@@ -120,7 +119,7 @@ pub struct SupportsScreens {
     /// compatibility mode`].
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[serde(rename = "android:largeScreens")]
+    #[yaserde(attribute, prefix = "android", rename = "largeScreens")]
     pub large_screens: Option<bool>,
     /// Indicates whether the application supports extra large screen form-factors. An
     /// xlarge screen is defined as a screen that is significantly larger than a
@@ -135,7 +134,7 @@ pub struct SupportsScreens {
     /// This attribute was introduced in API level 9.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[serde(rename = "android:xlargeScreens")]
+    #[yaserde(attribute, prefix = "android", rename = "xlargeScreens")]
     pub xlarge_screens: Option<bool>,
     /// Indicates whether the application includes resources to accommodate any screen
     /// density.
@@ -148,7 +147,7 @@ pub struct SupportsScreens {
     /// information).
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
-    #[serde(rename = "android:anyDensity")]
+    #[yaserde(attribute, prefix = "android", rename = "anyDensity")]
     pub any_density: Option<bool>,
     /// Specifies the minimum smallestWidth required. The smallestWidth is the shortest
     /// dimension of the screen space (in dp units) that must be available to your
@@ -194,8 +193,8 @@ pub struct SupportsScreens {
     /// attributes if your application does not support small screens.
     ///
     /// [`smallest screen width qualifier`]: https://developer.android.com/guide/topics/resources/providing-resources#SmallestScreenWidthQualifier
-    #[serde(rename = "android:requiresSmallestWidthDp")]
-    pub requires_smallest_width_dp: Option<i32>,
+    #[yaserde(attribute, prefix = "android", rename = "requiresSmallestWidthDp")]
+    pub requires_smallest_width_dp: Option<String>,
     /// This attribute allows you to enable [`screen compatibility mode`] as a
     /// user-optional feature by specifying the maximum "smallest screen width"
     /// for which your application is designed. If the smallest side of a
@@ -216,8 +215,8 @@ pub struct SupportsScreens {
     /// android:compatibleWidthLimitDp is larger than 320.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[serde(rename = "android:compatibleWidthLimitDp")]
-    pub compatible_width_limit_dp: Option<i32>,
+    #[yaserde(attribute, prefix = "android", rename = "compatibleWidthLimitDp")]
+    pub compatible_width_limit_dp: Option<String>,
     /// This attribute allows you to force-enable [`screen compatibility mode`] by
     /// specifying the maximum "smallest screen width" for which your application is
     /// designed. If the smallest side of a device's available screen is greater than
@@ -241,6 +240,6 @@ pub struct SupportsScreens {
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     /// [`android:compatibleWidthLimitDp`]:
     /// crate::SupportsScreens#structfield.compatible_width_limit_dp
-    #[serde(rename = "android:largestWidthLimitDp")]
-    pub largest_width_limit_dp: Option<i32>,
+    #[yaserde(attribute, prefix = "android", rename = "largestWidthLimitDp")]
+    pub largest_width_limit_dp: Option<String>,
 }

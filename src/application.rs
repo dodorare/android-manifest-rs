@@ -669,34 +669,22 @@ pub struct Application {
     #[yaserde(attribute, prefix = "android", rename = "vmSafeMode")]
     pub vm_safe_mode: Option<bool>,
     /// List of `<activity>` tags.
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub activity: Vec<Activity>,
     /// List of `<service>` tags.
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub service: Vec<Service>,
     /// List of `<receiver>` tags.
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub receiver: Vec<Receiver>,
-    // /// List of `<provider>` tags.
-    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    // pub provider: Vec<Provider>,
-    // /// List of `<activity-alias>` tags.
-    // #[serde(
-    //     rename = "activity-alias",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub activity_alias: Vec<ActivityAlias>,
-    // /// List of `<meta-data>` tags.
-    // #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
-    // pub meta_data: Vec<MetaData>,
-    // /// List of `<uses-library>` tags.
-    // #[serde(
-    //     rename = "uses-library",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub uses_library: Vec<UsesLibrary>,
+    /// List of `<provider>` tags.
+    pub provider: Vec<Provider>,
+    /// List of `<activity-alias>` tags.
+    #[yaserde(rename = "activity-alias")]
+    pub activity_alias: Vec<ActivityAlias>,
+    /// List of `<meta-data>` tags.
+    #[yaserde(rename = "meta-data")]
+    pub meta_data: Vec<MetaData>,
+    /// List of `<uses-library>` tags.
+    #[yaserde(rename = "uses-library")]
+    pub uses_library: Vec<UsesLibrary>,
 }
 
 /// GWP-ASan is a native memory allocator feature that helps find [`use-after-free`] and

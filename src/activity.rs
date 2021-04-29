@@ -250,9 +250,9 @@ pub struct Activity {
         attribute,
         prefix = "android",
         rename = "configChanges",
-        skip_serializing_if = "AttributeList::is_empty",
-        default
+        skip_serializing_if = "check_config_changes"
     )]
+    #[serde(skip_serializing_if = "AttributeList::is_empty")]
     pub config_changes: AttributeList<VerticalBar, ConfigChanges>,
     /// Whether or not the activity is direct-boot aware; that is, whether or  not it can
     /// run before the user unlocks the device.
@@ -783,20 +783,31 @@ pub struct Activity {
         attribute,
         prefix = "android",
         rename = "windowSoftInputMode",
-        skip_serializing_if = "AttributeList::is_empty",
-        default
+        skip_serializing_if = "check_window_soft_input_mode"
     )]
+    #[serde(skip_serializing_if = "AttributeList::is_empty")]
     pub window_soft_input_mode: AttributeList<VerticalBar, WindowSoftInputMode>,
     /// List of `<intent-filter>` tags.
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     #[yaserde(rename = "intent-filter")]
     pub intent_filter: Vec<IntentFilter>,
     /// List of `<meta-data>` tags.
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     #[yaserde(rename = "meta-data")]
     pub meta_data: Vec<MetaData>,
     /// A `<layout>` tag.
     pub layout: Option<Layout>,
+}
+
+impl Activity {
+    fn check_config_changes(&self, value: &AttributeList<VerticalBar, ConfigChanges>) -> bool {
+        value.is_empty()
+    }
+
+    fn check_window_soft_input_mode(
+        &self,
+        value: &AttributeList<VerticalBar, WindowSoftInputMode>,
+    ) -> bool {
+        value.is_empty()
+    }
 }
 
 /// Requests the activity to be displayed in wide color gamut mode on compatible

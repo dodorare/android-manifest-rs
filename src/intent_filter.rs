@@ -1,7 +1,7 @@
 use super::action::Action;
 use super::category::Category;
 use super::data::Data;
-use super::resources::{DrawableResource, Resource, StyleResource};
+use super::resources::{DrawableResource, Resource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Specifies the types of intents that an activity, service, or broadcast receiver can
@@ -87,7 +87,7 @@ pub struct IntentFilter {
     /// [`label`]: crate::Application#structfield.label
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
     #[yaserde(attribute, prefix = "android")]
-    pub label: Option<Resource<StyleResource>>,
+    pub label: Option<StringResourceOrString>,
     /// The priority that should be given to the parent component with regard to handling
     /// intents of the type described by the filter. This attribute has meaning for
     /// both activities and broadcast receivers:
@@ -136,10 +136,10 @@ pub struct IntentFilter {
     /// This attribute was introduced in API Level 28.
     #[yaserde(attribute, prefix = "android")]
     pub ordery: Option<i32>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    /// List of `<action>` tags.
     pub action: Vec<Action>,
-    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    // pub category: Vec<Category>,
-    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    // pub data: Vec<Data>,
+    /// List of `<category>` tags.
+    pub category: Vec<Category>,
+    /// List of `<data>` tags.
+    pub data: Vec<Data>,
 }

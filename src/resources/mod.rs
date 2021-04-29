@@ -20,7 +20,7 @@ pub trait ResourceType: FromStr {
     /// Creates new instance of [`Resource`](crate::Resource).
     fn new(name: &str, package: Option<String>) -> Resource<Self> {
         Resource {
-            name: name.to_owned(),
+            name: name.to_string(),
             package,
             phantom: PhantomData,
         }
@@ -38,17 +38,17 @@ pub struct Resource<T: ResourceType> {
 }
 
 impl<T: ResourceType> Resource<T> {
-    pub fn new(name: String) -> Self {
+    pub fn new(name: &str) -> Self {
         Self {
-            name,
+            name: name.to_string(),
             package: None,
             phantom: PhantomData,
         }
     }
 
-    pub fn new_with_package(name: String, package: Option<String>) -> Self {
+    pub fn new_with_package(name: &str, package: Option<String>) -> Self {
         Self {
-            name,
+            name: name.to_string(),
             package,
             phantom: PhantomData,
         }

@@ -33,8 +33,7 @@ use serde::{Deserialize, Serialize};
 /// [`grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<provider>`]: crate::Provider
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "grant-uri-permission")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct GrantUriPermission {
     /// A path identifying the data subset or subsets that permission can be  granted for.
     /// The path attribute specifies a complete path; permission can be granted only
@@ -62,10 +61,10 @@ pub struct GrantUriPermission {
     /// [`PATTERN_PREFIX`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_PREFIX
     /// [`PATTERN_SIMPLE_GLOB`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB
     /// [`PatternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
-    #[serde(rename = "android:path")]
+    #[yaserde(attribute, prefix = "android")]
     pub path: Option<String>,
-    #[serde(rename = "android:pathPattern")]
+    #[yaserde(attribute, prefix = "android", rename = "pathPattern")]
     pub path_pattern: Option<String>,
-    #[serde(rename = "android:pathPrefix")]
+    #[yaserde(attribute, prefix = "android", rename = "pathPrefix")]
     pub path_prefix: Option<String>,
 }

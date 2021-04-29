@@ -184,7 +184,9 @@ pub struct Receiver {
         skip_serializing_if = "Vec::is_empty",
         default
     )]
+    #[yaserde(rename = "intent-filter")]
     pub intent_filter: Vec<IntentFilter>,
     #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    #[yaserde(rename = "meta-data")]
     pub meta_data: Vec<MetaData>,
 }

@@ -39,13 +39,12 @@ use serde::{Deserialize, Serialize};
 /// [`android.widget`]: https://developer.android.com/reference/android/widget/package-summary
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
 /// [`<application>`]: crate::Application
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "uses-library")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct UsesLibrary {
     /// The name of the library. The name is provided by the documentation for the package
     /// you are using. An example of this is `"android.test.runner"`, a package that
     /// contains Android test classes.
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the library
     /// specified by android:name:
@@ -62,6 +61,6 @@ pub struct UsesLibrary {
     /// is available.
     ///
     /// The default is `"true"`.
-    #[serde(rename = "android:required")]
+    #[yaserde(attribute, prefix = "android")]
     pub required: Option<bool>,
 }

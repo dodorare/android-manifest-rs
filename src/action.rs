@@ -40,5 +40,5 @@ pub struct Action {
     ///
     /// [`Intent`]: https://developer.android.com/reference/android/content/Intent
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<String>,
+    pub name: Option<String>,
 }

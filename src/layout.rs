@@ -34,10 +34,10 @@ pub struct Layout {
     /// ```xml
     /// <activity android:name=".MyActivity">
     ///    <layout android:defaultHeight="500dp"
-    ///         android:defaultWidth="600dp"
-    ///         android:gravity="top|end"
-    ///         android:minHeight="450dp"
-    ///         android:minWidth="300dp" />
+    ///            android:defaultWidth="600dp"
+    ///            android:gravity="top|end"
+    ///            android:minHeight="450dp"
+    ///            android:minWidth="300dp" />
     /// </activity>
     /// ```
     #[yaserde(attribute, prefix = "android", rename = "minHeight")]

@@ -70,7 +70,7 @@ use serde::{Deserialize, Serialize};
     rename = "manifest",
     namespace = "android: http://schemas.android.com/apk/res/android"
 )]
-pub struct Manifest {
+pub struct AndroidManifest {
     /// A full Java-language-style package name for the Android app. The name may contain
     /// uppercase or lowercase letters ('A' through 'Z'), numbers, and underscores
     /// ('_'). However, individual package name parts may only start with letters.
@@ -193,7 +193,7 @@ pub struct Manifest {
     /// "y" separately in the lower and upper 16 bits. Or you could simply increase the
     /// number by one each time a new version is released.
     #[yaserde(attribute, prefix = "android", rename = "versionCode")]
-    pub version_code: Option<i32>,
+    pub version_code: Option<String>,
     /// The version number shown to users. This attribute can be set as a raw string or as
     /// a reference to a string resource. The string has no other purpose than to be
     /// displayed to users. The `versionCode` attribute holds the significant version
@@ -222,66 +222,42 @@ pub struct Manifest {
     /// [`App Install Location`]: https://developer.android.com/guide/topics/data/install-location
     #[yaserde(attribute, prefix = "android", rename = "installLocation")]
     pub install_location: Option<InstallLocation>,
+    /// Required `<application>` tag.
     pub application: Application,
-    // #[serde(
-    //     rename = "compatible-screens",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub compatible_screens: Vec<CompatibleScreens>,
-    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    // pub instrumentation: Vec<Instrumentation>,
-    // #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    // pub permission: Vec<Permission>,
-    // #[serde(
-    //     rename = "permission-group",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub permission_group: Vec<PermissionGroup>,
-    // #[serde(
-    //     rename = "permission-tree",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub permission_tree: Vec<PermissionTree>,
-    // #[serde(
-    //     rename = "supports-gl-texture",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub supports_gl_texture: Vec<SupportsGlTexture>,
-    // #[serde(
-    //     rename = "supports-screens",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub supports_screens: Vec<SupportsScreens>,
-    // #[serde(
-    //     rename = "uses-configuration",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub uses_configuration: Vec<UsesConfiguration>,
-    // #[serde(
-    //     rename = "uses-feature",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub uses_feature: Vec<UsesFeature>,
-    // #[serde(
-    //     rename = "uses-permission",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub uses_permission: Vec<UsesPermission>,
-    // #[serde(
-    //     rename = "uses-permission-sdk-23",
-    //     skip_serializing_if = "Vec::is_empty",
-    //     default
-    // )]
-    // pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
-    // pub uses_sdk: Option<UsesSdk>,
+    /// Optional `<uses-sdk>` tag.
+    #[yaserde(rename = "uses-sdk")]
+    pub uses_sdk: Option<UsesSdk>,
+    /// List of `<compatible-screens>` tags.
+    #[yaserde(rename = "compatible-screens")]
+    pub compatible_screens: Vec<CompatibleScreens>,
+    /// List of `<instrumentation>` tags.
+    pub instrumentation: Vec<Instrumentation>,
+    /// List of `<permission>` tags.
+    pub permission: Vec<Permission>,
+    /// List of `<permission-group>` tags.
+    #[yaserde(rename = "permission-group")]
+    pub permission_group: Vec<PermissionGroup>,
+    /// List of `<permission-tree>` tags.
+    #[yaserde(rename = "permission-tree")]
+    pub permission_tree: Vec<PermissionTree>,
+    /// List of `<supports-gl-texture>` tags.
+    #[yaserde(rename = "supports-gl-texture")]
+    pub supports_gl_texture: Vec<SupportsGlTexture>,
+    /// List of `<supports-screens>` tags.
+    #[yaserde(rename = "supports-screens")]
+    pub supports_screens: Vec<SupportsScreens>,
+    /// List of `<uses-configuration>` tags.
+    #[yaserde(rename = "uses-configuration")]
+    pub uses_configuration: Vec<UsesConfiguration>,
+    /// List of `<uses-feature>` tags.
+    #[yaserde(rename = "uses-feature")]
+    pub uses_feature: Vec<UsesFeature>,
+    /// List of `<uses-permission>` tags.
+    #[yaserde(rename = "uses-permission")]
+    pub uses_permission: Vec<UsesPermission>,
+    /// List of `<uses-permission-sdk-23>` tags.
+    #[yaserde(rename = "uses-permission-sdk-23")]
+    pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
 }
 
 /// The default install location for the app.
@@ -311,7 +287,7 @@ pub enum InstallLocation {
 }
 
 impl Default for InstallLocation {
-    fn default() -> InstallLocation {
+    fn default() -> Self {
         InstallLocation::InternalOnly
     }
 }

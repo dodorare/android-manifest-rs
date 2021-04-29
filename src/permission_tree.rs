@@ -34,24 +34,23 @@ use serde::{Deserialize, Serialize};
 /// [`PackageManager.addPermission()`]: https://developer.android.com/reference/android/content/pm/PackageManager#addPermission(android.content.pm.PermissionInfo)
 /// [`<permission>`]: crate::Permission
 /// [<manifest>]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "permission-tree")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct PermissionTree {
     /// An icon representing all the permissions in the tree. This attribute must be set
     /// as a reference to a drawable resource containing the image definition.
-    #[serde(rename = "android:icon")]
+    #[yaserde(attribute, prefix = "android")]
     pub icon: Option<Resource<DrawableResource>>,
     /// A user-readable name for the group. As a convenience, the label can be directly
     /// set as a raw string for quick and dirty programming. However, when the
     /// application is ready to be published, it should be set as a reference to a
     /// string resource, so that it can be localized like other strings in the user
     /// interface.
-    #[serde(rename = "android:label")]
+    #[yaserde(attribute, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name that's at the base of the permission tree.  It serves as a prefix to all
     /// permission names in the tree. Java-style scoping should be used to ensure that
     /// the name is unique. The name must have more than two period-separated segments
     /// in its path — for example, com.example.base is OK, but com.example is not.
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
 }

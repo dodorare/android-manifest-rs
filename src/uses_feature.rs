@@ -70,10 +70,9 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## XML Syntax
 /// ```xml
-/// <uses-feature
-///     android:name="string"
-///     android:required=["true" | "false"]
-///     android:glEsVersion="integer" />
+/// <uses-feature android:name="string"
+///               android:required=["true" | "false"]
+///               android:glEsVersion="integer" />
 /// ```
 ///
 /// ## Contained in
@@ -89,8 +88,7 @@ use serde::{Deserialize, Serialize};
 /// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
 /// [`Google Play and Feature-Based Filtering`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#market-feature-filtering
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "uses-feature")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct UsesFeature {
     /// Specifies a single hardware or software feature used by the application,
     /// as a descriptor string. Valid attribute values are listed in the
@@ -99,7 +97,7 @@ pub struct UsesFeature {
     ///
     /// [`Hardware features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#hw-features
     /// [`Software features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#sw-features
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the feature
     /// specified in `android:name`.
@@ -114,7 +112,7 @@ pub struct UsesFeature {
     /// function without the specified feature, if necessary.
     ///
     /// The default value for android:required if not declared is `"true"`.
-    #[serde(rename = "android:required")]
+    #[yaserde(attribute, prefix = "android")]
     pub required: Option<bool>,
     /// The OpenGL ES version required by the application. The higher 16 bits represent
     /// the major number and the lower 16 bits represent the minor number. For
@@ -141,6 +139,6 @@ pub struct UsesFeature {
     /// supported OpenGL ES version at runtime, see the [`OpenGL ES API guide`].
     ///
     /// [`OpenGL ES API guide`]: https://developer.android.com/guide/topics/graphics/opengl
-    #[serde(rename = "android:glEsVersion")]
-    pub gl_es_version: Option<i32>,
+    #[yaserde(attribute, prefix = "android", rename = "glEsVersion")]
+    pub gl_es_version: Option<String>,
 }

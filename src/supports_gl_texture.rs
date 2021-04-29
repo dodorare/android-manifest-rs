@@ -59,8 +59,7 @@ use serde::{Deserialize, Serialize};
 /// [`<supports-gl-texture>`]: crate::SupportsGlTexture
 /// [`Google Play and texture compression filtering`]: https://developer.android.com/guide/topics/manifest/supports-gl-texture-element#market-texture-filtering
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "supports-gl-texture")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct SupportsGlTexture {
     /// Specifies a single GL texture compression format supported by the application, as
     /// a descriptor string. Common descriptor values are listed in the table below.
@@ -85,11 +84,11 @@ pub struct SupportsGlTexture {
     /// PowerVR texture compression. Available in devices running PowerVR
     /// SGX530/540 GPU, such as Motorola DROID series; Samsung Galaxy S, Nexus
     /// S, and Galaxy Tab; and others.
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: Option<SupportsGlTextureName>,
 }
 
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 #[allow(non_camel_case_types)]
 pub enum SupportsGlTextureName {
     /// Ericsson texture compression. Specified in OpenGL ES 2.0 and available in all
@@ -101,8 +100,8 @@ pub enum SupportsGlTextureName {
     GL_AMD_compressed_3DC_texture,
     /// ATI texture compression. Available on devices running Adreno GPU, including HTC
     /// Nexus One, Droid Incredible, EVO, and others. For widest compatibility,
-    /// devices may also declare a <supports-gl-texture> element with the descriptor
-    /// GL_ATI_texture_compression_atitc.
+    /// devices may also declare a `<supports-gl-texture>` element with the descriptor
+    /// `GL_ATI_texture_compression_atitc`.
     GL_AMD_compressed_ATC_texture,
     /// Luminance alpha texture compression.
     GL_EXT_texture_compression_latc,
@@ -118,4 +117,10 @@ pub enum SupportsGlTextureName {
     /// such as Motorola DROID series; Samsung Galaxy S, Nexus S, and Galaxy Tab; and
     /// others.
     GL_IMG_texture_compression_pvrtc,
+}
+
+impl Default for SupportsGlTextureName {
+    fn default() -> Self {
+        SupportsGlTextureName::GL_OES_compressed_ETC1_RGB8_texture
+    }
 }

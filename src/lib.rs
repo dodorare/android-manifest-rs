@@ -37,6 +37,7 @@ pub use action::*;
 pub use activity::*;
 pub use activity_alias::*;
 pub use application::*;
+pub use attribute_list::*;
 pub use category::*;
 pub use compatible_screens::*;
 pub use data::*;
@@ -64,74 +65,259 @@ pub use uses_permission::*;
 pub use uses_permission_sdk_23::*;
 pub use uses_sdk::*;
 
-// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
-// #[yaserde(
-//     rename = "manifest",
-//     namespace = "html: http://schemas.android.com/apk/res/android"
-// )]
-// pub struct TestManifest {
-//     pub application: TestApplication,
-//     #[serde(skip_serializing_if = "Vec::is_empty", default)]
-//     #[yaserde(rename = "compatible-screens")]
-//     pub compatible_screens: Vec<TestCompatibleScreens>,
-// }
+/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a string of XML text.
+pub fn from_str(s: &str) -> Result<AndroidManifest, String> {
+    yaserde::de::from_str(s)
+}
 
-// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
-// pub struct TestApplication {
-//     #[yaserde(attribute, prefix = "android", rename = "allowTaskReparenting")]
-//     pub allow_task_reparenting: Option<bool>,
-//     #[yaserde(attribute, prefix = "android", rename = "allowBackup")]
-//     pub allow_backup: Option<bool>,
-// }
+/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from an IO stream of XML text.
+pub fn from_reader<R: std::io::Read>(reader: R) -> Result<AndroidManifest, String> {
+    yaserde::de::from_reader(reader)
+}
 
-// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
-// pub struct TestCompatibleScreens {
-//     pub screen: Vec<TestScreen>,
-// }
+/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a String of XML text.
+pub fn to_string(manifest: &AndroidManifest) -> Result<String, String> {
+    yaserde::ser::to_string(manifest)
+}
 
-// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
-// #[yaserde(prefix = "android")]
-// pub struct TestScreen {
-//     #[yaserde(attribute, prefix = "android", rename = "screenSize")]
-//     pub screen_size: TestScreenSize,
-//     #[yaserde(attribute, prefix = "android", rename = "screenDensity")]
-//     pub screen_density: TestScreenDensity,
-// }
+/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a pretty-printed String of XML text.
+pub fn to_string_pretty(manifest: &AndroidManifest) -> Result<String, String> {
+    let config = yaserde::ser::Config {
+        perform_indent: true,
+        write_document_declaration: true,
+        indent_string: None,
+    };
+    yaserde::ser::to_string_with_config(manifest, &config)
+}
 
-// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
-// #[serde(rename_all = "camelCase")]
-// pub enum TestScreenSize {
-//     Small,
-//     Normal,
-//     Large,
-//     Xlarge,
-// }
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-// impl Default for TestScreenSize {
-//     fn default() -> TestScreenSize {
-//         TestScreenSize::Small
-//     }
-// }
+    #[test]
+    fn test_manifest_deserialize_serialize() {
+        let given_xml = r#"<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.toggletest" android:versionCode="1" android:versionName="1.0">
+  <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
+    <activity android:label="@string/app_name" android:name="com.example.toggletest.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>"#;
+        let expected_manifest = AndroidManifest {
+            package: "com.example.toggletest".to_string(),
+            version_code: Some("1".to_string()),
+            version_name: Some("1.0".to_string()),
+            application: Application {
+                allow_backup: Some(true),
+                icon: Some(DrawableResource::new("ic_launcher", None)),
+                label: Some(StringResourceOrString::resource("app_name", None)),
+                theme: Some(StyleResource::new("AppTheme", None)),
+                activity: vec![Activity {
+                    label: Some(StringResourceOrString::resource("app_name", None)),
+                    name: "com.example.toggletest.MainActivity".to_string(),
+                    intent_filter: vec![IntentFilter {
+                        action: vec![Action {
+                            name: Some("android.intent.action.MAIN".to_string()),
+                        }],
+                        category: vec![Category {
+                            name: Some("android.intent.category.LAUNCHER".to_string()),
+                        }],
+                        ..Default::default()
+                    }],
+                    ..Default::default()
+                }],
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let deserialized_manifest: AndroidManifest = from_str(given_xml).unwrap();
+        assert_eq!(expected_manifest, deserialized_manifest);
+        let serialized_manifest = to_string_pretty(&expected_manifest).unwrap();
+        assert_eq!(given_xml, serialized_manifest);
+    }
 
-// #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
-// #[serde(rename_all = "camelCase")]
-// pub enum TestScreenDensity {
-//     /// "ldpi" (approximately 120 dpi)
-//     Ldpi,
-//     /// "mdpi" (approximately 160 dpi)
-//     Mdpi,
-//     /// "hdpi" (approximately 240 dpi)
-//     Hdpi,
-//     /// "xhdpi" (approximately 320 dpi)
-//     Xhdpi,
-//     /// "xxhdpi" (approximately 480 dpi)
-//     Xxhdpi,
-//     /// "xxxhdpi" (approximately 560-640 dpi)
-//     Xxxhdpi,
-// }
+    #[test]
+    fn test_complex_manifest_deserialize() {
+        let given_xml = r#"
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+          package="org.domokit.gcm" 
+          android:versionCode="4" 
+          android:versionName="0.0.4">
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-// impl Default for TestScreenDensity {
-//     fn default() -> TestScreenDensity {
-//         TestScreenDensity::Xhdpi
-//     }
-// }
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission android:name="org.domokit.gcm.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="org.domokit.gcm.permission.C2D_MESSAGE" />
+    
+    <application android:label="gcm" android:name="org.domokit.sky.shell.SkyApplication">
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize" 
+                  android:hardwareAccelerated="true" 
+                  android:launchMode="singleTask" 
+                  android:name="org.domokit.sky.shell.SkyActivity" 
+                  android:theme="@android:style/Theme.Black.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name="org.domokit.sky.shell.UpdateService"
+            android:exported="false"
+            android:process=":remote"/>
+        
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="org.domokit.sky.shell" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="org.domokit.gcm.GcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="org.domokit.gcm.InstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="org.domokit.gcm.RegistrationIntentService"
+            android:exported="false">
+        </service>
+    </application>
+</manifest>"#;
+        let expected_manifest = AndroidManifest {
+            package: "org.domokit.gcm".to_string(),
+            version_code: Some("4".to_string()),
+            version_name: Some("0.0.4".to_string()),
+            application: Application {
+                label: Some(StringResourceOrString::string("gcm")),
+                name: Some("org.domokit.sky.shell.SkyApplication".to_string()),
+                activity: vec![Activity {
+                    config_changes: AttributeList::from_vec(vec![
+                        ConfigChanges::Orientation,
+                        ConfigChanges::KeyboardHidden,
+                        ConfigChanges::Keyboard,
+                        ConfigChanges::ScreenSize,
+                    ]),
+                    hardware_accelerated: Some(true),
+                    launch_mode: Some(LaunchMode::Standard),
+                    name: "org.domokit.sky.shell.SkyActivity".to_string(),
+                    theme: Some(StyleResource::new(
+                        "Theme.Black.NoTitleBar",
+                        Some("android".to_string()),
+                    )),
+                    intent_filter: vec![IntentFilter {
+                        action: vec![Action {
+                            name: Some("android.intent.action.MAIN".to_string()),
+                        }],
+                        category: vec![Category {
+                            name: Some("android.intent.category.LAUNCHER".to_string()),
+                        }],
+                        ..Default::default()
+                    }],
+                    ..Default::default()
+                }],
+                service: vec![
+                    Service {
+                        exported: Some(false),
+                        name: "org.domokit.sky.shell.UpdateService".to_string(),
+                        process: Some(":remote".to_string()),
+                        ..Default::default()
+                    },
+                    Service {
+                        exported: Some(false),
+                        name: "org.domokit.gcm.GcmListenerService".to_string(),
+                        intent_filter: vec![IntentFilter {
+                            action: vec![Action {
+                                name: Some("com.google.android.c2dm.intent.RECEIVE".to_string()),
+                            }],
+                            ..Default::default()
+                        }],
+                        ..Default::default()
+                    },
+                    Service {
+                        exported: Some(false),
+                        name: "org.domokit.gcm.InstanceIDListenerService".to_string(),
+                        intent_filter: vec![IntentFilter {
+                            action: vec![Action {
+                                name: Some("com.google.android.gms.iid.InstanceID".to_string()),
+                            }],
+                            ..Default::default()
+                        }],
+                        ..Default::default()
+                    },
+                    Service {
+                        exported: Some(false),
+                        name: "org.domokit.gcm.RegistrationIntentService".to_string(),
+                        ..Default::default()
+                    },
+                ],
+                receiver: vec![Receiver {
+                    exported: Some(true),
+                    name: "com.google.android.gms.gcm.GcmReceiver".to_string(),
+                    permission: Some("com.google.android.c2dm.permission.SEND".to_string()),
+                    intent_filter: vec![IntentFilter {
+                        action: vec![Action {
+                            name: Some("com.google.android.c2dm.intent.RECEIVE".to_string()),
+                        }],
+                        category: vec![Category {
+                            name: Some("org.domokit.sky.shell".to_string()),
+                        }],
+                        ..Default::default()
+                    }],
+                    ..Default::default()
+                }],
+                ..Default::default()
+            },
+            uses_sdk: Some(UsesSdk {
+                min_sdk_version: Some(14),
+                target_sdk_version: Some(21),
+                ..Default::default()
+            }),
+            permission: vec![Permission {
+                name: Some("org.domokit.gcm.permission.C2D_MESSAGE".to_string()),
+                protection_level: Some(ProtectionLevel::Signature),
+                ..Default::default()
+            }],
+            uses_permission: vec![
+                UsesPermission {
+                    name: Some("android.permission.INTERNET".to_string()),
+                    ..Default::default()
+                },
+                UsesPermission {
+                    name: Some("android.permission.WAKE_LOCK".to_string()),
+                    ..Default::default()
+                },
+                UsesPermission {
+                    name: Some("com.google.android.c2dm.permission.RECEIVE".to_string()),
+                    ..Default::default()
+                },
+                UsesPermission {
+                    name: Some("org.domokit.gcm.permission.C2D_MESSAGE".to_string()),
+                    ..Default::default()
+                },
+            ],
+            ..Default::default()
+        };
+        let deserialized_manifest: AndroidManifest = from_str(given_xml).unwrap();
+        assert_eq!(expected_manifest, deserialized_manifest);
+    }
+}

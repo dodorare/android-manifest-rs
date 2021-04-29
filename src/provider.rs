@@ -1,3 +1,4 @@
+use super::attribute_list::{AttributeList, Semicolon};
 use super::grant_uri_permission::GrantUriPermission;
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
@@ -80,7 +81,7 @@ use serde::{Deserialize, Serialize};
 /// [`<grant-uri-permission>`]: crate::GrantUriPermission
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<path-permission>`]: crate::PathPermission
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 #[serde(rename = "provider")]
 pub struct Provider {
     /// A list of one or more URI authorities that identify data offered by the content
@@ -92,13 +93,13 @@ pub struct Provider {
     /// There is no default. At least one authority must be specified.
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
-    #[serde(
-        rename = "android:authorities",
-        with = "crate::list_serde::semicolon_list",
-        skip_serializing_if = "Vec::is_empty",
-        default
+    #[yaserde(
+        attribute,
+        prefix = "android",
+        skip_serializing_if = "check_authorities"
     )]
-    pub authorities: Vec<String>,
+    #[serde(skip_serializing_if = "AttributeList::is_empty")]
+    pub authorities: AttributeList<Semicolon, String>,
     /// Whether or not the service can be instantiated by the system — `"true"` if it can
     /// be, and `"false"` if not. The default value is `"true"`.
     ///
@@ -110,7 +111,7 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[serde(rename = "android:enabled")]
+    #[yaserde(attribute, prefix = "android")]
     pub enabled: Option<bool>,
     /// Whether or not the service is direct-boot aware; that is, whether or not it can
     /// run before the user unlocks the device.
@@ -122,7 +123,7 @@ pub struct Provider {
     /// The default value is `"false"`.
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
-    #[serde(rename = "android:directBootAware")]
+    #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<bool>,
     /// Whether the content provider is available for other applications to use:
     ///
@@ -147,7 +148,7 @@ pub struct Provider {
     /// [`android:grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
     /// [`android:targetSdkVersion`]: crate::UsesSdk#structfield.target_sdk_version
     /// [`permission`]: crate::Provider#structfield.permission
-    #[serde(rename = "android:exported")]
+    #[yaserde(attribute, prefix = "android")]
     pub exported: Option<bool>,
     /// Whether or not those who ordinarily would not have permission to access the
     /// content provider's data can be granted permission to do so, temporarily
@@ -182,7 +183,7 @@ pub struct Provider {
     /// [`writePermission`]: crate::Provider#structfield.write_permission
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`exported`]: crate::Provider#structfield.exported
-    #[serde(rename = "android:grantUriPermissions")]
+    #[yaserde(attribute, prefix = "android", rename = "grantUriPermissions")]
     pub grant_uri_permissions: Option<bool>,
     /// An icon representing the content provider. This attribute must be set as a
     /// reference to a drawable resource containing the image definition. If it is not
@@ -191,14 +192,14 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`icon`]: crate::Application#structfield.icon
-    #[serde(rename = "android:icon")]
+    #[yaserde(attribute, prefix = "android")]
     pub icon: Option<Resource<DrawableResource>>,
     /// The order in which the content provider should be instantiated, relative to other
     /// content providers hosted by the same process. When there are dependencies
     /// among content providers, setting this attribute for each of them ensures that
     /// they are created in the order required by those dependencies. The value is a
     /// simple integer, with higher numbers being initialized first.
-    #[serde(rename = "android:initOrder")]
+    #[yaserde(attribute, prefix = "android", rename = "initOrder")]
     pub init_order: Option<i32>,
     /// A user-readable label for the content provided. If this attribute is not set, the
     /// label set for the application as a whole is used instead (see
@@ -211,7 +212,7 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`label`]: crate::Application#structfield.label
-    #[serde(rename = "android:label")]
+    #[yaserde(attribute, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// If the app runs in multiple processes, this attribute determines whether multiple
     /// instances of the content provider are created. If `true`, each of the app's
@@ -221,7 +222,7 @@ pub struct Provider {
     /// Setting this flag to `true` may improve performance by reducing the overhead of
     /// interprocess communication, but it also increases the memory footprint of each
     /// process.
-    #[serde(rename = "android:multiprocess")]
+    #[yaserde(attribute, prefix = "android")]
     pub multiprocess: Option<bool>,
     /// The name of the class that implements the content provider, a subclass of
     /// [`ContentProvider`]. This should be a fully qualified class name (such
@@ -233,7 +234,7 @@ pub struct Provider {
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
     /// [`<manifest>`]: crate::Manifest
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: String,
     /// The name of a permission that clients must have to read or write the content
     /// provider's data. This attribute is a convenient way of setting a
@@ -252,7 +253,7 @@ pub struct Provider {
     /// [`grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#sectperm
     /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
-    #[serde(rename = "android:permission")]
+    #[yaserde(attribute, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the process in which the content provider should run. Normally, all
     /// components of an application run in the default process created for the
@@ -271,7 +272,7 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`process`]: crate::Application#structfield.process
-    #[serde(rename = "android:process")]
+    #[yaserde(attribute, prefix = "android")]
     pub process: Option<String>,
     /// A permission that clients must have to query the content provider.
     ///
@@ -285,12 +286,12 @@ pub struct Provider {
     /// [`<grant-uri-permission>`]: crate::GrantUriPermissions
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`writePermission`]: crate::Provider#structfield.write_permission
-    #[serde(rename = "android:readPermission")]
+    #[yaserde(attribute, prefix = "android", rename = "readPermission")]
     pub read_permission: Option<String>,
     /// Whether or not the data under the content provider's control is to be synchronized
     /// with data on a server — `"true"` if it is to be synchronized, and `"false"` if
     /// not.
-    #[serde(rename = "android:syncable")]
+    #[yaserde(attribute, prefix = "android")]
     pub syncable: Option<bool>,
     /// A permission that clients must have to make changes to the data controlled by the
     /// content provider.
@@ -305,14 +306,20 @@ pub struct Provider {
     /// [`<grant-uri-permission>`]: crate::GrantUriPermissions
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`readPermission`]: crate::Provider#structfield.write_permission
-    #[serde(rename = "android:writePermission")]
+    #[yaserde(attribute, prefix = "android", rename = "writePermission")]
     pub write_permission: Option<String>,
-    #[serde(rename = "path-permission", skip_serializing_if = "Vec::is_empty", default)]
+    #[yaserde(rename = "path-permission")]
     pub path_permission: Vec<PathPermission>,
+    #[yaserde(rename = "grant-uri-permission")]
     pub grant_uri_permission: Option<GrantUriPermission>,
-    
-    #[serde(rename = "intent-filter", skip_serializing_if = "Vec::is_empty", default)]
+    #[yaserde(rename = "intent-filter")]
     pub intent_filter: Vec<IntentFilter>,
-    #[serde(rename = "meta-data", skip_serializing_if = "Vec::is_empty", default)]
+    #[yaserde(rename = "meta-data")]
     pub meta_data: Vec<MetaData>,
+}
+
+impl Provider {
+    pub fn check_authorities(&self, value: &AttributeList<Semicolon, String>) -> bool {
+        value.is_empty()
+    }
 }

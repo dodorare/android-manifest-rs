@@ -26,27 +26,26 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
-#[serde(rename = "instrumentation")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct Instrumentation {
     /// Whether or not the Instrumentation class should run as a functional test —
     /// `"true"` if it should, and `"false"` if not. The default value is `"false"`.
-    #[serde(rename = "android:functionalTest")]
+    #[yaserde(attribute, prefix = "android", rename = "functionalTest")]
     pub functional_test: Option<bool>,
     /// Whether or not the Instrumentation object will turn profiling on and off —
     /// `"true"` if it determines when profiling starts and stops, and `"false"` if
     /// profiling continues the entire time it is running. A value of `"true"` enables
     /// the object to target profiling at a specific set of operations. The default
     /// value is `"false"`.
-    #[serde(rename = "android:handleProfiling")]
+    #[yaserde(attribute, prefix = "android", rename = "handleProfiling")]
     pub handle_profiling: Option<bool>,
     /// An icon that represents the Instrumentation class. This attribute must be set as a
     /// reference to a drawable resource.
-    #[serde(rename = "android:icon")]
+    #[yaserde(attribute, prefix = "android")]
     pub icon: Option<Resource<DrawableResource>>,
     /// A user-readable label for the Instrumentation class. The label can be set as a raw
     /// string or a reference to a string resource.
-    #[serde(rename = "android:label")]
+    #[yaserde(attribute, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name of the [`Instrumentation`] subclass. This should be a fully qualified
     /// class name (such as, `"com.example.project.StringInstrumentation"`). However,
@@ -56,7 +55,7 @@ pub struct Instrumentation {
     ///
     /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
     /// [`<manifest>`]: crate::Manifest
-    #[serde(rename = "android:name")]
+    #[yaserde(attribute, prefix = "android")]
     pub name: String,
     /// The application that the [`Instrumentation`] object will run against. An
     /// application is identified by the package name assigned in its manifest file by
@@ -64,7 +63,7 @@ pub struct Instrumentation {
     ///
     /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
     /// [`<manifest>`]: crate::Manifest
-    #[serde(rename = "android:targetPackage")]
+    #[yaserde(attribute, prefix = "android", rename = "targetPackage")]
     pub target_package: Option<String>,
     /// The processes that the [`Instrumentation`] object will run against. A
     /// comma-separated list indicates that the instrumentation will run against those
@@ -75,6 +74,6 @@ pub struct Instrumentation {
     ///
     /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
     /// [`android:targetPackage`]: crate::Instrumentation#structfield.target_package
-    #[serde(rename = "android:targetProcesses")]
+    #[yaserde(attribute, prefix = "android", rename = "targetProcesses")]
     pub target_processes: Option<String>,
 }

@@ -64,15 +64,15 @@ fn parse_any_resource(v: &str) -> Result<AnyResource, String> {
     };
     let (package, resource_type, name) = parse_resource(v)?;
     let any = if StringResource::resource_type() == resource_type {
-        AnyResource::String(Resource::<StringResource>::new_with_package(name, package))
+        AnyResource::String(Resource::<StringResource>::new_with_package(&name, package))
     } else if DrawableResource::resource_type() == resource_type {
         AnyResource::Drawable(Resource::<DrawableResource>::new_with_package(
-            name, package,
+            &name, package,
         ))
     } else if XmlResource::resource_type() == resource_type {
-        AnyResource::Xml(Resource::<XmlResource>::new_with_package(name, package))
+        AnyResource::Xml(Resource::<XmlResource>::new_with_package(&name, package))
     } else if StyleResource::resource_type() == resource_type {
-        AnyResource::Style(Resource::<StyleResource>::new_with_package(name, package))
+        AnyResource::Style(Resource::<StyleResource>::new_with_package(&name, package))
     } else {
         return Err(format!("unsuported resource type: {}", resource_type));
     };

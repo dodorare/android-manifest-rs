@@ -1,4 +1,4 @@
-use super::{parse_resource_with_type, Resource, ResourceVisitor, StringResource};
+use super::{parse_resource_with_type, Resource, ResourceType, ResourceVisitor, StringResource};
 use serde::{
     de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
@@ -12,6 +12,16 @@ use yaserde::{YaDeserialize, YaSerialize};
 pub enum StringResourceOrString {
     StringResource(Resource<StringResource>),
     String(String),
+}
+
+impl StringResourceOrString {
+    pub fn resource(name: &str, package: Option<String>) -> StringResourceOrString {
+        Self::StringResource(StringResource::new(name, package))
+    }
+
+    pub fn string(s: &str) -> StringResourceOrString {
+        Self::String(s.to_string())
+    }
 }
 
 impl Serialize for StringResourceOrString {

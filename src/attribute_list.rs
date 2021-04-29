@@ -1,5 +1,5 @@
 use serde::{
-    de::{self, Visitor},
+    de::{self, DeserializeOwned, Visitor},
     ser::Error,
     Deserialize, Deserializer, Serialize, Serializer,
 };
@@ -31,12 +31,12 @@ impl Delimiter for VerticalBar {
 }
 
 #[derive(Debug, PartialEq, Default)]
-pub struct AttributeList<D: Delimiter, T: YaSerialize + YaDeserialize> {
+pub struct AttributeList<D: Delimiter, T: Serialize + DeserializeOwned> {
     vec: Vec<T>,
     phantom: PhantomData<D>,
 }
 
-impl<D: Delimiter, T: YaSerialize + YaDeserialize> AttributeList<D, T> {
+impl<D: Delimiter, T: Serialize + DeserializeOwned> AttributeList<D, T> {
     pub fn new() -> Self {
         AttributeList {
             vec: Vec::new(),
@@ -60,35 +60,36 @@ impl<D: Delimiter, T: YaSerialize + YaDeserialize> AttributeList<D, T> {
     }
 }
 
-impl<D: Delimiter, T: YaSerialize + YaDeserialize> Serialize for AttributeList<D, T> {
+impl<D: Delimiter, T: Serialize + DeserializeOwned> Serialize for AttributeList<D, T> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        if self.vec().is_empty() {
+        if self.is_empty() {
             return Err(S::Error::custom("a value list can't be empty"));
         };
         serializer.serialize_str(
             &self
                 .vec()
                 .iter()
-                .map(|v| yaserde::ser::to_string(v).unwrap())
+                .map(|v| serde_plain::to_string(v).unwrap())
                 .collect::<Vec<String>>()
                 .join(D::delimiter_symbol()),
         )
     }
 }
 
-impl<D: Delimiter, T: YaSerialize + YaDeserialize> YaSerialize for AttributeList<D, T> {
+impl<D: Delimiter, T: Serialize + DeserializeOwned> YaSerialize for AttributeList<D, T> {
     fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
-        if self.vec().is_empty() {
-            return Err("a value list can't be empty".to_string());
-        };
+        // if self.is_empty() {
+        //     println!("1");
+        //     return Err("a value list can't be empty".to_string());
+        // };
         let _ret = writer.write(xml::writer::XmlEvent::characters(
             &self
                 .vec()
                 .iter()
-                .map(|v| yaserde::ser::to_string(v).unwrap())
+                .map(|v| serde_plain::to_string(v).unwrap())
                 .collect::<Vec<String>>()
                 .join(D::delimiter_symbol()),
         ));
@@ -110,7 +111,7 @@ impl<D: Delimiter, T: YaSerialize + YaDeserialize> YaSerialize for AttributeList
     }
 }
 
-fn parse_list_with_delimiter<D: Delimiter, T: YaSerialize + YaDeserialize>(
+fn parse_list_with_delimiter<D: Delimiter, T: Serialize + DeserializeOwned>(
     v: &str,
 ) -> Result<AttributeList<D, T>, String> {
     if v.is_empty() {
@@ -121,17 +122,17 @@ fn parse_list_with_delimiter<D: Delimiter, T: YaSerialize + YaDeserialize>(
     let values = v
         .replace(" ", "")
         .split(D::delimiter_symbol())
-        .map(|s| yaserde::de::from_str(s).unwrap())
+        .map(|s| serde_plain::from_str(s).unwrap())
         .collect();
     Ok(AttributeList::from_vec(values))
 }
 
-struct ListVisitor<D: Delimiter, T: YaSerialize + YaDeserialize> {
+struct ListVisitor<D: Delimiter, T: Serialize + DeserializeOwned> {
     delimiter: PhantomData<D>,
     value_type: PhantomData<T>,
 }
 
-impl<D: Delimiter, T: YaSerialize + YaDeserialize> ListVisitor<D, T> {
+impl<D: Delimiter, T: Serialize + DeserializeOwned> ListVisitor<D, T> {
     pub fn new() -> Self {
         ListVisitor {
             delimiter: PhantomData,
@@ -140,7 +141,7 @@ impl<D: Delimiter, T: YaSerialize + YaDeserialize> ListVisitor<D, T> {
     }
 }
 
-impl<'de, D: Delimiter, T: YaSerialize + YaDeserialize> Visitor<'de> for ListVisitor<D, T> {
+impl<'de, D: Delimiter, T: Serialize + DeserializeOwned> Visitor<'de> for ListVisitor<D, T> {
     type Value = AttributeList<D, T>;
 
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
@@ -159,7 +160,7 @@ impl<'de, D: Delimiter, T: YaSerialize + YaDeserialize> Visitor<'de> for ListVis
     }
 }
 
-impl<'de, D: Delimiter, T: YaSerialize + YaDeserialize> Deserialize<'de> for AttributeList<D, T> {
+impl<'de, D: Delimiter, T: Serialize + DeserializeOwned> Deserialize<'de> for AttributeList<D, T> {
     fn deserialize<De>(deserializer: De) -> Result<Self, De::Error>
     where
         De: Deserializer<'de>,
@@ -168,7 +169,7 @@ impl<'de, D: Delimiter, T: YaSerialize + YaDeserialize> Deserialize<'de> for Att
     }
 }
 
-impl<D: Delimiter, T: YaSerialize + YaDeserialize> YaDeserialize for AttributeList<D, T> {
+impl<D: Delimiter, T: Serialize + DeserializeOwned> YaDeserialize for AttributeList<D, T> {
     fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
         loop {
             match reader.next_event()? {

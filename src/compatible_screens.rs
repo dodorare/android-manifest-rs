@@ -59,8 +59,7 @@ use serde::{Deserialize, Serialize};
 /// [`<supports-screens>`]: crate::SupportsScreens
 /// [`Filters on Google Play`]: https://developer.android.com/google/play/filters
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
-#[serde(rename = "compatible-screens")]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 pub struct CompatibleScreens {
     pub screen: Vec<Screen>,
 }
@@ -73,31 +72,7 @@ pub struct CompatibleScreens {
 /// `android:screenSize` and `android:screenDensity` attributes (if you do not
 /// declare both attributes, then the element is ignored).
 ///
-/// Contained in:
-/// [`<compatible-screens>`]
-///
-/// [`<compatible-screens>`]: crate::CompatibleScreens
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
-#[serde(rename = "screen")]
-pub struct Screen {
-    /// `Required`. Specifies the screen size for this screen configuration.
-    ///
-    /// For information about the different screen sizes, see [`Supporting Multiple
-    /// Screens`].
-    ///
-    /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
-    #[serde(rename = "android:screenSize")]
-    pub screen_size: ScreenSize,
-    /// `Required.` Specifies the screen density for this screen configuration.
-    ///
-    /// For information about the different screen densities, see [`Supporting Multiple
-    /// Screens`].
-    ///
-    /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
-    #[serde(rename = "android:screenDensity")]
-    pub screen_density: ScreenDensity,
-}
-
+/// ## XML Example
 /// If your application is compatible with only small and normal screens, regardless of
 /// screen density, then you must specify twelve different <screen> elements, because each
 /// screen size has six different density configurations. You must declare each one of
@@ -105,55 +80,93 @@ pub struct Screen {
 /// screen configuration with which your application is not compatible. Here's what the
 /// manifest entry looks like if your application is compatible with only small and normal
 /// screens:
-///
-/// ## XML Example
 /// ```xml
 /// <manifest ... >
-/// ...
-/// <compatible-screens>
-///    <!-- all small size screens -->
-///    <screen android:screenSize="small" android:screenDensity="ldpi" />
-///    <screen android:screenSize="small" android:screenDensity="mdpi" />
-///    <screen android:screenSize="small" android:screenDensity="hdpi" />
-///    <screen android:screenSize="small" android:screenDensity="xhdpi" />
-///    <screen android:screenSize="small" android:screenDensity="xxhdpi" />
-///    <screen android:screenSize="small" android:screenDensity="xxxhdpi" />
-///    <!-- all normal size screens -->
-///    <screen android:screenSize="normal" android:screenDensity="ldpi" />
-///    <screen android:screenSize="normal" android:screenDensity="mdpi" />
-///    <screen android:screenSize="normal" android:screenDensity="hdpi" />
-///    <screen android:screenSize="normal" android:screenDensity="xhdpi" />
-///    <screen android:screenSize="normal" android:screenDensity="xxhdpi" />
-///    <screen android:screenSize="normal" android:screenDensity="xxxhdpi" />
-/// </compatible-screens>
-/// <application ... >
-///    ...
-/// <application>
+///     ...
+///     <compatible-screens>
+///        <!-- all small size screens -->
+///        <screen android:screenSize="small" android:screenDensity="ldpi" />
+///        <screen android:screenSize="small" android:screenDensity="mdpi" />
+///        <screen android:screenSize="small" android:screenDensity="hdpi" />
+///        <screen android:screenSize="small" android:screenDensity="xhdpi" />
+///        <screen android:screenSize="small" android:screenDensity="xxhdpi" />
+///        <screen android:screenSize="small" android:screenDensity="xxxhdpi" />
+///        <!-- all normal size screens -->
+///        <screen android:screenSize="normal" android:screenDensity="ldpi" />
+///        <screen android:screenSize="normal" android:screenDensity="mdpi" />
+///        <screen android:screenSize="normal" android:screenDensity="hdpi" />
+///        <screen android:screenSize="normal" android:screenDensity="xhdpi" />
+///        <screen android:screenSize="normal" android:screenDensity="xxhdpi" />
+///        <screen android:screenSize="normal" android:screenDensity="xxxhdpi" />
+///     </compatible-screens>
+///     <application ... >
+///        ...
+///     <application>
 /// </manifest>
 /// ```
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+///
+/// Contained in:
+/// [`<compatible-screens>`]
+///
+/// [`<compatible-screens>`]: crate::CompatibleScreens
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+pub struct Screen {
+    /// `Required`. Specifies the screen size for this screen configuration.
+    ///
+    /// For information about the different screen sizes, see [`Supporting Multiple
+    /// Screens`].
+    ///
+    /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
+    #[yaserde(attribute, prefix = "android", rename = "screenSize")]
+    pub screen_size: ScreenSize,
+    /// `Required.` Specifies the screen density for this screen configuration.
+    ///
+    /// For information about the different screen densities, see [`Supporting Multiple
+    /// Screens`].
+    ///
+    /// Accepted values:
+    /// * "ldpi" (approximately 120 dpi)
+    /// * "mdpi" (approximately 160 dpi)
+    /// * "hdpi" (approximately 240 dpi)
+    /// * "xhdpi" (approximately 320 dpi)
+    /// * "280"
+    /// * "360"
+    /// * "420"
+    /// * "480"
+    /// * "560"
+    ///
+    /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
+    #[yaserde(attribute, prefix = "android", rename = "screenDensity")]
+    pub screen_density: String,
+}
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenSize {
+    /// Screens that are of similar size to a low-density QVGA screen. The minimum layout
+    /// size for a small screen is approximately 320x426 dp units. Examples are QVGA
+    /// low-density and VGA high density.
+    #[yaserde(rename = "small")]
     Small,
+    /// Screens that are of similar size to a medium-density HVGA screen. The minimum
+    /// layout size for a normal screen is approximately 320x470 dp units. Examples of
+    /// such screens a WQVGA low-density, HVGA medium-density, WVGA high-density.
+    #[yaserde(rename = "normal")]
     Normal,
+    /// Screens that are of similar size to a medium-density VGA screen. The minimum
+    /// layout size for a large screen is approximately 480x640 dp units. Examples are VGA
+    /// and WVGA medium-density screens.
+    #[yaserde(rename = "large")]
     Large,
+    /// Screens that are considerably larger than the traditional medium-density HVGA
+    /// screen. The minimum layout size for an xlarge screen is approximately 720x960 dp
+    /// units. In most cases, devices with extra-large screens would be too large to carry
+    /// in a pocket and would most likely be tablet-style devices. Added in API level 9.
+    #[yaserde(rename = "xlarge")]
     Xlarge,
 }
 
-// todo: need to be finalized
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
-pub enum ScreenDensity {
-    /// "ldpi" (approximately 120 dpi)
-    Ldpi,
-    /// "mdpi" (approximately 160 dpi)
-    Mdpi,
-    /// "hdpi" (approximately 240 dpi)
-    Hdpi,
-    /// "xhdpi" (approximately 320 dpi)
-    Xhdpi,
-    /// "xxhdpi" (approximately 480 dpi)
-    Xxhdpi,
-    /// "xxxhdpi" (approximately 560-640 dpi)
-    Xxxhdpi,
+impl Default for ScreenSize {
+    fn default() -> Self {
+        ScreenSize::Normal
+    }
 }
