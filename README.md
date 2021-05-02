@@ -7,7 +7,7 @@ An [AndroidManifest] serializer and deserializer for Rust. This library will als
 ```toml
 # Cargo.toml
 [dependencies]
-android_manifest = "1.0"
+android-manifest = "*"
 ```
 
 ```rust

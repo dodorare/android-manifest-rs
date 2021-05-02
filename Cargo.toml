@@ -1,7 +1,7 @@
 [package]
 name = "android-manifest"
-version = "1.0.0"
-authors = ["enfipy <enfipy@gmail.com>", "olvyko <olvyko@gmail.com>", "Adoka3710 <adicoolwest@gmail.com>"]
+version = "0.1.0"
+authors = ["DodoRare Team <dodonotrare@gmail.com>"]
 edition = "2018"
 
 [dependencies]
