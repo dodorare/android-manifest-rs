@@ -350,7 +350,11 @@ pub struct Activity {
     /// Starting from Android 3.0, a hardware-accelerated OpenGL renderer is available to
     /// applications, to improve performance for many common 2D graphics operations.
     /// When the hardware-accelerated renderer is enabled, most operations in Canvas,
-    /// Paint, Xfermode, ColorFilter, Shader, and Camera are accelerated.
+    /// Paint, Xfermode, ColorFilter, Shader, and Camera are accelerated.This results in 
+    /// smoother animations, smoother scrolling, and improved responsiveness overall, even
+    /// for applications that do not explicitly make use the framework's OpenGL libraries.
+    /// Because of the increased resources required to enable hardware acceleration, your 
+    /// app will consume more RAM.
     ///
     /// Note that not all of the OpenGL 2D operations are accelerated. If you enable the
     /// hardware-accelerated renderer, test your application to ensure that it can
@@ -456,11 +460,11 @@ pub struct Activity {
     /// to be 1.33 or greater. On wearable devices, it must be 1.0 or greater.
     /// Otherwise, the system ignores the set value.
     ///
-    /// For more information about this attribute, see [`Supporting Multiple Screens`].
-    ///
     /// ## Note
     /// This attribute is ignored if the activity has [`resizeableActivity`] set to true,
     /// since that means your activity supports any size.
+    ///
+    /// For more information about this attribute, see [`Supporting Multiple Screens`].
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
     /// [`resizeableActivity`]: crate::Activity#structfield.resizeable_activity
@@ -557,7 +561,7 @@ pub struct Activity {
     /// If the root activity of a task sets this attribute's value to `persistRootOnly`,
     /// then only the root activity is preserved. Otherwise, the activities that are
     /// higher up the task's [`back stack`] are examined; any of these activities that
-    /// set this attribute's value to `persistAcrossReboots` are preserved
+    /// set this attribute's value to `persistAcrossReboots` are preserved.
     ///
     /// This attribute was introduced in API level 21.
     ///
@@ -571,8 +575,9 @@ pub struct Activity {
     ///
     /// If this attribute is not set, the permission set by the [`<application>`]
     /// element's [`permission`] attribute applies to the activity. If neither
-    /// attribute is set, the activity is not protected by a permission. For
-    /// more information on permissions, see the [`Permissions`] section in the
+    /// attribute is set, the activity is not protected by a permission. 
+    ///
+    /// For more information on permissions, see the [`Permissions`] section in the
     /// introduction and another document, [`Security and Permissions`].
     ///
     /// [`startActivity()`]: https://developer.android.com/reference/android/content/Context#startActivity(android.content.Intent)
@@ -594,9 +599,10 @@ pub struct Activity {
     /// in that process. If the process name begins with a lowercase character, the
     /// activity will run in a global process of that name, provided that it has
     /// permission to do so. This allows components in different applications to share
-    /// a process, reducing resource usage. The [`<application>`] element's
-    /// [`process`] attribute can set a different default process name for all
-    /// components.
+    /// a process, reducing resource usage. 
+    /// 
+    /// The [`<application>`] element's [`process`] attribute can set a different default
+    /// process name for all components.
     ///
     /// [`<application>`]: crate::Application
     /// [`process`]: crate::Application#structfield.process
@@ -633,6 +639,12 @@ pub struct Activity {
     /// this attribute, the attribute's value defaults to true.
     ///
     /// This attribute was added in API level 24.
+    ///
+    /// ## Note
+    /// A task's root activity value is applied to all additional activities launched 
+    /// in the task. That is, if the root activity of a task is resizable then the system
+    /// treats all other activities in the task as resizable. If the root activity is not
+    /// resizable, the other activities in the task are not resizable.
     ///
     /// [`multi-window display`]: https://developer.android.com/guide/topics/ui/multi-window
     /// [`<application>`]: crate::Application
@@ -738,7 +750,9 @@ pub struct Activity {
     /// If this attribute is not set, the activity inherits the theme set for the
     /// application as a whole — from the [`<application>`] element's [`theme`]
     /// attribute. If that attribute is also not set, the default system theme is
-    /// used. For more information, see the [`Styles and Themes`] developer guide.
+    /// used. 
+    ///
+    /// For more information, see the [`Styles and Themes`] developer guide.
     ///
     /// [`setTheme()`]: https://developer.android.com/reference/android/content/Context#setTheme(int)
     /// [`<application>`]: crate::Application
@@ -772,13 +786,13 @@ pub struct Activity {
     /// for example — has undefined results. Individual values are separated
     /// by a vertical bar (`|`).
     ///
-    /// Values set here (other than "`stateUnspecified`" and "`adjustUnspecified`")
-    /// override values set in the theme.
-    ///
     /// ## XML Examples
     /// ```xml
     /// <activity android:windowSoftInputMode="stateVisible|adjustResize" ... >
     /// ```
+    ///
+    /// Values set here (other than "`stateUnspecified`" and "`adjustUnspecified`")
+    /// override values set in the theme.
     #[yaserde(
         attribute,
         prefix = "android",
@@ -1091,6 +1105,9 @@ impl Default for LaunchMode {
 }
 
 /// This value indicates how tasks rooted at this activity will behave in lockTask mode.
+/// The value can be any one of the following [`R.attr.lockTaskMode`] string values:
+///
+/// [`R.attr.lockTaskMode`]: https://developer.android.com/reference/android/R.attr#lockTaskMode
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum LockTaskMode {

@@ -58,13 +58,12 @@ pub struct ActivityAlias {
     ///
     /// The [`<application>`] element has its own [`enabled`] attribute that applies to
     /// all application components, including activity aliases. The [`<application>`]
-    /// and [`<activity-alias>`] attributes must both be "`true`" for the system
+    /// and `<activity-alias>` attributes must both be "`true`" for the system
     /// to be able to instantiate the target activity through the alias. If
     /// either is "`false`", the alias does not work.
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    /// [`<activity-alias>`]: crate::ActivityAlias
     #[yaserde(attribute, prefix = "android")]
     pub enabled: Option<bool>,
     /// Whether the broadcast receiver can receive messages from non-system sources

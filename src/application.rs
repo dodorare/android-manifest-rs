@@ -118,9 +118,11 @@ pub struct Application {
     /// ## Note
     /// If your app targets Android 11 (API level 30) or higher, you cannot disable
     /// device-to-device migration of your app's files. The system automatically
-    /// allows this functionality. You can still disable cloud-based backup and
-    /// restore of your app's files by setting this attribute to "`false`", even if
-    /// your app targets Android 11 (API level 30) or higher.
+    /// allows this functionality. 
+    ///
+    /// You can still disable cloud-based backup and restore of your app's files by
+    /// setting this attribute to "`false`", even if your app targets Android 11 (API level 30)
+    /// or higher.
     #[yaserde(attribute, prefix = "android", rename = "allowBackup")]
     pub allow_backup: Option<bool>,
     /// Whether to allow the application to reset user data. This data includes flags—such
@@ -142,10 +144,11 @@ pub struct Application {
     ///
     /// The default value of this attribute is `true`.
     ///
-    /// For more information, see [`Tagged Pointers`].
+    /// ## Note 
+    /// Disabling this feature does `not` address the underlying code health issue. 
+    /// Future hardware devices may not support this manifest tag.
     ///
-    /// `Note:` Disabling this feature does `not` address the underlying code
-    /// health issue. Future hardware devices may not support this manifest tag.
+    /// For more information, see [`Tagged Pointers`].
     ///
     /// [`Tagged Pointers`]: https://source.android.com/devices/tech/debug/tagged-pointers
     #[yaserde(
@@ -208,7 +211,9 @@ pub struct Application {
     pub debuggable: Option<bool>,
     /// User-readable text about the application, longer and more descriptive than the
     /// application label. The value must be set as a reference to a string resource.
-    /// Unlike the label, it cannot be a raw string. There is no default value.
+    /// Unlike the label, it cannot be a raw string. 
+    /// 
+    /// There is no default value.
     #[yaserde(attribute, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
     /// Whether or not the application is direct-boot aware; that is, whether or
@@ -333,7 +338,7 @@ pub struct Application {
     /// [`targetSdkVersion`]: crate::UsesSdk#structfield.target_sdk_version
     /// [`Hardware Acceleration`]: https://developer.android.com/guide/topics/graphics/hardware-accel
     #[yaserde(attribute, prefix = "android", rename = "hardwareAccelerated")]
-    pub hardware_accelerateda: Option<bool>,
+    pub hardware_accelerated: Option<bool>,
     /// An icon for the application as whole, and the default icon for each of the
     /// application's components. See the individual icon attributes for [`<activity>`],
     /// [`<activity-alias>`], [`<service>`], [`<receiver>`], and [`<provider>`] elements.
