@@ -1,3 +1,6 @@
+use super::action::Action;
+use super::data::Data;
+use super::provider::Provider;
 use serde::{Deserialize, Serialize};
 
 /// Specifies the set of other apps that an app intends to interact with. 
@@ -35,6 +38,17 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 pub struct Queries {
    pub package: Option<Package>,
+/// Specifies one or more [`content provider authorities`]. Your app can discover other apps 
+/// whose content providers use the specified authorities.
+///
+/// ## Note
+/// There are some restrictions on the options that you can include in this `<provider>` element,
+/// compared to a typical [`<provider>`] manifest element. Usually, you only specify the
+/// `android:authorities` attribute.
+///
+/// [`<provider>`]: crate::Provider
+/// [`content provider authorities`]: https://developer.android.com/guide/topics/providers/content-provider-basics#ContentURIs
+   pub provider: Provider,
 }   
 
 /// Specifies a single app that your app intends to access. This other app might integrate with your app,
@@ -59,20 +73,6 @@ pub struct Package {
 /// [`declaring package visibility needs`]: https://developer.android.com/training/package-visibility/declaring#intent-filter-signature
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 pub struct Intent{
-
-}
-
-/// Specifies one or more [`content provider authorities`]. Your app can discover other apps 
-/// whose content providers use the specified authorities.
-///
-/// ## Note
-/// There are some restrictions on the options that you can include in this `<provider>` element,
-/// compared to a typical [`<provider>`] manifest element. Usually, you only specify the
-/// `android:authorities` attribute.
-///
-/// [`<provider>`]: crate::Provider
-/// [`content provider authorities`]: https://developer.android.com/guide/topics/providers/content-provider-basics#ContentURIs
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
-pub struct Provider{
-
+    pub action: Action,
+    pub data: Vec<Data>,
 }

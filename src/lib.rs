@@ -33,6 +33,8 @@ mod uses_permission;
 mod uses_permission_sdk_23;
 mod uses_sdk;
 mod queries;
+mod profileable;
+mod uses_native_library;
 
 pub use action::*;
 pub use activity::*;
@@ -66,6 +68,8 @@ pub use uses_permission::*;
 pub use uses_permission_sdk_23::*;
 pub use uses_sdk::*;
 pub use queries::*;
+pub use profileable::*;
+pub use uses_native_library::UsesNativeLibrary;
 
 /// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a string of XML text.
 pub fn from_str(s: &str) -> Result<AndroidManifest, String> {
