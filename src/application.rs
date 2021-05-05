@@ -274,7 +274,7 @@ pub struct Application {
     #[yaserde(attribute, prefix = "android", rename = "fullBackupContent")]
     pub full_backup_content: Option<Resource<XmlResource>>,
     /// This attribute indicates whether or not to use [`Auto Backup`] on devices where it
-    /// is availпable. If set to "`true`", then your app performs Auto Backup when
+    /// is available. If set to "`true`", then your app performs Auto Backup when
     /// installed on a device running Android 6.0 (API level 23) or higher. On older
     /// devices, your app ignores this attribute and performs [`Key/Value Backups`].
     ///
