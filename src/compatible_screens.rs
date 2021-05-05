@@ -139,6 +139,9 @@ pub struct Screen {
     #[yaserde(attribute, prefix = "android", rename = "screenDensity")]
     pub screen_density: String,
 }
+
+/// Android runs on a variety of devices that have different screen sizes and pixel densities.
+/// The system performs basic scaling and resizing to adapt your user interface to different screens.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenSize {

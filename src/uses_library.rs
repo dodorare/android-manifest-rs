@@ -7,7 +7,12 @@ use serde::{Deserialize, Serialize};
 /// library that all applications are automatically linked against. However,
 /// some packages (such as maps) are in separate libraries that are not
 /// automatically linked. Consult the documentation for the packages you're
-/// using to determine which library contains the package code
+/// using to determine which library contains the package code.
+///
+/// ## Node
+/// Google Play uses the <uses-library> elements declared in your app manifest to filter
+/// your app from devices that don't meet its library requirements. For more information 
+/// about filtering, see the topic [`Google Play filters`].
 ///
 /// This element also affects the installation of the application on a particular device
 /// and the availability of the application on Google Play:
@@ -38,6 +43,7 @@ use serde::{Deserialize, Serialize};
 /// [`android.view`]: https://developer.android.com/reference/android/view/package-summary
 /// [`android.widget`]: https://developer.android.com/reference/android/widget/package-summary
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
+/// [`Google Play filters`]: https://developer.android.com/google/play/filters
 /// [`<application>`]: crate::Application
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 pub struct UsesLibrary {
@@ -61,6 +67,8 @@ pub struct UsesLibrary {
     /// is available.
     ///
     /// The default is `"true"`.
+    ///
+    /// Introduced in: API Level 7.
     #[yaserde(attribute, prefix = "android")]
     pub required: Option<bool>,
 }

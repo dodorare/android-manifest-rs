@@ -42,7 +42,7 @@ use serde::{Deserialize, Serialize};
 /// their textures properly. You can use texture compression filtering as a way of
 /// targeting specific device types, based on GPU platform.
 ///
-/// For important information about how Google Play uses [`<supports-gl-texture>`]
+/// For important information about how Google Play uses `<supports-gl-texture>`
 /// elements as the basis for filtering, read [`Google Play and texture compression
 /// filtering`], below.
 ///
@@ -55,8 +55,6 @@ use serde::{Deserialize, Serialize};
 /// ## Contained in
 /// * [`<manifest>`]
 ///
-///
-/// [`<supports-gl-texture>`]: crate::SupportsGlTexture
 /// [`Google Play and texture compression filtering`]: https://developer.android.com/guide/topics/manifest/supports-gl-texture-element#market-texture-filtering
 /// [`<manifest>`]: crate::Manifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]

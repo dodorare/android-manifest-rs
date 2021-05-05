@@ -140,7 +140,7 @@ pub struct SupportsScreens {
     /// density.
     ///
     /// For applications that support Android 1.6 (API level 4) and higher,
-    /// this is "true" by default and you should not set it "false" unless you're
+    /// this is "true" by default and `you should not set it "false"` unless you're
     /// absolutely certain that it's necessary for your application to work. The only
     /// time it might be necessary to disable this is if your app directly manipulates
     /// bitmaps (see the [`Supporting Multiple Screens`] document for more
@@ -192,6 +192,8 @@ pub struct SupportsScreens {
     /// filtering (on Android 3.2), so you should continue using the other size
     /// attributes if your application does not support small screens.
     ///
+    /// This attribute was introduced in API level 13.
+    ///
     /// [`smallest screen width qualifier`]: https://developer.android.com/guide/topics/resources/providing-resources#SmallestScreenWidthQualifier
     #[yaserde(attribute, prefix = "android", rename = "requiresSmallestWidthDp")]
     pub requires_smallest_width_dp: Option<String>,
@@ -213,6 +215,8 @@ pub struct SupportsScreens {
     /// compatibility mode emulates only handset screens with a 320dp width, so
     /// screen compatibility mode is not applied if your value for
     /// android:compatibleWidthLimitDp is larger than 320.
+    ///
+    /// This attribute was introduced in API level 13.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[yaserde(attribute, prefix = "android", rename = "compatibleWidthLimitDp")]
@@ -236,6 +240,8 @@ pub struct SupportsScreens {
     /// emulates only handset screens with a 320dp width, so screen
     /// compatibility mode is not applied if your value for
     /// `android:largestWidthLimitDp` is larger than 320.
+    ///
+    /// This attribute was introduced in API level 13.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     /// [`android:compatibleWidthLimitDp`]:

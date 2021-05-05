@@ -51,7 +51,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Note
 /// When declaring a feature, remember that you must also request permissions as
-/// appropriate. For example, you must still request the `CAMERA` permission
+/// appropriate. For example, you must still request the [`CAMERA`] permission
 /// before your application can access the camera API. Requesting the permission
 /// grants your application access to the appropriate hardware and software,
 /// while declaring the features used by your application ensures proper device
@@ -85,6 +85,7 @@ use serde::{Deserialize, Serialize};
 /// [`Features Reference`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#features-reference
 /// [`glEsVersion`]: crate::UsesFeature#structfield.gl_es_version
 /// [`name`]: crate::UsesFeature#structfield.name
+/// [`CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
 /// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
 /// [`Google Play and Feature-Based Filtering`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#market-feature-filtering
 /// [`<manifest>`]: crate::Manifest

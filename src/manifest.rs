@@ -41,6 +41,7 @@ use serde::{Deserialize, Serialize};
 /// * [`<permission>`]
 /// * [`<permission-group>`]
 /// * [`<permission-tree>`]
+/// * [`<queries>`]
 /// * [`<supports-gl-texture>`]
 /// * [`<supports-screens>`]
 /// * [`<uses-configuration>`]

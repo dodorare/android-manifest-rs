@@ -44,10 +44,10 @@ pub struct UsesSdk {
     /// which indicates that your application is compatible with all versions of
     /// Android. If your application is not compatible with all versions (for
     /// instance, it uses APIs introduced in API Level 3) and you have not declared
-    /// the proper minSdkVersion, then when installed on a system with an API Level
+    /// the proper `minSdkVersion`, then when installed on a system with an API Level
     /// less than 3, the application will crash during runtime when attempting to
     /// access the unavailable APIs. For this reason, be certain to declare the
-    /// appropriate API Level in the minSdkVersion attribute.
+    /// appropriate API Level in the `minSdkVersion` attribute.
     #[yaserde(attribute, prefix = "android", rename = "minSdkVersion")]
     pub min_sdk_version: Option<i32>,
     /// An integer designating the API Level that the application targets. If not set, the
@@ -119,6 +119,14 @@ pub struct UsesSdk {
     /// which your application is likely to be installed will receive periodic
     /// system updates over the air, so you should consider their effect on your
     /// application before setting this attribute.
+    ///
+    /// Introduced in: API Level 4
+    ///
+    /// ## Important
+    /// Future versions of Android (beyond Android 2.0.1) will no longer check or enforce 
+    /// the `maxSdkVersion` attribute during installation or re-validation. Google Play will 
+    /// continue to use the attribute as a filter, however, when presenting users with 
+    /// applications available for download.
     #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<i32>,
 }

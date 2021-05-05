@@ -135,7 +135,7 @@ pub struct IntentFilter {
     ///
     /// This attribute was introduced in API Level 28.
     #[yaserde(attribute, prefix = "android")]
-    pub ordery: Option<i32>,
+    pub order: Option<i32>,
     /// List of `<action>` tags.
     pub action: Vec<Action>,
     /// List of `<category>` tags.

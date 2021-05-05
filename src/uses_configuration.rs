@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 /// installing the application on devices where it will not work.
 ///
 /// ## Note
-/// Most apps should not use this manifest tag. You should always support input with a
+/// `Most apps should not use this manifest tag`    . You should always support input with a
 /// directional pad (d-pad) in order to assist sight-impaired users and support devices
 /// that provide d-pad input in addition to or instead of touch. information about how to
 /// support d-pad input in your app, read [`Enabling Focus Navigation`]. If your app
@@ -148,6 +148,7 @@ pub enum ReqTouchScreen {
     /// The application requires a touch screen that can be operated with a
     /// finger.
     ///
+    /// ## Node
     /// If some type of touch input is required for your app, you should
     /// instead use the [`<uses-feature>`] tag to declare the required touchscreen
     /// type, beginning with `"android.hardware.faketouch"` for basic touch-style

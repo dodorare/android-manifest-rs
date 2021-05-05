@@ -166,25 +166,28 @@ pub struct Provider {
     /// open it, even though the viewer doesn't have general permission to look at all
     /// the content provider's data.
     ///
-    /// In such cases, permission is granted by `FLAG_GRANT_READ_URI_PERMISSION` and
-    /// `FLAG_GRANT_WRITE_URI_PERMISSION` flags in the Intent object that activates
+    /// In such cases, permission is granted by [`FLAG_GRANT_READ_URI_PERMISSION`] and
+    /// [`FLAG_GRANT_WRITE_URI_PERMISSION`] flags in the Intent object that activates
     /// the component. For example, the mail application might put
     /// `FLAG_GRANT_READ_URI_PERMISSION` in the Intent passed to
     /// `Context.startActivity()`. The permission is specific to the URI in the Intent.
     ///
     /// If you enable this feature, either by setting this attribute to
-    /// `"true"` or by defining `<grant-uri-permission>` subelements, you must call
-    /// `Context.revokeUriPermission()` when a covered URI is deleted from the
+    /// `"true"` or by defining [`<grant-uri-permission>`] subelements, you must call
+    /// [`Context.revokeUriPermission()`] when a covered URI is deleted from the
     /// provider.
     ///
-    /// See also the `<grant-uri-permission>` element.
+    /// See also the [`<grant-uri-permission>`] element.
     ///
     /// [`readPermission`]: crate::Provider#structfield.read_permission
     /// [`writePermission`]: crate::Provider#structfield.write_permission
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`exported`]: crate::Provider#structfield.exported
+    /// [`FLAG_GRANT_READ_URI_PERMISSION`]: https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_READ_URI_PERMISSION
+    /// [`FLAG_GRANT_WRITE_URI_PERMISSION`]: https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_WRITE_URI_PERMISSION
+    /// [`<grant-uri-permission>`]: crate::GrantUriPermission
     #[yaserde(attribute, prefix = "android", rename = "grantUriPermissions")]
-    pub grant_uri_permissions: Option<bool>,
+    pub grant_uri_permissions: Option<bool>,    
     /// An icon representing the content provider. This attribute must be set as a
     /// reference to a drawable resource containing the image definition. If it is not
     /// set, the icon specified for the application as a whole is used instead (see

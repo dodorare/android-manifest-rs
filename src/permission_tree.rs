@@ -50,7 +50,7 @@ pub struct PermissionTree {
     /// The name that's at the base of the permission tree.  It serves as a prefix to all
     /// permission names in the tree. Java-style scoping should be used to ensure that
     /// the name is unique. The name must have more than two period-separated segments
-    /// in its path — for example, com.example.base is OK, but com.example is not.
+    /// in its path — for example, `com.example.base` is OK, but `com.example` is not.
     #[yaserde(attribute, prefix = "android")]
     pub name: Option<String>,
 }

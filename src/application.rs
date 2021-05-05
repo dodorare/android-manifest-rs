@@ -274,7 +274,7 @@ pub struct Application {
     #[yaserde(attribute, prefix = "android", rename = "fullBackupContent")]
     pub full_backup_content: Option<Resource<XmlResource>>,
     /// This attribute indicates whether or not to use [`Auto Backup`] on devices where it
-    /// is available. If set to "`true`", then your app performs Auto Backup when
+    /// is availпable. If set to "`true`", then your app performs Auto Backup when
     /// installed on a device running Android 6.0 (API level 23) or higher. On older
     /// devices, your app ignores this attribute and performs [`Key/Value Backups`].
     ///
@@ -534,6 +534,12 @@ pub struct Application {
     /// this attribute, the attribute's value defaults to true.
     ///
     /// This attribute was added in API level 24.
+    ///
+    /// ## Note
+    /// A task's root activity value is applied to all additional activities launched in 
+    /// the task. That is, if the root activity of a task is resizable then the system 
+    /// treats all other activities in the task as resizable. If the root activity is not
+    /// resizable, the other activities in the task are not resizable
     ///
     /// [`multi-window display`]: https://developer.android.com/guide/topics/ui/multi-window
     /// [`<activity>`]: crate::Activity
