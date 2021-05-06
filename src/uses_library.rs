@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## Node
 /// Google Play uses the <uses-library> elements declared in your app manifest to filter
-/// your app from devices that don't meet its library requirements. For more information 
+/// your app from devices that don't meet its library requirements. For more information
 /// about filtering, see the topic [`Google Play filters`].
 ///
 /// This element also affects the installation of the application on a particular device

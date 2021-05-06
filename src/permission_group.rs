@@ -18,7 +18,7 @@ use serde::{Deserialize, Serialize};
 ///                   android:label="string resource"
 ////                  android:name="string" />
 /// ```
-///
+/// 
 /// ## Contained in
 /// * [`<manifest>`]
 ///

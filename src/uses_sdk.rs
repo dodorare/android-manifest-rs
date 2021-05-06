@@ -123,10 +123,10 @@ pub struct UsesSdk {
     /// Introduced in: API Level 4
     ///
     /// ## Important
-    /// Future versions of Android (beyond Android 2.0.1) will no longer check or enforce 
-    /// the `maxSdkVersion` attribute during installation or re-validation. Google Play will 
-    /// continue to use the attribute as a filter, however, when presenting users with 
-    /// applications available for download.
+    /// Future versions of Android (beyond Android 2.0.1) will no longer check or enforce
+    /// the `maxSdkVersion` attribute during installation or re-validation. Google Play
+    /// will continue to use the attribute as a filter, however, when presenting users
+    /// with applications available for download.
     #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<i32>,
 }

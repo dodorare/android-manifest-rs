@@ -19,7 +19,9 @@ mod path_permission;
 mod permission;
 mod permission_group;
 mod permission_tree;
+mod profileable;
 mod provider;
+mod queries;
 mod receiver;
 mod resources;
 mod service;
@@ -29,12 +31,10 @@ mod ui_options;
 mod uses_configuration;
 mod uses_feature;
 mod uses_library;
+mod uses_native_library;
 mod uses_permission;
 mod uses_permission_sdk_23;
 mod uses_sdk;
-mod queries;
-mod profileable;
-mod uses_native_library;
 
 pub use action::*;
 pub use activity::*;
@@ -54,7 +54,9 @@ pub use path_permission::*;
 pub use permission::*;
 pub use permission_group::*;
 pub use permission_tree::*;
+pub use profileable::*;
 pub use provider::*;
+pub use queries::*;
 pub use receiver::*;
 pub use resources::*;
 pub use service::*;
@@ -64,29 +66,31 @@ pub use ui_options::*;
 pub use uses_configuration::*;
 pub use uses_feature::*;
 pub use uses_library::*;
+pub use uses_native_library::UsesNativeLibrary;
 pub use uses_permission::*;
 pub use uses_permission_sdk_23::*;
 pub use uses_sdk::*;
-pub use queries::*;
-pub use profileable::*;
-pub use uses_native_library::UsesNativeLibrary;
 
-/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a string of XML text.
+/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a
+/// string of XML text.
 pub fn from_str(s: &str) -> Result<AndroidManifest, String> {
     yaserde::de::from_str(s)
 }
 
-/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from an IO stream of XML text.
+/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from an IO
+/// stream of XML text.
 pub fn from_reader<R: std::io::Read>(reader: R) -> Result<AndroidManifest, String> {
     yaserde::de::from_reader(reader)
 }
 
-/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a String of XML text.
+/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a String
+/// of XML text.
 pub fn to_string(manifest: &AndroidManifest) -> Result<String, String> {
     yaserde::ser::to_string(manifest)
 }
 
-/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a pretty-printed String of XML text.
+/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a
+/// pretty-printed String of XML text.
 pub fn to_string_pretty(manifest: &AndroidManifest) -> Result<String, String> {
     let config = yaserde::ser::Config {
         perform_indent: true,

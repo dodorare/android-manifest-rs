@@ -7,8 +7,8 @@ use serde::{Deserialize, Serialize};
 /// installing the application on devices where it will not work.
 ///
 /// ## Note
-/// `Most apps should not use this manifest tag`    . You should always support input with a
-/// directional pad (d-pad) in order to assist sight-impaired users and support devices
+/// `Most apps should not use this manifest tag`    . You should always support input with
+/// a directional pad (d-pad) in order to assist sight-impaired users and support devices
 /// that provide d-pad input in addition to or instead of touch. information about how to
 /// support d-pad input in your app, read [`Enabling Focus Navigation`]. If your app
 /// absolutely cannot function without a touchscreen, then instead use the

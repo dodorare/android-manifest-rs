@@ -116,8 +116,8 @@ pub struct Receiver {
     /// (see the [`<application>`] element's
     /// [`label`](crate::Application#structfield.label) attribute).
     ///
-    /// The service's label — whether set here or by the [`<application>`] element — is also
-    /// the default label for all the service's intent filters (see the
+    /// The service's label — whether set here or by the [`<application>`] element — is
+    /// also the default label for all the service's intent filters (see the
     /// [`<intent-filter>`] element's [`label`](crate::IntentFilter#structfield.label)
     /// attribute).
     ///

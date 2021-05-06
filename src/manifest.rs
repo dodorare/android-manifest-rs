@@ -4,6 +4,7 @@ use super::instrumentation::Instrumentation;
 use super::permission::Permission;
 use super::permission_group::PermissionGroup;
 use super::permission_tree::PermissionTree;
+use super::queries::Queries;
 use super::resources::{Resource, StringResource};
 use super::supports_gl_texture::SupportsGlTexture;
 use super::supports_screens::SupportsScreens;
@@ -66,6 +67,7 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-permission>`]: crate::UsesPermission
 /// [`<uses-permission-sdk-23>`]: crate::UsesPermissionSdk23
 /// [`<uses-sdk>`]: crate::UsesSdk
+/// [`<queries>`]: crate:: Queries
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
 #[yaserde(
     rename = "manifest",
@@ -259,6 +261,8 @@ pub struct AndroidManifest {
     /// List of `<uses-permission-sdk-23>` tags.
     #[yaserde(rename = "uses-permission-sdk-23")]
     pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
+    /// List of `<queries>` tags.
+    pub queries: Option<Queries>,
 }
 
 /// The default install location for the app.

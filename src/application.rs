@@ -1,3 +1,5 @@
+use crate::Profileable;
+
 use super::activity::Activity;
 use super::activity_alias::ActivityAlias;
 use super::meta_data::MetaData;
@@ -9,6 +11,7 @@ use super::resources::{
 use super::service::Service;
 use super::ui_options::UiOptions;
 use super::uses_library::UsesLibrary;
+use super::uses_native_library::UsesNativeLibrary;
 use serde::{Deserialize, Serialize};
 
 /// The declaration of the application.
@@ -118,11 +121,11 @@ pub struct Application {
     /// ## Note
     /// If your app targets Android 11 (API level 30) or higher, you cannot disable
     /// device-to-device migration of your app's files. The system automatically
-    /// allows this functionality. 
+    /// allows this functionality.
     ///
     /// You can still disable cloud-based backup and restore of your app's files by
-    /// setting this attribute to "`false`", even if your app targets Android 11 (API level 30)
-    /// or higher.
+    /// setting this attribute to "`false`", even if your app targets Android 11 (API
+    /// level 30) or higher.
     #[yaserde(attribute, prefix = "android", rename = "allowBackup")]
     pub allow_backup: Option<bool>,
     /// Whether to allow the application to reset user data. This data includes flags—such
@@ -144,8 +147,8 @@ pub struct Application {
     ///
     /// The default value of this attribute is `true`.
     ///
-    /// ## Note 
-    /// Disabling this feature does `not` address the underlying code health issue. 
+    /// ## Note
+    /// Disabling this feature does `not` address the underlying code health issue.
     /// Future hardware devices may not support this manifest tag.
     ///
     /// For more information, see [`Tagged Pointers`].
@@ -211,8 +214,8 @@ pub struct Application {
     pub debuggable: Option<bool>,
     /// User-readable text about the application, longer and more descriptive than the
     /// application label. The value must be set as a reference to a string resource.
-    /// Unlike the label, it cannot be a raw string. 
-    /// 
+    /// Unlike the label, it cannot be a raw string.
+    ///
     /// There is no default value.
     #[yaserde(attribute, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
@@ -536,8 +539,8 @@ pub struct Application {
     /// This attribute was added in API level 24.
     ///
     /// ## Note
-    /// A task's root activity value is applied to all additional activities launched in 
-    /// the task. That is, if the root activity of a task is resizable then the system 
+    /// A task's root activity value is applied to all additional activities launched in
+    /// the task. That is, if the root activity of a task is resizable then the system
     /// treats all other activities in the task as resizable. If the root activity is not
     /// resizable, the other activities in the task are not resizable
     ///
@@ -696,6 +699,11 @@ pub struct Application {
     /// List of `<uses-library>` tags.
     #[yaserde(rename = "uses-library")]
     pub uses_library: Vec<UsesLibrary>,
+    /// Optional `<profileable>` tag.
+    pub profileable: Option<Profileable>,
+    /// List of `<uses-native-library>` tags.
+    #[yaserde(rename = "uses-native-library")]
+    pub uses_native_library: Vec<UsesNativeLibrary>,
 }
 
 /// GWP-ASan is a native memory allocator feature that helps find [`use-after-free`] and

@@ -32,7 +32,7 @@ pub struct Permission {
     /// A user-readable description of the permission, longer and more informative than
     /// the label. It may be displayed to explain the permission to the user — for
     /// example,  when the user is asked whether to grant the permission to another
-    /// application. 
+    /// application.
     ///
     /// This attribute must be set as a reference to a string resource; unlike the `label`
     /// unlike the `label` attribute, it cannot be a raw string.
@@ -75,10 +75,10 @@ pub struct Permission {
     pub permission_group: Option<String>,
     /// Characterizes the potential risk implied in the permission and indicates the
     /// procedure the system should follow when determining whether or not to grant
-    /// the permission to an application requesting it. 
+    /// the permission to an application requesting it.
     ///
-    /// Each protection level consists of a base permission type and zero or more flags. 
-    /// For example, the `"dangerous"` protection level has no flags. In contrast, 
+    /// Each protection level consists of a base permission type and zero or more flags.
+    /// For example, the `"dangerous"` protection level has no flags. In contrast,
     /// the protection level `"signature|privileged"` is a combination of the
     /// `"signature"` base permission type and the `"privileged"` flag.
     #[yaserde(attribute, prefix = "android", rename = "protectionLevel")]

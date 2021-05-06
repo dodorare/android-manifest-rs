@@ -8,14 +8,14 @@ use serde::{Deserialize, Serialize};
 ///
 /// Unless this element is declared, and the [`<shell>`] tag set to true,
 /// the above tools and APIs will work only when an app is [`debuggable`].
-/// Debuggable apps incur significant and varied performance degradation, 
-/// and are not useful for measuring timing accurately.This element is strongly 
+/// Debuggable apps incur significant and varied performance degradation,
+/// and are not useful for measuring timing accurately.This element is strongly
 /// recommended for local performance measurements, in order to capture accurate results.
 ///
 /// ## XML Syntax
 /// ```xml
 /// <profileable android:shell=["true" | "false"] />
-/// ``` 
+/// ```
 ///
 /// ## Contained in
 /// * [`<application>`]

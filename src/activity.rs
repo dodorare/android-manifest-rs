@@ -350,10 +350,10 @@ pub struct Activity {
     /// Starting from Android 3.0, a hardware-accelerated OpenGL renderer is available to
     /// applications, to improve performance for many common 2D graphics operations.
     /// When the hardware-accelerated renderer is enabled, most operations in Canvas,
-    /// Paint, Xfermode, ColorFilter, Shader, and Camera are accelerated.This results in 
+    /// Paint, Xfermode, ColorFilter, Shader, and Camera are accelerated.This results in
     /// smoother animations, smoother scrolling, and improved responsiveness overall, even
     /// for applications that do not explicitly make use the framework's OpenGL libraries.
-    /// Because of the increased resources required to enable hardware acceleration, your 
+    /// Because of the increased resources required to enable hardware acceleration, your
     /// app will consume more RAM.
     ///
     /// Note that not all of the OpenGL 2D operations are accelerated. If you enable the
@@ -575,7 +575,7 @@ pub struct Activity {
     ///
     /// If this attribute is not set, the permission set by the [`<application>`]
     /// element's [`permission`] attribute applies to the activity. If neither
-    /// attribute is set, the activity is not protected by a permission. 
+    /// attribute is set, the activity is not protected by a permission.
     ///
     /// For more information on permissions, see the [`Permissions`] section in the
     /// introduction and another document, [`Security and Permissions`].
@@ -599,8 +599,8 @@ pub struct Activity {
     /// in that process. If the process name begins with a lowercase character, the
     /// activity will run in a global process of that name, provided that it has
     /// permission to do so. This allows components in different applications to share
-    /// a process, reducing resource usage. 
-    /// 
+    /// a process, reducing resource usage.
+    ///
     /// The [`<application>`] element's [`process`] attribute can set a different default
     /// process name for all components.
     ///
@@ -641,7 +641,7 @@ pub struct Activity {
     /// This attribute was added in API level 24.
     ///
     /// ## Note
-    /// A task's root activity value is applied to all additional activities launched 
+    /// A task's root activity value is applied to all additional activities launched
     /// in the task. That is, if the root activity of a task is resizable then the system
     /// treats all other activities in the task as resizable. If the root activity is not
     /// resizable, the other activities in the task are not resizable.
@@ -750,7 +750,7 @@ pub struct Activity {
     /// If this attribute is not set, the activity inherits the theme set for the
     /// application as a whole — from the [`<application>`] element's [`theme`]
     /// attribute. If that attribute is also not set, the default system theme is
-    /// used. 
+    /// used.
     ///
     /// For more information, see the [`Styles and Themes`] developer guide.
     ///
