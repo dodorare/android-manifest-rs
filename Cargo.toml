@@ -1,6 +1,6 @@
 [package]
 name = "android-manifest"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["DodoRare Team <dodonotrare@gmail.com>"]
 edition = "2018"
 
