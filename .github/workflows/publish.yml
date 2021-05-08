@@ -1,0 +1,12 @@
+name: Build and deploy to crates.io
+on:
+  push:
+    paths:
+    - 'Cargo.toml'
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@master
+    - run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
+    - run: cargo publish
