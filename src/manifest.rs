@@ -232,7 +232,7 @@ pub struct AndroidManifest {
     pub uses_sdk: Option<UsesSdk>,
     /// List of `<compatible-screens>` tags.
     #[yaserde(rename = "compatible-screens")]
-    pub compatible_screens: Vec<CompatibleScreens>,
+    pub compatible_screens: Option<CompatibleScreens>,
     /// List of `<instrumentation>` tags.
     pub instrumentation: Vec<Instrumentation>,
     /// List of `<permission>` tags.
