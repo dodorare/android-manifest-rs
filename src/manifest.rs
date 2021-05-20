@@ -68,7 +68,7 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-permission-sdk-23>`]: crate::UsesPermissionSdk23
 /// [`<uses-sdk>`]: crate::UsesSdk
 /// [`<queries>`]: crate:: Queries
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 #[yaserde(
     rename = "manifest",
     namespace = "android: http://schemas.android.com/apk/res/android"
@@ -266,7 +266,7 @@ pub struct AndroidManifest {
 }
 
 /// The default install location for the app.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum InstallLocation {
     /// The app may be installed on the external storage, but the system will install the

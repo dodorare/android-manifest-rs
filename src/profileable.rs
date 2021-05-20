@@ -29,7 +29,7 @@ use serde::{Deserialize, Serialize};
 /// [`<application>`]: crate::Application
 /// [`<shell>`]: https://developer.android.com/guide/topics/manifest/profileable-element#shell
 /// [`debuggable`]: https://developer.android.com/guide/topics/manifest/application-element#debug
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct Profileable {
     /// Indicates whether this application may be profiled by the shell process.
     #[yaserde(attribute, prefix = "android")]

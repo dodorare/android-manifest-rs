@@ -57,7 +57,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Google Play and texture compression filtering`]: https://developer.android.com/guide/topics/manifest/supports-gl-texture-element#market-texture-filtering
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct SupportsGlTexture {
     /// Specifies a single GL texture compression format supported by the application, as
     /// a descriptor string. Common descriptor values are listed in the table below.
@@ -86,7 +86,7 @@ pub struct SupportsGlTexture {
     pub name: Option<SupportsGlTextureName>,
 }
 
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 #[allow(non_camel_case_types)]
 pub enum SupportsGlTextureName {
     /// Ericsson texture compression. Specified in OpenGL ES 2.0 and available in all

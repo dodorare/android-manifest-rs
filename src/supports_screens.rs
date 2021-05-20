@@ -82,7 +82,7 @@ use serde::{Deserialize, Serialize};
 /// [`alternative layout resources`]: https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources
 /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
 /// [`<manifest>`]: crate::Manifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct SupportsScreens {
     /// Indicates whether the application is resizeable for different screen sizes. This
     /// attribute is true, by default. If set false, the system will run your

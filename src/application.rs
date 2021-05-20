@@ -95,7 +95,7 @@ use serde::{Deserialize, Serialize};
 /// [`<receiver>`]: crate::Receiver
 /// [`<provider>`]: crate::Provider
 /// [`<uses-library>`]: crate::UsesLibrary
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct Application {
     /// Whether or not activities that the application defines can move from the task that
     /// started them to the task they have an affinity for when that task is next
@@ -711,7 +711,7 @@ pub struct Application {
 ///
 /// [`use-after-free`]: https://cwe.mitre.org/data/definitions/416.html
 /// [`heap-buffer-overflow`]: https://cwe.mitre.org/data/definitions/122.html
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum GwpAsanMode {
     /// Always disabled: This setting completely disables GWP-ASan in your app and is the

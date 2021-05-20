@@ -30,7 +30,7 @@ pub trait ResourceType: FromStr {
 }
 
 /// Generic resource type.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Resource<T: ResourceType> {
     name: String,
     package: Option<String>,

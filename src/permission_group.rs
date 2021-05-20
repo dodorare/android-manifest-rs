@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`<manifest>`]: crate::Manifest
 /// [`<permission>`]: crate::Permission
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct PermissionGroup {
     /// User-readable text that describes the group. The text should be longer and more
     /// explanatory than the label. This attribute must be set as a reference to a

@@ -8,7 +8,7 @@ use std::io::{Read, Write};
 use yaserde::{YaDeserialize, YaSerialize};
 
 /// Enum used when the value can be string resource or just a row string.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum StringResourceOrString {
     StringResource(Resource<StringResource>),
     String(String),

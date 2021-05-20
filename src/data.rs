@@ -68,7 +68,7 @@ use serde::{Deserialize, Serialize};
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`Intents and Intent Filters`]: https://developer.android.com/guide/components/intents-filters
 /// [`Intent Filters`]: https://developer.android.com/guide/topics/manifest/manifest-intro#ifs
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct Data {
     /// The scheme part of a URI. This is the minimal essential attribute for specifying a
     /// URI; at least one scheme attribute must be set for the filter, or none of the
