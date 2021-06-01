@@ -70,7 +70,7 @@ pub struct Service {
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<bool>,
-    ///     her or not the service can be instantiated by the system — `"true"` if it can
+    /// Whether or not the service can be instantiated by the system — `"true"` if it can
     /// be, and `"false"` if not. The default value is `"true"`.
     ///
     /// The [`<application>`] element has its own [`enabled`] attribute that applies to

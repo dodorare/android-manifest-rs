@@ -2,12 +2,15 @@
 name = "android-manifest"
 version = "0.0.1"
 authors = ["DodoRare Team <dodonotrare@gmail.com>"]
+description = "Android Manifest serializer and deserializer for Rust"
+repository = "https://github.com/dodorare/android-manifest-rs"
+license = "Apache-2.0"
 edition = "2018"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_plain = "0.3"
-yaserde = { git = "https://github.com/olvyko/yaserde", branch = "add-skip-ser-if" }
-yaserde_derive = { git = "https://github.com/olvyko/yaserde", branch = "add-skip-ser-if" }
+yaserde = "0.7.0"
+yaserde_derive = "0.7.0"
 xml-rs = "0.8.3"
 log = "0.4"
