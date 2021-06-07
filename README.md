@@ -11,8 +11,6 @@
 
 [AndroidManifest]: https://developer.android.com/guide/topics/manifest/manifest-intro
 
-Install [android-manifest](https://crates.io/crates/android-manifest):
-
 ```toml
 # Cargo.toml
 [dependencies]
