@@ -142,7 +142,7 @@ impl<'de, T: ResourceType> Visitor<'de> for ResourceVisitor<T> {
     where
         E: de::Error,
     {
-        parse_resource_with_type(v).map_err(|e| E::custom(e))
+        parse_resource_with_type(v).map_err(E::custom)
     }
 }
 

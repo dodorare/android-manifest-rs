@@ -175,7 +175,7 @@ impl<D: Delimiter, T: Serialize + DeserializeOwned> YaDeserialize for AttributeL
             match reader.next_event()? {
                 xml::reader::XmlEvent::StartElement { .. } => {}
                 xml::reader::XmlEvent::Characters(ref v) => {
-                    return Ok(parse_list_with_delimiter(v)?);
+                    return parse_list_with_delimiter(v);
                 }
                 _ => {
                     break;

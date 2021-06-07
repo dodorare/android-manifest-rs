@@ -82,7 +82,7 @@ impl<'de> Visitor<'de> for StringResourceOrStringVisitor {
         if v.is_empty() {
             return Err(E::custom("value of attribute is empty"));
         };
-        if v.chars().next().unwrap() == '@' {
+        if v.starts_with('@') {
             Ok(StringResourceOrString::StringResource(
                 ResourceVisitor::<StringResource>::new().visit_str(v)?,
             ))
@@ -110,7 +110,7 @@ impl YaDeserialize for StringResourceOrString {
                     if text_content.is_empty() {
                         return Err("value of attribute is empty".to_string());
                     };
-                    if text_content.chars().next().unwrap() == '@' {
+                    if text_content.starts_with('@') {
                         return Ok(StringResourceOrString::StringResource(
                             parse_resource_with_type(&text_content)?,
                         ));
