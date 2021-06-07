@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 /// <permission-group android:description="string resource"
 ///                   android:icon="drawable resource"
 ///                   android:label="string resource"
-////                  android:name="string" />
+///                   android:name="string" />
 /// ```
 ///
 /// ## Contained in
