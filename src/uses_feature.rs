@@ -88,7 +88,7 @@ use serde::{Deserialize, Serialize};
 /// [`CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
 /// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
 /// [`Google Play and Feature-Based Filtering`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#market-feature-filtering
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct UsesFeature {
     /// Specifies a single hardware or software feature used by the application,

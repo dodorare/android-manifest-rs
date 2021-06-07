@@ -236,7 +236,7 @@ pub struct Provider {
     /// There is no default. The name must be specified.
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android")]
     pub name: String,
     /// The name of a permission that clients must have to read or write the content
@@ -286,7 +286,7 @@ pub struct Provider {
     /// See also the [`permission`] and [`writePermission`] attributes.
     ///
     /// [`android:grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
-    /// [`<grant-uri-permission>`]: crate::GrantUriPermissions
+    /// [`<grant-uri-permission>`]: crate::GrantUriPermission
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`writePermission`]: crate::Provider#structfield.write_permission
     #[yaserde(attribute, prefix = "android", rename = "readPermission")]
@@ -299,14 +299,14 @@ pub struct Provider {
     /// A permission that clients must have to make changes to the data controlled by the
     /// content provider.
     ///
-    /// If the provider sets [`android:grantUriPermission`] to true, or if a given client
+    /// If the provider sets [`android:grantUriPermissions`] to true, or if a given client
     /// satisfies the conditions of a [`<grant-uri-permission>`] subelement the client
     /// can gain temporary write access to modify the content provider's data.
     ///
     /// See also the [`permission`] and [`readPermission`] attributes.
     ///
     /// [`android:grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
-    /// [`<grant-uri-permission>`]: crate::GrantUriPermissions
+    /// [`<grant-uri-permission>`]: crate::GrantUriPermission
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`readPermission`]: crate::Provider#structfield.write_permission
     #[yaserde(attribute, prefix = "android", rename = "writePermission")]

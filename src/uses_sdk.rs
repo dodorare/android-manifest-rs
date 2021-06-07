@@ -31,7 +31,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Versioning Your Applications.`]: https://developer.android.com/studio/publish/versioning
 /// [`Google Play filters`]: https://developer.android.com/google/play/filters
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct UsesSdk {
     /// An integer designating the minimum API Level required for the application to run.

@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 /// API Level 1
 ///
 /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct Instrumentation {
     /// Whether or not the Instrumentation class should run as a functional test —
@@ -54,7 +54,7 @@ pub struct Instrumentation {
     /// There is no default. The name must be specified.
     ///
     /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android")]
     pub name: String,
     /// The application that the [`Instrumentation`] object will run against. An
@@ -62,7 +62,7 @@ pub struct Instrumentation {
     /// the [`<manifest>`] element.
     ///
     /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android", rename = "targetPackage")]
     pub target_package: Option<String>,
     /// The processes that the [`Instrumentation`] object will run against. A

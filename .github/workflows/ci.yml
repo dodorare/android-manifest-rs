@@ -1,0 +1,29 @@
+name: CI
+on:
+  push:
+    branches: [main]
+    paths:
+    - '.github/workflows/ci.yml'
+    - '**.rs'
+    - '**.toml'
+jobs:
+  test-and-check:
+    name: Check code format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          components: rustfmt, clippy
+          override: true
+      - name: Check the format
+        run: cargo +nightly fmt --all -- --check
+      - name: Run clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings -A clippy:upper-case-acronyms-aggressive
+      - name: Check for deadlinks
+        run: |
+          cargo install cargo-deadlinks
+          cargo deadlinks --check-http
+      - name: Run tests
+        run: cargo test --no-fail-fast

@@ -18,14 +18,14 @@ use serde::{Deserialize, Serialize};
 ///                   android:label="string resource"
 ////                  android:name="string" />
 /// ```
-/// 
+///
 /// ## Contained in
 /// * [`<manifest>`]
 ///
 /// ## Introduced in
 /// API Level 1
 ///
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 /// [`<permission>`]: crate::Permission
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct PermissionGroup {

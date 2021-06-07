@@ -33,7 +33,7 @@ use serde::{Deserialize, Serialize};
 /// ## Introduced in
 /// API Level 30
 ///
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 /// [`package visibility filtering`]: https://developer.android.com/training/package-visibility
 /// [`visible automatically`]: https://developer.android.com/training/package-visibility/automatic
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]

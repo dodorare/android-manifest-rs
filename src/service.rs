@@ -166,7 +166,7 @@ pub struct Service {
     /// There is no default. The name must be specified.
     ///
     /// [`Service`]: https://developer.android.com/reference/android/app/Service
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     /// [`should not change this name`]: https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
     /// [`android:exported="false"`]: crate::Service#structfield.exported
     #[yaserde(attribute, prefix = "android")]

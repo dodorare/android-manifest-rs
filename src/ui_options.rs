@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum UiOptions {
-    ///	No extra UI options. This is the default
+    /// No extra UI options. This is the default
     #[yaserde(rename = "none")]
     None,
     /// Add a bar at the bottom of the screen to display action items in the app

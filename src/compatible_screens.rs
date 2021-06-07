@@ -58,7 +58,7 @@ use serde::{Deserialize, Serialize};
 /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
 /// [`<supports-screens>`]: crate::SupportsScreens
 /// [`Filters on Google Play`]: https://developer.android.com/google/play/filters
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 pub struct CompatibleScreens {
     pub screen: Vec<Screen>,

@@ -214,7 +214,7 @@ fn parse_resource_with_type<T: ResourceType>(resource: &str) -> Result<Resource<
     };
     Ok(Resource {
         name: resource_name,
-        package: package,
+        package,
         phantom: PhantomData,
     })
 }

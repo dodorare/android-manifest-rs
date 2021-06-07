@@ -1,6 +1,6 @@
 [package]
 name = "android-manifest"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["DodoRare Team <dodonotrare@gmail.com>"]
 description = "Android Manifest serializer and deserializer for Rust"
 repository = "https://github.com/dodorare/android-manifest-rs"

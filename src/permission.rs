@@ -24,7 +24,7 @@ use serde::{Deserialize, Serialize};
 /// ## Introduced in
 /// API Level 1
 ///
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
@@ -100,7 +100,7 @@ pub enum ProtectionLevel {
     /// review these permissions before installing).
     #[yaserde(rename = "normal")]
     Normal,
-    ///	A higher-risk permission that would give a requesting application access to
+    /// A higher-risk permission that would give a requesting application access to
     /// private user data or control over the device that can negatively impact the
     /// user. Because this type of permission introduces potential risk, the system
     /// may not automatically grant it to the requesting application. For example, any

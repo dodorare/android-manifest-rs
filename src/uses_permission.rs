@@ -43,7 +43,7 @@ use serde::{Deserialize, Serialize};
 /// [`System Permissions`]: https://developer.android.com/guide/topics/permissions/overview
 /// [`android.Manifest.permission`]: https://developer.android.com/reference/android/Manifest.permission
 /// [`<uses-feature>`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#permissions-features
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct UsesPermission {
     /// The name of the permission. It can be a permission defined by theapplication with

@@ -87,7 +87,7 @@ use serde::{Deserialize, Serialize};
 /// ## Introduced in
 /// API Level 1
 ///
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 /// [`<activity>`]: crate::Activity
 /// [`<activity-alias>`]: crate::ActivityAlias
 /// [`<meta-data>`]: crate::MetaData
@@ -169,7 +169,7 @@ pub struct Application {
     /// There is no default. The name must be specified.
     ///
     /// [`BackupAgent`]: https://developer.android.com/reference/android/app/backup/BackupAgent
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android", rename = "backupAgent")]
     pub backup_agent: Option<String>,
     /// Indicates that [`Auto Backup`] operations may be performed on this app even if the
@@ -477,7 +477,7 @@ pub struct Application {
     /// begins with a lowercase character, a global process of that name is created. A
     /// global process can be shared with other applications, reducing resource usage.
     ///
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android")]
     pub process: Option<String>,
     /// Indicates that the application is prepared to attempt a restore of any backed-up
@@ -597,7 +597,7 @@ pub struct Application {
     /// element.
     ///
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinity
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android", rename = "taskAffinity")]
     pub task_affinity: Option<String>,
     /// Indicates whether this application is only for testing purposes. For example, it

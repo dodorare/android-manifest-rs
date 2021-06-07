@@ -34,7 +34,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Enabling Focus Navigation`]: https://developer.android.com/guide/topics/ui/accessibility/apps#focus-nav
 /// [`<uses-feature>`]: crate::UsesFeature
-/// [`<manifest>`]: crate::Manifest
+/// [`<manifest>`]: crate::AndroidManifest
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct UsesConfiguration {
     /// Whether or not the application requires a five-way navigation control — `"true"`
@@ -139,7 +139,7 @@ pub enum ReqTouchScreen {
     /// requirement is undefined.) This is the default value.
     #[yaserde(rename = "undefined")]
     Undefined,
-    ///	The application doesn't require a touch screen.
+    /// The application doesn't require a touch screen.
     #[yaserde(rename = "notouch")]
     Notouch,
     /// The application requires a touch screen that's operated with a stylus.

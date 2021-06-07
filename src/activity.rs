@@ -496,7 +496,7 @@ pub struct Activity {
     /// There is no default. The name must be specified.
     ///
     /// [`Activity`]: https://developer.android.com/reference/android/app/Activity
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     /// [`should not change this name`]: https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
     /// [`android:exported`]: crate::Activity#structfield.exported
     #[yaserde(attribute, prefix = "android")]
@@ -738,7 +738,7 @@ pub struct Activity {
     /// [`FLAG_ACTIVITY_NEW_TASK`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_NEW_TASK
     /// [`<application>`]: crate::Application
     /// [`taskAffinity`]: crate::Application#structfield.task_affinity
-    /// [`<manifest>`]: crate::Manifest
+    /// [`<manifest>`]: crate::AndroidManifest
     #[yaserde(attribute, prefix = "android", rename = "taskAffinity")]
     pub task_affinity: Option<String>,
     /// A reference to a style resource defining an overall theme for the activity. This
@@ -1087,7 +1087,7 @@ pub enum LaunchMode {
     /// [`onNewIntent()`]: https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
     #[yaserde(rename = "never")]
     SingleTask,
-    ///	Same as "`singleTask`", except that the system doesn't launch any other activities
+    /// Same as "`singleTask`", except that the system doesn't launch any other activities
     /// into the task holding the instance. The activity is always the single and only
     /// member of its task.
     ///
@@ -1161,7 +1161,7 @@ impl Default for LockTaskMode {
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum PersistableMode {
-    ///	`Default value`. When the system restarts, the activity task is preserved, but
+    /// `Default value`. When the system restarts, the activity task is preserved, but
     /// only the root activity's launching intent is used.
     ///
     /// When your app's launching intent loads your app's root activity, the activity
@@ -1221,7 +1221,7 @@ impl Default for PersistableMode {
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenOrientation {
-    ///	`The default value`. The system chooses the orientation. The policy it uses, and
+    /// `The default value`. The system chooses the orientation. The policy it uses, and
     /// therefore the choices made in specific contexts, may differ from device to
     /// device.
     #[yaserde(rename = "unspecified")]
@@ -1360,7 +1360,7 @@ pub enum WindowSoftInputMode {
     /// This is the default setting for the behavior of the main window.
     #[yaserde(rename = "adjustUnspecified")]
     AdjustUnspecified,
-    ///	The activity's main window is always resized to make room for the soft
+    /// The activity's main window is always resized to make room for the soft
     /// keyboard on screen.
     #[yaserde(rename = "adjustResize")]
     AdjustResize,

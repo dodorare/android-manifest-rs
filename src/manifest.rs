@@ -67,7 +67,7 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-permission>`]: crate::UsesPermission
 /// [`<uses-permission-sdk-23>`]: crate::UsesPermissionSdk23
 /// [`<uses-sdk>`]: crate::UsesSdk
-/// [`<queries>`]: crate:: Queries
+/// [`<queries>`]: crate::Queries
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 #[yaserde(
     rename = "manifest",
@@ -181,7 +181,7 @@ pub struct AndroidManifest {
     /// This attribute was introduced in API Level 3. It is meaningful only if the
     /// [`sharedUserId`] attribute is also set.
     ///
-    /// [`sharedUserId`]: crate::Manifest#structfield.shared_user_id
+    /// [`sharedUserId`]: crate::AndroidManifest#structfield.shared_user_id
     #[yaserde(attribute, prefix = "android", rename = "sharedUserLabel")]
     pub shared_user_label: Option<Resource<StringResource>>,
     /// An internal version number. This number is used only to determine whether one
