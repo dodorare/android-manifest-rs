@@ -60,6 +60,15 @@ impl<D: Delimiter, T: Serialize + DeserializeOwned> AttributeList<D, T> {
     }
 }
 
+impl<D: Delimiter, T: Serialize + DeserializeOwned> From<Vec<T>> for AttributeList<D, T> {
+    fn from(vec: Vec<T>) -> Self {
+        AttributeList {
+            vec,
+            phantom: PhantomData,
+        }
+    }
+}
+
 impl<D: Delimiter, T: Serialize + DeserializeOwned> Serialize for AttributeList<D, T> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
