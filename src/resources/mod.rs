@@ -63,21 +63,22 @@ impl<T: ResourceType> Resource<T> {
     }
 }
 
+impl<T: ResourceType> ToString for Resource<T> {
+    fn to_string(&self) -> String {
+        if let Some(package) = &self.package {
+            format!("@{}:{}/{}", package, T::resource_type(), self.name)
+        } else {
+            format!("@{}/{}", T::resource_type(), self.name)
+        }
+    }
+}
+
 impl<T: ResourceType> Serialize for Resource<T> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        if let Some(package) = &self.package {
-            serializer.serialize_str(&format!(
-                "@{}:{}/{}",
-                package,
-                T::resource_type(),
-                self.name
-            ))
-        } else {
-            serializer.serialize_str(&format!("@{}/{}", T::resource_type(), self.name))
-        }
+        serializer.serialize_str(&self.to_string())
     }
 }
 

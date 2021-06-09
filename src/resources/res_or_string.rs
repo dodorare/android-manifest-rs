@@ -24,6 +24,15 @@ impl StringResourceOrString {
     }
 }
 
+impl ToString for StringResourceOrString {
+    fn to_string(&self) -> String {
+        match self {
+            Self::StringResource(r) => r.to_string(),
+            Self::String(v) => v.clone(),
+        }
+    }
+}
+
 impl Serialize for StringResourceOrString {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
