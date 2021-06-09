@@ -449,7 +449,7 @@ pub struct Activity {
     ///
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
     #[yaserde(attribute, prefix = "android", rename = "maxRecents")]
-    pub max_recents: Option<i32>,
+    pub max_recents: Option<u32>,
     /// The maximum aspect ratio the activity supports. If the app runs on a device with a
     /// wider aspect ratio, the system automatically letterboxes the app, leaving
     /// portions of the screen unused so the app can run at its specified maximum

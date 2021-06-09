@@ -58,5 +58,5 @@ pub struct UsesPermissionSdk23 {
     /// app is not granted the permission and cannot use any related
     /// functionality.
     #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
-    pub max_sdk_version: Option<i32>,
+    pub max_sdk_version: Option<u32>,
 }

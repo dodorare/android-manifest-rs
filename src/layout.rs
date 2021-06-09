@@ -42,8 +42,27 @@ pub struct Layout {
     /// ```
     #[yaserde(attribute, prefix = "android", rename = "minHeight")]
     pub min_height: Option<String>,
+    /// Minimum height and minimum width for the activity in both split-screen and
+    /// freeform modes. If the user moves the divider in split-screen mode to make an
+    /// activity smaller than the specified minimum, the system crops the activity to
+    /// the size the user requests.
+    ///
+    /// For example, the following code shows how to specify an activity's default size
+    /// and location, and its minimum size, when the activity is displayed in freeform
+    /// mode:
+    ///
+    /// ## XML Example
+    /// ```xml
+    /// <activity android:name=".MyActivity">
+    ///    <layout android:defaultHeight="500dp"
+    ///            android:defaultWidth="600dp"
+    ///            android:gravity="top|end"
+    ///            android:minHeight="450dp"
+    ///            android:minWidth="300dp" />
+    /// </activity>
+    /// ```
     #[yaserde(attribute, prefix = "android", rename = "minWidth")]
-    pub min_width: Option<i32>,
+    pub min_width: Option<String>,
 }
 
 /// Standard constants and tools for placing an object within a potentially

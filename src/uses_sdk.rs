@@ -49,7 +49,7 @@ pub struct UsesSdk {
     /// access the unavailable APIs. For this reason, be certain to declare the
     /// appropriate API Level in the `minSdkVersion` attribute.
     #[yaserde(attribute, prefix = "android", rename = "minSdkVersion")]
-    pub min_sdk_version: Option<i32>,
+    pub min_sdk_version: Option<u32>,
     /// An integer designating the API Level that the application targets. If not set, the
     /// default value equals that given to `minSdkVersion`. This attribute informs the
     /// system that you have tested against the target version and the system should
@@ -81,7 +81,7 @@ pub struct UsesSdk {
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     /// [`Build.VERSION_CODES`]: https://developer.android.com/reference/android/os/Build.VERSION_CODES
     #[yaserde(attribute, prefix = "android", rename = "targetSdkVersion")]
-    pub target_sdk_version: Option<i32>,
+    pub target_sdk_version: Option<u32>,
     /// An integer designating the maximum API Level on which the application is designed
     /// to run. In Android 1.5, 1.6, 2.0, and 2.0.1, the system checks the value of
     /// this attribute when installing an application and when re-validating the
@@ -128,5 +128,5 @@ pub struct UsesSdk {
     /// will continue to use the attribute as a filter, however, when presenting users
     /// with applications available for download.
     #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
-    pub max_sdk_version: Option<i32>,
+    pub max_sdk_version: Option<u32>,
 }

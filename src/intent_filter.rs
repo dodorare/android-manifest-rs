@@ -123,7 +123,7 @@ pub struct IntentFilter {
     /// [`ACTION_SEND_MULTIPLE`]: https://developer.android.com/reference/android/content/Intent#ACTION_SEND_MULTIPLE
     /// [`setPriority()`]: https://developer.android.com/reference/android/content/IntentFilter#setPriority(int)
     #[yaserde(attribute, prefix = "android")]
-    pub priority: Option<i32>,
+    pub priority: Option<u32>,
     /// The order in which the filter should be processed when multiple filters match.
     /// order differs from priority in that priority applies across apps, while order
     /// disambiguates multiple matching filters in a single app.
@@ -135,7 +135,7 @@ pub struct IntentFilter {
     ///
     /// This attribute was introduced in API Level 28.
     #[yaserde(attribute, prefix = "android")]
-    pub order: Option<i32>,
+    pub order: Option<u32>,
     /// List of `<action>` tags.
     pub action: Vec<Action>,
     /// List of `<category>` tags.

@@ -81,5 +81,5 @@ pub struct UsesPermission {
     /// [`WRITE_EXTERNAL_STORAGE`]: https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
     /// [`getExternalFilesDir()`]: https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)
     #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
-    pub max_sdk_version: Option<i32>,
+    pub max_sdk_version: Option<u32>,
 }

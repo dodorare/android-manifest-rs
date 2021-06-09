@@ -203,7 +203,7 @@ pub struct Provider {
     /// they are created in the order required by those dependencies. The value is a
     /// simple integer, with higher numbers being initialized first.
     #[yaserde(attribute, prefix = "android", rename = "initOrder")]
-    pub init_order: Option<i32>,
+    pub init_order: Option<u32>,
     /// A user-readable label for the content provided. If this attribute is not set, the
     /// label set for the application as a whole is used instead (see
     /// the [`<application>`] element's [`label`] attribute).
