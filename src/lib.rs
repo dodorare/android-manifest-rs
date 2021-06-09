@@ -9,6 +9,7 @@ mod attribute_list;
 mod category;
 mod compatible_screens;
 mod data;
+pub mod error;
 mod grant_uri_permission;
 mod instrumentation;
 mod intent_filter;
@@ -44,6 +45,7 @@ pub use attribute_list::*;
 pub use category::*;
 pub use compatible_screens::*;
 pub use data::*;
+use error::{Error, Result};
 pub use grant_uri_permission::*;
 pub use instrumentation::*;
 pub use intent_filter::*;
@@ -73,31 +75,32 @@ pub use uses_sdk::*;
 
 /// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a
 /// string of XML text.
-pub fn from_str(s: &str) -> Result<AndroidManifest, String> {
-    yaserde::de::from_str(s)
+pub fn from_str(s: &str) -> Result<AndroidManifest> {
+    yaserde::de::from_str(s).map_err(|err| Error::FailedToDeserialize(err))
 }
 
 /// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from an IO
 /// stream of XML text.
-pub fn from_reader<R: std::io::Read>(reader: R) -> Result<AndroidManifest, String> {
-    yaserde::de::from_reader(reader)
+pub fn from_reader<R: std::io::Read>(reader: R) -> Result<AndroidManifest> {
+    yaserde::de::from_reader(reader).map_err(|err| Error::FailedToDeserialize(err))
 }
 
 /// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a String
 /// of XML text.
-pub fn to_string(manifest: &AndroidManifest) -> Result<String, String> {
-    yaserde::ser::to_string(manifest)
+pub fn to_string(manifest: &AndroidManifest) -> Result<String> {
+    yaserde::ser::to_string(manifest).map_err(|err| Error::FailedToSerialize(err))
 }
 
 /// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a
 /// pretty-printed String of XML text.
-pub fn to_string_pretty(manifest: &AndroidManifest) -> Result<String, String> {
+pub fn to_string_pretty(manifest: &AndroidManifest) -> Result<String> {
     let config = yaserde::ser::Config {
         perform_indent: true,
         write_document_declaration: true,
         indent_string: None,
     };
     yaserde::ser::to_string_with_config(manifest, &config)
+        .map_err(|err| Error::FailedToSerialize(err))
 }
 
 #[cfg(test)]
