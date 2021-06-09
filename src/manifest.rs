@@ -249,9 +249,9 @@ pub struct AndroidManifest {
     /// List of `<supports-screens>` tags.
     #[yaserde(rename = "supports-screens")]
     pub supports_screens: Vec<SupportsScreens>,
-    /// List of `<uses-configuration>` tags.
+    /// Optional `<uses-configuration>` tag.
     #[yaserde(rename = "uses-configuration")]
-    pub uses_configuration: Vec<UsesConfiguration>,
+    pub uses_configuration: Option<UsesConfiguration>,
     /// List of `<uses-feature>` tags.
     #[yaserde(rename = "uses-feature")]
     pub uses_feature: Vec<UsesFeature>,
