@@ -2,7 +2,9 @@ use super::attribute_list::{AttributeList, VerticalBar};
 use super::intent_filter::IntentFilter;
 use super::layout::Layout;
 use super::meta_data::MetaData;
-use super::resources::{DrawableResource, Resource, StringResourceOrString, StyleResource};
+use super::resources::{
+    DrawableResource, MipmapOrDrawableResource, Resource, StringResourceOrString, StyleResource,
+};
 use super::ui_options::UiOptions;
 use serde::{Deserialize, Serialize};
 
@@ -381,7 +383,7 @@ pub struct Activity {
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// Sets the immersive mode setting for the current activity. If the
     /// `android:immersive` attribute is set to true in the app's manifest entry
     /// for this activity, the [`ActivityInfo.flags`] member always has its

@@ -1,6 +1,6 @@
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
-use super::resources::{DrawableResource, Resource, StringResource};
+use super::resources::{MipmapOrDrawableResource, Resource, StringResource};
 use serde::{Deserialize, Serialize};
 
 /// An alias for an activity, named by the `targetActivity` attribute.
@@ -87,7 +87,7 @@ pub struct ActivityAlias {
     /// [`<activity>`]: crate::Activity
     /// [`icon`]: crate::Activity#structfield.icon
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the alias when presented to users through the alias. See
     /// the [`<activity>`] element's [`label`] attribute for more information.
     ///

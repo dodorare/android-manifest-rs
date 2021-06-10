@@ -1,4 +1,6 @@
-use super::resources::{DrawableResource, Resource, StringResource, StringResourceOrString};
+use super::resources::{
+    MipmapOrDrawableResource, Resource, StringResource, StringResourceOrString,
+};
 use serde::{Deserialize, Serialize};
 
 /// Declares a name for a logical grouping of related permissions.
@@ -37,7 +39,7 @@ pub struct PermissionGroup {
     /// An icon representing the permission. This attribute must be set as a reference to
     /// a drawable resource containing the image definition.
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable name for the group. As a convenience, the label can be directly
     /// set as a raw string while you're developing the application. However, when the
     /// application is ready to be published, it should be set as a reference to a

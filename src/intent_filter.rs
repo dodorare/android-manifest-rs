@@ -1,7 +1,7 @@
 use super::action::Action;
 use super::category::Category;
 use super::data::Data;
-use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Specifies the types of intents that an activity, service, or broadcast receiver can
@@ -69,7 +69,7 @@ pub struct IntentFilter {
     /// [`<application>`]: crate::Application
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the parent component. This label, rather than the one
     /// set by the parent component, is used when the component is presented to the
     /// user as having the capability described by the filter. The label should be set

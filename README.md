@@ -25,7 +25,7 @@ let manifest = AndroidManifest {
     version_name: Some("1.0".to_string()),
     application: Application {
         allow_backup: Some(true),
-        icon: Some(DrawableResource::new("ic_launcher", None)),
+        icon: Some(MipmapOrDrawableResource::mipmap("ic_launcher", None)),
         label: Some(StringResourceOrString::resource("app_name", None)),
         theme: Some(StyleResource::new("AppTheme", None)),
         activity: vec![Activity {

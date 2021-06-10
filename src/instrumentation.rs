@@ -1,4 +1,4 @@
-use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Declares an [`Instrumentation`] class that enables you to monitor an application's
@@ -42,7 +42,7 @@ pub struct Instrumentation {
     /// An icon that represents the Instrumentation class. This attribute must be set as a
     /// reference to a drawable resource.
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the Instrumentation class. The label can be set as a raw
     /// string or a reference to a string resource.
     #[yaserde(attribute, prefix = "android")]

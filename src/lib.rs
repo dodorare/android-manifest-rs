@@ -76,19 +76,19 @@ pub use uses_sdk::*;
 /// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a
 /// string of XML text.
 pub fn from_str(s: &str) -> Result<AndroidManifest> {
-    yaserde::de::from_str(s).map_err(|err| Error::FailedToDeserialize(err))
+    yaserde::de::from_str(s).map_err(Error::FailedToDeserialize)
 }
 
 /// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from an IO
 /// stream of XML text.
 pub fn from_reader<R: std::io::Read>(reader: R) -> Result<AndroidManifest> {
-    yaserde::de::from_reader(reader).map_err(|err| Error::FailedToDeserialize(err))
+    yaserde::de::from_reader(reader).map_err(Error::FailedToDeserialize)
 }
 
 /// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a String
 /// of XML text.
 pub fn to_string(manifest: &AndroidManifest) -> Result<String> {
-    yaserde::ser::to_string(manifest).map_err(|err| Error::FailedToSerialize(err))
+    yaserde::ser::to_string(manifest).map_err(Error::FailedToSerialize)
 }
 
 /// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a
@@ -99,8 +99,7 @@ pub fn to_string_pretty(manifest: &AndroidManifest) -> Result<String> {
         write_document_declaration: true,
         indent_string: None,
     };
-    yaserde::ser::to_string_with_config(manifest, &config)
-        .map_err(|err| Error::FailedToSerialize(err))
+    yaserde::ser::to_string_with_config(manifest, &config).map_err(Error::FailedToSerialize)
 }
 
 #[cfg(test)]
@@ -126,7 +125,7 @@ mod tests {
             version_name: Some("1.0".to_string()),
             application: Application {
                 allow_backup: Some(true),
-                icon: Some(DrawableResource::new("ic_launcher", None)),
+                icon: Some(MipmapOrDrawableResource::mipmap("ic_launcher", None)),
                 label: Some(StringResourceOrString::resource("app_name", None)),
                 theme: Some(StyleResource::new("AppTheme", None)),
                 activity: vec![Activity {

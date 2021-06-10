@@ -1,8 +1,10 @@
 mod any;
+mod mipmap_or_drawable;
 mod res_or_string;
 mod types;
 
 pub use any::*;
+pub use mipmap_or_drawable::*;
 pub use res_or_string::*;
 use serde::{
     de::{self, Visitor},

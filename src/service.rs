@@ -1,6 +1,8 @@
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
-use super::resources::{DrawableResource, Resource, StringResource, StringResourceOrString};
+use super::resources::{
+    MipmapOrDrawableResource, Resource, StringResource, StringResourceOrString,
+};
 use serde::{Deserialize, Serialize};
 
 /// Declares a service (a [`Service`] subclass) as one of the application's components.
@@ -129,7 +131,7 @@ pub struct Service {
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// If set to true, this service will run under a special process that is isolated
     /// from the rest of the system and has no permissions of its own.
     /// The only communication with it is through the Service API (binding and

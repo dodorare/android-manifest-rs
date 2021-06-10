@@ -6,7 +6,8 @@ use super::meta_data::MetaData;
 use super::provider::Provider;
 use super::receiver::Receiver;
 use super::resources::{
-    DrawableResource, Resource, StringResource, StringResourceOrString, StyleResource, XmlResource,
+    DrawableResource, MipmapOrDrawableResource, Resource, StringResource, StringResourceOrString,
+    StyleResource, XmlResource,
 };
 use super::service::Service;
 use super::ui_options::UiOptions;
@@ -357,7 +358,7 @@ pub struct Application {
     /// [`<receiver>`]: crate::Receiver
     /// [`<provider>`]: crate::Provider
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// Whether or not the application is a game. The system may group together
     /// applications classifed as games or display them separately from other
     /// applications.

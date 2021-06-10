@@ -1,4 +1,6 @@
-use super::resources::{DrawableResource, Resource, StringResource, StringResourceOrString};
+use super::resources::{
+    MipmapOrDrawableResource, Resource, StringResource, StringResourceOrString,
+};
 use serde::{Deserialize, Serialize};
 
 /// Declares a security permission.
@@ -40,7 +42,7 @@ pub struct Permission {
     pub description: Option<Resource<StringResource>>,
     /// A reference to a drawable resource for an icon that represents the permission.
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A name for the permission, one that can be displayed to users. As a convenience,
     /// the label can be directly set as a raw string while you're developing the
     /// application. However, when the application is ready to be published, it should

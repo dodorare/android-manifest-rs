@@ -3,7 +3,7 @@ use super::grant_uri_permission::GrantUriPermission;
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
 use super::path_permission::PathPermission;
-use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Declares a content provider component.
@@ -196,7 +196,7 @@ pub struct Provider {
     /// [`<application>`]: crate::Application
     /// [`icon`]: crate::Application#structfield.icon
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// The order in which the content provider should be instantiated, relative to other
     /// content providers hosted by the same process. When there are dependencies
     /// among content providers, setting this attribute for each of them ensures that

@@ -45,6 +45,28 @@ impl ResourceType for DrawableResource {
     }
 }
 
+/// Mipmap resource type.
+#[derive(Debug, PartialEq, Clone)]
+pub struct MipmapResource;
+
+impl FromStr for MipmapResource {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s == "mipmap" {
+            Ok(MipmapResource)
+        } else {
+            Err(format!("failed to convert {} to mipmap resource type", s))
+        }
+    }
+}
+
+impl ResourceType for MipmapResource {
+    fn resource_type() -> &'static str {
+        "mipmap"
+    }
+}
+
 /// Xml resource type.
 #[derive(Debug, PartialEq, Clone)]
 pub struct XmlResource;

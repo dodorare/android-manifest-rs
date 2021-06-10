@@ -1,4 +1,4 @@
-use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Declares the base name for a tree of permissions.
@@ -39,7 +39,7 @@ pub struct PermissionTree {
     /// An icon representing all the permissions in the tree. This attribute must be set
     /// as a reference to a drawable resource containing the image definition.
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable name for the group. As a convenience, the label can be directly
     /// set as a raw string for quick and dirty programming. However, when the
     /// application is ready to be published, it should be set as a reference to a

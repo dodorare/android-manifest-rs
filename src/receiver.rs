@@ -1,6 +1,6 @@
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
-use super::resources::{DrawableResource, Resource, StringResourceOrString};
+use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
 /// Declares a broadcast receiver (a [`BroadcastReceiver`] subclass) as one of the
@@ -110,7 +110,7 @@ pub struct Receiver {
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
     #[yaserde(attribute, prefix = "android")]
-    pub icon: Option<Resource<DrawableResource>>,
+    pub icon: Option<MipmapOrDrawableResource>,
     /// A name for the service that can be displayed to users. If this attribute is not
     /// set, the label set for the application as a whole is used instead
     /// (see the [`<application>`] element's
