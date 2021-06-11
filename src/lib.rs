@@ -110,7 +110,7 @@ mod tests {
     fn test_manifest_deserialize_serialize() {
         let given_xml = r#"<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.toggletest" android:versionCode="1" android:versionName="1.0">
-  <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
+  <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
     <activity android:label="@string/app_name" android:name="com.example.toggletest.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
