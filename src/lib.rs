@@ -156,9 +156,9 @@ mod tests {
     fn test_complex_manifest_deserialize() {
         let given_xml = r#"
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
-          package="org.domokit.gcm" 
-          android:versionCode="4" 
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.domokit.gcm"
+          android:versionCode="4"
           android:versionName="0.0.4">
     <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -169,12 +169,12 @@ mod tests {
     <permission android:name="org.domokit.gcm.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="org.domokit.gcm.permission.C2D_MESSAGE" />
-    
+
     <application android:label="gcm" android:name="org.domokit.sky.shell.SkyApplication">
-        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize" 
-                  android:hardwareAccelerated="true" 
-                  android:launchMode="singleTask" 
-                  android:name="org.domokit.sky.shell.SkyActivity" 
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+                  android:hardwareAccelerated="true"
+                  android:launchMode="singleTask"
+                  android:name="org.domokit.sky.shell.SkyActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -185,7 +185,6 @@ mod tests {
             android:name="org.domokit.sky.shell.UpdateService"
             android:exported="false"
             android:process=":remote"/>
-        
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
@@ -230,7 +229,7 @@ mod tests {
                         ConfigChanges::ScreenSize,
                     ]),
                     hardware_accelerated: Some(true),
-                    launch_mode: Some(LaunchMode::Standard),
+                    launch_mode: Some(LaunchMode::SingleTask),
                     name: "org.domokit.sky.shell.SkyActivity".to_string(),
                     theme: Some(StyleResource::new(
                         "Theme.Black.NoTitleBar",
