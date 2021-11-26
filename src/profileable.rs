@@ -13,12 +13,7 @@ use serde::{Deserialize, Serialize};
 /// ## Introduced in
 /// API Level 29
 ///
-/// [`android.os.Trace`]: https://developer.android.com/reference/kotlin/android/os/Trace
-/// [`simpleperf`]: https://developer.android.com/ndk/guides/simpleperf
-/// [`am profile`]: https://developer.android.com/studio/command-line/adb#am
 /// [`<application>`]: crate::Application
-/// [`<shell>`]: https://developer.android.com/guide/topics/manifest/profileable-element#shell
-/// [`debuggable`]: https://developer.android.com/guide/topics/manifest/application-element#debug
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 pub struct Profileable {
     /// Specifies whether the user of the device can profile this application 
@@ -37,7 +32,7 @@ pub struct Profileable {
     /// 
     /// [`android.os.Trace`]: https://developer.android.com/reference/kotlin/android/os/Trace
     /// [`simpleperf`]: https://developer.android.com/ndk/guides/simpleperf
-    /// [`am profile commands`]: 
+    /// [`am profile commands`]: https://developer.android.com/studio/command-line/perfetto
     #[yaserde(attribute, prefix = "android")]
     pub shell: bool,
     /// Specifies whether the application can be profiled by system services or
