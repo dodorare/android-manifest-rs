@@ -1,7 +1,7 @@
-use super::profileable::Profileable;
 use super::activity::Activity;
 use super::activity_alias::ActivityAlias;
 use super::meta_data::MetaData;
+use super::profileable::Profileable;
 use super::provider::Provider;
 use super::receiver::Receiver;
 use super::resources::{
