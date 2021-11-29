@@ -1,5 +1,4 @@
-use crate::Profileable;
-
+use super::profileable::Profileable;
 use super::activity::Activity;
 use super::activity_alias::ActivityAlias;
 use super::meta_data::MetaData;

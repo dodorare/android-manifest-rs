@@ -1063,7 +1063,7 @@ pub enum LaunchMode {
     /// Use Cases: Normal launches for most activities
     ///
     /// Multiple Instances?: Yes
-    #[yaserde(rename = "never")]
+    #[yaserde(rename = "standard")]
     Standard,
     /// If an instance of the activity already exists at the top of the target task, the
     /// system routes the intent to that instance through a call to
@@ -1075,7 +1075,7 @@ pub enum LaunchMode {
     /// Multiple Instances?: Conditionally
     ///
     /// [`onNewIntent()`]: https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
-    #[yaserde(rename = "never")]
+    #[yaserde(rename = "singleTop")]
     SingleTop,
     /// The system creates the activity at the root of a new task and routes the intent to
     /// it. However, if an instance of the activity already exists, the system routes
@@ -1087,7 +1087,7 @@ pub enum LaunchMode {
     /// Multiple Instances?: No
     ///
     /// [`onNewIntent()`]: https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
-    #[yaserde(rename = "never")]
+    #[yaserde(rename = "singleTask")]
     SingleTask,
     /// Same as "`singleTask`", except that the system doesn't launch any other activities
     /// into the task holding the instance. The activity is always the single and only
@@ -1096,7 +1096,7 @@ pub enum LaunchMode {
     /// Use Cases: Specialized launches (not recommended for general use)
     ///
     /// Multiple Instances?: No
-    #[yaserde(rename = "never")]
+    #[yaserde(rename = "singleInstance")]
     SingleInstance,
 }
 

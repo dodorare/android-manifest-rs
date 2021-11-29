@@ -4,7 +4,9 @@ use serde::{Deserialize, Serialize};
 ///
 /// ## XML Syntax
 /// ```xml
-/// <profileable android:shell=["true" | "false"] />
+/// <profileable android:shell=["true" | "false"] 
+///              android:enable=["true" | "false"]
+///  />
 /// ```
 ///
 /// ## Contained in
