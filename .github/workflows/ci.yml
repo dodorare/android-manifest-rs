@@ -6,6 +6,11 @@ on:
     - '.github/workflows/ci.yml'
     - '**.rs'
     - '**.toml'
+  pull_request:
+    paths:
+    - '.github/workflows/ci.yml'
+    - '**.rs'
+    - '**.toml'
 jobs:
   test-and-check:
     name: Check code format
