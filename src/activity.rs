@@ -47,7 +47,7 @@ use serde::{Deserialize, Serialize};
 ///           android:maxAspectRatio="float"
 ///           android:multiprocess=["true" | "false"]
 ///           android:name="string"
-///           android:noHistory=["true" | "false"]  
+///           android:noHistory=["true" | "false"]
 ///           android:parentActivityName="string"
 ///           android:persistableMode=["persistRootOnly" |
 ///                                    "persistAcrossReboots" | "persistNever"]
@@ -72,7 +72,7 @@ use serde::{Deserialize, Serialize};
 ///                                        "stateUnchanged", "stateHidden",
 ///                                        "stateAlwaysHidden", "stateVisible",
 ///                                        "stateAlwaysVisible", "adjustUnspecified",
-///                                        "adjustResize", "adjustPan"] >   
+///                                        "adjustResize", "adjustPan"] >
 ///     ...
 /// </activity>
 /// ```

@@ -109,7 +109,7 @@ pub struct Data {
     /// [`scheme`] and [`host`] attributes are also specified for the filter.
     ///
     /// [`scheme`]: crate::Data#structfield.scheme
-    /// [`host`]: crate::Data#structfield.host   
+    /// [`host`]: crate::Data#structfield.host
     #[yaserde(attribute, prefix = "android")]
     pub port: Option<String>,
     /// The path part of a URI which must begin with a /. The path attribute specifies a
@@ -142,7 +142,7 @@ pub struct Data {
     /// [`PATTERN_SIMPLE_GLOB`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB
     /// [`PatsternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
     /// [`scheme`]: crate::Data#structfield.scheme
-    /// [`host`]: crate::Data#structfield.host     
+    /// [`host`]: crate::Data#structfield.host
     #[yaserde(attribute, prefix = "android")]
     pub path: Option<String>,
     #[yaserde(attribute, prefix = "android", rename = "pathPattern")]
