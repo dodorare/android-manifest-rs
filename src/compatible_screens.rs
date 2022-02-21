@@ -52,7 +52,7 @@ use serde::{Deserialize, Serialize};
 /// ## Contained in
 /// * [`<manifest>`]
 ///
-/// ## Introduced in    
+/// ## Introduced in
 /// API Level 9
 ///
 /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support

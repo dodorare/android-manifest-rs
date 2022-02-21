@@ -21,7 +21,7 @@ Create `AndroidManifest.xml` by yourself:
 ```rust
 let manifest = AndroidManifest {
     package: "com.example.toggletest".to_string(),
-    version_code: Some("1".to_string()),
+    version_code: Some(1),
     version_name: Some("1.0".to_string()),
     application: Application {
         allow_backup: Some(true),
@@ -53,15 +53,15 @@ Or parse any `AndroidManifest.xml` file:
 ```rust
 let xml = r#"
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
-          package="com.example.toggletest" 
-          android:versionCode="1" 
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.toggletest"
+          android:versionCode="1"
           android:versionName="1.0">
-    <application android:allowBackup="true" 
-               android:icon="@drawable/ic_launcher" 
-               android:label="@string/app_name" 
+    <application android:allowBackup="true"
+               android:icon="@drawable/ic_launcher"
+               android:label="@string/app_name"
                android:theme="@style/AppTheme">
-        <activity android:label="@string/app_name" 
+        <activity android:label="@string/app_name"
                   android:name="com.example.toggletest.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

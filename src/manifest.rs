@@ -196,14 +196,14 @@ pub struct AndroidManifest {
     /// "y" separately in the lower and upper 16 bits. Or you could simply increase the
     /// number by one each time a new version is released.
     #[yaserde(attribute, prefix = "android", rename = "versionCode")]
-    pub version_code: Option<String>,
+    pub version_code: Option<u32>,
     /// The version number shown to users. This attribute can be set as a raw string or as
     /// a reference to a string resource. The string has no other purpose than to be
     /// displayed to users. The `versionCode` attribute holds the significant version
     /// number used internally.
     #[yaserde(attribute, prefix = "android", rename = "versionName")]
     pub version_name: Option<String>,
-    /// When an app is installed on the external storage:  
+    /// When an app is installed on the external storage:
     ///
     /// * The `.apk` file is saved to the external storage, but any app data (such as
     ///   databases) is still saved on the internal device memory.

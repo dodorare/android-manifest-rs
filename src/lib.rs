@@ -121,7 +121,7 @@ mod tests {
 </manifest>"#;
         let expected_manifest = AndroidManifest {
             package: "com.example.toggletest".to_string(),
-            version_code: Some("1".to_string()),
+            version_code: Some(1),
             version_name: Some("1.0".to_string()),
             application: Application {
                 allow_backup: Some(true),
@@ -216,7 +216,7 @@ mod tests {
 </manifest>"#;
         let expected_manifest = AndroidManifest {
             package: "org.domokit.gcm".to_string(),
-            version_code: Some("4".to_string()),
+            version_code: Some(1),
             version_name: Some("0.0.4".to_string()),
             application: Application {
                 label: Some(StringResourceOrString::string("gcm")),
