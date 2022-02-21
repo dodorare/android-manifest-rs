@@ -129,7 +129,7 @@ fn parse_list_with_delimiter<D: Delimiter, T: Serialize + DeserializeOwned>(
         );
     };
     let values = v
-        .replace(" ", "")
+        .replace(' ', "")
         .split(D::delimiter_symbol())
         .map(|s| serde_plain::from_str(s).unwrap())
         .collect();
