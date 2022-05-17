@@ -172,7 +172,7 @@ pub struct Service {
     /// [`should not change this name`]: https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
     /// [`android:exported="false"`]: crate::Service#structfield.exported
     #[yaserde(attribute, prefix = "android")]
-    pub name: String,
+    pub name: Option<String>,
     /// The name of a permission that an entity must have in order to launch the service
     /// or bind to it. If a caller of [`startService()`], [`bindService()`],
     /// or [`stopService()`] has not been granted this permission, the method

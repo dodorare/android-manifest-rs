@@ -147,6 +147,7 @@ mod tests {
             ..Default::default()
         };
         let deserialized_manifest: AndroidManifest = from_str(given_xml).unwrap();
+        println!("{:?}", deserialized_manifest);
         assert_eq!(expected_manifest, deserialized_manifest);
         let serialized_manifest = to_string_pretty(&expected_manifest).unwrap();
         assert_eq!(given_xml, serialized_manifest);
@@ -249,13 +250,13 @@ mod tests {
                 service: vec![
                     Service {
                         exported: Some(false),
-                        name: "org.domokit.sky.shell.UpdateService".to_string(),
+                        name: Some("org.domokit.sky.shell.UpdateService".to_string()),
                         process: Some(":remote".to_string()),
                         ..Default::default()
                     },
                     Service {
                         exported: Some(false),
-                        name: "org.domokit.gcm.GcmListenerService".to_string(),
+                        name: Some("org.domokit.gcm.GcmListenerService".to_string()),
                         intent_filter: vec![IntentFilter {
                             action: vec![Action {
                                 name: Some("com.google.android.c2dm.intent.RECEIVE".to_string()),
@@ -266,7 +267,7 @@ mod tests {
                     },
                     Service {
                         exported: Some(false),
-                        name: "org.domokit.gcm.InstanceIDListenerService".to_string(),
+                        name: Some("org.domokit.gcm.InstanceIDListenerService".to_string()),
                         intent_filter: vec![IntentFilter {
                             action: vec![Action {
                                 name: Some("com.google.android.gms.iid.InstanceID".to_string()),
@@ -277,7 +278,7 @@ mod tests {
                     },
                     Service {
                         exported: Some(false),
-                        name: "org.domokit.gcm.RegistrationIntentService".to_string(),
+                        name: Some("org.domokit.gcm.RegistrationIntentService".to_string()),
                         ..Default::default()
                     },
                 ],
