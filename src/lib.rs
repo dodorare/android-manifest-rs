@@ -257,23 +257,23 @@ mod tests {
                     Service {
                         exported: Some(false),
                         name: Some("org.domokit.gcm.GcmListenerService".to_string()),
-                        intent_filter: vec![IntentFilter {
-                            action: vec![Action {
-                                name: Some("com.google.android.c2dm.intent.RECEIVE".to_string()),
-                            }],
-                            ..Default::default()
-                        }],
+                        // intent_filter: vec![IntentFilter {
+                        //     action: vec![Action {
+                        //         name: Some("com.google.android.c2dm.intent.RECEIVE".to_string()),
+                        //     }],
+                        //     ..Default::default()
+                        // }],
                         ..Default::default()
                     },
                     Service {
                         exported: Some(false),
                         name: Some("org.domokit.gcm.InstanceIDListenerService".to_string()),
-                        intent_filter: vec![IntentFilter {
-                            action: vec![Action {
-                                name: Some("com.google.android.gms.iid.InstanceID".to_string()),
-                            }],
-                            ..Default::default()
-                        }],
+                        // intent_filter: vec![IntentFilter {
+                        //     action: vec![Action {
+                        //         name: Some("com.google.android.gms.iid.InstanceID".to_string()),
+                        //     }],
+                        //     ..Default::default()
+                        // }],
                         ..Default::default()
                     },
                     Service {
