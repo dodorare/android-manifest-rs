@@ -2,7 +2,6 @@ use super::action::Action;
 use super::category::Category;
 use super::data::Data;
 use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
-use displaydoc::Display;
 use serde::{Deserialize, Serialize};
 
 /// Specifies the types of intents that an activity, service, or broadcast receiver can
@@ -68,8 +67,6 @@ pub struct IntentFilter {
     /// For more on intent filter icons, see [`Icons and Labels`] in the introduction.
     ///
     /// [`<application>`]: crate::Application
-    /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
-    #[ignore_extra_doc_attributes]
     #[yaserde(attribute, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the parent component. This label, rather than the one
@@ -88,7 +85,6 @@ pub struct IntentFilter {
     /// [`<application>`]: crate::Application
     /// [`label`]: crate::Application#structfield.label
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
-    #[ignore_extra_doc_attributes]
     #[yaserde(attribute, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The priority that should be given to the parent component with regard to handling
@@ -125,7 +121,6 @@ pub struct IntentFilter {
     /// [`ACTION_SENDTO`]: https://developer.android.com/reference/android/content/Intent#ACTION_SENDTO
     /// [`ACTION_SEND_MULTIPLE`]: https://developer.android.com/reference/android/content/Intent#ACTION_SEND_MULTIPLE
     /// [`setPriority()`]: https://developer.android.com/reference/android/content/IntentFilter#setPriority(int)
-    #[ignore_extra_doc_attributes]
     #[yaserde(attribute, prefix = "android")]
     pub priority: Option<u32>,
     /// The order in which the filter should be processed when multiple filters match.
