@@ -213,10 +213,10 @@ pub struct Service {
     /// [`process`]: crate::Application#structfield.process
     #[yaserde(attribute, prefix = "android")]
     pub process: Option<String>,
-    // #[yaserde(rename = "intent-filter")]
-    // pub intent_filter: Vec<IntentFilter>,
-    // #[yaserde(rename = "meta-data")]
-    // pub meta_data: Vec<MetaData>,
+    #[yaserde(rename = "intent-filter")]
+    pub intent_filter: Vec<IntentFilter>,
+    #[yaserde(rename = "meta-data")]
+    pub meta_data: Vec<MetaData>,
 }
 
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
