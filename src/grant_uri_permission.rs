@@ -33,7 +33,7 @@ use serde::{Deserialize, Serialize};
 /// [`grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<provider>`]: crate::Provider
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
 pub struct GrantUriPermission {
     /// A path identifying the data subset or subsets that permission can be  granted for.
     /// The path attribute specifies a complete path; permission can be granted only

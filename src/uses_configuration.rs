@@ -35,7 +35,7 @@ use serde::{Deserialize, Serialize};
 /// [`Enabling Focus Navigation`]: https://developer.android.com/guide/topics/ui/accessibility/apps#focus-nav
 /// [`<uses-feature>`]: crate::UsesFeature
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
 pub struct UsesConfiguration {
     /// Whether or not the application requires a five-way navigation control — `"true"`
     /// if it does, and `"false"` if not. A five-way control is one that can move the
@@ -77,7 +77,7 @@ pub struct UsesConfiguration {
 }
 
 /// The type of keyboard the application requires, if any at all.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ReqKeyboardType {
     /// The application does not require a keyboard. (A keyboard requirement is
@@ -104,7 +104,7 @@ impl Default for ReqKeyboardType {
 }
 
 /// The navigation device required by the application, if any.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ReqNavigation {
     /// The application does not require any type of navigation control. (The
@@ -132,7 +132,7 @@ impl Default for ReqNavigation {
 }
 
 /// The type of touch screen the application requires, if any at all.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ReqTouchScreen {
     /// The application doesn't require a touch screen. (The touch screen

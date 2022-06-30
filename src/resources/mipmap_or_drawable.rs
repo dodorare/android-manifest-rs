@@ -11,7 +11,7 @@ use std::io::{Read, Write};
 use yaserde::{YaDeserialize, YaSerialize};
 
 /// Enum used when the value can be string resource or just a row string.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum MipmapOrDrawableResource {
     Mipmap(Resource<MipmapResource>),
     Drawable(Resource<DrawableResource>),

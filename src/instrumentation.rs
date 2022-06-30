@@ -26,7 +26,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Instrumentation`]: https://developer.android.com/reference/android/app/Instrumentation
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
 pub struct Instrumentation {
     /// Whether or not the Instrumentation class should run as a functional test —
     /// `"true"` if it should, and `"false"` if not. The default value is `"false"`.

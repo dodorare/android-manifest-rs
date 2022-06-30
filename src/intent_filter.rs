@@ -53,7 +53,7 @@ use serde::{Deserialize, Serialize};
 /// [`<action>`]: crate::Action
 /// [`<category>`]: crate::Category
 /// [`<data>`]: crate::Data
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
 pub struct IntentFilter {
     /// An icon that represents the parent activity, service, or broadcast receiver when
     /// that component is presented to the user as having the capability described by

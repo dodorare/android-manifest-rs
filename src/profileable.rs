@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 /// API Level 29
 ///
 /// [`<application>`]: crate::Application
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
 pub struct Profileable {
     /// Specifies whether the user of the device can profile this application
     /// through local debugging tools. These include
