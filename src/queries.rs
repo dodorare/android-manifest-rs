@@ -164,6 +164,18 @@ pub struct QueriesProvider {
     )]
     #[serde(skip_serializing_if = "AttributeList::is_empty")]
     pub authorities: AttributeList<Semicolon, String>,
+    /// The name of the class that implements the content provider, a subclass of
+    /// [`ContentProvider`]. This should be a fully qualified class name (such
+    /// as, `"com.example.project.TransportationProvider"`). However, as a
+    /// shorthand, if the first character of the name is a period, it is
+    /// appended to the package name specified in the [`<manifest>`] element.
+    ///
+    /// There is no default. The name must be specified.
+    ///
+    /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
+    /// [`<manifest>`]: crate::AndroidManifest
+    #[yaserde(attribute, prefix = "android")]
+    pub name: String,
 }
 
 impl QueriesProvider {
