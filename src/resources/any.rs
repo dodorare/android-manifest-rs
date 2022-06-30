@@ -11,7 +11,7 @@ use std::io::{Read, Write};
 use yaserde::{YaDeserialize, YaSerialize};
 
 /// Enum used when the value can be any of available resources.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum AnyResource {
     String(Resource<StringResource>),
     Drawable(Resource<DrawableResource>),

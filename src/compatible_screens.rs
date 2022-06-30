@@ -59,7 +59,7 @@ use serde::{Deserialize, Serialize};
 /// [`<supports-screens>`]: crate::SupportsScreens
 /// [`Filters on Google Play`]: https://developer.android.com/google/play/filters
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct CompatibleScreens {
     pub screen: Vec<Screen>,
 }
@@ -109,7 +109,7 @@ pub struct CompatibleScreens {
 /// [`<compatible-screens>`]
 ///
 /// [`<compatible-screens>`]: crate::CompatibleScreens
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct Screen {
     /// `Required`. Specifies the screen size for this screen configuration.
     ///
@@ -143,7 +143,7 @@ pub struct Screen {
 /// Android runs on a variety of devices that have different screen sizes and pixel
 /// densities. The system performs basic scaling and resizing to adapt your user interface
 /// to different screens.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenSize {
     /// Screens that are of similar size to a low-density QVGA screen. The minimum layout

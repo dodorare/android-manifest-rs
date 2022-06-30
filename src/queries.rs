@@ -37,7 +37,7 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`]: crate::AndroidManifest
 /// [`package visibility filtering`]: https://developer.android.com/training/package-visibility
 /// [`visible automatically`]: https://developer.android.com/training/package-visibility/automatic
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct Queries {
     /// Specifies a single app that your app intends to access. This other app might
     /// integrate with your app, or your app might use services that the other app
@@ -61,7 +61,7 @@ pub struct Queries {
 
 /// Specifies a single app that your app intends to access. This other app might integrate
 /// with your app, or your app might use services that the other app provides.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct Package {
     /// `Required`. Specifies the package name of the other app.
     #[yaserde(attribute, prefix = "android")]
@@ -80,7 +80,9 @@ pub struct Package {
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`intent filter signature`]: https://developer.android.com/training/basics/intents/filters
 /// [`declaring package visibility needs`]: https://developer.android.com/training/package-visibility/declaring#intent-filter-signature
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Intent {
     pub action: Action,
     pub data: Vec<Data>,

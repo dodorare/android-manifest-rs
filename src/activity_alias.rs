@@ -50,7 +50,9 @@ use serde::{Deserialize, Serialize};
 /// [`<activity>`]: crate::Activity
 /// [`android.intent.action.MAIN`]: https://developer.android.com/reference/android/content/Intent#ACTION_MAIN
 /// [`android.intent.category.LAUNCHER`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_LAUNCHER
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct ActivityAlias {
     /// Whether or not the target activity can be instantiated by the system through this
     /// alias — "`true`" if it can be, and "`false`" if not. The default value is

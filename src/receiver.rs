@@ -51,7 +51,9 @@ use serde::{Deserialize, Serialize};
 /// [`<application>`]: crate::Application
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<meta-data>`]: crate::MetaData
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Receiver {
     /// Whether or not the broadcast `receiver` is direct-boot aware; that is,
     /// whether or not it can run before the user unlocks the device.
