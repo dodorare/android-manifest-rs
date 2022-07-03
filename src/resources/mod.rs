@@ -6,14 +6,17 @@ mod types;
 pub use any::*;
 pub use mipmap_or_drawable::*;
 pub use res_or_string::*;
+
 use serde::{
     de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
 };
-use std::fmt;
-use std::io::{Read, Write};
-use std::marker::PhantomData;
-use std::str::FromStr;
+use std::{
+    fmt,
+    io::{Read, Write},
+    marker::PhantomData,
+    str::FromStr,
+};
 pub use types::*;
 use yaserde::{YaDeserialize, YaSerialize};
 
@@ -188,7 +191,7 @@ fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), St
                 .to_string(),
         );
     };
-    let first_part = split_str.get(0).unwrap();
+    let first_part = split_str.first().unwrap(); // Can be unwraped because we checked the length.
     let resource_type = &first_part[1..];
     let split_type: Vec<_> = resource_type.split(':').collect();
     let (resource_type, package) = if split_type.len() == 2 {
@@ -196,7 +199,7 @@ fn parse_resource(resource: &str) -> Result<(Option<String>, String, String), St
     } else {
         (split_type[0], None)
     };
-    let resource_name = split_str.get(1).unwrap();
+    let resource_name = split_str.get(1).unwrap(); // Can be unwraped because we checked the length.
     Ok((
         package,
         resource_type.to_string(),
