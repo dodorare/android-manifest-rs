@@ -9,7 +9,9 @@ use serde::{Deserialize, Serialize};
 /// * [`<activity>`]
 ///
 /// [`<activity>`]: crate::Activity
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Layout {
     /// Default width of the activity when launched in freeform mode.
     #[yaserde(attribute, prefix = "android", rename = "defaultWidth")]
@@ -67,7 +69,7 @@ pub struct Layout {
 
 /// Standard constants and tools for placing an object within a potentially
 /// larger container.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum Gravity {
     /// Raw bit controlling whether the right/bottom edge is clipped to its

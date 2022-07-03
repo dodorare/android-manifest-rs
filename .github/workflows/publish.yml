@@ -1,6 +1,7 @@
 name: Build and deploy to crates.io
 on:
   push:
+    branches: [main]
     paths:
     - 'Cargo.toml'
 jobs:

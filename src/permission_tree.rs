@@ -34,7 +34,9 @@ use serde::{Deserialize, Serialize};
 /// [`PackageManager.addPermission()`]: https://developer.android.com/reference/android/content/pm/PackageManager#addPermission(android.content.pm.PermissionInfo)
 /// [`<permission>`]: crate::Permission
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct PermissionTree {
     /// An icon representing all the permissions in the tree. This attribute must be set
     /// as a reference to a drawable resource containing the image definition.

@@ -711,7 +711,7 @@ pub struct Application {
 ///
 /// [`use-after-free`]: https://cwe.mitre.org/data/definitions/416.html
 /// [`heap-buffer-overflow`]: https://cwe.mitre.org/data/definitions/122.html
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum GwpAsanMode {
     /// Always disabled: This setting completely disables GWP-ASan in your app and is the

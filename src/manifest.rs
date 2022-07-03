@@ -266,7 +266,7 @@ pub struct AndroidManifest {
 }
 
 /// The default install location for the app.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum InstallLocation {
     /// The app may be installed on the external storage, but the system will install the

@@ -42,7 +42,9 @@ use serde::{Deserialize, Serialize};
 /// [`vendor-provided shared native library`]: https://source.android.com/devices/tech/config/namespaces_libraries#adding-additional-native-libraries
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
 /// [`<application>`]: crate::Application
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct UsesNativeLibrary {
     /// The name of the library file.
     #[yaserde(attribute, prefix = "android")]

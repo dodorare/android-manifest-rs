@@ -23,7 +23,9 @@ use serde::{Deserialize, Serialize};
 /// API Level 4
 ///
 /// [`<provider>`]: crate::Provider
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct PathPermission {
     /// A complete URI path for a subset of content provider data. Permission can be
     /// granted only to the particular data identified by this path. When used to

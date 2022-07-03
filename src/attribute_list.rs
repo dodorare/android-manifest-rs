@@ -12,7 +12,7 @@ pub trait Delimiter {
     fn delimiter_symbol() -> &'static str;
 }
 
-#[derive(Debug, PartialEq, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, Default, Clone)]
 pub struct Semicolon;
 
 impl Delimiter for Semicolon {
@@ -21,7 +21,7 @@ impl Delimiter for Semicolon {
     }
 }
 
-#[derive(Debug, PartialEq, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, Default, Clone)]
 pub struct VerticalBar;
 
 impl Delimiter for VerticalBar {
@@ -30,7 +30,7 @@ impl Delimiter for VerticalBar {
     }
 }
 
-#[derive(Debug, PartialEq, Default, Clone)]
+#[derive(Debug, PartialEq, Eq, Default, Clone)]
 pub struct AttributeList<D: Delimiter, T: Serialize + DeserializeOwned> {
     vec: Vec<T>,
     phantom: PhantomData<D>,

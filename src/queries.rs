@@ -36,7 +36,7 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`]: crate::AndroidManifest
 /// [`package visibility filtering`]: https://developer.android.com/training/package-visibility
 /// [`visible automatically`]: https://developer.android.com/training/package-visibility/automatic
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct Queries {
     /// Specifies a single app that your app intends to access. This other app might
     /// integrate with your app, or your app might use services that the other app
@@ -60,7 +60,7 @@ pub struct Queries {
 
 /// Specifies a single app that your app intends to access. This other app might integrate
 /// with your app, or your app might use services that the other app provides.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct Package {
     /// `Required`. Specifies the package name of the other app.
     #[yaserde(attribute, prefix = "android")]
@@ -79,7 +79,9 @@ pub struct Package {
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`intent filter signature`]: https://developer.android.com/training/basics/intents/filters
 /// [`declaring package visibility needs`]: https://developer.android.com/training/package-visibility/declaring#intent-filter-signature
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Intent {
     pub action: Action,
     pub data: Vec<Data>,
@@ -145,7 +147,9 @@ pub struct Intent {
 /// [`Content Providers`]: https://developer.android.com/guide/topics/providers/content-providers
 /// [`<queries>`]: crate::Queries
 /// [`Preparing your Gradle build for package visibility in Android 11`]: https://android-developers.googleblog.com/2020/07/preparing-your-build-for-package-visibility-in-android-11.html
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 #[serde(rename = "provider")]
 pub struct QueriesProvider {
     /// A list of one or more URI authorities that identify data offered by the content
@@ -164,6 +168,18 @@ pub struct QueriesProvider {
     )]
     #[serde(skip_serializing_if = "AttributeList::is_empty")]
     pub authorities: AttributeList<Semicolon, String>,
+    /// The name of the class that implements the content provider, a subclass of
+    /// [`ContentProvider`]. This should be a fully qualified class name (such
+    /// as, `"com.example.project.TransportationProvider"`). However, as a
+    /// shorthand, if the first character of the name is a period, it is
+    /// appended to the package name specified in the [`<manifest>`] element.
+    ///
+    /// There is no default. The name must be specified.
+    ///
+    /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
+    /// [`<manifest>`]: crate::AndroidManifest
+    #[yaserde(attribute, prefix = "android")]
+    pub name: String,
 }
 
 impl QueriesProvider {

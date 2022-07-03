@@ -828,7 +828,7 @@ impl Activity {
 
 /// Requests the activity to be displayed in wide color gamut mode on compatible
 /// devices.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ColorMode {
     /// Indicating that the activity should use a high dynamic range if the presentation
@@ -850,7 +850,7 @@ impl Default for ColorMode {
 }
 
 /// Lists configuration changes that the `activity` will handle itself.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ConfigChanges {
     /// The display density has changed — the user might have specified a different
@@ -936,7 +936,7 @@ impl Default for ConfigChanges {
 
 /// Four values which produce the following effects when the user opens a document with
 /// the application
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum DocumentLaunchMode {
     /// The system searches for a task whose base intent's `ComponentName` and data URI
@@ -1054,7 +1054,7 @@ impl Default for DocumentLaunchMode {
 /// [`navigate up`]: https://developer.android.com/guide/navigation
 /// [`FLAG_ACTIVITY_CLEAR_TOP`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_CLEAR_TOP
 /// [`Tasks and Back Stack`]: https://developer.android.com/guide/components/activities/tasks-and-back-stack
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum LaunchMode {
     /// Default. The system always creates a new instance of the activity in the target
@@ -1110,7 +1110,7 @@ impl Default for LaunchMode {
 /// The value can be any one of the following [`R.attr.lockTaskMode`] string values:
 ///
 /// [`R.attr.lockTaskMode`]: https://developer.android.com/reference/android/R.attr#lockTaskMode
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum LockTaskMode {
     /// `Default value`. This is the default value. Tasks don't launch into lock task mode
@@ -1160,7 +1160,7 @@ impl Default for LockTaskMode {
 
 /// Defines how an instance of an activity is preserved within a containing task
 /// across device restarts.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum PersistableMode {
     /// `Default value`. When the system restarts, the activity task is preserved, but
@@ -1220,7 +1220,7 @@ impl Default for PersistableMode {
 }
 
 /// The orientation of the activity's display on the device.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ScreenOrientation {
     /// `The default value`. The system chooses the orientation. The policy it uses, and
@@ -1320,7 +1320,7 @@ impl Default for ScreenOrientation {
 
 /// How the main window of the activity interacts with the window containing the on-screen
 /// soft keyboard.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum WindowSoftInputMode {
     /// The state of the soft keyboard (whether it is hidden or visible) is not

@@ -2,7 +2,7 @@ use super::ResourceType;
 use std::str::FromStr;
 
 /// String resource type.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct StringResource;
 
 impl FromStr for StringResource {
@@ -24,7 +24,7 @@ impl ResourceType for StringResource {
 }
 
 /// Drawable resource type.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct DrawableResource;
 
 impl FromStr for DrawableResource {
@@ -46,7 +46,7 @@ impl ResourceType for DrawableResource {
 }
 
 /// Mipmap resource type.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct MipmapResource;
 
 impl FromStr for MipmapResource {
@@ -68,7 +68,7 @@ impl ResourceType for MipmapResource {
 }
 
 /// Xml resource type.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct XmlResource;
 
 impl FromStr for XmlResource {
@@ -90,7 +90,7 @@ impl ResourceType for XmlResource {
 }
 
 /// Style resource type.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct StyleResource;
 
 impl FromStr for StyleResource {

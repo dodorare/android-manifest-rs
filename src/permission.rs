@@ -29,7 +29,9 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`]: crate::AndroidManifest
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Permission {
     /// A user-readable description of the permission, longer and more informative than
     /// the label. It may be displayed to explain the permission to the user — for
@@ -91,7 +93,7 @@ pub struct Permission {
 /// see [`protectionLevel`].
 ///
 /// [`protectionLevel`]: https://developer.android.com/reference/android/R.attr#protectionLevel
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum ProtectionLevel {
     /// The default value. A lower-risk permission that gives requesting applications

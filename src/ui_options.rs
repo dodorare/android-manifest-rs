@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Extra options for an activity's UI.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Clone)]
+#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum UiOptions {
     /// No extra UI options. This is the default
