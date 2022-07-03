@@ -59,7 +59,9 @@ use serde::{Deserialize, Serialize};
 /// [`<service>`]: crate::Service
 /// [`<receiver>`]: crate::Receiver
 /// [`<provider>`]: crate::Provider
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct MetaData {
     /// A unique name for the item. To ensure that the name is unique, use a Java-style
     /// naming convention — for example, `"com.example.project.activity.fred"`.

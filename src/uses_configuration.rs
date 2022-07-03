@@ -35,7 +35,9 @@ use serde::{Deserialize, Serialize};
 /// [`Enabling Focus Navigation`]: https://developer.android.com/guide/topics/ui/accessibility/apps#focus-nav
 /// [`<uses-feature>`]: crate::UsesFeature
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct UsesConfiguration {
     /// Whether or not the application requires a five-way navigation control — `"true"`
     /// if it does, and `"false"` if not. A five-way control is one that can move the

@@ -89,7 +89,9 @@ use serde::{Deserialize, Serialize};
 /// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
 /// [`Google Play and Feature-Based Filtering`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#market-feature-filtering
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct UsesFeature {
     /// Specifies a single hardware or software feature used by the application,
     /// as a descriptor string. Valid attribute values are listed in the

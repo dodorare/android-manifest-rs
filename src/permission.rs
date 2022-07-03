@@ -29,7 +29,9 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`]: crate::AndroidManifest
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Permission {
     /// A user-readable description of the permission, longer and more informative than
     /// the label. It may be displayed to explain the permission to the user — for

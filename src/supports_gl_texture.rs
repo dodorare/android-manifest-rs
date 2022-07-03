@@ -57,7 +57,9 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`Google Play and texture compression filtering`]: https://developer.android.com/guide/topics/manifest/supports-gl-texture-element#market-texture-filtering
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct SupportsGlTexture {
     /// Specifies a single GL texture compression format supported by the application, as
     /// a descriptor string. Common descriptor values are listed in the table below.

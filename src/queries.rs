@@ -79,7 +79,9 @@ pub struct Package {
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`intent filter signature`]: https://developer.android.com/training/basics/intents/filters
 /// [`declaring package visibility needs`]: https://developer.android.com/training/package-visibility/declaring#intent-filter-signature
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Intent {
     pub action: Action,
     pub data: Vec<Data>,
@@ -145,7 +147,9 @@ pub struct Intent {
 /// [`Content Providers`]: https://developer.android.com/guide/topics/providers/content-providers
 /// [`<queries>`]: crate::Queries
 /// [`Preparing your Gradle build for package visibility in Android 11`]: https://android-developers.googleblog.com/2020/07/preparing-your-build-for-package-visibility-in-android-11.html
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 #[serde(rename = "provider")]
 pub struct QueriesProvider {
     /// A list of one or more URI authorities that identify data offered by the content

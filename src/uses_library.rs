@@ -45,7 +45,9 @@ use serde::{Deserialize, Serialize};
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
 /// [`Google Play filters`]: https://developer.android.com/google/play/filters
 /// [`<application>`]: crate::Application
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct UsesLibrary {
     /// The name of the library. The name is provided by the documentation for the package
     /// you are using. An example of this is `"android.test.runner"`, a package that

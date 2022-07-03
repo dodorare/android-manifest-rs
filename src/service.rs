@@ -53,7 +53,9 @@ use serde::{Deserialize, Serialize};
 /// [`<application>`]: crate::Application
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<meta-data>`]: crate::MetaData
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Service {
     /// A string that describes the service to users. The label should be set as a
     /// reference to a string resource, so that it can be localized like other strings

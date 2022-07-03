@@ -81,7 +81,9 @@ use serde::{Deserialize, Serialize};
 /// [`<grant-uri-permission>`]: crate::GrantUriPermission
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<path-permission>`]: crate::PathPermission
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 #[serde(rename = "provider")]
 pub struct Provider {
     /// A list of one or more URI authorities that identify data offered by the content

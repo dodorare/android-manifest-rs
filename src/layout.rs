@@ -9,7 +9,9 @@ use serde::{Deserialize, Serialize};
 /// * [`<activity>`]
 ///
 /// [`<activity>`]: crate::Activity
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone)]
+#[derive(
+    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+)]
 pub struct Layout {
     /// Default width of the activity when launched in freeform mode.
     #[yaserde(attribute, prefix = "android", rename = "defaultWidth")]
