@@ -55,6 +55,7 @@ pub struct Queries {
     ///
     /// [`<provider>`]: crate::Provider
     /// [`content provider authorities`]: https://developer.android.com/guide/topics/providers/content-provider-basics#ContentURIs
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub provider: Vec<QueriesProvider>,
 }
 
@@ -84,6 +85,7 @@ pub struct Package {
 )]
 pub struct Intent {
     pub action: Action,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub data: Vec<Data>,
 }
 

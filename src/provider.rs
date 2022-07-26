@@ -313,13 +313,16 @@ pub struct Provider {
     /// [`readPermission`]: crate::Provider#structfield.write_permission
     #[yaserde(attribute, prefix = "android", rename = "writePermission")]
     pub write_permission: Option<String>,
-    #[yaserde(rename = "path-permission")]
-    pub path_permission: Vec<PathPermission>,
     #[yaserde(rename = "grant-uri-permission")]
     pub grant_uri_permission: Option<GrantUriPermission>,
+    #[yaserde(rename = "path-permission")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub path_permission: Vec<PathPermission>,
     #[yaserde(rename = "intent-filter")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
     #[yaserde(rename = "meta-data")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
 }
 

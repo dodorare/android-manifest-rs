@@ -139,9 +139,33 @@ pub struct IntentFilter {
     #[yaserde(attribute, prefix = "android")]
     pub order: Option<u32>,
     /// List of `<action>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub action: Vec<Action>,
     /// List of `<category>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub category: Vec<Category>,
     /// List of `<data>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub data: Vec<Data>,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_intent_filter_toml_serialize_deserialize() {
+        let value = IntentFilter {
+            order: Some(100),
+            action: vec![Action {
+                name: Some("android.intent.action.MAIN".to_string()),
+            }],
+            category: vec![Category {
+                name: Some("android.intent.category.LAUNCHER".to_string()),
+            }],
+            ..Default::default()
+        };
+        let string = toml::to_string_pretty(&value).unwrap();
+        let _value: IntentFilter = toml::from_str(&string).unwrap();
+    }
 }

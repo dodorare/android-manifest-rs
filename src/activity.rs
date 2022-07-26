@@ -801,16 +801,18 @@ pub struct Activity {
         rename = "windowSoftInputMode",
         skip_serializing_if = "check_window_soft_input_mode"
     )]
-    #[serde(skip_serializing_if = "AttributeList::is_empty")]
+    #[serde(default, skip_serializing_if = "AttributeList::is_empty")]
     pub window_soft_input_mode: AttributeList<VerticalBar, WindowSoftInputMode>,
+    /// A `<layout>` tag.
+    pub layout: Option<Layout>,
     /// List of `<intent-filter>` tags.
     #[yaserde(rename = "intent-filter")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
     /// List of `<meta-data>` tags.
     #[yaserde(rename = "meta-data")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
-    /// A `<layout>` tag.
-    pub layout: Option<Layout>,
 }
 
 impl Activity {

@@ -128,8 +128,10 @@ pub struct ActivityAlias {
     pub target_activity: Option<String>,
     /// List of `<intent-filter>` tags.
     #[yaserde(rename = "intent-filter")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
     /// List of `<meta-data>` tags.
     #[yaserde(rename = "meta-data")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
 }

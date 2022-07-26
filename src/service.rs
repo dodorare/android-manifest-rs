@@ -216,8 +216,10 @@ pub struct Service {
     #[yaserde(attribute, prefix = "android")]
     pub process: Option<String>,
     #[yaserde(rename = "intent-filter")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
     #[yaserde(rename = "meta-data")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
 }
 

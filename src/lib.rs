@@ -107,113 +107,67 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_manifest_deserialize_serialize() {
-        let given_xml = r#"<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.toggletest" android:versionCode="1" android:versionName="1.0">
-  <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
-    <activity android:label="@string/app_name" android:name="com.example.toggletest.MainActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-  </application>
-</manifest>"#;
-        let expected_manifest = AndroidManifest {
-            package: "com.example.toggletest".to_string(),
-            version_code: Some(1),
-            version_name: Some("1.0".to_string()),
-            application: Application {
-                allow_backup: Some(true),
-                icon: Some(MipmapOrDrawableResource::mipmap("ic_launcher", None)),
-                label: Some(StringResourceOrString::resource("app_name", None)),
-                theme: Some(StyleResource::new("AppTheme", None)),
-                activity: vec![Activity {
-                    label: Some(StringResourceOrString::resource("app_name", None)),
-                    name: "com.example.toggletest.MainActivity".to_string(),
-                    intent_filter: vec![IntentFilter {
-                        action: vec![Action {
-                            name: Some("android.intent.action.MAIN".to_string()),
-                        }],
-                        category: vec![Category {
-                            name: Some("android.intent.category.LAUNCHER".to_string()),
-                        }],
-                        ..Default::default()
-                    }],
-                    ..Default::default()
-                }],
-                ..Default::default()
-            },
-            ..Default::default()
-        };
-        let deserialized_manifest: AndroidManifest = from_str(given_xml).unwrap();
-        assert_eq!(expected_manifest, deserialized_manifest);
-        let serialized_manifest = to_string_pretty(&expected_manifest).unwrap();
-        assert_eq!(given_xml, serialized_manifest);
-    }
-
-    #[test]
     fn test_complex_manifest_deserialize() {
         let given_xml = r#"
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.domokit.gcm"
-          android:versionCode="4"
-          android:versionName="0.0.4">
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+              package="org.domokit.gcm"
+              android:versionCode="4"
+              android:versionName="0.0.4">
+        <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
+        <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+        <uses-permission android:name="android.permission.WAKE_LOCK" />
+        <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="org.domokit.gcm.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="org.domokit.gcm.permission.C2D_MESSAGE" />
+        <permission android:name="org.domokit.gcm.permission.C2D_MESSAGE"
+            android:protectionLevel="signature" />
+        <uses-permission android:name="org.domokit.gcm.permission.C2D_MESSAGE" />
 
-    <application android:label="gcm" android:name="org.domokit.sky.shell.SkyApplication">
-        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
-                  android:hardwareAccelerated="true"
-                  android:launchMode="singleTask"
-                  android:name="org.domokit.sky.shell.SkyActivity"
-                  android:theme="@android:style/Theme.Black.NoTitleBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <service
-            android:name="org.domokit.sky.shell.UpdateService"
-            android:exported="false"
-            android:process=":remote"/>
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="org.domokit.sky.shell" />
-            </intent-filter>
-        </receiver>
-        <service
-            android:name="org.domokit.gcm.GcmListenerService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="org.domokit.gcm.InstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
-            </intent-filter>
-        </service>
-        <service
-            android:name="org.domokit.gcm.RegistrationIntentService"
-            android:exported="false">
-        </service>
-    </application>
-</manifest>"#;
+        <application android:label="gcm" android:name="org.domokit.sky.shell.SkyApplication">
+            <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+                      android:hardwareAccelerated="true"
+                      android:launchMode="singleTask"
+                      android:name="org.domokit.sky.shell.SkyActivity"
+                      android:theme="@android:style/Theme.Black.NoTitleBar">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>
+            <service
+                android:name="org.domokit.sky.shell.UpdateService"
+                android:exported="false"
+                android:process=":remote"/>
+            <receiver
+                android:name="com.google.android.gms.gcm.GcmReceiver"
+                android:exported="true"
+                android:permission="com.google.android.c2dm.permission.SEND" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <category android:name="org.domokit.sky.shell" />
+                </intent-filter>
+            </receiver>
+            <service
+                android:name="org.domokit.gcm.GcmListenerService"
+                android:exported="false" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                </intent-filter>
+            </service>
+            <service
+                android:name="org.domokit.gcm.InstanceIDListenerService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.iid.InstanceID"/>
+                </intent-filter>
+            </service>
+            <service
+                android:name="org.domokit.gcm.RegistrationIntentService"
+                android:exported="false">
+            </service>
+        </application>
+    </manifest>"#;
         let expected_manifest = AndroidManifest {
             package: "org.domokit.gcm".to_string(),
             version_code: Some(4),
@@ -328,7 +282,11 @@ mod tests {
             ],
             ..Default::default()
         };
-        let deserialized_manifest: AndroidManifest = from_str(given_xml).unwrap();
-        assert_eq!(expected_manifest, deserialized_manifest);
+        let deserialized_xml_manifest: AndroidManifest = from_str(given_xml).unwrap();
+        assert_eq!(expected_manifest, deserialized_xml_manifest);
+        let serialized_toml_manifest = toml::to_string_pretty(&deserialized_xml_manifest).unwrap();
+        let deserialized_toml_manifest: AndroidManifest =
+            toml::from_str(&serialized_toml_manifest).unwrap();
+        assert_eq!(deserialized_xml_manifest, deserialized_toml_manifest);
     }
 }

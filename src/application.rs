@@ -682,28 +682,42 @@ pub struct Application {
     /// ART ahead-of-time (AOT) compiler.
     #[yaserde(attribute, prefix = "android", rename = "vmSafeMode")]
     pub vm_safe_mode: Option<bool>,
+    /// Optional `<profileable>` tag.
+    pub profileable: Option<Profileable>,
     /// List of `<activity>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub activity: Vec<Activity>,
     /// List of `<service>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub service: Vec<Service>,
     /// List of `<receiver>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub receiver: Vec<Receiver>,
     /// List of `<provider>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub provider: Vec<Provider>,
     /// List of `<activity-alias>` tags.
     #[yaserde(rename = "activity-alias")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub activity_alias: Vec<ActivityAlias>,
     /// List of `<meta-data>` tags.
     #[yaserde(rename = "meta-data")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
     /// List of `<uses-library>` tags.
     #[yaserde(rename = "uses-library")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_library: Vec<UsesLibrary>,
-    /// Optional `<profileable>` tag.
-    pub profileable: Option<Profileable>,
     /// List of `<uses-native-library>` tags.
     #[yaserde(rename = "uses-native-library")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_native_library: Vec<UsesNativeLibrary>,
+}
+
+impl Application {
+    pub fn is_default(&self) -> bool {
+        self == &Application::default()
+    }
 }
 
 /// GWP-ASan is a native memory allocator feature that helps find [`use-after-free`] and

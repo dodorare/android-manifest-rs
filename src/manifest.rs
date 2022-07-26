@@ -226,6 +226,7 @@ pub struct AndroidManifest {
     #[yaserde(attribute, prefix = "android", rename = "installLocation")]
     pub install_location: Option<InstallLocation>,
     /// Required `<application>` tag.
+    #[serde(default, skip_serializing_if = "Application::is_default")]
     pub application: Application,
     /// Optional `<uses-sdk>` tag.
     #[yaserde(rename = "uses-sdk")]
@@ -233,36 +234,45 @@ pub struct AndroidManifest {
     /// List of `<compatible-screens>` tags.
     #[yaserde(rename = "compatible-screens")]
     pub compatible_screens: Option<CompatibleScreens>,
-    /// List of `<instrumentation>` tags.
-    pub instrumentation: Vec<Instrumentation>,
-    /// List of `<permission>` tags.
-    pub permission: Vec<Permission>,
-    /// List of `<permission-group>` tags.
-    #[yaserde(rename = "permission-group")]
-    pub permission_group: Vec<PermissionGroup>,
-    /// List of `<permission-tree>` tags.
-    #[yaserde(rename = "permission-tree")]
-    pub permission_tree: Vec<PermissionTree>,
-    /// List of `<supports-gl-texture>` tags.
-    #[yaserde(rename = "supports-gl-texture")]
-    pub supports_gl_texture: Vec<SupportsGlTexture>,
-    /// List of `<supports-screens>` tags.
-    #[yaserde(rename = "supports-screens")]
-    pub supports_screens: Vec<SupportsScreens>,
     /// Optional `<uses-configuration>` tag.
     #[yaserde(rename = "uses-configuration")]
     pub uses_configuration: Option<UsesConfiguration>,
+    /// List of `<queries>` tags.
+    pub queries: Option<Queries>,
+    /// List of `<instrumentation>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub instrumentation: Vec<Instrumentation>,
+    /// List of `<permission>` tags.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub permission: Vec<Permission>,
+    /// List of `<permission-group>` tags.
+    #[yaserde(rename = "permission-group")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub permission_group: Vec<PermissionGroup>,
+    /// List of `<permission-tree>` tags.
+    #[yaserde(rename = "permission-tree")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub permission_tree: Vec<PermissionTree>,
+    /// List of `<supports-gl-texture>` tags.
+    #[yaserde(rename = "supports-gl-texture")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub supports_gl_texture: Vec<SupportsGlTexture>,
+    /// List of `<supports-screens>` tags.
+    #[yaserde(rename = "supports-screens")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub supports_screens: Vec<SupportsScreens>,
     /// List of `<uses-feature>` tags.
     #[yaserde(rename = "uses-feature")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_feature: Vec<UsesFeature>,
     /// List of `<uses-permission>` tags.
     #[yaserde(rename = "uses-permission")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_permission: Vec<UsesPermission>,
     /// List of `<uses-permission-sdk-23>` tags.
     #[yaserde(rename = "uses-permission-sdk-23")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
-    /// List of `<queries>` tags.
-    pub queries: Option<Queries>,
 }
 
 /// The default install location for the app.

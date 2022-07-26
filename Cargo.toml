@@ -16,3 +16,6 @@ xml-rs = "0.8.4"
 thiserror = "1.0"
 displaydoc = "0.2"
 log = "0.4"
+
+[dev-dependencies]
+toml = "0.5.9"
