@@ -254,7 +254,7 @@ pub struct Activity {
         rename = "configChanges",
         skip_serializing_if = "check_config_changes"
     )]
-    #[serde(skip_serializing_if = "AttributeList::is_empty")]
+    #[serde(default, skip_serializing_if = "AttributeList::is_empty")]
     pub config_changes: AttributeList<VerticalBar, ConfigChanges>,
     /// Whether or not the activity is direct-boot aware; that is, whether or  not it can
     /// run before the user unlocks the device.
