@@ -278,6 +278,7 @@ pub struct AndroidManifest {
 /// The default install location for the app.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum InstallLocation {
     /// The app may be installed on the external storage, but the system will install the
     /// app on the internal storage by default. If the internal storage is full, then
@@ -291,6 +292,7 @@ pub enum InstallLocation {
     /// is full, then the system will not install the app. This is also the default
     /// behavior if you do not define android:installLocation.
     #[yaserde(rename = "internalOnly")]
+    #[default]
     InternalOnly,
     /// The app prefers to be installed on the external storage (SD card). There is no
     /// guarantee that the system will honor this request. The app might be installed
@@ -301,8 +303,4 @@ pub enum InstallLocation {
     PreferExternal,
 }
 
-impl Default for InstallLocation {
-    fn default() -> Self {
-        InstallLocation::InternalOnly
-    }
-}
+

@@ -83,10 +83,12 @@ pub struct UsesConfiguration {
 /// The type of keyboard the application requires, if any at all.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ReqKeyboardType {
     /// The application does not require a keyboard. (A keyboard requirement is
     /// not defined.) This is the default value.
     #[yaserde(rename = "undefined")]
+    #[default]
     Undefined,
     /// The application does not require a keyboard.
     #[yaserde(rename = "nokeys")]
@@ -101,19 +103,17 @@ pub enum ReqKeyboardType {
     Twelvekey,
 }
 
-impl Default for ReqKeyboardType {
-    fn default() -> Self {
-        ReqKeyboardType::Undefined
-    }
-}
+
 
 /// The navigation device required by the application, if any.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ReqNavigation {
     /// The application does not require any type of navigation control. (The
     /// navigation requirement is not defined.) This is the default value.
     #[yaserde(rename = "undefined")]
+    #[default]
     Undefined,
     /// The application does not require a navigation control.
     #[yaserde(rename = "nonav")]
@@ -129,19 +129,17 @@ pub enum ReqNavigation {
     Wheel,
 }
 
-impl Default for ReqNavigation {
-    fn default() -> Self {
-        ReqNavigation::Undefined
-    }
-}
+
 
 /// The type of touch screen the application requires, if any at all.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ReqTouchScreen {
     /// The application doesn't require a touch screen. (The touch screen
     /// requirement is undefined.) This is the default value.
     #[yaserde(rename = "undefined")]
+    #[default]
     Undefined,
     /// The application doesn't require a touch screen.
     #[yaserde(rename = "notouch")]
@@ -163,8 +161,4 @@ pub enum ReqTouchScreen {
     Finger,
 }
 
-impl Default for ReqTouchScreen {
-    fn default() -> Self {
-        ReqTouchScreen::Undefined
-    }
-}
+

@@ -227,8 +227,10 @@ pub struct Service {
 
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ForegroundServiceType {
     #[yaserde(rename = "camera")]
+    #[default]
     Camera,
     #[yaserde(rename = "connectedDevice")]
     ConnectedDevice,
@@ -246,8 +248,4 @@ pub enum ForegroundServiceType {
     PhoneCall,
 }
 
-impl Default for ForegroundServiceType {
-    fn default() -> Self {
-        ForegroundServiceType::Camera
-    }
-}
+

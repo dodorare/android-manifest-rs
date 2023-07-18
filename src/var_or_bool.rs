@@ -113,7 +113,7 @@ impl<'de> Visitor<'de> for VarOrBoolVisitor {
         if v.is_empty() {
             return Err(E::custom("value of attribute is empty"));
         };
-        if v.starts_with("${") && v.ends_with("}") {
+        if v.starts_with("${") && v.ends_with('}') {
             Ok(VarOrBool::var(v))
         } else {
             Ok(VarOrBool::Bool(v.parse().map_err(|_| {
@@ -141,7 +141,7 @@ impl YaDeserialize for VarOrBool {
                     if text_content.is_empty() {
                         return Err("value of attribute is empty".to_string());
                     };
-                    if text_content.starts_with("${") && text_content.ends_with("}") {
+                    if text_content.starts_with("${") && text_content.ends_with('}') {
                         return Ok(VarOrBool::Var(text_content));
                     } else {
                         return Ok(VarOrBool::Bool(text_content.parse().map_err(|_| {

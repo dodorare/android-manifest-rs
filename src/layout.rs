@@ -71,10 +71,12 @@ pub struct Layout {
 /// larger container.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum Gravity {
     /// Raw bit controlling whether the right/bottom edge is clipped to its
     /// container, based on the gravity direction being applied.
     #[yaserde(rename = "axisClip")]
+    #[default]
     AxisClip,
     /// Raw bit controlling how the right/bottom edge is placed.
     #[yaserde(rename = "axisPullAfter")]
@@ -170,8 +172,4 @@ pub enum Gravity {
     VerticalGravityMask,
 }
 
-impl Default for Gravity {
-    fn default() -> Self {
-        Gravity::AxisClip
-    }
-}
+

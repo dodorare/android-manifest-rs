@@ -729,10 +729,12 @@ impl Application {
 /// [`heap-buffer-overflow`]: https://cwe.mitre.org/data/definitions/122.html
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum GwpAsanMode {
     /// Always disabled: This setting completely disables GWP-ASan in your app and is the
     /// default for non-system apps.
     #[yaserde(rename = "never")]
+    #[default]
     Never,
     /// Always enabled: This setting enables GWP-ASan in your app, which includes the
     /// following:
@@ -748,8 +750,4 @@ pub enum GwpAsanMode {
     Always,
 }
 
-impl Default for GwpAsanMode {
-    fn default() -> GwpAsanMode {
-        GwpAsanMode::Never
-    }
-}
+

@@ -834,10 +834,12 @@ impl Activity {
 /// devices.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ColorMode {
     /// Indicating that the activity should use a high dynamic range if the presentation
     /// display supports it.
     #[yaserde(rename = "hdr")]
+    #[default]
     Hdr,
     /// Indicating that the activity should use a wide color gamut if the presentation
     /// display supports it. To render wide color gamut content, your app must load a
@@ -847,20 +849,18 @@ pub enum ColorMode {
     WideColorGamut,
 }
 
-impl Default for ColorMode {
-    fn default() -> Self {
-        ColorMode::Hdr
-    }
-}
+
 
 /// Lists configuration changes that the `activity` will handle itself.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ConfigChanges {
     /// The display density has changed — the user might have specified a different
     /// display scale, or a different display might now be active. Added in API level
     /// 24.
     #[yaserde(rename = "density")]
+    #[default]
     Density,
     /// The font scaling factor has changed — the user has selected a new global font
     /// size.
@@ -932,16 +932,13 @@ pub enum ConfigChanges {
     UiMode,
 }
 
-impl Default for ConfigChanges {
-    fn default() -> Self {
-        ConfigChanges::Density
-    }
-}
+
 
 /// Four values which produce the following effects when the user opens a document with
 /// the application
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum DocumentLaunchMode {
     /// The system searches for a task whose base intent's `ComponentName` and data URI
     /// match those of the launching intent. If the system finds such a task, the
@@ -968,6 +965,7 @@ pub enum DocumentLaunchMode {
     ///
     /// [`FLAG_ACTIVITY_NEW_TASK`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_NEW_TASK
     #[yaserde(rename = "none")]
+    #[default]
     None,
     /// This activity is not launched into a new document even if the Intent contains
     /// [`FLAG_ACTIVITY_NEW_DOCUMENT`]. Setting this overrides the behavior of the
@@ -982,11 +980,7 @@ pub enum DocumentLaunchMode {
     Never,
 }
 
-impl Default for DocumentLaunchMode {
-    fn default() -> Self {
-        DocumentLaunchMode::None
-    }
-}
+
 
 /// An instruction on how the activity should be launched.
 ///
@@ -1060,6 +1054,7 @@ impl Default for DocumentLaunchMode {
 /// [`Tasks and Back Stack`]: https://developer.android.com/guide/components/activities/tasks-and-back-stack
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum LaunchMode {
     /// Default. The system always creates a new instance of the activity in the target
     /// task and routes the intent to it.
@@ -1068,6 +1063,7 @@ pub enum LaunchMode {
     ///
     /// Multiple Instances?: Yes
     #[yaserde(rename = "standard")]
+    #[default]
     Standard,
     /// If an instance of the activity already exists at the top of the target task, the
     /// system routes the intent to that instance through a call to
@@ -1104,11 +1100,7 @@ pub enum LaunchMode {
     SingleInstance,
 }
 
-impl Default for LaunchMode {
-    fn default() -> Self {
-        LaunchMode::Standard
-    }
-}
+
 
 /// This value indicates how tasks rooted at this activity will behave in lockTask mode.
 /// The value can be any one of the following [`R.attr.lockTaskMode`] string values:
@@ -1116,12 +1108,14 @@ impl Default for LaunchMode {
 /// [`R.attr.lockTaskMode`]: https://developer.android.com/reference/android/R.attr#lockTaskMode
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum LockTaskMode {
     /// `Default value`. This is the default value. Tasks don't launch into lock task mode
     /// but can be placed there by calling [`startLockTask()`].
     ///
     /// [`startLockTask()`]: https://developer.android.com/reference/android/app/Activity#startLockTask()
     #[yaserde(rename = "normal")]
+    #[default]
     Normal,
     /// Tasks don't launch into lockTask mode, and the device user can't pin these tasks
     /// from the overview screen.
@@ -1156,16 +1150,13 @@ pub enum LockTaskMode {
     Always,
 }
 
-impl Default for LockTaskMode {
-    fn default() -> Self {
-        LockTaskMode::Normal
-    }
-}
+
 
 /// Defines how an instance of an activity is preserved within a containing task
 /// across device restarts.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum PersistableMode {
     /// `Default value`. When the system restarts, the activity task is preserved, but
     /// only the root activity's launching intent is used.
@@ -1182,6 +1173,7 @@ pub enum PersistableMode {
     /// [`PersistableBundle`]: https://developer.android.com/reference/android/os/PersistableBundle
     /// [`onSaveInstanceState()`]: https://developer.android.com/reference/android/app/Activity#onSaveInstanceState(android.os.Bundle,%20android.os.PersistableBundle)
     #[yaserde(rename = "persistRootOnly")]
+    #[default]
     PersistRootOnly,
     /// This activity's state is preserved, along with the state of each activity higher
     /// up the [`back stack`] that has its own persistableMode attribute set to
@@ -1217,20 +1209,18 @@ pub enum PersistableMode {
     PersistNever,
 }
 
-impl Default for PersistableMode {
-    fn default() -> Self {
-        PersistableMode::PersistRootOnly
-    }
-}
+
 
 /// The orientation of the activity's display on the device.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ScreenOrientation {
     /// `The default value`. The system chooses the orientation. The policy it uses, and
     /// therefore the choices made in specific contexts, may differ from device to
     /// device.
     #[yaserde(rename = "unspecified")]
+    #[default]
     Unspecified,
     /// The same orientation as the activity that's immediately beneath it in the activity
     /// stack.
@@ -1316,22 +1306,20 @@ pub enum ScreenOrientation {
     Locked,
 }
 
-impl Default for ScreenOrientation {
-    fn default() -> Self {
-        ScreenOrientation::Unspecified
-    }
-}
+
 
 /// How the main window of the activity interacts with the window containing the on-screen
 /// soft keyboard.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum WindowSoftInputMode {
     /// The state of the soft keyboard (whether it is hidden or visible) is not
     /// specified. The system will choose an appropriate state or rely on the
     /// setting in the theme. This is the default setting for the behavior
     /// of the soft keyboard.
     #[yaserde(rename = "stateUnspecified")]
+    #[default]
     StateUnspecified,
     /// The soft keyboard is kept in whatever state it was last in, whether
     /// visible or hidden, when the activity comes to the fore.
@@ -1380,8 +1368,4 @@ pub enum WindowSoftInputMode {
     AdjustPan,
 }
 
-impl Default for WindowSoftInputMode {
-    fn default() -> Self {
-        WindowSoftInputMode::StateUnspecified
-    }
-}
+

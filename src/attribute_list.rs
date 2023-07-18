@@ -165,7 +165,7 @@ impl<'de, D: Delimiter, T: Serialize + DeserializeOwned> Visitor<'de> for ListVi
     where
         E: de::Error,
     {
-        parse_list_with_delimiter(v).map_err(|e| E::custom(&e))
+        parse_list_with_delimiter(v).map_err(|e| E::custom(e))
     }
 }
 

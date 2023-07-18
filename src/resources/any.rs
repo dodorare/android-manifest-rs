@@ -92,7 +92,7 @@ impl<'de> Visitor<'de> for AnyResourceVisitor {
     where
         E: de::Error,
     {
-        parse_any_resource(v).map_err(|e| E::custom(&e))
+        parse_any_resource(v).map_err(|e| E::custom(e))
     }
 }
 
