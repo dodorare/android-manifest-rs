@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::VarOrBool;
+
 /// Specifies a [`vendor-provided shared native library`] that the application must be
 /// linked against.
 ///
@@ -64,5 +66,5 @@ pub struct UsesNativeLibrary {
     ///
     /// The default is `"true"`.
     #[yaserde(attribute, prefix = "android")]
-    pub required: Option<bool>,
+    pub required: Option<VarOrBool>,
 }

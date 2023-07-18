@@ -1,3 +1,5 @@
+use crate::VarOrBool;
+
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
 use super::resources::{MipmapOrDrawableResource, Resource, StringResource};
@@ -67,7 +69,7 @@ pub struct ActivityAlias {
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     #[yaserde(attribute, prefix = "android")]
-    pub enabled: Option<bool>,
+    pub enabled: Option<VarOrBool>,
     /// Whether the broadcast receiver can receive messages from non-system sources
     /// outside its application — "`true`" if it can, and "`false`" if
     /// not. If "`false`", the target activity can be launched through the
@@ -82,7 +84,7 @@ pub struct ActivityAlias {
     /// presence of at least one filter implies that the alias is intended for
     /// external use — so the default value is "`true`".
     #[yaserde(attribute, prefix = "android")]
-    pub exported: Option<bool>,
+    pub exported: Option<VarOrBool>,
     /// An icon for the target activity when presented to users through the alias. See the
     /// [`<activity>`] element's [`icon`] attribute for more information.
     ///

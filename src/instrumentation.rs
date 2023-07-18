@@ -1,3 +1,5 @@
+use crate::VarOrBool;
+
 use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
 use serde::{Deserialize, Serialize};
 
@@ -33,14 +35,14 @@ pub struct Instrumentation {
     /// Whether or not the Instrumentation class should run as a functional test —
     /// `"true"` if it should, and `"false"` if not. The default value is `"false"`.
     #[yaserde(attribute, prefix = "android", rename = "functionalTest")]
-    pub functional_test: Option<bool>,
+    pub functional_test: Option<VarOrBool>,
     /// Whether or not the Instrumentation object will turn profiling on and off —
     /// `"true"` if it determines when profiling starts and stops, and `"false"` if
     /// profiling continues the entire time it is running. A value of `"true"` enables
     /// the object to target profiling at a specific set of operations. The default
     /// value is `"false"`.
     #[yaserde(attribute, prefix = "android", rename = "handleProfiling")]
-    pub handle_profiling: Option<bool>,
+    pub handle_profiling: Option<VarOrBool>,
     /// An icon that represents the Instrumentation class. This attribute must be set as a
     /// reference to a drawable resource.
     #[yaserde(attribute, prefix = "android")]

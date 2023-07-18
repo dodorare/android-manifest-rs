@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::VarOrBool;
+
 /// Indicates what hardware and software features the application requires.
 ///
 /// For example, an application might specify that it requires a physical keyboard or a
@@ -53,11 +55,11 @@ pub struct UsesConfiguration {
     ///
     /// [`reqNavigation`]: crate::UsesConfiguration#structfield.req_navigation
     #[yaserde(attribute, prefix = "android", rename = "reqFiveWayNav")]
-    pub req_five_way_nav: Option<bool>,
+    pub req_five_way_nav: Option<VarOrBool>,
     /// Whether or not the application requires a hardware keyboard — `"true"` if it does,
     /// and `"false"` if not.
     #[yaserde(attribute, prefix = "android", rename = "reqHardKeyboard")]
-    pub req_hard_keyboard: Option<bool>,
+    pub req_hard_keyboard: Option<VarOrBool>,
     /// The type of keyboard the application requires, if any at all. This attribute does
     /// not distinguish between hardware and software keyboards. If a hardware
     /// keyboard of a certain type is required, specify the type here and also set the

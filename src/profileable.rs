@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::VarOrBool;
+
 /// Specifies how profilers can access this application.
 ///
 /// ## XML Syntax
@@ -38,7 +40,7 @@ pub struct Profileable {
     /// [`simpleperf`]: https://developer.android.com/ndk/guides/simpleperf
     /// [`am profile commands`]: https://developer.android.com/studio/command-line/perfetto
     #[yaserde(attribute, prefix = "android")]
-    pub shell: bool,
+    pub shell: VarOrBool,
     /// Specifies whether the application can be profiled by system services or
     /// shell tools (for the latter, you must also set [`android:shell`]). If
     /// false, the application cannot be profiled at all. Defaults to true. This
@@ -46,5 +48,5 @@ pub struct Profileable {
     ///
     /// [`android:shell`]: https://developer.android.com/guide/topics/manifest/profileable-element#shell
     #[yaserde(attribute, prefix = "android")]
-    pub enable: bool,
+    pub enable: VarOrBool,
 }

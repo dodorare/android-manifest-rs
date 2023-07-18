@@ -1,3 +1,5 @@
+use crate::VarOrBool;
+
 use super::attribute_list::{AttributeList, VerticalBar};
 use super::intent_filter::IntentFilter;
 use super::layout::Layout;
@@ -105,7 +107,7 @@ pub struct Activity {
     /// activity in it's context stream, which resides in another process. The default
     /// value of this attribute is "`false`".
     #[yaserde(attribute, prefix = "android", rename = "allowEmbedded")]
-    pub allow_embedded: Option<bool>,
+    pub allow_embedded: Option<VarOrBool>,
     /// Whether or not the activity can move from the task that started it to the task it
     /// has an affinity for when that task is next brought to the front — "`true`" if
     /// it can move, and "`false`" if it must remain with the task where it started.
@@ -139,7 +141,7 @@ pub struct Activity {
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinity
     /// [`launchMode`]: crate::Activity#structfield.launch_mode
     #[yaserde(attribute, prefix = "android", rename = "allowTaskReparenting")]
-    pub allow_task_reparenting: Option<bool>,
+    pub allow_task_reparenting: Option<VarOrBool>,
     /// Whether or not the state of the task that the activity is in will always be
     /// maintained by the system — "`true`" if it will be, and "`false`" if the system
     /// is allowed to reset the task to its initial state in certain situations. The
@@ -156,7 +158,7 @@ pub struct Activity {
     /// an application like the web browser where there is a lot of state (such as
     /// multiple open tabs) that users would not like to lose.
     #[yaserde(attribute, prefix = "android", rename = "alwaysRetainTaskState")]
-    pub always_retain_task_state: Option<bool>,
+    pub always_retain_task_state: Option<VarOrBool>,
     /// Whether or not tasks launched by activities with this attribute remains in the
     /// [`overview screen`] until the last activity in the task is completed. If true, the
     /// task is automatically removed from the `overview screen.` This overrides the
@@ -166,7 +168,7 @@ pub struct Activity {
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
     /// [`FLAG_ACTIVITY_RETAIN_IN_RECENTS`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_RETAIN_IN_RECENTS
     #[yaserde(attribute, prefix = "android", rename = "autoRemoveFromRecents")]
-    pub auto_remove_from_recents: Option<bool>,
+    pub auto_remove_from_recents: Option<VarOrBool>,
     /// A [`drawable resource`] providing an extended graphical banner for its associated
     /// item. Use with the `<activity>` tag to supply a default banner for a specific
     /// activity, or with the [`<application>`] tag to supply a banner for all
@@ -220,7 +222,7 @@ pub struct Activity {
     /// [`allowTaskReparenting`]: crate::Activity#structfield.allow_task_reparenting
     /// [`FLAG_ACTIVITY_RESET_TASK_IF_NEEDED`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
     #[yaserde(attribute, prefix = "android", rename = "clearTaskOnLaunch")]
-    pub clear_task_on_launch: Option<bool>,
+    pub clear_task_on_launch: Option<VarOrBool>,
     /// Requests the activity to be displayed in wide color gamut mode on compatible
     /// devices. In wide color gamut mode, a window can render outside of the [`SRGB`]
     /// gamut to display more vibrant colors. If the device doesn't support wide color
@@ -267,7 +269,7 @@ pub struct Activity {
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
-    pub direct_boot_aware: Option<bool>,
+    pub direct_boot_aware: Option<VarOrBool>,
     /// Specifies how a new instance of an activity should be added to a task
     /// each time it is launched. This attribute permits the user to have
     /// multiple documents from the same application appear in the [`overview
@@ -295,7 +297,7 @@ pub struct Activity {
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     #[yaserde(attribute, prefix = "android")]
-    pub enabled: Option<bool>,
+    pub enabled: Option<VarOrBool>,
     /// Whether or not the task initiated by this activity should be excluded
     /// from the list of recently used applications, the [`overview screen`].
     /// That is, when this activity is the root activity of a new task, this
@@ -307,7 +309,7 @@ pub struct Activity {
     ///
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
     #[yaserde(attribute, prefix = "android", rename = "excludeFromRecents")]
-    pub exclude_from_recents: Option<bool>,
+    pub exclude_from_recents: Option<VarOrBool>,
     /// This element sets whether the activity can be launched by components of other
     /// applications — "`true`" if it can be, and "`false`" if not. If "`false`", the
     /// activity can be launched only by components of the same application or
@@ -330,7 +332,7 @@ pub struct Activity {
     /// [`ActivityNotFoundException`]: https://developer.android.com/reference/android/content/ActivityNotFoundException
     /// [`permission`]: crate::Activity#structfield.permission
     #[yaserde(attribute, prefix = "android")]
-    pub exported: Option<bool>,
+    pub exported: Option<VarOrBool>,
     /// Whether or not an existing instance of the activity should be shut down (finished)
     /// whenever the user again launches its task (chooses the task on the home
     /// screen) — "`true`" if it should be shut down, and "`false`" if not.
@@ -343,7 +345,7 @@ pub struct Activity {
     ///
     /// [`allowTaskReparenting`]: https://developer.android.com/guide/topics/manifest/activity-element#reparent
     #[yaserde(attribute, prefix = "android", rename = "finishOnTaskLaunch")]
-    pub finish_on_task_launch: Option<bool>,
+    pub finish_on_task_launch: Option<VarOrBool>,
     /// Whether or not hardware-accelerated rendering should be enabled for this Activity
     /// — "`true`" if it should be enabled, and "`false`" if not.
     ///
@@ -362,7 +364,7 @@ pub struct Activity {
     /// hardware-accelerated renderer, test your application to ensure that it can
     /// make use of the renderer without errors.
     #[yaserde(attribute, prefix = "android", rename = "hardwareAccelerated")]
-    pub hardware_accelerated: Option<bool>,
+    pub hardware_accelerated: Option<VarOrBool>,
     /// An icon representing the activity. The icon is displayed to users when a
     /// representation of the activity is required on-screen. For example,
     /// icons for activities that initiate tasks are displayed in the launcher
@@ -394,7 +396,7 @@ pub struct Activity {
     /// [`FLAG_IMMERSIVE`]: https://developer.android.com/reference/android/content/pm/ActivityInfo#FLAG_IMMERSIVE
     /// [`setImmersive()`]: https://developer.android.com/reference/android/app/Activity#setImmersive(boolean)
     #[yaserde(attribute, prefix = "android")]
-    pub immersive: Option<bool>,
+    pub immersive: Option<VarOrBool>,
     /// A user-readable label for the activity. The label is displayed on-screen when the
     /// activity must be represented to the user. It's often displayed along with the
     /// activity icon. If this attribute is not set, the label set for the application
@@ -484,7 +486,7 @@ pub struct Activity {
     /// wherever they are used (provided permissions allow it), something that is
     /// almost never necessary or desirable.
     #[yaserde(attribute, prefix = "android")]
-    pub multiprocess: Option<bool>,
+    pub multiprocess: Option<VarOrBool>,
     /// The name of the class that implements the activity, a subclass of [`Activity`].
     /// The attribute value should be a fully qualified class name (such as, "`com.
     /// example.project.ExtracurricularActivity`"). However, as a shorthand, if the
@@ -521,7 +523,7 @@ pub struct Activity {
     /// [`finish()`]: https://developer.android.com/reference/android/app/Activity#finish()
     /// [`onActivityResult()`]: https://developer.android.com/reference/android/app/Activity#onActivityResult(int,%20int,%20android.content.Intent)
     #[yaserde(attribute, prefix = "android", rename = "noHistory")]
-    pub no_history: Option<bool>,
+    pub no_history: Option<VarOrBool>,
     /// The class name of the logical parent of the activity. The name here must match the
     /// class name given to the corresponding `<activity>` element's [`android:name`]
     /// attribute.
@@ -627,7 +629,7 @@ pub struct Activity {
     /// [`ActivityManager.TaskDescription`]: https://developer.android.com/reference/android/app/ActivityManager.TaskDescription
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
     #[yaserde(attribute, prefix = "android", rename = "relinquishTaskIdentity")]
-    pub relinquish_task_identity: Option<bool>,
+    pub relinquish_task_identity: Option<VarOrBool>,
     /// Specifies whether the app supports [`multi-window display`]. You can set
     /// this attribute in either the `<activity>` or [`<application>`] element.
     ///
@@ -651,7 +653,7 @@ pub struct Activity {
     /// [`multi-window display`]: https://developer.android.com/guide/topics/ui/multi-window
     /// [`<application>`]: crate::Application
     #[yaserde(attribute, prefix = "android", rename = "resizeableActivity")]
-    pub resizeable_activity: Option<bool>,
+    pub resizeable_activity: Option<VarOrBool>,
     /// The orientation of the activity's display on the device. The system ignores this
     /// attribute if the activity is running in [`multi-window mode`].
     ///
@@ -686,7 +688,7 @@ pub struct Activity {
     ///
     /// This attribute was added in API level 23.
     #[yaserde(attribute, prefix = "android", rename = "showForAllUsers")]
-    pub show_for_all_users: Option<bool>,
+    pub show_for_all_users: Option<VarOrBool>,
     /// Whether or not the activity can be killed and successfully restarted without
     /// having saved its state — "`true`" if it can be restarted without reference to
     /// its previous state, and "`false`" if its previous state is required. The
@@ -709,14 +711,14 @@ pub struct Activity {
     /// [`Bundle`]: https://developer.android.com/reference/android/os/Bundle
     /// [`onCreate()`]: https://developer.android.com/reference/android/app/Activity#onCreate(android.os.Bundle)
     #[yaserde(attribute, prefix = "android", rename = "stateNotNeeded")]
-    pub state_not_needed: Option<bool>,
+    pub state_not_needed: Option<VarOrBool>,
     /// Specifies whether the activity supports [`Picture-in-Picture`] display.
     ///
     /// This attribute was added in API level 24.
     ///
     /// [`Picture-in-Picture`]: https://developer.android.com/guide/topics/ui/picture-in-picture
     #[yaserde(attribute, prefix = "android", rename = "supportsPictureInPicture")]
-    pub supports_picture_in_picture: Option<bool>,
+    pub supports_picture_in_picture: Option<VarOrBool>,
     /// The task that the activity has an affinity for. Activities with the same affinity
     /// conceptually belong to the same task (to the same `"application"` from the
     /// user's perspective). The affinity of a task is determined by the affinity of

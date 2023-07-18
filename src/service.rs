@@ -1,3 +1,5 @@
+use crate::VarOrBool;
+
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
 use super::resources::{
@@ -73,7 +75,7 @@ pub struct Service {
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
-    pub direct_boot_aware: Option<bool>,
+    pub direct_boot_aware: Option<VarOrBool>,
     /// Whether or not the service can be instantiated by the system — `"true"` if it can
     /// be, and `"false"` if not. The default value is `"true"`.
     ///
@@ -86,7 +88,7 @@ pub struct Service {
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     #[yaserde(attribute, prefix = "android")]
-    pub enabled: Option<bool>,
+    pub enabled: Option<VarOrBool>,
     /// Whether or not components of other applications can invoke the service or interact
     /// with it — `"true"` if they can, and `"false"` if not. When the value is
     /// `"false"`, only components of the same application or applications with the
@@ -107,7 +109,7 @@ pub struct Service {
     ///
     /// [`permission`]: crate::Service#structfield.enabled
     #[yaserde(attribute, prefix = "android")]
-    pub exported: Option<bool>,
+    pub exported: Option<VarOrBool>,
     /// Specify that the service is a [`foreground service`] that satisfies a particular
     /// use case. For example, a foreground service type of `"location"` indicates
     /// that an app is getting the device's current location, usually to [`continue a
@@ -139,7 +141,7 @@ pub struct Service {
     /// The only communication with it is through the Service API (binding and
     /// starting).
     #[yaserde(attribute, prefix = "android", rename = "isolatedProcess")]
-    pub isolated_process: Option<bool>,
+    pub isolated_process: Option<VarOrBool>,
     /// A name for the service that can be displayed to users. If this attribute is not
     /// set, the label set for the application as a whole is used instead
     /// (see the [`<application>`] element's
