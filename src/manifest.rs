@@ -302,5 +302,3 @@ pub enum InstallLocation {
     #[yaserde(rename = "preferExternal")]
     PreferExternal,
 }
-
-

@@ -21,5 +21,3 @@ pub enum UiOptions {
     #[yaserde(rename = "splitActionBarWhenNarrow")]
     SplitActionBarWhenNarrow,
 }
-
-

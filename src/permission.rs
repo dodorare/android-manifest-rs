@@ -135,5 +135,3 @@ pub enum ProtectionLevel {
     #[yaserde(rename = "signatureOrSystem")]
     SignatureOrSystem,
 }
-
-

@@ -120,5 +120,3 @@ pub enum SupportsGlTextureName {
     /// others.
     GL_IMG_texture_compression_pvrtc,
 }
-
-

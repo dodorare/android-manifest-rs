@@ -749,5 +749,3 @@ pub enum GwpAsanMode {
     #[yaserde(rename = "always")]
     Always,
 }
-
-

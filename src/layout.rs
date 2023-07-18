@@ -171,5 +171,3 @@ pub enum Gravity {
     #[yaserde(rename = "verticalGravityMask")]
     VerticalGravityMask,
 }
-
-

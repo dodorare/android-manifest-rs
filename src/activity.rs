@@ -849,8 +849,6 @@ pub enum ColorMode {
     WideColorGamut,
 }
 
-
-
 /// Lists configuration changes that the `activity` will handle itself.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -932,8 +930,6 @@ pub enum ConfigChanges {
     UiMode,
 }
 
-
-
 /// Four values which produce the following effects when the user opens a document with
 /// the application
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
@@ -979,8 +975,6 @@ pub enum DocumentLaunchMode {
     #[yaserde(rename = "never")]
     Never,
 }
-
-
 
 /// An instruction on how the activity should be launched.
 ///
@@ -1100,8 +1094,6 @@ pub enum LaunchMode {
     SingleInstance,
 }
 
-
-
 /// This value indicates how tasks rooted at this activity will behave in lockTask mode.
 /// The value can be any one of the following [`R.attr.lockTaskMode`] string values:
 ///
@@ -1149,8 +1141,6 @@ pub enum LockTaskMode {
     #[yaserde(rename = "always")]
     Always,
 }
-
-
 
 /// Defines how an instance of an activity is preserved within a containing task
 /// across device restarts.
@@ -1208,8 +1198,6 @@ pub enum PersistableMode {
     #[yaserde(rename = "persistNever")]
     PersistNever,
 }
-
-
 
 /// The orientation of the activity's display on the device.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
@@ -1306,8 +1294,6 @@ pub enum ScreenOrientation {
     Locked,
 }
 
-
-
 /// How the main window of the activity interacts with the window containing the on-screen
 /// soft keyboard.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
@@ -1367,5 +1353,3 @@ pub enum WindowSoftInputMode {
     #[yaserde(rename = "adjustPan")]
     AdjustPan,
 }
-
-

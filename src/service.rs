@@ -247,5 +247,3 @@ pub enum ForegroundServiceType {
     #[yaserde(rename = "phoneCall")]
     PhoneCall,
 }
-
-

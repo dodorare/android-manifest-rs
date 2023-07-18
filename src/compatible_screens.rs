@@ -170,5 +170,3 @@ pub enum ScreenSize {
     #[yaserde(rename = "xlarge")]
     Xlarge,
 }
-
-

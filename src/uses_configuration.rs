@@ -103,8 +103,6 @@ pub enum ReqKeyboardType {
     Twelvekey,
 }
 
-
-
 /// The navigation device required by the application, if any.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -128,8 +126,6 @@ pub enum ReqNavigation {
     #[yaserde(rename = "wheel")]
     Wheel,
 }
-
-
 
 /// The type of touch screen the application requires, if any at all.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
@@ -160,5 +156,3 @@ pub enum ReqTouchScreen {
     #[yaserde(rename = "finger")]
     Finger,
 }
-
-
