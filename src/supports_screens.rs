@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::VarOrBool;
+
 /// Lets you specify the screen sizes your application supports and enable screen
 /// compatibility mode for screens larger than what your application supports.
 ///
@@ -96,7 +98,7 @@ pub struct SupportsScreens {
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[yaserde(attribute, prefix = "android")]
-    pub resizeable: Option<bool>,
+    pub resizeable: Option<VarOrBool>,
     /// Indicates whether the application supports smaller screen form-factors. A small
     /// screen is defined as one with a smaller aspect ratio than the `"normal"`
     /// (traditional HVGA) screen. An application that does not support small screens
@@ -104,13 +106,13 @@ pub struct SupportsScreens {
     /// Google Play), because there is little the platform can do to make such an
     /// application work on a smaller screen. This is `"true"` by default.
     #[yaserde(attribute, prefix = "android", rename = "smallScreens")]
-    pub small_screens: Option<bool>,
+    pub small_screens: Option<VarOrBool>,
     /// Indicates whether an application supports the "normal" screen form-factors.
     /// Traditionally this is an HVGA medium density screen, but WQVGA low density and
     /// WVGA high density are also considered to be normal. This attribute is "true"
     /// by default.
     #[yaserde(attribute, prefix = "android", rename = "normalScreens")]
-    pub normal_screens: Option<bool>,
+    pub normal_screens: Option<VarOrBool>,
     /// Indicates whether the application supports larger screen form-factors. A large
     /// screen is defined as a screen that is significantly larger than a "normal"
     /// handset screen, and thus might require some special care on the application's
@@ -122,7 +124,7 @@ pub struct SupportsScreens {
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[yaserde(attribute, prefix = "android", rename = "largeScreens")]
-    pub large_screens: Option<bool>,
+    pub large_screens: Option<VarOrBool>,
     /// Indicates whether the application supports extra large screen form-factors. An
     /// xlarge screen is defined as a screen that is significantly larger than a
     /// "large" screen, such as a tablet (or something larger) and may require special
@@ -137,7 +139,7 @@ pub struct SupportsScreens {
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     #[yaserde(attribute, prefix = "android", rename = "xlargeScreens")]
-    pub xlarge_screens: Option<bool>,
+    pub xlarge_screens: Option<VarOrBool>,
     /// Indicates whether the application includes resources to accommodate any screen
     /// density.
     ///
@@ -150,7 +152,7 @@ pub struct SupportsScreens {
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
     #[yaserde(attribute, prefix = "android", rename = "anyDensity")]
-    pub any_density: Option<bool>,
+    pub any_density: Option<VarOrBool>,
     /// Specifies the minimum smallestWidth required. The smallestWidth is the shortest
     /// dimension of the screen space (in dp units) that must be available to your
     /// application UI—that is, the shortest of the available screen's two dimensions.

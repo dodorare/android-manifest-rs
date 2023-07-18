@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::VarOrBool;
+
 /// Declares a single hardware or software feature that is used by the
 /// application.
 ///
@@ -116,7 +118,7 @@ pub struct UsesFeature {
     ///
     /// The default value for android:required if not declared is `"true"`.
     #[yaserde(attribute, prefix = "android")]
-    pub required: Option<bool>,
+    pub required: Option<VarOrBool>,
     /// The OpenGL ES version required by the application. The higher 16 bits represent
     /// the major number and the lower 16 bits represent the minor number. For
     /// example, to specify OpenGL ES version 2.0, you would set the value as

@@ -95,6 +95,7 @@ pub struct Permission {
 /// [`protectionLevel`]: https://developer.android.com/reference/android/R.attr#protectionLevel
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ProtectionLevel {
     /// The default value. A lower-risk permission that gives requesting applications
     /// access to isolated application-level features, with minimal risk to other
@@ -103,6 +104,7 @@ pub enum ProtectionLevel {
     /// for the user's explicit approval (though the user always has the option to
     /// review these permissions before installing).
     #[yaserde(rename = "normal")]
+    #[default]
     Normal,
     /// A higher-risk permission that would give a requesting application access to
     /// private user data or control over the device that can negatively impact the
@@ -134,8 +136,4 @@ pub enum ProtectionLevel {
     SignatureOrSystem,
 }
 
-impl Default for ProtectionLevel {
-    fn default() -> Self {
-        ProtectionLevel::Normal
-    }
-}
+

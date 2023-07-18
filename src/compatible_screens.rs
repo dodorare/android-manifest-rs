@@ -145,6 +145,7 @@ pub struct Screen {
 /// to different screens.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum ScreenSize {
     /// Screens that are of similar size to a low-density QVGA screen. The minimum layout
     /// size for a small screen is approximately 320x426 dp units. Examples are QVGA
@@ -155,6 +156,7 @@ pub enum ScreenSize {
     /// layout size for a normal screen is approximately 320x470 dp units. Examples of
     /// such screens a WQVGA low-density, HVGA medium-density, WVGA high-density.
     #[yaserde(rename = "normal")]
+    #[default]
     Normal,
     /// Screens that are of similar size to a medium-density VGA screen. The minimum
     /// layout size for a large screen is approximately 480x640 dp units. Examples are VGA
@@ -169,8 +171,4 @@ pub enum ScreenSize {
     Xlarge,
 }
 
-impl Default for ScreenSize {
-    fn default() -> Self {
-        ScreenSize::Normal
-    }
-}
+

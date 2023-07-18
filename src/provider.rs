@@ -1,3 +1,5 @@
+use crate::VarOrBool;
+
 use super::attribute_list::{AttributeList, Semicolon};
 use super::grant_uri_permission::GrantUriPermission;
 use super::intent_filter::IntentFilter;
@@ -114,7 +116,7 @@ pub struct Provider {
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     #[yaserde(attribute, prefix = "android")]
-    pub enabled: Option<bool>,
+    pub enabled: Option<VarOrBool>,
     /// Whether or not the service is direct-boot aware; that is, whether or not it can
     /// run before the user unlocks the device.
     ///
@@ -126,7 +128,7 @@ pub struct Provider {
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
-    pub direct_boot_aware: Option<bool>,
+    pub direct_boot_aware: Option<VarOrBool>,
     /// Whether the content provider is available for other applications to use:
     ///
     /// * `true:` The provider is available to other applications. Any application can use
@@ -151,7 +153,7 @@ pub struct Provider {
     /// [`android:targetSdkVersion`]: crate::UsesSdk#structfield.target_sdk_version
     /// [`permission`]: crate::Provider#structfield.permission
     #[yaserde(attribute, prefix = "android")]
-    pub exported: Option<bool>,
+    pub exported: Option<VarOrBool>,
     /// Whether or not those who ordinarily would not have permission to access the
     /// content provider's data can be granted permission to do so, temporarily
     /// overcoming the restriction imposed by the [`readPermission`], [`writePermission`],
@@ -189,7 +191,7 @@ pub struct Provider {
     /// [`FLAG_GRANT_WRITE_URI_PERMISSION`]: https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_WRITE_URI_PERMISSION
     /// [`<grant-uri-permission>`]: crate::GrantUriPermission
     #[yaserde(attribute, prefix = "android", rename = "grantUriPermissions")]
-    pub grant_uri_permissions: Option<bool>,
+    pub grant_uri_permissions: Option<VarOrBool>,
     /// An icon representing the content provider. This attribute must be set as a
     /// reference to a drawable resource containing the image definition. If it is not
     /// set, the icon specified for the application as a whole is used instead (see
@@ -228,7 +230,7 @@ pub struct Provider {
     /// interprocess communication, but it also increases the memory footprint of each
     /// process.
     #[yaserde(attribute, prefix = "android")]
-    pub multiprocess: Option<bool>,
+    pub multiprocess: Option<VarOrBool>,
     /// The name of the class that implements the content provider, a subclass of
     /// [`ContentProvider`]. This should be a fully qualified class name (such
     /// as, `"com.example.project.TransportationProvider"`). However, as a
@@ -297,7 +299,7 @@ pub struct Provider {
     /// with data on a server — `"true"` if it is to be synchronized, and `"false"` if
     /// not.
     #[yaserde(attribute, prefix = "android")]
-    pub syncable: Option<bool>,
+    pub syncable: Option<VarOrBool>,
     /// A permission that clients must have to make changes to the data controlled by the
     /// content provider.
     ///

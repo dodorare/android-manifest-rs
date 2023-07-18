@@ -90,9 +90,11 @@ pub struct SupportsGlTexture {
 
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[allow(non_camel_case_types)]
+#[derive(Default)]
 pub enum SupportsGlTextureName {
     /// Ericsson texture compression. Specified in OpenGL ES 2.0 and available in all
     /// Android-powered devices that support OpenGL ES 2.0.
+    #[default]
     GL_OES_compressed_ETC1_RGB8_texture,
     /// Generic paletted texture compression.
     GL_OES_compressed_paletted_texture,
@@ -119,8 +121,4 @@ pub enum SupportsGlTextureName {
     GL_IMG_texture_compression_pvrtc,
 }
 
-impl Default for SupportsGlTextureName {
-    fn default() -> Self {
-        SupportsGlTextureName::GL_OES_compressed_ETC1_RGB8_texture
-    }
-}
+

@@ -1,3 +1,5 @@
+use crate::VarOrBool;
+
 use super::intent_filter::IntentFilter;
 use super::meta_data::MetaData;
 use super::resources::{MipmapOrDrawableResource, StringResourceOrString};
@@ -66,7 +68,7 @@ pub struct Receiver {
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
     #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
-    pub direct_boot_aware: Option<bool>,
+    pub direct_boot_aware: Option<VarOrBool>,
     /// Whether or not the broadcast receiver can be instantiated by the system — `"true"`
     /// if it can be, and `"false"` if not. The default value is `"true"`.
     ///
@@ -79,7 +81,7 @@ pub struct Receiver {
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
     #[yaserde(attribute, prefix = "android")]
-    pub enabled: Option<bool>,
+    pub enabled: Option<VarOrBool>,
     /// Whether the broadcast receiver can receive messages from non-system sources
     /// outside its application — `"true"` if it can, and `"false"` if
     /// not. If `"false"`, the only messages the broadcast receiver can
@@ -97,7 +99,7 @@ pub struct Receiver {
     ///
     /// [`permission`]: crate::Receiver#structfield.permission
     #[yaserde(attribute, prefix = "android")]
-    pub exported: Option<bool>,
+    pub exported: Option<VarOrBool>,
     /// An icon representing the service. This attribute must be set as a reference to a
     /// drawable resource containing the image definition. If it is not set, the icon
     /// specified for the application as a whole is used instead (see the

@@ -3,9 +3,11 @@ use serde::{Deserialize, Serialize};
 /// Extra options for an activity's UI.
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub enum UiOptions {
     /// No extra UI options. This is the default
     #[yaserde(rename = "none")]
+    #[default]
     None,
     /// Add a bar at the bottom of the screen to display action items in the app
     /// bar (also known as the action bar), when constrained for horizontal
@@ -20,8 +22,4 @@ pub enum UiOptions {
     SplitActionBarWhenNarrow,
 }
 
-impl Default for UiOptions {
-    fn default() -> UiOptions {
-        UiOptions::None
-    }
-}
+

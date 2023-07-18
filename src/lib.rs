@@ -36,6 +36,7 @@ mod uses_native_library;
 mod uses_permission;
 mod uses_permission_sdk_23;
 mod uses_sdk;
+mod var_or_bool;
 
 pub use action::*;
 pub use activity::*;
@@ -72,6 +73,7 @@ pub use uses_native_library::UsesNativeLibrary;
 pub use uses_permission::*;
 pub use uses_permission_sdk_23::*;
 pub use uses_sdk::*;
+pub use var_or_bool::*;
 
 /// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a
 /// string of XML text.
@@ -108,8 +110,7 @@ mod tests {
 
     #[test]
     fn test_complex_manifest_deserialize() {
-        let given_xml = r#"
-    <?xml version="1.0" encoding="utf-8"?>
+        let given_xml = r#"<?xml version="1.0" encoding="utf-8"?>
     <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="org.domokit.gcm"
               android:versionCode="4"
@@ -124,7 +125,7 @@ mod tests {
             android:protectionLevel="signature" />
         <uses-permission android:name="org.domokit.gcm.permission.C2D_MESSAGE" />
 
-        <application android:label="gcm" android:name="org.domokit.sky.shell.SkyApplication">
+        <application android:label="gcm" android:name="org.domokit.sky.shell.SkyApplication" android:usesCleartextTraffic="${usesCleartextTraffic}">
             <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
                       android:hardwareAccelerated="true"
                       android:launchMode="singleTask"
@@ -175,6 +176,7 @@ mod tests {
             application: Application {
                 label: Some(StringResourceOrString::string("gcm")),
                 name: Some("org.domokit.sky.shell.SkyApplication".to_string()),
+                uses_cleartext_traffic: Some("${usesCleartextTraffic}".into()),
                 activity: vec![Activity {
                     config_changes: AttributeList::from_vec(vec![
                         ConfigChanges::Orientation,
@@ -182,7 +184,7 @@ mod tests {
                         ConfigChanges::Keyboard,
                         ConfigChanges::ScreenSize,
                     ]),
-                    hardware_accelerated: Some(true),
+                    hardware_accelerated: Some(true.into()),
                     launch_mode: Some(LaunchMode::SingleTask),
                     name: "org.domokit.sky.shell.SkyActivity".to_string(),
                     theme: Some(StyleResource::new(
@@ -202,13 +204,13 @@ mod tests {
                 }],
                 service: vec![
                     Service {
-                        exported: Some(false),
+                        exported: Some(false.into()),
                         name: "org.domokit.sky.shell.UpdateService".to_string(),
                         process: Some(":remote".to_string()),
                         ..Default::default()
                     },
                     Service {
-                        exported: Some(false),
+                        exported: Some(false.into()),
                         name: "org.domokit.gcm.GcmListenerService".to_string(),
                         intent_filter: vec![IntentFilter {
                             action: vec![Action {
@@ -219,7 +221,7 @@ mod tests {
                         ..Default::default()
                     },
                     Service {
-                        exported: Some(false),
+                        exported: Some(false.into()),
                         name: "org.domokit.gcm.InstanceIDListenerService".to_string(),
                         intent_filter: vec![IntentFilter {
                             action: vec![Action {
@@ -230,13 +232,13 @@ mod tests {
                         ..Default::default()
                     },
                     Service {
-                        exported: Some(false),
+                        exported: Some(false.into()),
                         name: "org.domokit.gcm.RegistrationIntentService".to_string(),
                         ..Default::default()
                     },
                 ],
                 receiver: vec![Receiver {
-                    exported: Some(true),
+                    exported: Some(true.into()),
                     name: "com.google.android.gms.gcm.GcmReceiver".to_string(),
                     permission: Some("com.google.android.c2dm.permission.SEND".to_string()),
                     intent_filter: vec![IntentFilter {

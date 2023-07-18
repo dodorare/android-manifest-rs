@@ -1,4 +1,6 @@
 use serde::{Deserialize, Serialize};
+
+use crate::VarOrBool;
 /// Specifies a shared library that the application must be linked against.
 ///
 /// This element tells the system to include the library's code in the class loader for
@@ -72,5 +74,5 @@ pub struct UsesLibrary {
     ///
     /// Introduced in: API Level 7.
     #[yaserde(attribute, prefix = "android")]
-    pub required: Option<bool>,
+    pub required: Option<VarOrBool>,
 }
