@@ -147,6 +147,14 @@ pub struct IntentFilter {
     /// List of `<data>` tags.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub data: Vec<Data>,
+    /// This attribute signals to the system that it should verify whether your app
+    /// belongs to the URL domains used in your intent filters.
+    ///
+    /// See [`verify-android-applinks`] for more information.
+    ///
+    /// [`verify-android-applinks`]: https://developer.android.com/training/app-links/verify-android-applinks
+    #[yaserde(attribute, prefix = "android", rename = "autoVerify")]
+    pub auto_verify: Option<bool>,
 }
 
 #[cfg(test)]
