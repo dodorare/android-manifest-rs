@@ -1,11 +1,11 @@
 [package]
 name = "android-manifest"
-version = "0.1.10"
+version = "0.2.0"
 authors = ["DodoRare Team <support@dodorare.com>"]
 description = "Android Manifest serializer and deserializer for Rust"
 repository = "https://github.com/dodorare/android-manifest-rs"
 license = "Apache-2.0"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
