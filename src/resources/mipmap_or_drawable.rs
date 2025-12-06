@@ -1,10 +1,10 @@
 use super::{
-    parse_resource_with_type, DrawableResource, MipmapResource, Resource, ResourceType,
-    ResourceVisitor,
+    DrawableResource, MipmapResource, Resource, ResourceType, ResourceVisitor,
+    parse_resource_with_type,
 };
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
+    de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};

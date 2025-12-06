@@ -8,8 +8,8 @@ pub use mipmap_or_drawable::*;
 pub use res_or_string::*;
 
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
+    de::{self, Visitor},
 };
 use std::{
     fmt,

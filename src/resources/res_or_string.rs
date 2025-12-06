@@ -1,7 +1,7 @@
-use super::{parse_resource_with_type, Resource, ResourceType, ResourceVisitor, StringResource};
+use super::{Resource, ResourceType, ResourceVisitor, StringResource, parse_resource_with_type};
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
+    de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};
