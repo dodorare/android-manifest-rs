@@ -1,7 +1,7 @@
 use serde::{
+    Deserialize, Deserializer, Serialize, Serializer,
     de::{self, DeserializeOwned, Visitor},
     ser::Error,
-    Deserialize, Deserializer, Serialize, Serializer,
 };
 use std::fmt;
 use std::io::{Read, Write};

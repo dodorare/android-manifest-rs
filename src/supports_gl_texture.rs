@@ -84,7 +84,7 @@ pub struct SupportsGlTexture {
     /// PowerVR texture compression. Available in devices running PowerVR
     /// SGX530/540 GPU, such as Motorola DROID series; Samsung Galaxy S, Nexus
     /// S, and Galaxy Tab; and others.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<SupportsGlTextureName>,
 }
 

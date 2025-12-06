@@ -170,7 +170,7 @@ mod tests {
         </application>
     </manifest>"#;
         let expected_manifest = AndroidManifest {
-            package: "org.domokit.gcm".to_string(),
+            package: Some("org.domokit.gcm".to_string()),
             version_code: Some(4),
             version_name: Some("0.0.4".to_string()),
             application: Application {

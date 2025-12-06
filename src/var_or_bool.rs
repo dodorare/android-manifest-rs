@@ -1,6 +1,6 @@
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
+    de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};
@@ -41,11 +41,11 @@ impl VarOrBool {
     }
 }
 
-impl ToString for VarOrBool {
-    fn to_string(&self) -> String {
+impl fmt::Display for VarOrBool {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Var(r) => r.to_string(),
-            Self::Bool(v) => v.to_string(),
+            Self::Var(r) => write!(f, "{}", r),
+            Self::Bool(v) => write!(f, "{}", v),
         }
     }
 }

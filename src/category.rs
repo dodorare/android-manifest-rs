@@ -43,6 +43,6 @@ pub struct Category {
     /// [`CATEGORY_DEFAULT`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_DEFAULT
     /// [`startActivity()`]: https://developer.android.com/reference/android/app/Activity#startActivity(android.content.Intent)
     /// [`startActivityForResult()`]: https://developer.android.com/reference/android/app/Activity#startActivityForResult(android.content.Intent,%20int)
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
 }

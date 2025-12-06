@@ -1,7 +1,7 @@
-use super::{parse_resource_with_type, Resource, ResourceType, ResourceVisitor, StringResource};
+use super::{Resource, ResourceType, ResourceVisitor, StringResource, parse_resource_with_type};
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
+    de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};
@@ -24,11 +24,11 @@ impl StringResourceOrString {
     }
 }
 
-impl ToString for StringResourceOrString {
-    fn to_string(&self) -> String {
+impl fmt::Display for StringResourceOrString {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::StringResource(r) => r.to_string(),
-            Self::String(v) => v.clone(),
+            Self::StringResource(r) => write!(f, "{}", r),
+            Self::String(v) => write!(f, "{}", v),
         }
     }
 }

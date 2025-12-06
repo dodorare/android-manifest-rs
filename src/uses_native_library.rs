@@ -49,22 +49,21 @@ use crate::VarOrBool;
 )]
 pub struct UsesNativeLibrary {
     /// The name of the library file.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: String,
     /// Boolean value that indicates whether the application requires the library
     /// specified by android:name:
     ///
-    /// * `"true"`: The application does not function without this library. The system
-    ///   will
-    /// not allow the application on a device that does not have the library.
+    /// * `"true"`: The application does not function without this library. The system will
+    ///   not allow the application on a device that does not have the library.
     ///
     /// * `"false"`: The application can use the library if present, but is designed to
     ///   function
-    /// without it if necessary. The system will allow the application to be installed,
-    /// even if the library is not present. If you use `"false"`, you are responsible
-    /// for gracefully handling the absence of the library.
+    ///   without it if necessary. The system will allow the application to be installed,
+    ///   even if the library is not present. If you use `"false"`, you are responsible
+    ///   for gracefully handling the absence of the library.
     ///
     /// The default is `"true"`.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub required: Option<VarOrBool>,
 }

@@ -40,19 +40,19 @@ use serde::{Deserialize, Serialize};
 pub struct PermissionTree {
     /// An icon representing all the permissions in the tree. This attribute must be set
     /// as a reference to a drawable resource containing the image definition.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable name for the group. As a convenience, the label can be directly
     /// set as a raw string for quick and dirty programming. However, when the
     /// application is ready to be published, it should be set as a reference to a
     /// string resource, so that it can be localized like other strings in the user
     /// interface.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name that's at the base of the permission tree.  It serves as a prefix to all
     /// permission names in the tree. Java-style scoping should be used to ensure that
     /// the name is unique. The name must have more than two period-separated segments
     /// in its path — for example, `com.example.base` is OK, but `com.example` is not.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
 }

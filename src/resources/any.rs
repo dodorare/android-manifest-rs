@@ -1,10 +1,10 @@
 use super::{
-    parse_resource, DrawableResource, Resource, ResourceType, StringResource, StyleResource,
-    XmlResource,
+    DrawableResource, Resource, ResourceType, StringResource, StyleResource, XmlResource,
+    parse_resource,
 };
 use serde::{
-    de::{self, Visitor},
     Deserialize, Deserializer, Serialize, Serializer,
+    de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};

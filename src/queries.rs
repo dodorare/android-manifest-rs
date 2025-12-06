@@ -64,7 +64,7 @@ pub struct Queries {
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
 pub struct Package {
     /// `Required`. Specifies the package name of the other app.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: String,
 }
 
@@ -164,7 +164,7 @@ pub struct QueriesProvider {
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
     #[yaserde(
-        attribute,
+        attribute = true,
         prefix = "android",
         skip_serializing_if = "check_authorities"
     )]
@@ -180,7 +180,7 @@ pub struct QueriesProvider {
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: String,
 }
 

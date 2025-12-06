@@ -68,7 +68,7 @@ pub struct ActivityAlias {
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub enabled: Option<VarOrBool>,
     /// Whether the broadcast receiver can receive messages from non-system sources
     /// outside its application — "`true`" if it can, and "`false`" if
@@ -83,26 +83,26 @@ pub struct ActivityAlias {
     /// know its name) — so the default value is "`false`". On the other hand, the
     /// presence of at least one filter implies that the alias is intended for
     /// external use — so the default value is "`true`".
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub exported: Option<VarOrBool>,
     /// An icon for the target activity when presented to users through the alias. See the
     /// [`<activity>`] element's [`icon`] attribute for more information.
     ///
     /// [`<activity>`]: crate::Activity
     /// [`icon`]: crate::Activity#structfield.icon
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the alias when presented to users through the alias. See
     /// the [`<activity>`] element's [`label`] attribute for more information.
     ///
     /// [`<activity>`]: crate::Activity
     /// [`label`]: crate::Activity#structfield.label
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub label: Option<Resource<StringResource>>,
     /// A unique name for the alias. The name should resemble a fully qualified class
     /// name. But, unlike the name of the target activity, the alias name
     /// is arbitrary; it does not refer to an actual class.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// The name of a permission that clients must have to launch the target activity or
     /// get it to do something via the alias. If a caller of [`startActivity()`] or
@@ -119,14 +119,14 @@ pub struct ActivityAlias {
     /// [`startActivity()`]: https://developer.android.com/reference/android/content/Context#startActivity(android.content.Intent)
     /// [`startActivityForResult()`]: https://developer.android.com/reference/android/app/Activity#startActivityForResult(android.content.Intent,%20int)
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the activity that can be activated through the alias. This name must
     /// match the `name` attribute of an [`<activity>`] element that precedes the
     /// alias in the manifest.
     ///
     /// [`<activity>`]: crate::Activity
-    #[yaserde(attribute, prefix = "android", rename = "targetActivity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "targetActivity")]
     pub target_activity: Option<String>,
     /// List of `<intent-filter>` tags.
     #[yaserde(rename = "intent-filter")]
