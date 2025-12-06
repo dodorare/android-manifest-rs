@@ -498,7 +498,11 @@ pub struct Application {
     /// honor this opt-out request.
     ///
     /// [`scoped storage`]: https://developer.android.com/training/data-storage#scoped-storage
-    #[yaserde(attribute = true, prefix = "android", rename = "requestLegacyExternalStorage")]
+    #[yaserde(
+        attribute = true,
+        prefix = "android",
+        rename = "requestLegacyExternalStorage"
+    )]
     pub request_legacy_external_storage: Option<VarOrBool>,
     /// Specifies the account type required by the application in order to function. If
     /// your app requires an [`Account`], the value for this attribute must correspond to

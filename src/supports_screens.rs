@@ -199,7 +199,11 @@ pub struct SupportsScreens {
     /// This attribute was introduced in API level 13.
     ///
     /// [`smallest screen width qualifier`]: https://developer.android.com/guide/topics/resources/providing-resources#SmallestScreenWidthQualifier
-    #[yaserde(attribute = true, prefix = "android", rename = "requiresSmallestWidthDp")]
+    #[yaserde(
+        attribute = true,
+        prefix = "android",
+        rename = "requiresSmallestWidthDp"
+    )]
     pub requires_smallest_width_dp: Option<String>,
     /// This attribute allows you to enable [`screen compatibility mode`] as a
     /// user-optional feature by specifying the maximum "smallest screen width"
@@ -223,7 +227,11 @@ pub struct SupportsScreens {
     /// This attribute was introduced in API level 13.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[yaserde(attribute = true, prefix = "android", rename = "compatibleWidthLimitDp")]
+    #[yaserde(
+        attribute = true,
+        prefix = "android",
+        rename = "compatibleWidthLimitDp"
+    )]
     pub compatible_width_limit_dp: Option<String>,
     /// This attribute allows you to force-enable [`screen compatibility mode`] by
     /// specifying the maximum "smallest screen width" for which your application is

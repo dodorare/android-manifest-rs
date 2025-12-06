@@ -636,7 +636,11 @@ pub struct Activity {
     ///
     /// [`ActivityManager.TaskDescription`]: https://developer.android.com/reference/android/app/ActivityManager.TaskDescription
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
-    #[yaserde(attribute = true, prefix = "android", rename = "relinquishTaskIdentity")]
+    #[yaserde(
+        attribute = true,
+        prefix = "android",
+        rename = "relinquishTaskIdentity"
+    )]
     pub relinquish_task_identity: Option<VarOrBool>,
     /// Specifies whether the app supports [`multi-window display`]. You can set
     /// this attribute in either the `<activity>` or [`<application>`] element.
@@ -725,7 +729,11 @@ pub struct Activity {
     /// This attribute was added in API level 24.
     ///
     /// [`Picture-in-Picture`]: https://developer.android.com/guide/topics/ui/picture-in-picture
-    #[yaserde(attribute = true, prefix = "android", rename = "supportsPictureInPicture")]
+    #[yaserde(
+        attribute = true,
+        prefix = "android",
+        rename = "supportsPictureInPicture"
+    )]
     pub supports_picture_in_picture: Option<VarOrBool>,
     /// The task that the activity has an affinity for. Activities with the same affinity
     /// conceptually belong to the same task (to the same `"application"` from the
