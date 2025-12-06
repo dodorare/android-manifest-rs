@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.testapp"
+    android:versionCode="1"
+    android:versionName="1.0"
+    tools:ignore="MissingVersion"
+    tools:locale="en">
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="33" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:theme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <!-- Activity with tools:replace attribute -->
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:replace="android:theme,android:exported"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Activity with tools:remove attribute -->
+        <activity
+            android:name=".SecondActivity"
+            android:exported="false"
+            tools:remove="android:windowSoftInputMode"
+            tools:targetApi="21" />
+
+        <!-- Service with tools attributes -->
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="false"
+            tools:node="merge"
+            tools:ignore="ExportedService" />
+
+        <!-- Receiver with tools attributes -->
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:replace="android:exported"
+            tools:selector="com.example.lib1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Provider with tools attributes -->
+        <provider
+            android:name=".MyProvider"
+            android:authorities="com.example.testapp.provider"
+            android:exported="false"
+            tools:node="strict"
+            tools:strict="android:authorities" />
+
+        <!-- Meta-data -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

@@ -223,6 +223,45 @@ pub struct Service {
     #[yaserde(rename = "meta-data")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
+    /// Specifies which attributes from lower priority manifest files should be replaced
+    /// by attributes from this manifest. This is a comma-separated list of attribute names.
+    ///
+    /// For example: `tools:replace="android:process,android:exported"`
+    ///
+    /// Reference: [Merge manifest files - tools:replace](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
+    #[yaserde(attribute, prefix = "tools")]
+    pub replace: Option<String>,
+    /// Specifies which attributes or child elements from lower priority manifest files
+    /// should be removed entirely.
+    ///
+    /// Reference: [Merge manifest files - tools:remove](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
+    #[yaserde(attribute, prefix = "tools")]
+    pub remove: Option<String>,
+    /// Specifies the merge strategy for this element.
+    ///
+    /// Reference: [Merge manifest files - tools:node](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
+    #[yaserde(attribute, prefix = "tools")]
+    pub node: Option<String>,
+    /// Lint issue IDs to ignore on this element.
+    ///
+    /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
+    #[yaserde(attribute, prefix = "tools")]
+    pub ignore: Option<String>,
+    /// Target API level for this element.
+    ///
+    /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
+    #[yaserde(attribute, prefix = "tools", rename = "targetApi")]
+    pub target_api: Option<String>,
+    /// Specifies library package names to apply the merge rule to.
+    ///
+    /// Reference: [Merge manifest files - tools:selector](https://developer.android.com/studio/build/manage-manifests#marker_selector)
+    #[yaserde(attribute, prefix = "tools")]
+    pub selector: Option<String>,
+    /// Generate a build failure if attributes don't exactly match.
+    ///
+    /// Reference: [Merge manifest files - tools:strict](https://developer.android.com/studio/build/manage-manifests#attribute_markers)
+    #[yaserde(attribute, prefix = "tools")]
+    pub strict: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]

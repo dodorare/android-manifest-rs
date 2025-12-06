@@ -23,12 +23,19 @@ use serde::{Deserialize, Serialize};
 /// ## XML Syntax
 /// ```xml
 /// <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+///           xmlns:tools="http://schemas.android.com/tools"
 ///           package="string"
 ///           android:sharedUserId="string"
 ///           android:sharedUserLabel="string resource"
 ///           android:versionCode="integer"
 ///           android:versionName="string"
-///           android:installLocation=["auto" | "internalOnly" | "preferExternal"] >
+///           android:installLocation=["auto" | "internalOnly" | "preferExternal"]
+///           tools:ignore="string"
+///           tools:targetApi="string"
+///           tools:locale="string"
+///           tools:shrinkMode=["safe" | "strict"]
+///           tools:keep="string"
+///           tools:discard="string" >
 ///     ...
 /// </manifest>
 /// ```
@@ -71,7 +78,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 #[yaserde(
     rename = "manifest",
-    namespace = "android: http://schemas.android.com/apk/res/android"
+    namespace = "android: http://schemas.android.com/apk/res/android",
+    namespace = "tools: http://schemas.android.com/tools"
 )]
 pub struct AndroidManifest {
     /// A full Java-language-style package name for the Android app. The name may contain
@@ -126,7 +134,8 @@ pub struct AndroidManifest {
     /// [`Google Play`]: https://developer.android.com/distribute/google-play
     /// [`how to set the application ID`]: https://developer.android.com/studio/build/application-id
     #[yaserde(attribute)]
-    pub package: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub package: Option<String>,
     /// ## Caution
     /// `This constant was deprecated in API level 29.`
     /// Shared user IDs cause non-deterministic behavior within the package manager. As
@@ -225,6 +234,31 @@ pub struct AndroidManifest {
     /// [`App Install Location`]: https://developer.android.com/guide/topics/data/install-location
     #[yaserde(attribute, prefix = "android", rename = "installLocation")]
     pub install_location: Option<InstallLocation>,
+    /// This attribute accepts a comma-separated list of lint issue IDs that you'd like
+    /// the tools to ignore on this element or any of its descendants.
+    ///
+    /// For example: `tools:ignore="MissingTranslation"`
+    ///
+    /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
+    #[yaserde(attribute, prefix = "tools")]
+    pub ignore: Option<String>,
+    /// This attribute works the same as the @TargetApi annotation in Java code. It lets
+    /// you specify the API level (either as an integer or as a code name) that supports
+    /// this element.
+    ///
+    /// For example: `tools:targetApi="14"`
+    ///
+    /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
+    #[yaserde(attribute, prefix = "tools", rename = "targetApi")]
+    pub target_api: Option<String>,
+    /// This tells the tools what the default language or locale is for the resources in
+    /// the given `<resources>` element to avoid warnings from the spellchecker.
+    ///
+    /// For example: `tools:locale="es"`
+    ///
+    /// Reference: [Tools Attributes - tools:locale](https://developer.android.com/studio/write/tool-attributes#toolslocale)
+    #[yaserde(attribute, prefix = "tools")]
+    pub locale: Option<String>,
     /// Required `<application>` tag.
     #[serde(default, skip_serializing_if = "Application::is_default")]
     pub application: Application,
@@ -273,6 +307,34 @@ pub struct AndroidManifest {
     #[yaserde(rename = "uses-permission-sdk-23")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
+    /// This attribute lets you specify whether the build tools should use safe mode
+    /// (keep all resources that are explicitly cited and that might be referenced
+    /// dynamically) or strict mode (keep only the resources that are explicitly cited
+    /// in code or in other resources).
+    ///
+    /// For example: `tools:shrinkMode="strict"`
+    ///
+    /// Reference: [Tools Attributes - tools:shrinkMode](https://developer.android.com/studio/write/tool-attributes#toolsshrinkmode)
+    #[yaserde(attribute, prefix = "tools", rename = "shrinkMode")]
+    pub shrink_mode: Option<String>,
+    /// When using resource shrinking to remove unused resources, this attribute lets
+    /// you specify resources to keep, typically because they are referenced in an
+    /// indirect way at runtime. You can use the asterisk character as a wild card.
+    ///
+    /// For example: `tools:keep="@layout/used_1,@layout/used_2,@layout/*_3"`
+    ///
+    /// Reference: [Tools Attributes - tools:keep](https://developer.android.com/studio/write/tool-attributes#toolskeep)
+    #[yaserde(attribute, prefix = "tools")]
+    pub keep: Option<String>,
+    /// When using resource shrinking to remove unused resources, this attribute lets
+    /// you specify resources you want to manually discard, typically because the resource
+    /// is referenced but in a way that does not affect your app.
+    ///
+    /// For example: `tools:discard="@layout/unused_1"`
+    ///
+    /// Reference: [Tools Attributes - tools:discard](https://developer.android.com/studio/write/tool-attributes#toolsdiscard)
+    #[yaserde(attribute, prefix = "tools")]
+    pub discard: Option<String>,
 }
 
 /// The default install location for the app.
