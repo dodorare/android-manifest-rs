@@ -40,17 +40,17 @@ pub struct Permission {
     ///
     /// This attribute must be set as a reference to a string resource; unlike the `label`
     /// unlike the `label` attribute, it cannot be a raw string.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
     /// A reference to a drawable resource for an icon that represents the permission.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A name for the permission, one that can be displayed to users. As a convenience,
     /// the label can be directly set as a raw string while you're developing the
     /// application. However, when the application is ready to be published, it should
     /// be set as a reference to a string resource, so that it can be localized like
     /// other strings in the user interface.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name of the permission. This is the name that will be used in code to refer to
     /// the permission — for example, in a [`<uses-permission>`] element and the
@@ -67,7 +67,7 @@ pub struct Permission {
     /// `com.example.myapp.ENGAGE_HYPERSPACE`.
     ///
     /// [`<uses-permission>`]: crate::UsesPermission
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// Assigns this permission to a group. The value of this attribute is the name of the
     /// group, which must be declared with the [`<permission-group>`] element in this
@@ -75,7 +75,7 @@ pub struct Permission {
     /// belong to a group.
     ///
     /// [`<permission-group>`]: crate::PermissionGroup
-    #[yaserde(attribute, prefix = "android", rename = "permissionGroup")]
+    #[yaserde(attribute = true, prefix = "android", rename = "permissionGroup")]
     pub permission_group: Option<String>,
     /// Characterizes the potential risk implied in the permission and indicates the
     /// procedure the system should follow when determining whether or not to grant
@@ -85,7 +85,7 @@ pub struct Permission {
     /// For example, the `"dangerous"` protection level has no flags. In contrast,
     /// the protection level `"signature|privileged"` is a combination of the
     /// `"signature"` base permission type and the `"privileged"` flag.
-    #[yaserde(attribute, prefix = "android", rename = "protectionLevel")]
+    #[yaserde(attribute = true, prefix = "android", rename = "protectionLevel")]
     pub protection_level: Option<ProtectionLevel>,
 }
 

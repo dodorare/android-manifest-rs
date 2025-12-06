@@ -68,12 +68,12 @@ impl<T: ResourceType> Resource<T> {
     }
 }
 
-impl<T: ResourceType> ToString for Resource<T> {
-    fn to_string(&self) -> String {
+impl<T: ResourceType> fmt::Display for Resource<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if let Some(package) = &self.package {
-            format!("@{}:{}/{}", package, T::resource_type(), self.name)
+            write!(f, "@{}:{}/{}", package, T::resource_type(), self.name)
         } else {
-            format!("@{}/{}", T::resource_type(), self.name)
+            write!(f, "@{}/{}", T::resource_type(), self.name)
         }
     }
 }

@@ -113,7 +113,7 @@ pub struct Activity {
     /// for Wear custom notifications must declare this so Wear can display the
     /// activity in it's context stream, which resides in another process. The default
     /// value of this attribute is "`false`".
-    #[yaserde(attribute, prefix = "android", rename = "allowEmbedded")]
+    #[yaserde(attribute = true, prefix = "android", rename = "allowEmbedded")]
     pub allow_embedded: Option<VarOrBool>,
     /// Whether or not the activity can move from the task that started it to the task it
     /// has an affinity for when that task is next brought to the front — "`true`" if
@@ -147,7 +147,7 @@ pub struct Activity {
     /// [`<application>`]: crate::Application
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinity
     /// [`launchMode`]: crate::Activity#structfield.launch_mode
-    #[yaserde(attribute, prefix = "android", rename = "allowTaskReparenting")]
+    #[yaserde(attribute = true, prefix = "android", rename = "allowTaskReparenting")]
     pub allow_task_reparenting: Option<VarOrBool>,
     /// Whether or not the state of the task that the activity is in will always be
     /// maintained by the system — "`true`" if it will be, and "`false`" if the system
@@ -164,7 +164,7 @@ pub struct Activity {
     /// its last state, regardless of how they get there. This is useful, for example, in
     /// an application like the web browser where there is a lot of state (such as
     /// multiple open tabs) that users would not like to lose.
-    #[yaserde(attribute, prefix = "android", rename = "alwaysRetainTaskState")]
+    #[yaserde(attribute = true, prefix = "android", rename = "alwaysRetainTaskState")]
     pub always_retain_task_state: Option<VarOrBool>,
     /// Whether or not tasks launched by activities with this attribute remains in the
     /// [`overview screen`] until the last activity in the task is completed. If true, the
@@ -174,7 +174,7 @@ pub struct Activity {
     ///
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
     /// [`FLAG_ACTIVITY_RETAIN_IN_RECENTS`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_RETAIN_IN_RECENTS
-    #[yaserde(attribute, prefix = "android", rename = "autoRemoveFromRecents")]
+    #[yaserde(attribute = true, prefix = "android", rename = "autoRemoveFromRecents")]
     pub auto_remove_from_recents: Option<VarOrBool>,
     /// A [`drawable resource`] providing an extended graphical banner for its associated
     /// item. Use with the `<activity>` tag to supply a default banner for a specific
@@ -196,7 +196,7 @@ pub struct Activity {
     /// [`<application>`]: crate::Application
     /// [`CATEGORY_LEANBACK_LAUNCHER`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_LEANBACK_LAUNCHER
     /// [`Provide a home screen banner`]: https://developer.android.com/training/tv/start/start#banner
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub banner: Option<Resource<DrawableResource>>,
     /// Whether or not all activities will be removed from the task, except for the root
     /// activity, whenever it is re-launched from the home screen — "`true`" if the
@@ -228,7 +228,7 @@ pub struct Activity {
     /// [`alwaysRetainTaskState`]: crate::Activity#structfield.always_retain_task_state
     /// [`allowTaskReparenting`]: crate::Activity#structfield.allow_task_reparenting
     /// [`FLAG_ACTIVITY_RESET_TASK_IF_NEEDED`]: https://developer.android.com/reference/android/content/Intent#FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-    #[yaserde(attribute, prefix = "android", rename = "clearTaskOnLaunch")]
+    #[yaserde(attribute = true, prefix = "android", rename = "clearTaskOnLaunch")]
     pub clear_task_on_launch: Option<VarOrBool>,
     /// Requests the activity to be displayed in wide color gamut mode on compatible
     /// devices. In wide color gamut mode, a window can render outside of the [`SRGB`]
@@ -238,7 +238,7 @@ pub struct Activity {
     ///
     /// [`Enhancing Graphics with Wide Color Content`]: https://developer.android.com/training/wide-color-gamut
     /// [`SRGB`]: https://developer.android.com/reference/android/graphics/ColorSpace.Named#SRGB
-    #[yaserde(attribute, prefix = "android", rename = "colorMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "colorMode")]
     pub color_mode: Option<ColorMode>,
     /// Lists configuration changes that the activity will handle itself. When a
     /// configuration change occurs at runtime, the activity is shut down and
@@ -258,10 +258,11 @@ pub struct Activity {
     /// [`Handling Runtime Changes`]: https://developer.android.com/guide/topics/resources/runtime-changes
     /// [`onConfigurationChanged()`]: https://developer.android.com/reference/android/app/Activity#onConfigurationChanged(android.content.res.Configuration)
     #[yaserde(
-        attribute,
+        attribute = true,
         prefix = "android",
         rename = "configChanges",
-        skip_serializing_if = "check_config_changes"
+        skip_serializing_if = "check_config_changes",
+        default = "default_config_changes"
     )]
     #[serde(default, skip_serializing_if = "AttributeList::is_empty")]
     pub config_changes: AttributeList<VerticalBar, ConfigChanges>,
@@ -275,7 +276,7 @@ pub struct Activity {
     /// that is stored in device protected storage.
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
-    #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
+    #[yaserde(attribute = true, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<VarOrBool>,
     /// Specifies how a new instance of an activity should be added to a task
     /// each time it is launched. This attribute permits the user to have
@@ -288,7 +289,7 @@ pub struct Activity {
     /// `documentLaunchMode`="`none`" is used.
     ///
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
-    #[yaserde(attribute, prefix = "android", rename = "documentLaunchMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "documentLaunchMode")]
     pub document_launch_mode: Option<DocumentLaunchMode>,
     /// Whether or not the activity can be instantiated by the system — "`true`" if it can
     /// be, and "`false`" if not.
@@ -303,7 +304,7 @@ pub struct Activity {
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub enabled: Option<VarOrBool>,
     /// Whether or not the task initiated by this activity should be excluded
     /// from the list of recently used applications, the [`overview screen`].
@@ -315,7 +316,7 @@ pub struct Activity {
     /// The default value is "`false`".
     ///
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
-    #[yaserde(attribute, prefix = "android", rename = "excludeFromRecents")]
+    #[yaserde(attribute = true, prefix = "android", rename = "excludeFromRecents")]
     pub exclude_from_recents: Option<VarOrBool>,
     /// This element sets whether the activity can be launched by components of other
     /// applications — "`true`" if it can be, and "`false`" if not. If "`false`", the
@@ -338,7 +339,7 @@ pub struct Activity {
     ///
     /// [`ActivityNotFoundException`]: https://developer.android.com/reference/android/content/ActivityNotFoundException
     /// [`permission`]: crate::Activity#structfield.permission
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub exported: Option<VarOrBool>,
     /// Whether or not an existing instance of the activity should be shut down (finished)
     /// whenever the user again launches its task (chooses the task on the home
@@ -351,7 +352,7 @@ pub struct Activity {
     /// re-parented, but destroyed.
     ///
     /// [`allowTaskReparenting`]: https://developer.android.com/guide/topics/manifest/activity-element#reparent
-    #[yaserde(attribute, prefix = "android", rename = "finishOnTaskLaunch")]
+    #[yaserde(attribute = true, prefix = "android", rename = "finishOnTaskLaunch")]
     pub finish_on_task_launch: Option<VarOrBool>,
     /// Whether or not hardware-accelerated rendering should be enabled for this Activity
     /// — "`true`" if it should be enabled, and "`false`" if not.
@@ -370,7 +371,7 @@ pub struct Activity {
     /// Note that not all of the OpenGL 2D operations are accelerated. If you enable the
     /// hardware-accelerated renderer, test your application to ensure that it can
     /// make use of the renderer without errors.
-    #[yaserde(attribute, prefix = "android", rename = "hardwareAccelerated")]
+    #[yaserde(attribute = true, prefix = "android", rename = "hardwareAccelerated")]
     pub hardware_accelerated: Option<VarOrBool>,
     /// An icon representing the activity. The icon is displayed to users when a
     /// representation of the activity is required on-screen. For example,
@@ -391,7 +392,7 @@ pub struct Activity {
     /// [`android:label`]: crate::Activity#structfield.label
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// Sets the immersive mode setting for the current activity. If the
     /// `android:immersive` attribute is set to true in the app's manifest entry
@@ -402,7 +403,7 @@ pub struct Activity {
     /// [`ActivityInfo.flags`]: https://developer.android.com/reference/android/content/pm/ActivityInfo#flags
     /// [`FLAG_IMMERSIVE`]: https://developer.android.com/reference/android/content/pm/ActivityInfo#FLAG_IMMERSIVE
     /// [`setImmersive()`]: https://developer.android.com/reference/android/app/Activity#setImmersive(boolean)
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub immersive: Option<VarOrBool>,
     /// A user-readable label for the activity. The label is displayed on-screen when the
     /// activity must be represented to the user. It's often displayed along with the
@@ -421,7 +422,7 @@ pub struct Activity {
     ///
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// An instruction on how the activity should be launched. There are four modes that
     /// work in conjunction with activity flags (`FLAG_ACTIVITY_*` constants) in
@@ -431,7 +432,7 @@ pub struct Activity {
     /// The default mode is `"standard"`.
     ///
     /// [`Intent`]: https://developer.android.com/reference/android/content/Intent
-    #[yaserde(attribute, prefix = "android", rename = "launchMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "launchMode")]
     pub launch_mode: Option<LaunchMode>,
     /// Determines how the system presents this activity when the device is running in
     /// [`lock task mode`].
@@ -448,7 +449,7 @@ pub struct Activity {
     ///
     /// [`lock task mode`]: https://developer.android.com/work/dpc/dedicated-devices/lock-task-mode
     /// [`privileged apps`]: https://source.android.com/devices/tech/config/perms-allowlist
-    #[yaserde(attribute, prefix = "android", rename = "lockTaskMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "lockTaskMode")]
     pub lock_task_mode: Option<LockTaskMode>,
     /// The maximum number of tasks rooted at this activity in the [`overview screen`].
     /// When this number of entries is reached, the system removes the least-recently
@@ -459,7 +460,7 @@ pub struct Activity {
     /// The default value is 16.
     ///
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
-    #[yaserde(attribute, prefix = "android", rename = "maxRecents")]
+    #[yaserde(attribute = true, prefix = "android", rename = "maxRecents")]
     pub max_recents: Option<u32>,
     /// The maximum aspect ratio the activity supports. If the app runs on a device with a
     /// wider aspect ratio, the system automatically letterboxes the app, leaving
@@ -479,7 +480,7 @@ pub struct Activity {
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
     /// [`resizeableActivity`]: crate::Activity#structfield.resizeable_activity
-    #[yaserde(attribute, prefix = "android", rename = "maxAspectRatio")]
+    #[yaserde(attribute = true, prefix = "android", rename = "maxAspectRatio")]
     pub max_aspect_ratio: Option<f32>,
     /// Whether an instance of the activity can be launched into the process of the
     /// component that started it — "`true`" if it can be, and "`false`" if not.
@@ -492,7 +493,7 @@ pub struct Activity {
     /// can run in multiple processes, allowing the system to create instances
     /// wherever they are used (provided permissions allow it), something that is
     /// almost never necessary or desirable.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub multiprocess: Option<VarOrBool>,
     /// The name of the class that implements the activity, a subclass of [`Activity`].
     /// The attribute value should be a fully qualified class name (such as, "`com.
@@ -510,7 +511,7 @@ pub struct Activity {
     /// [`<manifest>`]: crate::AndroidManifest
     /// [`should not change this name`]: https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
     /// [`android:exported`]: crate::Activity#structfield.exported
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: String,
     /// Whether or not the activity should be removed from the activity stack and finished
     /// (its [`finish()`] method called) when the user navigates away from it and it's
@@ -529,7 +530,7 @@ pub struct Activity {
     ///
     /// [`finish()`]: https://developer.android.com/reference/android/app/Activity#finish()
     /// [`onActivityResult()`]: https://developer.android.com/reference/android/app/Activity#onActivityResult(int,%20int,%20android.content.Intent)
-    #[yaserde(attribute, prefix = "android", rename = "noHistory")]
+    #[yaserde(attribute = true, prefix = "android", rename = "noHistory")]
     pub no_history: Option<VarOrBool>,
     /// The class name of the logical parent of the activity. The name here must match the
     /// class name given to the corresponding `<activity>` element's [`android:name`]
@@ -564,7 +565,7 @@ pub struct Activity {
     /// [`android:name`]: crate::Activity#structfield.name
     /// [`TaskStackBuilder`]: https://developer.android.com/reference/android/app/TaskStackBuilder
     /// [`Providing Up Navigation`]: https://developer.android.com/guide/navigation
-    #[yaserde(attribute, prefix = "android", rename = "parentActivityName")]
+    #[yaserde(attribute = true, prefix = "android", rename = "parentActivityName")]
     pub parent_activity_name: Option<String>,
     /// Defines how an instance of an activity is preserved within a containing task
     /// across device restarts.
@@ -577,7 +578,7 @@ pub struct Activity {
     /// This attribute was introduced in API level 21.
     ///
     /// [`back stack`]: https://developer.android.com/guide/components/activities/tasks-and-back-stack
-    #[yaserde(attribute, prefix = "android", rename = "persistableMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "persistableMode")]
     pub persistable_mode: Option<PersistableMode>,
     /// The name of a permission that clients must have to launch the activity or
     /// otherwise get it to respond to an intent. If a caller of [`startActivity()`]
@@ -597,7 +598,7 @@ pub struct Activity {
     /// [`permission`]: crate::Application#structfield.permission
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
     /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the process in which the activity should run. Normally, all components
     /// of an application run in a default process name created for the application
@@ -617,7 +618,7 @@ pub struct Activity {
     ///
     /// [`<application>`]: crate::Application
     /// [`process`]: crate::Application#structfield.process
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub process: Option<String>,
     /// Whether or not the activity relinquishes its task identifiers to an activity above
     /// it in the task stack. A task whose root activity has this attribute set to
@@ -635,7 +636,7 @@ pub struct Activity {
     ///
     /// [`ActivityManager.TaskDescription`]: https://developer.android.com/reference/android/app/ActivityManager.TaskDescription
     /// [`overview screen`]: https://developer.android.com/guide/components/activities/recents
-    #[yaserde(attribute, prefix = "android", rename = "relinquishTaskIdentity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "relinquishTaskIdentity")]
     pub relinquish_task_identity: Option<VarOrBool>,
     /// Specifies whether the app supports [`multi-window display`]. You can set
     /// this attribute in either the `<activity>` or [`<application>`] element.
@@ -659,7 +660,7 @@ pub struct Activity {
     ///
     /// [`multi-window display`]: https://developer.android.com/guide/topics/ui/multi-window
     /// [`<application>`]: crate::Application
-    #[yaserde(attribute, prefix = "android", rename = "resizeableActivity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "resizeableActivity")]
     pub resizeable_activity: Option<VarOrBool>,
     /// The orientation of the activity's display on the device. The system ignores this
     /// attribute if the activity is running in [`multi-window mode`].
@@ -685,7 +686,7 @@ pub struct Activity {
     ///
     /// [`multi-window mode`]: https://developer.android.com/guide/topics/ui/multi-window
     /// [`<uses-feature>`]: crate::UsesFeature
-    #[yaserde(attribute, prefix = "android", rename = "screenOrientation")]
+    #[yaserde(attribute = true, prefix = "android", rename = "screenOrientation")]
     pub screen_orientation: Option<ScreenOrientation>,
     /// Whether or not the activity is shown when the device's current user is
     /// different than the user who launched the activity. You can set this
@@ -694,7 +695,7 @@ pub struct Activity {
     /// value.
     ///
     /// This attribute was added in API level 23.
-    #[yaserde(attribute, prefix = "android", rename = "showForAllUsers")]
+    #[yaserde(attribute = true, prefix = "android", rename = "showForAllUsers")]
     pub show_for_all_users: Option<VarOrBool>,
     /// Whether or not the activity can be killed and successfully restarted without
     /// having saved its state — "`true`" if it can be restarted without reference to
@@ -717,14 +718,14 @@ pub struct Activity {
     /// [`onSaveInstanceState()`]: https://developer.android.com/reference/android/app/Activity#onSaveInstanceState(android.os.Bundle)
     /// [`Bundle`]: https://developer.android.com/reference/android/os/Bundle
     /// [`onCreate()`]: https://developer.android.com/reference/android/app/Activity#onCreate(android.os.Bundle)
-    #[yaserde(attribute, prefix = "android", rename = "stateNotNeeded")]
+    #[yaserde(attribute = true, prefix = "android", rename = "stateNotNeeded")]
     pub state_not_needed: Option<VarOrBool>,
     /// Specifies whether the activity supports [`Picture-in-Picture`] display.
     ///
     /// This attribute was added in API level 24.
     ///
     /// [`Picture-in-Picture`]: https://developer.android.com/guide/topics/ui/picture-in-picture
-    #[yaserde(attribute, prefix = "android", rename = "supportsPictureInPicture")]
+    #[yaserde(attribute = true, prefix = "android", rename = "supportsPictureInPicture")]
     pub supports_picture_in_picture: Option<VarOrBool>,
     /// The task that the activity has an affinity for. Activities with the same affinity
     /// conceptually belong to the same task (to the same `"application"` from the
@@ -750,7 +751,7 @@ pub struct Activity {
     /// [`<application>`]: crate::Application
     /// [`taskAffinity`]: crate::Application#structfield.task_affinity
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute, prefix = "android", rename = "taskAffinity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "taskAffinity")]
     pub task_affinity: Option<String>,
     /// A reference to a style resource defining an overall theme for the activity. This
     /// automatically sets the activity's context to use this theme (see
@@ -769,7 +770,7 @@ pub struct Activity {
     /// [`<application>`]: crate::Application
     /// [`theme`]: crate::Application#structfield.theme
     /// [`Styles and Themes`]: https://developer.android.com/guide/topics/ui/look-and-feel/themes
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub theme: Option<Resource<StyleResource>>,
     /// Extra options for an activity's UI.
     ///
@@ -779,7 +780,7 @@ pub struct Activity {
     /// This attribute was added in API level 14.
     ///
     /// [`Adding the App Bar`]: https://developer.android.com/training/appbar
-    #[yaserde(attribute, prefix = "android", rename = "uiOptions")]
+    #[yaserde(attribute = true, prefix = "android", rename = "uiOptions")]
     pub ui_options: Option<UiOptions>,
     /// How the main window of the activity interacts with the window containing the
     /// on-screen soft keyboard. The setting for this attribute affects two things:
@@ -805,10 +806,11 @@ pub struct Activity {
     /// Values set here (other than "`stateUnspecified`" and "`adjustUnspecified`")
     /// override values set in the theme.
     #[yaserde(
-        attribute,
+        attribute = true,
         prefix = "android",
         rename = "windowSoftInputMode",
-        skip_serializing_if = "check_window_soft_input_mode"
+        skip_serializing_if = "check_window_soft_input_mode",
+        default = "default_window_soft_input_mode"
     )]
     #[serde(default, skip_serializing_if = "AttributeList::is_empty")]
     pub window_soft_input_mode: AttributeList<VerticalBar, WindowSoftInputMode>,
@@ -823,12 +825,13 @@ pub struct Activity {
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
     /// Specifies which attributes from lower priority manifest files should be replaced
-    /// by attributes from this manifest. This is a comma-separated list of attribute names.
+    /// by attributes from this manifest. This is a comma-separated list of attribute
+    /// names.
     ///
     /// For example: `tools:replace="android:theme,android:exported"`
     ///
     /// Reference: [Merge manifest files - tools:replace](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub replace: Option<String>,
     /// Specifies which attributes or child elements from lower priority manifest files
     /// should be removed entirely.
@@ -836,7 +839,7 @@ pub struct Activity {
     /// For example: `tools:remove="android:configChanges"`
     ///
     /// Reference: [Merge manifest files - tools:remove](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub remove: Option<String>,
     /// Specifies the merge strategy for this element. Can be "merge", "replace",
     /// "removeAll", "merge-only", or "strict".
@@ -844,7 +847,7 @@ pub struct Activity {
     /// For example: `tools:node="replace"`
     ///
     /// Reference: [Merge manifest files - tools:node](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub node: Option<String>,
     /// This attribute accepts a comma-separated list of lint issue IDs that you'd like
     /// the tools to ignore on this element or any of its descendants.
@@ -852,7 +855,7 @@ pub struct Activity {
     /// For example: `tools:ignore="UnusedAttribute"`
     ///
     /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub ignore: Option<String>,
     /// This attribute works the same as the @TargetApi annotation in Java code. It lets
     /// you specify the API level (either as an integer or as a code name) that supports
@@ -861,22 +864,30 @@ pub struct Activity {
     /// For example: `tools:targetApi="14"`
     ///
     /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
-    #[yaserde(attribute, prefix = "tools", rename = "targetApi")]
+    #[yaserde(attribute = true, prefix = "tools", rename = "targetApi")]
     pub target_api: Option<String>,
     /// Specifies library package names to apply the merge rule to.
     ///
     /// For example: `tools:selector="com.example.lib1"`
     ///
     /// Reference: [Merge manifest files - tools:selector](https://developer.android.com/studio/build/manage-manifests#marker_selector)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub selector: Option<String>,
     /// Generate a build failure if attributes don't exactly match.
     ///
     /// For example: `tools:strict="android:screenOrientation"`
     ///
     /// Reference: [Merge manifest files - tools:strict](https://developer.android.com/studio/build/manage-manifests#attribute_markers)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub strict: Option<String>,
+}
+
+fn default_config_changes() -> AttributeList<VerticalBar, ConfigChanges> {
+    AttributeList::default()
+}
+
+fn default_window_soft_input_mode() -> AttributeList<VerticalBar, WindowSoftInputMode> {
+    AttributeList::default()
 }
 
 impl Activity {

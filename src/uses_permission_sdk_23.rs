@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-permission>`], you can request the permission only if the app is running
 /// on platforms that support the [`runtime permissions model`] in which the user
 /// grants permissions to the app while it is running.
-
+///
 /// For more information on permissions, see the [`Permissions`] section in the
 /// introduction and the separate [`System Permissions`] API guide. A list of
 /// permissions defined by the base platform is available at
@@ -53,12 +53,12 @@ pub struct UsesPermissionSdk23 {
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// The highest API level at which this permission should be granted to your
     /// app. If the app is installed on a device with a later API level, the
     /// app is not granted the permission and cannot use any related
     /// functionality.
-    #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
+    #[yaserde(attribute = true, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<u32>,
 }

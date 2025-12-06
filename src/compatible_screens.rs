@@ -117,7 +117,7 @@ pub struct Screen {
     /// Screens`].
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
-    #[yaserde(attribute, prefix = "android", rename = "screenSize")]
+    #[yaserde(attribute = true, prefix = "android", rename = "screenSize")]
     pub screen_size: ScreenSize,
     /// `Required.` Specifies the screen density for this screen configuration.
     ///
@@ -136,7 +136,7 @@ pub struct Screen {
     /// * "560"
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
-    #[yaserde(attribute, prefix = "android", rename = "screenDensity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "screenDensity")]
     pub screen_density: String,
 }
 

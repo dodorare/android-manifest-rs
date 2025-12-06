@@ -54,17 +54,17 @@ pub struct UsesConfiguration {
     /// `reqNavigation` instead.
     ///
     /// [`reqNavigation`]: crate::UsesConfiguration#structfield.req_navigation
-    #[yaserde(attribute, prefix = "android", rename = "reqFiveWayNav")]
+    #[yaserde(attribute = true, prefix = "android", rename = "reqFiveWayNav")]
     pub req_five_way_nav: Option<VarOrBool>,
     /// Whether or not the application requires a hardware keyboard — `"true"` if it does,
     /// and `"false"` if not.
-    #[yaserde(attribute, prefix = "android", rename = "reqHardKeyboard")]
+    #[yaserde(attribute = true, prefix = "android", rename = "reqHardKeyboard")]
     pub req_hard_keyboard: Option<VarOrBool>,
     /// The type of keyboard the application requires, if any at all. This attribute does
     /// not distinguish between hardware and software keyboards. If a hardware
     /// keyboard of a certain type is required, specify the type here and also set the
     /// reqHardKeyboard attribute to `"true"`.
-    #[yaserde(attribute, prefix = "android", rename = "reqKeyboardType")]
+    #[yaserde(attribute = true, prefix = "android", rename = "reqKeyboardType")]
     pub req_keyboard_type: Option<ReqKeyboardType>,
     /// The navigation device required by the application, if any.
     ///
@@ -73,10 +73,10 @@ pub struct UsesConfiguration {
     /// rather than set this one.
     ///
     /// [`reqFiveWayNav`]: crate::UsesConfiguration#structfield.req_five_way_nav
-    #[yaserde(attribute, prefix = "android", rename = "reqNavigation")]
+    #[yaserde(attribute = true, prefix = "android", rename = "reqNavigation")]
     pub req_navigation: Option<ReqNavigation>,
     /// The type of touch screen the application requires, if any at all.
-    #[yaserde(attribute, prefix = "android", rename = "reqTouchScreen")]
+    #[yaserde(attribute = true, prefix = "android", rename = "reqTouchScreen")]
     pub req_touch_screen: Option<ReqTouchScreen>,
 }
 

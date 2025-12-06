@@ -111,7 +111,7 @@ pub struct Application {
     ///
     /// [`<activity>`]: crate::Activity
     /// [`allowTaskReparenting`]: crate::Activity#structfield.allow_task_reparenting
-    #[yaserde(attribute, prefix = "android", rename = "allowTaskReparenting")]
+    #[yaserde(attribute = true, prefix = "android", rename = "allowTaskReparenting")]
     pub allow_task_reparenting: Option<VarOrBool>,
     /// Whether to allow the application to participate in the backup and restore
     /// infrastructure. If this attribute is set to false, no backup or restore of the
@@ -128,7 +128,7 @@ pub struct Application {
     /// You can still disable cloud-based backup and restore of your app's files by
     /// setting this attribute to "`false`", even if your app targets Android 11 (API
     /// level 30) or higher.
-    #[yaserde(attribute, prefix = "android", rename = "allowBackup")]
+    #[yaserde(attribute = true, prefix = "android", rename = "allowBackup")]
     pub allow_backup: Option<VarOrBool>,
     /// Whether to allow the application to reset user data. This data includes flags—such
     /// as whether the user has seen introductory tooltips—as well as user-customizable
@@ -143,7 +143,7 @@ pub struct Application {
     /// Third-party apps cannot include this attribute in their manifest files.
     ///
     /// [`Restoring User Data on New Devices`]: https://developer.android.com/guide/topics/data/backup
-    #[yaserde(attribute, prefix = "android", rename = "allowClearUserData")]
+    #[yaserde(attribute = true, prefix = "android", rename = "allowClearUserData")]
     pub allow_clear_user_data: Option<VarOrBool>,
     /// Whether or not the app has the Heap pointer tagging feature enabled.
     ///
@@ -157,7 +157,7 @@ pub struct Application {
     ///
     /// [`Tagged Pointers`]: https://source.android.com/devices/tech/debug/tagged-pointers
     #[yaserde(
-        attribute,
+        attribute = true,
         prefix = "android",
         rename = "allowNativeHeapPointerTagging"
     )]
@@ -172,7 +172,7 @@ pub struct Application {
     ///
     /// [`BackupAgent`]: https://developer.android.com/reference/android/app/backup/BackupAgent
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute, prefix = "android", rename = "backupAgent")]
+    #[yaserde(attribute = true, prefix = "android", rename = "backupAgent")]
     pub backup_agent: Option<String>,
     /// Indicates that [`Auto Backup`] operations may be performed on this app even if the
     /// app is in a foreground-equivalent state. The system shuts down an app during
@@ -185,7 +185,7 @@ pub struct Application {
     ///
     /// [`Auto Backup`]: https://developer.android.com/guide/topics/data/autobackup
     /// [`startForeground()`]: https://developer.android.com/reference/android/app/Service#startForeground(int,%20android.app.Notification)
-    #[yaserde(attribute, prefix = "android", rename = "backupInForeground")]
+    #[yaserde(attribute = true, prefix = "android", rename = "backupInForeground")]
     pub backup_in_foreground: Option<VarOrBool>,
     /// A [`drawable resource`] providing an extended graphical banner for its associated
     /// item. Use with the `<application>` tag to supply a default banner for all
@@ -207,19 +207,19 @@ pub struct Application {
     /// [`<activity>`]: crate::Activity
     /// [`CATEGORY_LEANBACK_LAUNCHER`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_LEANBACK_LAUNCHER
     /// [`Provide a home screen banner`]: https://developer.android.com/training/tv/start/start#banner
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub banner: Option<Resource<DrawableResource>>,
     /// Whether or not the application can be debugged, even when running on a device in
     /// user mode — "`true`" if it can be, and "`false`" if not. The default value is
     /// "`false`".
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub debuggable: Option<VarOrBool>,
     /// User-readable text about the application, longer and more descriptive than the
     /// application label. The value must be set as a reference to a string resource.
     /// Unlike the label, it cannot be a raw string.
     ///
     /// There is no default value.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
     /// Whether or not the application is direct-boot aware; that is, whether or
     /// not it can run before the user unlocks the device. If you're using a
@@ -235,7 +235,7 @@ pub struct Application {
     ///
     /// [`Application`]: https://developer.android.com/reference/android/app/Application
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
-    #[yaserde(attribute, prefix = "android", rename = "directBootAware")]
+    #[yaserde(attribute = true, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<VarOrBool>,
     /// Whether or not the Android system can instantiate components of the
     /// application — "`true`" if it can, and "`false`" if not. If the value
@@ -244,7 +244,7 @@ pub struct Application {
     /// component-specific values; all components are disabled.
     ///
     /// The default value is "`true`".
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub enabled: Option<VarOrBool>,
     /// Whether or not the package installer extracts native libraries from the APK to the
     /// filesystem. If set to "`false`", then your native libraries must be page aligned
@@ -263,7 +263,7 @@ pub struct Application {
     /// `AndroidManifest.xml`.
     ///
     /// [`Android Gradle plugin 3.6.0`]: https://developer.android.com/studio/releases/gradle-plugin#3-6-0
-    #[yaserde(attribute, prefix = "android", rename = "extractNativeLibs")]
+    #[yaserde(attribute = true, prefix = "android", rename = "extractNativeLibs")]
     pub extract_native_libs: Option<VarOrBool>,
     /// This attribute points to an XML file that contains full backup rules for [`Auto
     /// Backup`]. These rules determine what files get backed up. For more information,
@@ -276,7 +276,7 @@ pub struct Application {
     /// [`Auto Backup`]: https://developer.android.com/guide/topics/data/autobackup
     /// [`XML Config Syntax`]: https://developer.android.com/guide/topics/data/autobackup#XMLSyntax
     /// [`Files that are backed`]: https://developer.android.com/guide/topics/data/autobackup#Files
-    #[yaserde(attribute, prefix = "android", rename = "fullBackupContent")]
+    #[yaserde(attribute = true, prefix = "android", rename = "fullBackupContent")]
     pub full_backup_content: Option<Resource<XmlResource>>,
     /// This attribute indicates whether or not to use [`Auto Backup`] on devices where it
     /// is available. If set to "`true`", then your app performs Auto Backup when
@@ -287,7 +287,7 @@ pub struct Application {
     ///
     /// [`Auto Backup`]: https://developer.android.com/guide/topics/data/autobackup
     /// [`Key/Value Backups`]: https://developer.android.com/guide/topics/data/keyvaluebackup
-    #[yaserde(attribute, prefix = "android", rename = "fullBackupOnly")]
+    #[yaserde(attribute = true, prefix = "android", rename = "fullBackupOnly")]
     pub full_backup_only: Option<VarOrBool>,
     /// This attribute indicates whether or not to use [`GWP-ASan`], which is a native
     /// memory allocator feature that helps find use-after-free and
@@ -296,7 +296,7 @@ pub struct Application {
     /// The default value is "`never`".
     ///
     /// [`GWP-ASan`]: https://developer.android.com/ndk/guides/gwp-asan
-    #[yaserde(attribute, prefix = "android", rename = "gwpAsanMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "gwpAsanMode")]
     pub gwp_asan_mode: Option<GwpAsanMode>,
     /// Whether or not the application contains any code — "`true`" if it does, and
     /// "`false`" if not. When the value is "`false`", the system does not try to load
@@ -310,13 +310,13 @@ pub struct Application {
     /// manifest file. Otherwise, you may get runtime errors.
     ///
     /// [`Play Feature Delivery`]: https://developer.android.com/platform/technology/app-bundle
-    #[yaserde(attribute, prefix = "android", rename = "hasCode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "hasCode")]
     pub has_code: Option<VarOrBool>,
     /// When the user uninstalls an app, whether or not to show the user a prompt to keep
     /// the app's data.
     ///
     /// The default value is "`false`".
-    #[yaserde(attribute, prefix = "android", rename = "hasFragileUserData")]
+    #[yaserde(attribute = true, prefix = "android", rename = "hasFragileUserData")]
     pub has_fragile_user_data: Option<VarOrBool>,
     /// Whether or not hardware-accelerated rendering should be enabled for all activities
     /// and views in this application — "`true`" if it should be enabled, and
@@ -342,7 +342,7 @@ pub struct Application {
     /// [`minSdkVersion`]: crate::UsesSdk#structfield.min_sdk_version
     /// [`targetSdkVersion`]: crate::UsesSdk#structfield.target_sdk_version
     /// [`Hardware Acceleration`]: https://developer.android.com/guide/topics/graphics/hardware-accel
-    #[yaserde(attribute, prefix = "android", rename = "hardwareAccelerated")]
+    #[yaserde(attribute = true, prefix = "android", rename = "hardwareAccelerated")]
     pub hardware_accelerated: Option<VarOrBool>,
     /// An icon for the application as whole, and the default icon for each of the
     /// application's components. See the individual icon attributes for [`<activity>`],
@@ -358,14 +358,14 @@ pub struct Application {
     /// [`<service>`]: crate::Service
     /// [`<receiver>`]: crate::Receiver
     /// [`<provider>`]: crate::Provider
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// Whether or not the application is a game. The system may group together
     /// applications classifed as games or display them separately from other
     /// applications.
     ///
     /// The default is `false`.
-    #[yaserde(attribute, prefix = "android", rename = "isGame")]
+    #[yaserde(attribute = true, prefix = "android", rename = "isGame")]
     pub is_game: Option<VarOrBool>,
     /// Whether the application in question should be terminated after its settings have
     /// been restored during a full-system restore operation. Single-package restore
@@ -375,7 +375,7 @@ pub struct Application {
     ///
     /// The default is "`true`", which means that after the application has finished
     /// processing its data during a full-system restore, it will be terminated.
-    #[yaserde(attribute, prefix = "android", rename = "killAfterRestore")]
+    #[yaserde(attribute = true, prefix = "android", rename = "killAfterRestore")]
     pub kill_after_restore: Option<VarOrBool>,
     /// Whether your application's processes should be created with a large Dalvik heap.
     /// This applies to all processes created for the application. It only applies to the
@@ -393,7 +393,7 @@ pub struct Application {
     ///
     /// [`getMemoryClass()`]: https://developer.android.com/reference/android/app/ActivityManager#getMemoryClass()
     /// [`getLargeMemoryClass()`]: https://developer.android.com/reference/android/app/ActivityManager#getLargeMemoryClass()
-    #[yaserde(attribute, prefix = "android", rename = "largeHeap")]
+    #[yaserde(attribute = true, prefix = "android", rename = "largeHeap")]
     pub large_heap: Option<VarOrBool>,
     /// A user-readable label for the application as a whole, and a default label for each
     /// of the application's components. See the individual label attributes for
@@ -409,21 +409,21 @@ pub struct Application {
     /// [`<service>`]: crate::Service
     /// [`<receiver>`]: crate::Receiver
     /// [`<provider>`]: crate::Provider
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// A logo for the application as whole, and the default logo for activities. This
     /// attribute must be set as a reference to a drawable resource containing the
     /// image (for example `"@drawable/logo"`).
     ///
     /// There is no default logo.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub logo: Option<Resource<DrawableResource>>,
     /// The fully qualified name of an Activity subclass that the system can launch to let
     /// users manage the memory occupied by the application on the device. The
     /// activity should also be declared with an [`<activity>`] element.
     ///
     /// [`<activity>`]: crate::Activity
-    #[yaserde(attribute, prefix = "android", rename = "manageSpaceActivity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "manageSpaceActivity")]
     pub manage_space_activity: Option<String>,
     /// The fully qualified name of an [`Application`] subclass implemented for the
     /// application. When the application process is started, this class is instantiated
@@ -433,7 +433,7 @@ pub struct Application {
     /// subclass, Android uses an instance of the base Application class.
     ///
     /// [`Application`]: https://developer.android.com/reference/android/app/Application
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// Specifies the name of the XML file that contains your application's [`Network
     /// Security Configuration`]. The value must be a reference to the XML resource file
@@ -442,7 +442,7 @@ pub struct Application {
     /// This attribute was added in API level 24.
     ///
     /// [`Network Security Configuration`]: https://developer.android.com/training/articles/security-config
-    #[yaserde(attribute, prefix = "android", rename = "networkSecurityConfig")]
+    #[yaserde(attribute = true, prefix = "android", rename = "networkSecurityConfig")]
     pub network_security_config: Option<Resource<XmlResource>>,
     /// The name of a permission that clients must have in order to interact with the
     /// application. This attribute is a convenient way to set a permission that applies
@@ -454,13 +454,13 @@ pub struct Application {
     ///
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
     /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// Whether or not the application should remain running at all times — "`true`" if it
     /// should, and "`false`" if not. The default value is "`false`". Applications
     /// should not normally set this flag; persistence mode is intended only for
     /// certain system applications.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub persistent: Option<VarOrBool>,
     /// The name of a process where all components of the application should run. Each
     /// component can override this default by setting its own `process` attribute.
@@ -480,7 +480,7 @@ pub struct Application {
     /// global process can be shared with other applications, reducing resource usage.
     ///
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub process: Option<String>,
     /// Indicates that the application is prepared to attempt a restore of any backed-up
     /// data set, even if the backup was stored by a newer version of the application
@@ -489,7 +489,7 @@ pub struct Application {
     /// suggests that the data are incompatible. Use with caution!
     ///
     /// The default value of this attribute is `false`.
-    #[yaserde(attribute, prefix = "android", rename = "restoreAnyVersion")]
+    #[yaserde(attribute = true, prefix = "android", rename = "restoreAnyVersion")]
     pub restore_any_version: Option<VarOrBool>,
     /// Whether or not the application wants to opt out of [`scoped storage`].
     ///
@@ -498,7 +498,7 @@ pub struct Application {
     /// honor this opt-out request.
     ///
     /// [`scoped storage`]: https://developer.android.com/training/data-storage#scoped-storage
-    #[yaserde(attribute, prefix = "android", rename = "requestLegacyExternalStorage")]
+    #[yaserde(attribute = true, prefix = "android", rename = "requestLegacyExternalStorage")]
     pub request_legacy_external_storage: Option<VarOrBool>,
     /// Specifies the account type required by the application in order to function. If
     /// your app requires an [`Account`], the value for this attribute must correspond to
@@ -524,7 +524,7 @@ pub struct Application {
     /// [`AuthenticatorDescription`]: https://developer.android.com/reference/android/accounts/AuthenticatorDescription
     /// [`android:restrictedAccountType`]:
     /// crate::Application#structfield.restricted_account_type
-    #[yaserde(attribute, prefix = "android", rename = "requiredAccountType")]
+    #[yaserde(attribute = true, prefix = "android", rename = "requiredAccountType")]
     pub required_account_type: Option<String>,
     /// Specifies whether the app supports [`multi-window display`]. You can set this
     /// attribute in either the [`<activity>`] or `<application>` element.
@@ -548,7 +548,7 @@ pub struct Application {
     ///
     /// [`multi-window display`]: https://developer.android.com/guide/topics/ui/multi-window
     /// [`<activity>`]: crate::Activity
-    #[yaserde(attribute, prefix = "android", rename = "resizeableActivity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "resizeableActivity")]
     pub resizeable_activity: Option<VarOrBool>,
     /// Specifies the account type required by this application and indicates that
     /// restricted profiles are allowed to access such accounts that belong to the owner
@@ -573,7 +573,7 @@ pub struct Application {
     /// [`AuthenticatorDescription`]: https://developer.android.com/reference/android/accounts/AuthenticatorDescription
     /// [`android:requiredAccountType`]:
     /// crate::Application#structfield.required_account_type
-    #[yaserde(attribute, prefix = "android", rename = "restrictedAccountType")]
+    #[yaserde(attribute = true, prefix = "android", rename = "restrictedAccountType")]
     pub restricted_account_type: Option<String>,
     /// Declares whether your application is willing to support right-to-left (RTL)
     /// layouts. If set to "`true`" and [`targetSdkVersion`] is set to 17 or higher,
@@ -588,7 +588,7 @@ pub struct Application {
     /// This attribute was added in API level 17.
     ///
     /// [`targetSdkVersion`]: crate::UsesSdk#structfield.target_sdk_version
-    #[yaserde(attribute, prefix = "android", rename = "supportsRtl")]
+    #[yaserde(attribute = true, prefix = "android", rename = "supportsRtl")]
     pub supports_rtl: Option<VarOrBool>,
     /// An affinity name that applies to all activities within the application, except for
     /// those that set a different affinity with their own [`taskAffinity`] attributes.
@@ -600,7 +600,7 @@ pub struct Application {
     ///
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinity
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute, prefix = "android", rename = "taskAffinity")]
+    #[yaserde(attribute = true, prefix = "android", rename = "taskAffinity")]
     pub task_affinity: Option<String>,
     /// Indicates whether this application is only for testing purposes. For example, it
     /// may expose functionality or data outside of itself that would cause a security
@@ -610,7 +610,7 @@ pub struct Application {
     /// Android Studio automatically adds this attribute when you click `Run`.
     ///
     /// [`adb`]: https://developer.android.com/studio/command-line/adb
-    #[yaserde(attribute, prefix = "android", rename = "testOnly")]
+    #[yaserde(attribute = true, prefix = "android", rename = "testOnly")]
     pub test_only: Option<VarOrBool>,
     /// A reference to a style resource defining a default theme for all activities in the
     /// application. Individual activities can override the default by setting their own
@@ -619,7 +619,7 @@ pub struct Application {
     ///
     /// [`theme`]: crate::Activity#structfield.theme
     /// [`Styles and Themes`]: https://developer.android.com/guide/topics/ui/look-and-feel/themes
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub theme: Option<Resource<StyleResource>>,
     /// Extra options for an activity's UI.
     ///
@@ -629,7 +629,7 @@ pub struct Application {
     /// This attribute was added in API level 14.
     ///
     /// [`Adding the App Bar`]: https://developer.android.com/training/appbar
-    #[yaserde(attribute, prefix = "android", rename = "uiOptions")]
+    #[yaserde(attribute = true, prefix = "android", rename = "uiOptions")]
     pub ui_options: Option<UiOptions>,
     /// Indicates whether the app intends to use cleartext network traffic, such as
     /// cleartext HTTP. The default value for apps that target API level 27 or lower is
@@ -672,7 +672,7 @@ pub struct Application {
     /// [`NetworkSecurityPolicy.isCleartextTrafficPermitted()`]: https://developer.android.com/reference/android/security/NetworkSecurityPolicy#isCleartextTrafficPermitted()
     /// [`WebView`]: https://developer.android.com/reference/android/webkit/WebView
     /// [`StrictMode.VmPolicy.Builder.detectCleartextNetwork()`]: https://developer.android.com/reference/android/os/StrictMode.VmPolicy.Builder#detectCleartextNetwork()
-    #[yaserde(attribute, prefix = "android", rename = "usesCleartextTraffic")]
+    #[yaserde(attribute = true, prefix = "android", rename = "usesCleartextTraffic")]
     pub uses_cleartext_traffic: Option<VarOrBool>,
     /// Indicates whether the app would like the virtual machine (VM) to operate in safe
     /// mode. The default value is "`false`".
@@ -682,7 +682,7 @@ pub struct Application {
     ///
     /// This attribute was adapted in API level 22 where a value of "`true`" disabled the
     /// ART ahead-of-time (AOT) compiler.
-    #[yaserde(attribute, prefix = "android", rename = "vmSafeMode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "vmSafeMode")]
     pub vm_safe_mode: Option<VarOrBool>,
     /// Optional `<profileable>` tag.
     pub profileable: Option<Profileable>,
@@ -715,41 +715,42 @@ pub struct Application {
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_native_library: Vec<UsesNativeLibrary>,
     /// Specifies which attributes from lower priority manifest files should be replaced
-    /// by attributes from this manifest. This is a comma-separated list of attribute names.
+    /// by attributes from this manifest. This is a comma-separated list of attribute
+    /// names.
     ///
     /// Reference: [Merge manifest files - tools:replace](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub replace: Option<String>,
     /// Specifies which attributes or child elements from lower priority manifest files
     /// should be removed entirely.
     ///
     /// Reference: [Merge manifest files - tools:remove](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub remove: Option<String>,
     /// Specifies the merge strategy for this element.
     ///
     /// Reference: [Merge manifest files - tools:node](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub node: Option<String>,
     /// Lint issue IDs to ignore on this element.
     ///
     /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub ignore: Option<String>,
     /// Target API level for this element.
     ///
     /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
-    #[yaserde(attribute, prefix = "tools", rename = "targetApi")]
+    #[yaserde(attribute = true, prefix = "tools", rename = "targetApi")]
     pub target_api: Option<String>,
     /// Specifies library package names to apply the merge rule to.
     ///
     /// Reference: [Merge manifest files - tools:selector](https://developer.android.com/studio/build/manage-manifests#marker_selector)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub selector: Option<String>,
     /// Generate a build failure if attributes don't exactly match.
     ///
     /// Reference: [Merge manifest files - tools:strict](https://developer.android.com/studio/build/manage-manifests#attribute_markers)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub strict: Option<String>,
 }
 
@@ -776,12 +777,12 @@ pub enum GwpAsanMode {
     /// Always enabled: This setting enables GWP-ASan in your app, which includes the
     /// following:
     /// 1. The operating system reserves a fixed amount of RAM for GWP-ASan operations,
-    ///   approximately ~70KiB for each affected process. (Enable GWP-ASan if your app is
-    ///   not critically sensitive to increases in memory usage.)
+    ///    approximately ~70KiB for each affected process. (Enable GWP-ASan if your app is
+    ///    not critically sensitive to increases in memory usage.)
     /// 2. GWP-ASan intercepts a randomly-chosen subset of heap allocations and places
-    /// them   into a special region that reliably detects memory safety violations.
+    ///    them   into a special region that reliably detects memory safety violations.
     /// 3. When a memory safety violation occurs in the special region, GWP-ASan
-    /// terminates   the process.
+    ///    terminates   the process.
     /// 4. GWP-ASan provides additional information about the fault in the crash report.
     #[yaserde(rename = "always")]
     Always,

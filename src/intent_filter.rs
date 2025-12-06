@@ -70,7 +70,7 @@ pub struct IntentFilter {
     ///
     /// [`<application>`]: crate::Application
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the parent component. This label, rather than the one
     /// set by the parent component, is used when the component is presented to the
@@ -88,7 +88,7 @@ pub struct IntentFilter {
     /// [`<application>`]: crate::Application
     /// [`label`]: crate::Application#structfield.label
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The priority that should be given to the parent component with regard to handling
     /// intents of the type described by the filter. This attribute has meaning for
@@ -96,14 +96,14 @@ pub struct IntentFilter {
     ///
     /// * It provides information about how able an activity is to respond to an intent
     ///   that matches the filter, relative
-    /// to other activities that could also respond to the intent. When an intent
-    /// could be handled by multiple activities with different priorities, Android
-    /// will consider only those with higher priority values as potential targets for
-    /// the intent.
+    ///   to other activities that could also respond to the intent. When an intent
+    ///   could be handled by multiple activities with different priorities, Android
+    ///   will consider only those with higher priority values as potential targets for
+    ///   the intent.
     /// * It controls the order in which broadcast receivers are executed to
-    /// receive broadcast messages. Those with higher priority values are called
-    /// before those with lower values. (The order applies only to
-    /// synchronous messages; it's ignored for asynchronous messages.)
+    ///   receive broadcast messages. Those with higher priority values are called
+    ///   before those with lower values. (The order applies only to
+    ///   synchronous messages; it's ignored for asynchronous messages.)
     ///
     /// Use this attribute only if you really need to impose a specific order in
     /// which the broadcasts are received, or want to force Android to prefer
@@ -115,7 +115,7 @@ pub struct IntentFilter {
     /// * A non-privileged application requests any priority > 0
     /// * A privileged application requests a priority > 0 for [`ACTION_VIEW`],
     ///   [`ACTION_SEND`], [`ACTION_SENDTO`] or
-    /// [`ACTION_SEND_MULTIPLE`]
+    ///   [`ACTION_SEND_MULTIPLE`]
     ///
     /// Also see [`setPriority()`].
     ///
@@ -124,7 +124,7 @@ pub struct IntentFilter {
     /// [`ACTION_SENDTO`]: https://developer.android.com/reference/android/content/Intent#ACTION_SENDTO
     /// [`ACTION_SEND_MULTIPLE`]: https://developer.android.com/reference/android/content/Intent#ACTION_SEND_MULTIPLE
     /// [`setPriority()`]: https://developer.android.com/reference/android/content/IntentFilter#setPriority(int)
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub priority: Option<u32>,
     /// The order in which the filter should be processed when multiple filters match.
     /// order differs from priority in that priority applies across apps, while order
@@ -136,7 +136,7 @@ pub struct IntentFilter {
     /// default value is 0.
     ///
     /// This attribute was introduced in API Level 28.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub order: Option<u32>,
     /// List of `<action>` tags.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -153,7 +153,7 @@ pub struct IntentFilter {
     /// See [`verify-android-applinks`] for more information.
     ///
     /// [`verify-android-applinks`]: https://developer.android.com/training/app-links/verify-android-applinks
-    #[yaserde(attribute, prefix = "android", rename = "autoVerify")]
+    #[yaserde(attribute = true, prefix = "android", rename = "autoVerify")]
     pub auto_verify: Option<bool>,
 }
 

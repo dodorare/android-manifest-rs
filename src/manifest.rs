@@ -78,8 +78,10 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
 #[yaserde(
     rename = "manifest",
-    namespace = "android: http://schemas.android.com/apk/res/android",
-    namespace = "tools: http://schemas.android.com/tools"
+    namespaces = {
+        "android" = "http://schemas.android.com/apk/res/android",
+        "tools" = "http://schemas.android.com/tools"
+    }
 )]
 pub struct AndroidManifest {
     /// A full Java-language-style package name for the Android app. The name may contain
@@ -98,8 +100,8 @@ pub struct AndroidManifest {
     /// * It uses this name to resolve any relative class names that are declared in the
     ///   manifest file. For example, if package is set to `"com.example.myapp"`, an
     ///   activity declared as
-    /// `<activity android:name=".MainActivity">` is resolved to be
-    /// `com.example.myapp.MainActivity`.
+    ///   `<activity android:name=".MainActivity">` is resolved to be
+    ///   `com.example.myapp.MainActivity`.
     ///
     /// This name is also the default name for your app process (see the `<application>`
     /// element's [`process`] attribute). And it's the default task affinity for your
@@ -133,7 +135,7 @@ pub struct AndroidManifest {
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinitys
     /// [`Google Play`]: https://developer.android.com/distribute/google-play
     /// [`how to set the application ID`]: https://developer.android.com/studio/build/application-id
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub package: Option<String>,
     /// ## Caution
@@ -150,7 +152,7 @@ pub struct AndroidManifest {
     /// set to the same value for two or more apps, they will all share the same ID —
     /// provided that their certificate sets are identical. Apps with the same user ID
     /// can access each other's data and, if desired, run in the same process.
-    #[yaserde(attribute, prefix = "android", rename = "sharedUserId")]
+    #[yaserde(attribute = true, prefix = "android", rename = "sharedUserId")]
     pub shared_user_id: Option<String>,
     /// The higher the sandbox version number, the higher the level of security. Its
     /// default value is 1; you can also set it to 2. Setting this attribute
@@ -173,7 +175,7 @@ pub struct AndroidManifest {
     /// value. To downgrade the target sandbox value, you must uninstall the app and
     /// replace it with a version whose manifest contains a lower value for this
     /// attribute.
-    #[yaserde(attribute, prefix = "android", rename = "targetSandboxVersion")]
+    #[yaserde(attribute = true, prefix = "android", rename = "targetSandboxVersion")]
     pub target_sandbox_version: Option<String>,
     /// ## Caution
     /// `This constant was deprecated in API level 29`. Shared user IDs cause
@@ -191,7 +193,7 @@ pub struct AndroidManifest {
     /// [`sharedUserId`] attribute is also set.
     ///
     /// [`sharedUserId`]: crate::AndroidManifest#structfield.shared_user_id
-    #[yaserde(attribute, prefix = "android", rename = "sharedUserLabel")]
+    #[yaserde(attribute = true, prefix = "android", rename = "sharedUserLabel")]
     pub shared_user_label: Option<Resource<StringResource>>,
     /// An internal version number. This number is used only to determine whether one
     /// version is more recent than another, with higher numbers indicating more
@@ -204,13 +206,13 @@ pub struct AndroidManifest {
     /// translate a version number in "x.y" format to an integer by encoding the "x" and
     /// "y" separately in the lower and upper 16 bits. Or you could simply increase the
     /// number by one each time a new version is released.
-    #[yaserde(attribute, prefix = "android", rename = "versionCode")]
+    #[yaserde(attribute = true, prefix = "android", rename = "versionCode")]
     pub version_code: Option<u32>,
     /// The version number shown to users. This attribute can be set as a raw string or as
     /// a reference to a string resource. The string has no other purpose than to be
     /// displayed to users. The `versionCode` attribute holds the significant version
     /// number used internally.
-    #[yaserde(attribute, prefix = "android", rename = "versionName")]
+    #[yaserde(attribute = true, prefix = "android", rename = "versionName")]
     pub version_name: Option<String>,
     /// When an app is installed on the external storage:
     ///
@@ -232,7 +234,7 @@ pub struct AndroidManifest {
     /// Introduced in: API Level 8.
     ///
     /// [`App Install Location`]: https://developer.android.com/guide/topics/data/install-location
-    #[yaserde(attribute, prefix = "android", rename = "installLocation")]
+    #[yaserde(attribute = true, prefix = "android", rename = "installLocation")]
     pub install_location: Option<InstallLocation>,
     /// This attribute accepts a comma-separated list of lint issue IDs that you'd like
     /// the tools to ignore on this element or any of its descendants.
@@ -240,7 +242,7 @@ pub struct AndroidManifest {
     /// For example: `tools:ignore="MissingTranslation"`
     ///
     /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub ignore: Option<String>,
     /// This attribute works the same as the @TargetApi annotation in Java code. It lets
     /// you specify the API level (either as an integer or as a code name) that supports
@@ -249,7 +251,7 @@ pub struct AndroidManifest {
     /// For example: `tools:targetApi="14"`
     ///
     /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
-    #[yaserde(attribute, prefix = "tools", rename = "targetApi")]
+    #[yaserde(attribute = true, prefix = "tools", rename = "targetApi")]
     pub target_api: Option<String>,
     /// This tells the tools what the default language or locale is for the resources in
     /// the given `<resources>` element to avoid warnings from the spellchecker.
@@ -257,7 +259,7 @@ pub struct AndroidManifest {
     /// For example: `tools:locale="es"`
     ///
     /// Reference: [Tools Attributes - tools:locale](https://developer.android.com/studio/write/tool-attributes#toolslocale)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub locale: Option<String>,
     /// Required `<application>` tag.
     #[serde(default, skip_serializing_if = "Application::is_default")]
@@ -315,7 +317,7 @@ pub struct AndroidManifest {
     /// For example: `tools:shrinkMode="strict"`
     ///
     /// Reference: [Tools Attributes - tools:shrinkMode](https://developer.android.com/studio/write/tool-attributes#toolsshrinkmode)
-    #[yaserde(attribute, prefix = "tools", rename = "shrinkMode")]
+    #[yaserde(attribute = true, prefix = "tools", rename = "shrinkMode")]
     pub shrink_mode: Option<String>,
     /// When using resource shrinking to remove unused resources, this attribute lets
     /// you specify resources to keep, typically because they are referenced in an
@@ -324,7 +326,7 @@ pub struct AndroidManifest {
     /// For example: `tools:keep="@layout/used_1,@layout/used_2,@layout/*_3"`
     ///
     /// Reference: [Tools Attributes - tools:keep](https://developer.android.com/studio/write/tool-attributes#toolskeep)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub keep: Option<String>,
     /// When using resource shrinking to remove unused resources, this attribute lets
     /// you specify resources you want to manually discard, typically because the resource
@@ -333,7 +335,7 @@ pub struct AndroidManifest {
     /// For example: `tools:discard="@layout/unused_1"`
     ///
     /// Reference: [Tools Attributes - tools:discard](https://developer.android.com/studio/write/tool-attributes#toolsdiscard)
-    #[yaserde(attribute, prefix = "tools")]
+    #[yaserde(attribute = true, prefix = "tools")]
     pub discard: Option<String>,
 }
 

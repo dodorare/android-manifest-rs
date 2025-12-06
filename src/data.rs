@@ -87,7 +87,7 @@ pub struct Data {
     /// result, you should always specify schemes using lowercase letters.
     ///
     /// [`mimeType`]: crate::Data#structfield.mime_type
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub scheme: Option<String>,
     /// The host part of a URI authority. This attribute is meaningless unless a
     /// [`scheme`] attribute is also specified for the filter. To match multiple
@@ -105,14 +105,14 @@ pub struct Data {
     /// using lowercase letters.
     ///
     /// [`scheme`]: crate::Data#structfield.scheme
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub host: Option<String>,
     /// The port part of a URI authority. This attribute is meaningful only if the
     /// [`scheme`] and [`host`] attributes are also specified for the filter.
     ///
     /// [`scheme`]: crate::Data#structfield.scheme
     /// [`host`]: crate::Data#structfield.host
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub port: Option<String>,
     /// The path part of a URI which must begin with a /. The path attribute specifies a
     /// complete path that is matched against the complete path in an Intent object.
@@ -145,11 +145,11 @@ pub struct Data {
     /// [`PatsternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
     /// [`scheme`]: crate::Data#structfield.scheme
     /// [`host`]: crate::Data#structfield.host
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub path: Option<String>,
-    #[yaserde(attribute, prefix = "android", rename = "pathPattern")]
+    #[yaserde(attribute = true, prefix = "android", rename = "pathPattern")]
     pub path_pattern: Option<String>,
-    #[yaserde(attribute, prefix = "android", rename = "pathPrefix")]
+    #[yaserde(attribute = true, prefix = "android", rename = "pathPrefix")]
     pub path_prefix: Option<String>,
     /// A MIME media type, such as `image/jpeg` or `audio/mpeg4-generic`. The
     /// subtype can be the asterisk wildcard (*) to indicate that any subtype
@@ -162,6 +162,6 @@ pub struct Data {
     /// MIME type matching in the Android framework is case-sensitive,
     /// unlike formal RFC MIME types. As a result, you should always specify
     /// MIME types using lowercase letters.
-    #[yaserde(attribute, prefix = "android", rename = "mimeType")]
+    #[yaserde(attribute = true, prefix = "android", rename = "mimeType")]
     pub mime_type: Option<String>,
 }

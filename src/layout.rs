@@ -14,14 +14,14 @@ use serde::{Deserialize, Serialize};
 )]
 pub struct Layout {
     /// Default width of the activity when launched in freeform mode.
-    #[yaserde(attribute, prefix = "android", rename = "defaultWidth")]
+    #[yaserde(attribute = true, prefix = "android", rename = "defaultWidth")]
     pub default_width: Option<String>,
     /// Default height of the activity when launched in freeform mode.
-    #[yaserde(attribute, prefix = "android", rename = "defaultHeight")]
+    #[yaserde(attribute = true, prefix = "android", rename = "defaultHeight")]
     pub default_height: Option<String>,
     /// Initial placement of the activity when launched in freeform mode. See the Gravity
     /// reference for suitable values.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub gravity: Gravity,
     /// Minimum height and minimum width for the activity in both split-screen and
     /// freeform modes. If the user moves the divider in split-screen mode to make an
@@ -42,7 +42,7 @@ pub struct Layout {
     ///            android:minWidth="300dp" />
     /// </activity>
     /// ```
-    #[yaserde(attribute, prefix = "android", rename = "minHeight")]
+    #[yaserde(attribute = true, prefix = "android", rename = "minHeight")]
     pub min_height: Option<String>,
     /// Minimum height and minimum width for the activity in both split-screen and
     /// freeform modes. If the user moves the divider in split-screen mode to make an
@@ -63,7 +63,7 @@ pub struct Layout {
     ///            android:minWidth="300dp" />
     /// </activity>
     /// ```
-    #[yaserde(attribute, prefix = "android", rename = "minWidth")]
+    #[yaserde(attribute = true, prefix = "android", rename = "minWidth")]
     pub min_width: Option<String>,
 }
 

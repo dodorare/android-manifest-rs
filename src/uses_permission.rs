@@ -57,7 +57,7 @@ pub struct UsesPermission {
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// The highest API level at which this permission should be granted to your app.
     /// Setting this attribute is useful if the permission your app requires is no
@@ -82,6 +82,6 @@ pub struct UsesPermission {
     ///
     /// [`WRITE_EXTERNAL_STORAGE`]: https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
     /// [`getExternalFilesDir()`]: https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)
-    #[yaserde(attribute, prefix = "android", rename = "maxSdkVersion")]
+    #[yaserde(attribute = true, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<u32>,
 }

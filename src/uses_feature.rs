@@ -13,12 +13,12 @@ use crate::VarOrBool;
 /// it. Because feature support can vary across Android devices, the
 /// <uses-feature> element serves an important role in letting an application
 /// describe the device-variable features that it uses.
-
+///
 /// The set of available features that your application declares corresponds to
 /// the set of feature constants made available by the Android [`PackageManager`],
 /// which are listed for convenience in the [`Features Reference`] sections at the
 /// bottom of this document.
-
+///
 /// You must specify each feature in a separate `<uses-feature>` element, so if
 /// your application requires multiple features, it would declare multiple
 /// `<uses-feature>` elements. For example, an application that requires both
@@ -32,7 +32,7 @@ use crate::VarOrBool;
 /// ```
 /// In general, you should always make sure to declare `<uses-feature>` elements
 /// for all of the features that your application requires.
-
+///
 /// Declared `<uses-feature>` elements are informational only, meaning that the
 /// Android system itself does not check for matching feature support on the
 /// device before installing an application. However, other services (such as
@@ -40,12 +40,12 @@ use crate::VarOrBool;
 /// declarations as part of handling or interacting with your application. For
 /// this reason, it's very important that you declare all of the features (from
 /// the list below) that your application uses.
-
+///
 /// For some features, there may exist a specific attribute that allows you to
 /// define a version of the feature, such as the version of Open GL used
 /// (declared with [`glEsVersion`]). Other features that either do or do not exist
 /// for a device, such as a camera, are declared using the [`name`] attribute.
-
+///
 /// Although the <uses-feature> element is only activated for devices running
 /// API Level 4 or higher, it is recommended to include these elements for all
 /// applications, even if the [`minSdkVersion`] is "3" or lower. Devices running
@@ -102,22 +102,22 @@ pub struct UsesFeature {
     ///
     /// [`Hardware features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#hw-features
     /// [`Software features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#sw-features
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the feature
     /// specified in `android:name`.
     ///
     /// * When you declare `android:required="true"` for a feature, you are specifying
     ///   that the
-    /// application cannot function, or is not designed to function, when the
-    /// specified feature is not present on the device.
+    ///   application cannot function, or is not designed to function, when the
+    ///   specified feature is not present on the device.
     /// * When you declare `android:required="false"` for a feature, it means that the
     ///   application
-    /// prefers to use the feature if present on the device, but that it is designed to
-    /// function without the specified feature, if necessary.
+    ///   prefers to use the feature if present on the device, but that it is designed to
+    ///   function without the specified feature, if necessary.
     ///
     /// The default value for android:required if not declared is `"true"`.
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub required: Option<VarOrBool>,
     /// The OpenGL ES version required by the application. The higher 16 bits represent
     /// the major number and the lower 16 bits represent the minor number. For
@@ -144,6 +144,6 @@ pub struct UsesFeature {
     /// supported OpenGL ES version at runtime, see the [`OpenGL ES API guide`].
     ///
     /// [`OpenGL ES API guide`]: https://developer.android.com/guide/topics/graphics/opengl
-    #[yaserde(attribute, prefix = "android", rename = "glEsVersion")]
+    #[yaserde(attribute = true, prefix = "android", rename = "glEsVersion")]
     pub gl_es_version: Option<String>,
 }

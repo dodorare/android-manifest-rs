@@ -63,10 +63,10 @@ pub struct GrantUriPermission {
     /// [`PATTERN_PREFIX`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_PREFIX
     /// [`PATTERN_SIMPLE_GLOB`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB
     /// [`PatternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
-    #[yaserde(attribute, prefix = "android")]
+    #[yaserde(attribute = true, prefix = "android")]
     pub path: Option<String>,
-    #[yaserde(attribute, prefix = "android", rename = "pathPattern")]
+    #[yaserde(attribute = true, prefix = "android", rename = "pathPattern")]
     pub path_pattern: Option<String>,
-    #[yaserde(attribute, prefix = "android", rename = "pathPrefix")]
+    #[yaserde(attribute = true, prefix = "android", rename = "pathPrefix")]
     pub path_prefix: Option<String>,
 }

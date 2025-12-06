@@ -10,12 +10,12 @@ edition = "2021"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_plain = "1.0"
-yaserde = "0.8"
-yaserde_derive = "0.8"
-xml-rs = "0.8.4"
-thiserror = "1.0"
+yaserde = "0.12"
+yaserde_derive = "0.12"
+xml-rs = "0.8"
+thiserror = "2.0"
 displaydoc = "0.2"
 log = "0.4"
 
 [dev-dependencies]
-toml = "0.5.9"
+toml = "0.9"
