@@ -7,6 +7,7 @@ pub use any::*;
 pub use mipmap_or_drawable::*;
 pub use res_or_string::*;
 
+use crate::xml::{XmlDeserialize, XmlSerialize};
 use serde::{
     Deserialize, Deserializer, Serialize, Serializer,
     de::{self, Visitor},
@@ -18,7 +19,6 @@ use std::{
     str::FromStr,
 };
 pub use types::*;
-use yaserde::{YaDeserialize, YaSerialize};
 
 /// Trait implemented by types that can be used as resource.
 pub trait ResourceType: FromStr {
@@ -87,37 +87,19 @@ impl<T: ResourceType> Serialize for Resource<T> {
     }
 }
 
-impl<T: ResourceType> YaSerialize for Resource<T> {
-    fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
-        if let Some(package) = &self.package {
-            let _ret = writer.write(xml::writer::XmlEvent::characters(&format!(
-                "@{}:{}/{}",
-                package,
-                T::resource_type(),
-                self.name
-            )));
-        } else {
-            let _ret = writer.write(xml::writer::XmlEvent::characters(&format!(
-                "@{}/{}",
-                T::resource_type(),
-                self.name
-            )));
-        }
-        Ok(())
-    }
-
-    fn serialize_attributes(
+impl<T: ResourceType> XmlSerialize for Resource<T> {
+    fn serialize<W: Write>(
         &self,
-        attributes: Vec<xml::attribute::OwnedAttribute>,
-        namespace: xml::namespace::Namespace,
-    ) -> Result<
-        (
-            Vec<xml::attribute::OwnedAttribute>,
-            xml::namespace::Namespace,
-        ),
-        String,
-    > {
-        Ok((attributes, namespace))
+        writer: &mut crate::xml::ser::Serializer<W>,
+    ) -> Result<(), String> {
+        let value = if let Some(package) = &self.package {
+            format!("@{}:{}/{}", package, T::resource_type(), self.name)
+        } else {
+            format!("@{}/{}", T::resource_type(), self.name)
+        };
+        writer
+            .write(xml::writer::XmlEvent::characters(&value))
+            .map_err(|error| error.to_string())
     }
 }
 
@@ -161,8 +143,8 @@ impl<'de, T: ResourceType> Deserialize<'de> for Resource<T> {
     }
 }
 
-impl<T: ResourceType> YaDeserialize for Resource<T> {
-    fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
+impl<T: ResourceType> XmlDeserialize for Resource<T> {
+    fn deserialize<R: Read>(reader: &mut crate::xml::de::Deserializer<R>) -> Result<Self, String> {
         loop {
             match reader.next_event()? {
                 xml::reader::XmlEvent::StartElement { .. } => {}

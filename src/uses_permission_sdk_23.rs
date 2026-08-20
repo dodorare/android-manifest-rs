@@ -42,7 +42,7 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`]: crate::AndroidManifest
 /// [`<uses-permission>`]: crate::UsesPermission
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesPermissionSdk23 {
     /// The name of the permission. This permission can be defined by the app
@@ -53,12 +53,12 @@ pub struct UsesPermissionSdk23 {
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// The highest API level at which this permission should be granted to your
     /// app. If the app is installed on a device with a later API level, the
     /// app is not granted the permission and cannot use any related
     /// functionality.
-    #[yaserde(attribute = true, prefix = "android", rename = "maxSdkVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<u32>,
 }

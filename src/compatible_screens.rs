@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// Only one instance of the `<compatible-screens>` element is
 /// allowed in the manifest, but it can contain multiple `<screen>` elements.
-/// Each <screen> element specifies a specific screen size-density combination
+/// Each `<screen>` element specifies a specific screen size-density combination
 /// with which the application is compatible.
 ///
 /// The Android system does not read the `<compatible-screens>` manifest element (neither
@@ -59,7 +59,7 @@ use serde::{Deserialize, Serialize};
 /// [`<supports-screens>`]: crate::SupportsScreens
 /// [`Filters on Google Play`]: https://developer.android.com/google/play/filters
 /// [`<manifest>`]: crate::AndroidManifest
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 pub struct CompatibleScreens {
     pub screen: Vec<Screen>,
 }
@@ -74,7 +74,7 @@ pub struct CompatibleScreens {
 ///
 /// ## XML Example
 /// If your application is compatible with only small and normal screens, regardless of
-/// screen density, then you must specify twelve different <screen> elements, because each
+/// screen density, then you must specify twelve different `<screen>` elements, because each
 /// screen size has six different density configurations. You must declare each one of
 /// these; any combination of size and density that you do not specify is considered a
 /// screen configuration with which your application is not compatible. Here's what the
@@ -109,7 +109,7 @@ pub struct CompatibleScreens {
 /// [`<compatible-screens>`]
 ///
 /// [`<compatible-screens>`]: crate::CompatibleScreens
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 pub struct Screen {
     /// `Required`. Specifies the screen size for this screen configuration.
     ///
@@ -117,7 +117,7 @@ pub struct Screen {
     /// Screens`].
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
-    #[yaserde(attribute = true, prefix = "android", rename = "screenSize")]
+    #[xml(attribute = true, prefix = "android", rename = "screenSize")]
     pub screen_size: ScreenSize,
     /// `Required.` Specifies the screen density for this screen configuration.
     ///
@@ -136,37 +136,37 @@ pub struct Screen {
     /// * "560"
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support#range
-    #[yaserde(attribute = true, prefix = "android", rename = "screenDensity")]
+    #[xml(attribute = true, prefix = "android", rename = "screenDensity")]
     pub screen_density: String,
 }
 
 /// Android runs on a variety of devices that have different screen sizes and pixel
 /// densities. The system performs basic scaling and resizing to adapt your user interface
 /// to different screens.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum ScreenSize {
     /// Screens that are of similar size to a low-density QVGA screen. The minimum layout
     /// size for a small screen is approximately 320x426 dp units. Examples are QVGA
     /// low-density and VGA high density.
-    #[yaserde(rename = "small")]
+    #[xml(rename = "small")]
     Small,
     /// Screens that are of similar size to a medium-density HVGA screen. The minimum
     /// layout size for a normal screen is approximately 320x470 dp units. Examples of
     /// such screens a WQVGA low-density, HVGA medium-density, WVGA high-density.
-    #[yaserde(rename = "normal")]
+    #[xml(rename = "normal")]
     #[default]
     Normal,
     /// Screens that are of similar size to a medium-density VGA screen. The minimum
     /// layout size for a large screen is approximately 480x640 dp units. Examples are VGA
     /// and WVGA medium-density screens.
-    #[yaserde(rename = "large")]
+    #[xml(rename = "large")]
     Large,
     /// Screens that are considerably larger than the traditional medium-density HVGA
     /// screen. The minimum layout size for an xlarge screen is approximately 720x960 dp
     /// units. In most cases, devices with extra-large screens would be too large to carry
     /// in a pocket and would most likely be tablet-style devices. Added in API level 9.
-    #[yaserde(rename = "xlarge")]
+    #[xml(rename = "xlarge")]
     Xlarge,
 }

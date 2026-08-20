@@ -54,7 +54,7 @@ use serde::{Deserialize, Serialize};
 /// [`<category>`]: crate::Category
 /// [`<data>`]: crate::Data
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct IntentFilter {
     /// An icon that represents the parent activity, service, or broadcast receiver when
@@ -70,7 +70,7 @@ pub struct IntentFilter {
     ///
     /// [`<application>`]: crate::Application
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the parent component. This label, rather than the one
     /// set by the parent component, is used when the component is presented to the
@@ -88,7 +88,7 @@ pub struct IntentFilter {
     /// [`<application>`]: crate::Application
     /// [`label`]: crate::Application#structfield.label
     /// [`Icons and Labels`]: https://developer.android.com/guide/topics/manifest/manifest-intro#iconlabel
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The priority that should be given to the parent component with regard to handling
     /// intents of the type described by the filter. This attribute has meaning for
@@ -124,7 +124,7 @@ pub struct IntentFilter {
     /// [`ACTION_SENDTO`]: https://developer.android.com/reference/android/content/Intent#ACTION_SENDTO
     /// [`ACTION_SEND_MULTIPLE`]: https://developer.android.com/reference/android/content/Intent#ACTION_SEND_MULTIPLE
     /// [`setPriority()`]: https://developer.android.com/reference/android/content/IntentFilter#setPriority(int)
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub priority: Option<u32>,
     /// The order in which the filter should be processed when multiple filters match.
     /// order differs from priority in that priority applies across apps, while order
@@ -136,7 +136,7 @@ pub struct IntentFilter {
     /// default value is 0.
     ///
     /// This attribute was introduced in API Level 28.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub order: Option<u32>,
     /// List of `<action>` tags.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -153,7 +153,7 @@ pub struct IntentFilter {
     /// See [`verify-android-applinks`] for more information.
     ///
     /// [`verify-android-applinks`]: https://developer.android.com/training/app-links/verify-android-applinks
-    #[yaserde(attribute = true, prefix = "android", rename = "autoVerify")]
+    #[xml(attribute = true, prefix = "android", rename = "autoVerify")]
     pub auto_verify: Option<bool>,
 }
 

@@ -1,10 +1,10 @@
+use crate::xml::{XmlDeserialize, XmlSerialize};
 use serde::{
     Deserialize, Deserializer, Serialize, Serializer,
     de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};
-use yaserde::{YaDeserialize, YaSerialize};
 
 /// Enum used when the value can be string resource or just a row string.
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -62,31 +62,14 @@ impl Serialize for VarOrBool {
     }
 }
 
-impl YaSerialize for VarOrBool {
-    fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
-        match self {
-            VarOrBool::Var(variable) => {
-                let _ret = writer.write(xml::writer::XmlEvent::characters(variable));
-            }
-            VarOrBool::Bool(value) => {
-                let _ret = writer.write(xml::writer::XmlEvent::characters(&value.to_string()));
-            }
-        }
-        Ok(())
-    }
-
-    fn serialize_attributes(
+impl XmlSerialize for VarOrBool {
+    fn serialize<W: Write>(
         &self,
-        attributes: Vec<xml::attribute::OwnedAttribute>,
-        namespace: xml::namespace::Namespace,
-    ) -> Result<
-        (
-            Vec<xml::attribute::OwnedAttribute>,
-            xml::namespace::Namespace,
-        ),
-        String,
-    > {
-        Ok((attributes, namespace))
+        writer: &mut crate::xml::ser::Serializer<W>,
+    ) -> Result<(), String> {
+        writer
+            .write(xml::writer::XmlEvent::characters(&self.to_string()))
+            .map_err(|error| error.to_string())
     }
 }
 
@@ -128,12 +111,12 @@ impl<'de> Deserialize<'de> for VarOrBool {
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_string(VarOrBoolVisitor)
+        deserializer.deserialize_any(VarOrBoolVisitor)
     }
 }
 
-impl YaDeserialize for VarOrBool {
-    fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
+impl XmlDeserialize for VarOrBool {
+    fn deserialize<R: Read>(reader: &mut crate::xml::de::Deserializer<R>) -> Result<Self, String> {
         loop {
             match reader.next_event()? {
                 xml::reader::XmlEvent::StartElement { .. } => {}

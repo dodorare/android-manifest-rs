@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 /// major and minor versions). [`Versioning Your Applications.`]
 ///
 /// ## Note
-/// Google Play uses the <uses-sdk> attributes declared in your app manifest to filter
+/// Google Play uses the `<uses-sdk>` attributes declared in your app manifest to filter
 /// your app from devices that do not meet its platform version requirements. Before
 /// setting these attributes, make sure that you understand [`Google Play filters`].
 ///
@@ -33,7 +33,7 @@ use serde::{Deserialize, Serialize};
 /// [`Google Play filters`]: https://developer.android.com/google/play/filters
 /// [`<manifest>`]: crate::AndroidManifest
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesSdk {
     /// An integer designating the minimum API Level required for the application to run.
@@ -50,7 +50,7 @@ pub struct UsesSdk {
     /// less than 3, the application will crash during runtime when attempting to
     /// access the unavailable APIs. For this reason, be certain to declare the
     /// appropriate API Level in the `minSdkVersion` attribute.
-    #[yaserde(attribute = true, prefix = "android", rename = "minSdkVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "minSdkVersion")]
     pub min_sdk_version: Option<u32>,
     /// An integer designating the API Level that the application targets. If not set, the
     /// default value equals that given to `minSdkVersion`. This attribute informs the
@@ -82,7 +82,7 @@ pub struct UsesSdk {
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     /// [`Build.VERSION_CODES`]: https://developer.android.com/reference/android/os/Build.VERSION_CODES
-    #[yaserde(attribute = true, prefix = "android", rename = "targetSdkVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "targetSdkVersion")]
     pub target_sdk_version: Option<u32>,
     /// An integer designating the maximum API Level on which the application is designed
     /// to run. In Android 1.5, 1.6, 2.0, and 2.0.1, the system checks the value of
@@ -129,6 +129,6 @@ pub struct UsesSdk {
     /// the `maxSdkVersion` attribute during installation or re-validation. Google Play
     /// will continue to use the attribute as a filter, however, when presenting users
     /// with applications available for download.
-    #[yaserde(attribute = true, prefix = "android", rename = "maxSdkVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<u32>,
 }

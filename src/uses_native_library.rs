@@ -45,11 +45,11 @@ use crate::VarOrBool;
 /// [`PackageManager`]: https://developer.android.com/reference/android/content/pm/PackageManager
 /// [`<application>`]: crate::Application
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesNativeLibrary {
     /// The name of the library file.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: String,
     /// Boolean value that indicates whether the application requires the library
     /// specified by android:name:
@@ -64,6 +64,6 @@ pub struct UsesNativeLibrary {
     ///   for gracefully handling the absence of the library.
     ///
     /// The default is `"true"`.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub required: Option<VarOrBool>,
 }

@@ -84,7 +84,7 @@ use serde::{Deserialize, Serialize};
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<path-permission>`]: crate::PathPermission
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 #[serde(rename = "provider")]
 pub struct Provider {
@@ -97,7 +97,7 @@ pub struct Provider {
     /// There is no default. At least one authority must be specified.
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
-    #[yaserde(
+    #[xml(
         attribute = true,
         prefix = "android",
         skip_serializing_if = "check_authorities"
@@ -109,13 +109,13 @@ pub struct Provider {
     ///
     /// The [`<application>`] element has its own [`enabled`] attribute that applies to
     /// all application components, including services. The [`<application>`] and
-    /// <service> attributes must both be `"true"` (as they both are by default) for
+    /// `<service>` attributes must both be `"true"` (as they both are by default) for
     /// the service to be enabled. If either is `"false"`, the service is disabled; it
     /// cannot be instantiated.
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub enabled: Option<VarOrBool>,
     /// Whether or not the service is direct-boot aware; that is, whether or not it can
     /// run before the user unlocks the device.
@@ -127,7 +127,7 @@ pub struct Provider {
     /// The default value is `"false"`.
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
-    #[yaserde(attribute = true, prefix = "android", rename = "directBootAware")]
+    #[xml(attribute = true, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<VarOrBool>,
     /// Whether the content provider is available for other applications to use:
     ///
@@ -152,7 +152,7 @@ pub struct Provider {
     /// [`android:grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
     /// [`android:targetSdkVersion`]: crate::UsesSdk#structfield.target_sdk_version
     /// [`permission`]: crate::Provider#structfield.permission
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub exported: Option<VarOrBool>,
     /// Whether or not those who ordinarily would not have permission to access the
     /// content provider's data can be granted permission to do so, temporarily
@@ -178,7 +178,7 @@ pub struct Provider {
     ///
     /// If you enable this feature, either by setting this attribute to
     /// `"true"` or by defining [`<grant-uri-permission>`] subelements, you must call
-    /// [`Context.revokeUriPermission()`] when a covered URI is deleted from the
+    /// `Context.revokeUriPermission()` when a covered URI is deleted from the
     /// provider.
     ///
     /// See also the [`<grant-uri-permission>`] element.
@@ -190,7 +190,7 @@ pub struct Provider {
     /// [`FLAG_GRANT_READ_URI_PERMISSION`]: https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_READ_URI_PERMISSION
     /// [`FLAG_GRANT_WRITE_URI_PERMISSION`]: https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_WRITE_URI_PERMISSION
     /// [`<grant-uri-permission>`]: crate::GrantUriPermission
-    #[yaserde(attribute = true, prefix = "android", rename = "grantUriPermissions")]
+    #[xml(attribute = true, prefix = "android", rename = "grantUriPermissions")]
     pub grant_uri_permissions: Option<VarOrBool>,
     /// An icon representing the content provider. This attribute must be set as a
     /// reference to a drawable resource containing the image definition. If it is not
@@ -199,14 +199,14 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`icon`]: crate::Application#structfield.icon
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// The order in which the content provider should be instantiated, relative to other
     /// content providers hosted by the same process. When there are dependencies
     /// among content providers, setting this attribute for each of them ensures that
     /// they are created in the order required by those dependencies. The value is a
     /// simple integer, with higher numbers being initialized first.
-    #[yaserde(attribute = true, prefix = "android", rename = "initOrder")]
+    #[xml(attribute = true, prefix = "android", rename = "initOrder")]
     pub init_order: Option<u32>,
     /// A user-readable label for the content provided. If this attribute is not set, the
     /// label set for the application as a whole is used instead (see
@@ -219,7 +219,7 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`label`]: crate::Application#structfield.label
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// If the app runs in multiple processes, this attribute determines whether multiple
     /// instances of the content provider are created. If `true`, each of the app's
@@ -229,7 +229,7 @@ pub struct Provider {
     /// Setting this flag to `true` may improve performance by reducing the overhead of
     /// interprocess communication, but it also increases the memory footprint of each
     /// process.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub multiprocess: Option<VarOrBool>,
     /// The name of the class that implements the content provider, a subclass of
     /// [`ContentProvider`]. This should be a fully qualified class name (such
@@ -241,7 +241,7 @@ pub struct Provider {
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: String,
     /// The name of a permission that clients must have to read or write the content
     /// provider's data. This attribute is a convenient way of setting a
@@ -260,7 +260,7 @@ pub struct Provider {
     /// [`grantUriPermissions`]: crate::Provider#structfield.grant_uri_permissions
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#sectperm
     /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the process in which the content provider should run. Normally, all
     /// components of an application run in the default process created for the
@@ -279,7 +279,7 @@ pub struct Provider {
     ///
     /// [`<application>`]: crate::Application
     /// [`process`]: crate::Application#structfield.process
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub process: Option<String>,
     /// A permission that clients must have to query the content provider.
     ///
@@ -293,12 +293,12 @@ pub struct Provider {
     /// [`<grant-uri-permission>`]: crate::GrantUriPermission
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`writePermission`]: crate::Provider#structfield.write_permission
-    #[yaserde(attribute = true, prefix = "android", rename = "readPermission")]
+    #[xml(attribute = true, prefix = "android", rename = "readPermission")]
     pub read_permission: Option<String>,
     /// Whether or not the data under the content provider's control is to be synchronized
     /// with data on a server — `"true"` if it is to be synchronized, and `"false"` if
     /// not.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub syncable: Option<VarOrBool>,
     /// A permission that clients must have to make changes to the data controlled by the
     /// content provider.
@@ -313,17 +313,17 @@ pub struct Provider {
     /// [`<grant-uri-permission>`]: crate::GrantUriPermission
     /// [`permission`]: crate::Provider#structfield.permission
     /// [`readPermission`]: crate::Provider#structfield.write_permission
-    #[yaserde(attribute = true, prefix = "android", rename = "writePermission")]
+    #[xml(attribute = true, prefix = "android", rename = "writePermission")]
     pub write_permission: Option<String>,
-    #[yaserde(rename = "grant-uri-permission")]
+    #[xml(rename = "grant-uri-permission")]
     pub grant_uri_permission: Option<GrantUriPermission>,
-    #[yaserde(rename = "path-permission")]
+    #[xml(rename = "path-permission")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub path_permission: Vec<PathPermission>,
-    #[yaserde(rename = "intent-filter")]
+    #[xml(rename = "intent-filter")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
-    #[yaserde(rename = "meta-data")]
+    #[xml(rename = "meta-data")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
     /// Specifies which attributes from lower priority manifest files should be replaced
@@ -331,38 +331,38 @@ pub struct Provider {
     /// names.
     ///
     /// Reference: [Merge manifest files - tools:replace](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub replace: Option<String>,
     /// Specifies which attributes or child elements from lower priority manifest files
     /// should be removed entirely.
     ///
     /// Reference: [Merge manifest files - tools:remove](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub remove: Option<String>,
     /// Specifies the merge strategy for this element.
     ///
     /// Reference: [Merge manifest files - tools:node](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub node: Option<String>,
     /// Lint issue IDs to ignore on this element.
     ///
     /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub ignore: Option<String>,
     /// Target API level for this element.
     ///
     /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
-    #[yaserde(attribute = true, prefix = "tools", rename = "targetApi")]
+    #[xml(attribute = true, prefix = "tools", rename = "targetApi")]
     pub target_api: Option<String>,
     /// Specifies library package names to apply the merge rule to.
     ///
     /// Reference: [Merge manifest files - tools:selector](https://developer.android.com/studio/build/manage-manifests#marker_selector)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub selector: Option<String>,
     /// Generate a build failure if attributes don't exactly match.
     ///
     /// Reference: [Merge manifest files - tools:strict](https://developer.android.com/studio/build/manage-manifests#attribute_markers)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub strict: Option<String>,
 }
 

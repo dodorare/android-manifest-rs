@@ -75,8 +75,10 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-permission-sdk-23>`]: crate::UsesPermissionSdk23
 /// [`<uses-sdk>`]: crate::UsesSdk
 /// [`<queries>`]: crate::Queries
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Default, Clone)]
-#[yaserde(
+#[derive(
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Default, Clone,
+)]
+#[xml(
     rename = "manifest",
     namespaces = {
         "android" = "http://schemas.android.com/apk/res/android",
@@ -135,7 +137,7 @@ pub struct AndroidManifest {
     /// [`taskAffinity`]: crate::Activity#structfield.task_affinitys
     /// [`Google Play`]: https://developer.android.com/distribute/google-play
     /// [`how to set the application ID`]: https://developer.android.com/studio/build/application-id
-    #[yaserde(attribute = true)]
+    #[xml(attribute = true)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub package: Option<String>,
     /// ## Caution
@@ -152,7 +154,7 @@ pub struct AndroidManifest {
     /// set to the same value for two or more apps, they will all share the same ID —
     /// provided that their certificate sets are identical. Apps with the same user ID
     /// can access each other's data and, if desired, run in the same process.
-    #[yaserde(attribute = true, prefix = "android", rename = "sharedUserId")]
+    #[xml(attribute = true, prefix = "android", rename = "sharedUserId")]
     pub shared_user_id: Option<String>,
     /// The higher the sandbox version number, the higher the level of security. Its
     /// default value is 1; you can also set it to 2. Setting this attribute
@@ -175,7 +177,7 @@ pub struct AndroidManifest {
     /// value. To downgrade the target sandbox value, you must uninstall the app and
     /// replace it with a version whose manifest contains a lower value for this
     /// attribute.
-    #[yaserde(attribute = true, prefix = "android", rename = "targetSandboxVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "targetSandboxVersion")]
     pub target_sandbox_version: Option<String>,
     /// ## Caution
     /// `This constant was deprecated in API level 29`. Shared user IDs cause
@@ -193,7 +195,7 @@ pub struct AndroidManifest {
     /// [`sharedUserId`] attribute is also set.
     ///
     /// [`sharedUserId`]: crate::AndroidManifest#structfield.shared_user_id
-    #[yaserde(attribute = true, prefix = "android", rename = "sharedUserLabel")]
+    #[xml(attribute = true, prefix = "android", rename = "sharedUserLabel")]
     pub shared_user_label: Option<Resource<StringResource>>,
     /// An internal version number. This number is used only to determine whether one
     /// version is more recent than another, with higher numbers indicating more
@@ -206,13 +208,13 @@ pub struct AndroidManifest {
     /// translate a version number in "x.y" format to an integer by encoding the "x" and
     /// "y" separately in the lower and upper 16 bits. Or you could simply increase the
     /// number by one each time a new version is released.
-    #[yaserde(attribute = true, prefix = "android", rename = "versionCode")]
+    #[xml(attribute = true, prefix = "android", rename = "versionCode")]
     pub version_code: Option<u32>,
     /// The version number shown to users. This attribute can be set as a raw string or as
     /// a reference to a string resource. The string has no other purpose than to be
     /// displayed to users. The `versionCode` attribute holds the significant version
     /// number used internally.
-    #[yaserde(attribute = true, prefix = "android", rename = "versionName")]
+    #[xml(attribute = true, prefix = "android", rename = "versionName")]
     pub version_name: Option<String>,
     /// When an app is installed on the external storage:
     ///
@@ -234,7 +236,7 @@ pub struct AndroidManifest {
     /// Introduced in: API Level 8.
     ///
     /// [`App Install Location`]: https://developer.android.com/guide/topics/data/install-location
-    #[yaserde(attribute = true, prefix = "android", rename = "installLocation")]
+    #[xml(attribute = true, prefix = "android", rename = "installLocation")]
     pub install_location: Option<InstallLocation>,
     /// This attribute accepts a comma-separated list of lint issue IDs that you'd like
     /// the tools to ignore on this element or any of its descendants.
@@ -242,7 +244,7 @@ pub struct AndroidManifest {
     /// For example: `tools:ignore="MissingTranslation"`
     ///
     /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub ignore: Option<String>,
     /// This attribute works the same as the @TargetApi annotation in Java code. It lets
     /// you specify the API level (either as an integer or as a code name) that supports
@@ -251,7 +253,7 @@ pub struct AndroidManifest {
     /// For example: `tools:targetApi="14"`
     ///
     /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
-    #[yaserde(attribute = true, prefix = "tools", rename = "targetApi")]
+    #[xml(attribute = true, prefix = "tools", rename = "targetApi")]
     pub target_api: Option<String>,
     /// This tells the tools what the default language or locale is for the resources in
     /// the given `<resources>` element to avoid warnings from the spellchecker.
@@ -259,19 +261,19 @@ pub struct AndroidManifest {
     /// For example: `tools:locale="es"`
     ///
     /// Reference: [Tools Attributes - tools:locale](https://developer.android.com/studio/write/tool-attributes#toolslocale)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub locale: Option<String>,
     /// Required `<application>` tag.
     #[serde(default, skip_serializing_if = "Application::is_default")]
     pub application: Application,
     /// Optional `<uses-sdk>` tag.
-    #[yaserde(rename = "uses-sdk")]
+    #[xml(rename = "uses-sdk")]
     pub uses_sdk: Option<UsesSdk>,
     /// List of `<compatible-screens>` tags.
-    #[yaserde(rename = "compatible-screens")]
+    #[xml(rename = "compatible-screens")]
     pub compatible_screens: Option<CompatibleScreens>,
     /// Optional `<uses-configuration>` tag.
-    #[yaserde(rename = "uses-configuration")]
+    #[xml(rename = "uses-configuration")]
     pub uses_configuration: Option<UsesConfiguration>,
     /// List of `<queries>` tags.
     pub queries: Option<Queries>,
@@ -282,31 +284,31 @@ pub struct AndroidManifest {
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub permission: Vec<Permission>,
     /// List of `<permission-group>` tags.
-    #[yaserde(rename = "permission-group")]
+    #[xml(rename = "permission-group")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub permission_group: Vec<PermissionGroup>,
     /// List of `<permission-tree>` tags.
-    #[yaserde(rename = "permission-tree")]
+    #[xml(rename = "permission-tree")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub permission_tree: Vec<PermissionTree>,
     /// List of `<supports-gl-texture>` tags.
-    #[yaserde(rename = "supports-gl-texture")]
+    #[xml(rename = "supports-gl-texture")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub supports_gl_texture: Vec<SupportsGlTexture>,
     /// List of `<supports-screens>` tags.
-    #[yaserde(rename = "supports-screens")]
+    #[xml(rename = "supports-screens")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub supports_screens: Vec<SupportsScreens>,
     /// List of `<uses-feature>` tags.
-    #[yaserde(rename = "uses-feature")]
+    #[xml(rename = "uses-feature")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_feature: Vec<UsesFeature>,
     /// List of `<uses-permission>` tags.
-    #[yaserde(rename = "uses-permission")]
+    #[xml(rename = "uses-permission")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_permission: Vec<UsesPermission>,
     /// List of `<uses-permission-sdk-23>` tags.
-    #[yaserde(rename = "uses-permission-sdk-23")]
+    #[xml(rename = "uses-permission-sdk-23")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub uses_permission_sdk_23: Vec<UsesPermissionSdk23>,
     /// This attribute lets you specify whether the build tools should use safe mode
@@ -317,7 +319,7 @@ pub struct AndroidManifest {
     /// For example: `tools:shrinkMode="strict"`
     ///
     /// Reference: [Tools Attributes - tools:shrinkMode](https://developer.android.com/studio/write/tool-attributes#toolsshrinkmode)
-    #[yaserde(attribute = true, prefix = "tools", rename = "shrinkMode")]
+    #[xml(attribute = true, prefix = "tools", rename = "shrinkMode")]
     pub shrink_mode: Option<String>,
     /// When using resource shrinking to remove unused resources, this attribute lets
     /// you specify resources to keep, typically because they are referenced in an
@@ -326,7 +328,7 @@ pub struct AndroidManifest {
     /// For example: `tools:keep="@layout/used_1,@layout/used_2,@layout/*_3"`
     ///
     /// Reference: [Tools Attributes - tools:keep](https://developer.android.com/studio/write/tool-attributes#toolskeep)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub keep: Option<String>,
     /// When using resource shrinking to remove unused resources, this attribute lets
     /// you specify resources you want to manually discard, typically because the resource
@@ -335,12 +337,12 @@ pub struct AndroidManifest {
     /// For example: `tools:discard="@layout/unused_1"`
     ///
     /// Reference: [Tools Attributes - tools:discard](https://developer.android.com/studio/write/tool-attributes#toolsdiscard)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub discard: Option<String>,
 }
 
 /// The default install location for the app.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum InstallLocation {
@@ -349,13 +351,13 @@ pub enum InstallLocation {
     /// the system will install it on the external storage. Once installed, the user
     /// can move the app to either internal or external storage through the system
     /// settings.
-    #[yaserde(rename = "auto")]
+    #[xml(rename = "auto")]
     Auto,
     /// The app must be installed on the internal device storage only. If this is set, the
     /// app will never be installed on the external storage. If the internal storage
     /// is full, then the system will not install the app. This is also the default
     /// behavior if you do not define android:installLocation.
-    #[yaserde(rename = "internalOnly")]
+    #[xml(rename = "internalOnly")]
     #[default]
     InternalOnly,
     /// The app prefers to be installed on the external storage (SD card). There is no
@@ -363,6 +365,6 @@ pub enum InstallLocation {
     /// on internal storage if the external media is unavailable or full. Once
     /// installed, the user can move the app to either internal or external storage
     /// through the system settings.
-    #[yaserde(rename = "preferExternal")]
+    #[xml(rename = "preferExternal")]
     PreferExternal,
 }

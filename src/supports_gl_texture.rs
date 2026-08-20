@@ -20,10 +20,10 @@ use serde::{Deserialize, Serialize};
 ///     android:name="GL_OES_compressed_paletted_texture" />
 /// ```
 ///
-/// Declared <supports-gl-texture> elements are informational, meaning that the Android
+/// Declared `<supports-gl-texture>` elements are informational, meaning that the Android
 /// system itself does not examine the elements at install time to ensure matching support
 /// on the device. However, other services (such as Google Play) or applications can check
-/// your application's <supports-gl-texture> declarations as part of handling or
+/// your application's `<supports-gl-texture>` declarations as part of handling or
 /// interacting with your application.  For this reason, it's very important that you
 /// declare all of the texture compression formats (from the list below) that your
 /// application is capable of supporting.
@@ -58,7 +58,7 @@ use serde::{Deserialize, Serialize};
 /// [`Google Play and texture compression filtering`]: https://developer.android.com/guide/topics/manifest/supports-gl-texture-element#market-texture-filtering
 /// [`<manifest>`]: crate::AndroidManifest
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct SupportsGlTexture {
     /// Specifies a single GL texture compression format supported by the application, as
@@ -70,7 +70,7 @@ pub struct SupportsGlTexture {
     /// compression. `GL_AMD_compressed_ATC_texture` ATI texture
     /// compression. Available on devices running Adreno GPU, including HTC
     /// Nexus One, Droid Incredible, EVO, and others. For widest
-    /// compatibility, devices may also declare a <supports-gl-texture> element
+    /// compatibility, devices may also declare a `<supports-gl-texture>` element
     /// with the descriptor GL_ATI_texture_compression_atitc.
     /// `GL_EXT_texture_compression_latc` Luminance alpha texture compression.
     /// `GL_EXT_texture_compression_dxt1` S3 DXT1 texture compression. Supported
@@ -84,11 +84,11 @@ pub struct SupportsGlTexture {
     /// PowerVR texture compression. Available in devices running PowerVR
     /// SGX530/540 GPU, such as Motorola DROID series; Samsung Galaxy S, Nexus
     /// S, and Galaxy Tab; and others.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<SupportsGlTextureName>,
 }
 
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[allow(non_camel_case_types)]
 #[derive(Default)]
 pub enum SupportsGlTextureName {

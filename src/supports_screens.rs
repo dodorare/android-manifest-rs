@@ -85,7 +85,7 @@ use crate::VarOrBool;
 /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
 /// [`<manifest>`]: crate::AndroidManifest
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct SupportsScreens {
     /// Indicates whether the application is resizeable for different screen sizes. This
@@ -97,7 +97,7 @@ pub struct SupportsScreens {
     /// introduced. You should not use it.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub resizeable: Option<VarOrBool>,
     /// Indicates whether the application supports smaller screen form-factors. A small
     /// screen is defined as one with a smaller aspect ratio than the `"normal"`
@@ -105,13 +105,13 @@ pub struct SupportsScreens {
     /// will not be available for small screen devices from external services (such as
     /// Google Play), because there is little the platform can do to make such an
     /// application work on a smaller screen. This is `"true"` by default.
-    #[yaserde(attribute = true, prefix = "android", rename = "smallScreens")]
+    #[xml(attribute = true, prefix = "android", rename = "smallScreens")]
     pub small_screens: Option<VarOrBool>,
     /// Indicates whether an application supports the "normal" screen form-factors.
     /// Traditionally this is an HVGA medium density screen, but WQVGA low density and
     /// WVGA high density are also considered to be normal. This attribute is "true"
     /// by default.
-    #[yaserde(attribute = true, prefix = "android", rename = "normalScreens")]
+    #[xml(attribute = true, prefix = "android", rename = "normalScreens")]
     pub normal_screens: Option<VarOrBool>,
     /// Indicates whether the application supports larger screen form-factors. A large
     /// screen is defined as a screen that is significantly larger than a "normal"
@@ -123,7 +123,7 @@ pub struct SupportsScreens {
     /// compatibility mode`].
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[yaserde(attribute = true, prefix = "android", rename = "largeScreens")]
+    #[xml(attribute = true, prefix = "android", rename = "largeScreens")]
     pub large_screens: Option<VarOrBool>,
     /// Indicates whether the application supports extra large screen form-factors. An
     /// xlarge screen is defined as a screen that is significantly larger than a
@@ -138,7 +138,7 @@ pub struct SupportsScreens {
     /// This attribute was introduced in API level 9.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[yaserde(attribute = true, prefix = "android", rename = "xlargeScreens")]
+    #[xml(attribute = true, prefix = "android", rename = "xlargeScreens")]
     pub xlarge_screens: Option<VarOrBool>,
     /// Indicates whether the application includes resources to accommodate any screen
     /// density.
@@ -151,7 +151,7 @@ pub struct SupportsScreens {
     /// information).
     ///
     /// [`Supporting Multiple Screens`]: https://developer.android.com/guide/practices/screens_support
-    #[yaserde(attribute = true, prefix = "android", rename = "anyDensity")]
+    #[xml(attribute = true, prefix = "android", rename = "anyDensity")]
     pub any_density: Option<VarOrBool>,
     /// Specifies the minimum smallestWidth required. The smallestWidth is the shortest
     /// dimension of the screen space (in dp units) that must be available to your
@@ -185,7 +185,7 @@ pub struct SupportsScreens {
     /// the small size or a minimum width of 320dp), you do not need to use this
     /// attribute. Otherwise, you should use a value for this attribute that
     /// matches the smallest value used by your application for the [`smallest screen
-    /// width qualifier`] (sw<N>dp).
+    /// width qualifier`] (`sw<N>dp`).
     ///
     /// ## Caution
     /// The Android system does
@@ -199,7 +199,7 @@ pub struct SupportsScreens {
     /// This attribute was introduced in API level 13.
     ///
     /// [`smallest screen width qualifier`]: https://developer.android.com/guide/topics/resources/providing-resources#SmallestScreenWidthQualifier
-    #[yaserde(
+    #[xml(
         attribute = true,
         prefix = "android",
         rename = "requiresSmallestWidthDp"
@@ -227,7 +227,7 @@ pub struct SupportsScreens {
     /// This attribute was introduced in API level 13.
     ///
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
-    #[yaserde(
+    #[xml(
         attribute = true,
         prefix = "android",
         rename = "compatibleWidthLimitDp"
@@ -258,6 +258,6 @@ pub struct SupportsScreens {
     /// [`screen compatibility mode`]: https://developer.android.com/guide/topics/manifest/supports-screens-element#compat-mode
     /// [`android:compatibleWidthLimitDp`]:
     /// crate::SupportsScreens#structfield.compatible_width_limit_dp
-    #[yaserde(attribute = true, prefix = "android", rename = "largestWidthLimitDp")]
+    #[xml(attribute = true, prefix = "android", rename = "largestWidthLimitDp")]
     pub largest_width_limit_dp: Option<String>,
 }

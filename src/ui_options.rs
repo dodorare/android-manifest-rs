@@ -1,12 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 /// Extra options for an activity's UI.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum UiOptions {
     /// No extra UI options. This is the default
-    #[yaserde(rename = "none")]
+    #[xml(rename = "none")]
     #[default]
     None,
     /// Add a bar at the bottom of the screen to display action items in the app
@@ -18,6 +18,6 @@ pub enum UiOptions {
     /// space is made available not only for the action items, but also for
     /// navigation and title elements at the top. Menu items are not split
     /// across the two bars; they always appear together.
-    #[yaserde(rename = "splitActionBarWhenNarrow")]
+    #[xml(rename = "splitActionBarWhenNarrow")]
     SplitActionBarWhenNarrow,
 }

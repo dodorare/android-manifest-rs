@@ -11,9 +11,9 @@ use serde::{Deserialize, Serialize};
 /// ## Node
 /// Some packages are [`visible automatically`]. Your app can always see these packages in
 /// its queries for other installed apps. To view other packages, declare your app's need
-/// for increased package visibility using the <queries> element.
+/// for increased package visibility using the `<queries>` element.
 ///
-/// Learn more about how to use the <queries> element in the guide on [`package visibility
+/// Learn more about how to use the `<queries>` element in the guide on [`package visibility
 /// filtering`].
 ///
 /// ## XML Syntax
@@ -36,14 +36,14 @@ use serde::{Deserialize, Serialize};
 /// [`<manifest>`]: crate::AndroidManifest
 /// [`package visibility filtering`]: https://developer.android.com/training/package-visibility
 /// [`visible automatically`]: https://developer.android.com/training/package-visibility/automatic
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 pub struct Queries {
     /// Specifies a single app that your app intends to access. This other app might
     /// integrate with your app, or your app might use services that the other app
     /// provides.
     pub package: Option<Package>,
     /// Specifies an [`intent filter signature`]. Your app can discover other apps that
-    /// have matching [`<intent-filter>`] elements.
+    /// have matching `<intent-filter>` elements.
     pub intent: Option<Intent>,
     /// Specifies one or more [`content provider authorities`]. Your app can discover
     /// other apps whose content providers use the specified authorities.
@@ -61,10 +61,10 @@ pub struct Queries {
 
 /// Specifies a single app that your app intends to access. This other app might integrate
 /// with your app, or your app might use services that the other app provides.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 pub struct Package {
     /// `Required`. Specifies the package name of the other app.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: String,
 }
 
@@ -72,7 +72,7 @@ pub struct Package {
 /// matching [`<intent-filter>`] elements.
 ///
 /// ## Node
-/// There are some restrictions on the options that you can include in this <intent>
+/// There are some restrictions on the options that you can include in this `<intent>`
 /// element, compared to a typical intent filter signature. Learn more about these
 /// restrictions in the "intent filter signature" section of the guide to [`declaring
 /// package visibility needs`].
@@ -81,7 +81,7 @@ pub struct Package {
 /// [`intent filter signature`]: https://developer.android.com/training/basics/intents/filters
 /// [`declaring package visibility needs`]: https://developer.android.com/training/package-visibility/declaring#intent-filter-signature
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct Intent {
     pub action: Action,
@@ -118,7 +118,7 @@ pub struct Intent {
 /// content provider can use to identify subsets of the provider data.
 ///
 /// In cases where you need to query a content provider but don't know the specific
-/// package names, you can declare that provider authority in a <provider> element,
+/// package names, you can declare that provider authority in a `<provider>` element,
 /// as shown in the following snippet:
 ///
 /// ## XML Example
@@ -132,8 +132,8 @@ pub struct Intent {
 /// ```
 ///
 /// ## Node
-/// If your <queries> element includes a <provider> element, you might see an editor
-/// warning in Android Studio related to the <provider> element. As long as you're using
+/// If your `<queries>` element includes a `<provider>` element, you might see an editor
+/// warning in Android Studio related to the `<provider>` element. As long as you're using
 /// the latest "dot" release of the Android Gradle plugin, your build is unaffected, so
 /// you can disregard the warning. Learn more in the blog post about [`Preparing your
 /// Gradle build for package visibility in Android 11`].
@@ -150,7 +150,7 @@ pub struct Intent {
 /// [`<queries>`]: crate::Queries
 /// [`Preparing your Gradle build for package visibility in Android 11`]: https://android-developers.googleblog.com/2020/07/preparing-your-build-for-package-visibility-in-android-11.html
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 #[serde(rename = "provider")]
 pub struct QueriesProvider {
@@ -163,7 +163,7 @@ pub struct QueriesProvider {
     /// There is no default. At least one authority must be specified.
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
-    #[yaserde(
+    #[xml(
         attribute = true,
         prefix = "android",
         skip_serializing_if = "check_authorities"
@@ -180,7 +180,7 @@ pub struct QueriesProvider {
     ///
     /// [`ContentProvider`]: https://developer.android.com/reference/android/content/ContentProvider
     /// [`<manifest>`]: crate::AndroidManifest
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: String,
 }
 

@@ -21,7 +21,7 @@ use serde::{Deserialize, Serialize};
 /// To control filtering, always explicitly declare hardware features in `<uses-feature>`
 /// elements, rather than relying on Google Play to "discover" the requirements in
 /// `<uses-permission>` elements. Then, if you want to disable filtering for a particular
-/// feature, you can add a `android:required`="`false`" attribute to the <uses-feature>
+/// feature, you can add a `android:required`="`false`" attribute to the `<uses-feature>`
 /// declaration.
 ///
 /// For a list of permissions that imply hardware features, see the documentation for the
@@ -45,7 +45,7 @@ use serde::{Deserialize, Serialize};
 /// [`<uses-feature>`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#permissions-features
 /// [`<manifest>`]: crate::AndroidManifest
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesPermission {
     /// The name of the permission. It can be a permission defined by theapplication with
@@ -57,7 +57,7 @@ pub struct UsesPermission {
     /// [`<permission>`]: crate::Permission
     /// [`android.permission.CAMERA`]: https://developer.android.com/reference/android/Manifest.permission#CAMERA
     /// [`android.permission.READ_CONTACTS`]: https://developer.android.com/reference/android/Manifest.permission#READ_CONTACTS
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// The highest API level at which this permission should be granted to your app.
     /// Setting this attribute is useful if the permission your app requires is no
@@ -82,6 +82,6 @@ pub struct UsesPermission {
     ///
     /// [`WRITE_EXTERNAL_STORAGE`]: https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
     /// [`getExternalFilesDir()`]: https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)
-    #[yaserde(attribute = true, prefix = "android", rename = "maxSdkVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "maxSdkVersion")]
     pub max_sdk_version: Option<u32>,
 }

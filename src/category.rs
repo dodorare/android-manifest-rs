@@ -19,7 +19,7 @@ use serde::{Deserialize, Serialize};
 /// [`Intents and Intent Filters`]: https://developer.android.com/guide/components/intents-filters
 /// [`<intent-filter>`]: crate::IntentFilter
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct Category {
     /// The name of the category. Standard categories are defined in the [`Intent`]
@@ -43,6 +43,6 @@ pub struct Category {
     /// [`CATEGORY_DEFAULT`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_DEFAULT
     /// [`startActivity()`]: https://developer.android.com/reference/android/app/Activity#startActivity(android.content.Intent)
     /// [`startActivityForResult()`]: https://developer.android.com/reference/android/app/Activity#startActivityForResult(android.content.Intent,%20int)
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
 }

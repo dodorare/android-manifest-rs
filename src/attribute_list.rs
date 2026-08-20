@@ -1,3 +1,4 @@
+use crate::xml::{XmlDeserialize, XmlSerialize};
 use serde::{
     Deserialize, Deserializer, Serialize, Serializer,
     de::{self, DeserializeOwned, Visitor},
@@ -6,7 +7,6 @@ use serde::{
 use std::fmt;
 use std::io::{Read, Write};
 use std::marker::PhantomData;
-use yaserde::{YaDeserialize, YaSerialize};
 
 pub trait Delimiter {
     fn delimiter_symbol() -> &'static str;
@@ -88,35 +88,22 @@ impl<D: Delimiter, T: Serialize + DeserializeOwned> Serialize for AttributeList<
     }
 }
 
-impl<D: Delimiter, T: Serialize + DeserializeOwned> YaSerialize for AttributeList<D, T> {
-    fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
-        // if self.is_empty() {
-        //     println!("1");
-        //     return Err("a value list can't be empty".to_string());
-        // };
-        let _ret = writer.write(xml::writer::XmlEvent::characters(
-            &self
-                .vec()
-                .iter()
-                .map(|v| serde_plain::to_string(v).unwrap())
-                .collect::<Vec<String>>()
-                .join(D::delimiter_symbol()),
-        ));
-        Ok(())
-    }
-
-    fn serialize_attributes(
+impl<D: Delimiter, T: Serialize + DeserializeOwned> XmlSerialize for AttributeList<D, T> {
+    fn serialize<W: Write>(
         &self,
-        attributes: Vec<xml::attribute::OwnedAttribute>,
-        namespace: xml::namespace::Namespace,
-    ) -> Result<
-        (
-            Vec<xml::attribute::OwnedAttribute>,
-            xml::namespace::Namespace,
-        ),
-        String,
-    > {
-        Ok((attributes, namespace))
+        writer: &mut crate::xml::ser::Serializer<W>,
+    ) -> Result<(), String> {
+        let values = self
+            .vec()
+            .iter()
+            .map(serde_plain::to_string)
+            .collect::<Result<Vec<_>, _>>()
+            .map_err(|error| error.to_string())?;
+        writer
+            .write(xml::writer::XmlEvent::characters(
+                &values.join(D::delimiter_symbol()),
+            ))
+            .map_err(|error| error.to_string())
     }
 }
 
@@ -178,8 +165,8 @@ impl<'de, D: Delimiter, T: Serialize + DeserializeOwned> Deserialize<'de> for At
     }
 }
 
-impl<D: Delimiter, T: Serialize + DeserializeOwned> YaDeserialize for AttributeList<D, T> {
-    fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
+impl<D: Delimiter, T: Serialize + DeserializeOwned> XmlDeserialize for AttributeList<D, T> {
+    fn deserialize<R: Read>(reader: &mut crate::xml::de::Deserializer<R>) -> Result<Self, String> {
         loop {
             match reader.next_event()? {
                 xml::reader::XmlEvent::StartElement { .. } => {}

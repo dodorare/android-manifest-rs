@@ -53,7 +53,7 @@ use serde::{Deserialize, Serialize};
 /// [`android.intent.action.MAIN`]: https://developer.android.com/reference/android/content/Intent#ACTION_MAIN
 /// [`android.intent.category.LAUNCHER`]: https://developer.android.com/reference/android/content/Intent#CATEGORY_LAUNCHER
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct ActivityAlias {
     /// Whether or not the target activity can be instantiated by the system through this
@@ -68,7 +68,7 @@ pub struct ActivityAlias {
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub enabled: Option<VarOrBool>,
     /// Whether the broadcast receiver can receive messages from non-system sources
     /// outside its application — "`true`" if it can, and "`false`" if
@@ -83,26 +83,26 @@ pub struct ActivityAlias {
     /// know its name) — so the default value is "`false`". On the other hand, the
     /// presence of at least one filter implies that the alias is intended for
     /// external use — so the default value is "`true`".
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub exported: Option<VarOrBool>,
     /// An icon for the target activity when presented to users through the alias. See the
     /// [`<activity>`] element's [`icon`] attribute for more information.
     ///
     /// [`<activity>`]: crate::Activity
     /// [`icon`]: crate::Activity#structfield.icon
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A user-readable label for the alias when presented to users through the alias. See
     /// the [`<activity>`] element's [`label`] attribute for more information.
     ///
     /// [`<activity>`]: crate::Activity
     /// [`label`]: crate::Activity#structfield.label
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub label: Option<Resource<StringResource>>,
     /// A unique name for the alias. The name should resemble a fully qualified class
     /// name. But, unlike the name of the target activity, the alias name
     /// is arbitrary; it does not refer to an actual class.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// The name of a permission that clients must have to launch the target activity or
     /// get it to do something via the alias. If a caller of [`startActivity()`] or
@@ -119,21 +119,21 @@ pub struct ActivityAlias {
     /// [`startActivity()`]: https://developer.android.com/reference/android/content/Context#startActivity(android.content.Intent)
     /// [`startActivityForResult()`]: https://developer.android.com/reference/android/app/Activity#startActivityForResult(android.content.Intent,%20int)
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the activity that can be activated through the alias. This name must
     /// match the `name` attribute of an [`<activity>`] element that precedes the
     /// alias in the manifest.
     ///
     /// [`<activity>`]: crate::Activity
-    #[yaserde(attribute = true, prefix = "android", rename = "targetActivity")]
+    #[xml(attribute = true, prefix = "android", rename = "targetActivity")]
     pub target_activity: Option<String>,
     /// List of `<intent-filter>` tags.
-    #[yaserde(rename = "intent-filter")]
+    #[xml(rename = "intent-filter")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
     /// List of `<meta-data>` tags.
-    #[yaserde(rename = "meta-data")]
+    #[xml(rename = "meta-data")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
 }

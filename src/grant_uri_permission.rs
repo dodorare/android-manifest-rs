@@ -34,7 +34,7 @@ use serde::{Deserialize, Serialize};
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<provider>`]: crate::Provider
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct GrantUriPermission {
     /// A path identifying the data subset or subsets that permission can be  granted for.
@@ -63,10 +63,10 @@ pub struct GrantUriPermission {
     /// [`PATTERN_PREFIX`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_PREFIX
     /// [`PATTERN_SIMPLE_GLOB`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB
     /// [`PatternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub path: Option<String>,
-    #[yaserde(attribute = true, prefix = "android", rename = "pathPattern")]
+    #[xml(attribute = true, prefix = "android", rename = "pathPattern")]
     pub path_pattern: Option<String>,
-    #[yaserde(attribute = true, prefix = "android", rename = "pathPrefix")]
+    #[xml(attribute = true, prefix = "android", rename = "pathPrefix")]
     pub path_prefix: Option<String>,
 }

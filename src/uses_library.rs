@@ -12,7 +12,7 @@ use crate::VarOrBool;
 /// using to determine which library contains the package code.
 ///
 /// ## Node
-/// Google Play uses the <uses-library> elements declared in your app manifest to filter
+/// Google Play uses the `<uses-library>` elements declared in your app manifest to filter
 /// your app from devices that don't meet its library requirements. For more information
 /// about filtering, see the topic [`Google Play filters`].
 ///
@@ -48,13 +48,13 @@ use crate::VarOrBool;
 /// [`Google Play filters`]: https://developer.android.com/google/play/filters
 /// [`<application>`]: crate::Application
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesLibrary {
     /// The name of the library. The name is provided by the documentation for the package
     /// you are using. An example of this is `"android.test.runner"`, a package that
     /// contains Android test classes.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the library
     /// specified by android:name:
@@ -73,6 +73,6 @@ pub struct UsesLibrary {
     /// The default is `"true"`.
     ///
     /// Introduced in: API Level 7.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub required: Option<VarOrBool>,
 }
