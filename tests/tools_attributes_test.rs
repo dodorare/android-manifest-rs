@@ -1,4 +1,4 @@
-use android_manifest::AndroidManifest;
+use android_manifest::from_str;
 use std::fs;
 
 #[test]
@@ -6,8 +6,7 @@ fn test_parse_manifest_with_tools_attributes() {
     let xml_content = fs::read_to_string("tests/test_manifest_with_tools.xml")
         .expect("Failed to read test manifest file");
 
-    let manifest: AndroidManifest =
-        yaserde::de::from_str(&xml_content).expect("Failed to parse manifest");
+    let manifest = from_str(&xml_content).expect("Failed to parse manifest");
 
     // Test manifest level tools attributes
     assert_eq!(manifest.package, Some("com.example.testapp".to_string()));

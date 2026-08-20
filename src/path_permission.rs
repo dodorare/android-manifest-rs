@@ -24,18 +24,18 @@ use serde::{Deserialize, Serialize};
 ///
 /// [`<provider>`]: crate::Provider
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct PathPermission {
     /// A complete URI path for a subset of content provider data. Permission can be
     /// granted only to the particular data identified by this path. When used to
     /// provide search suggestion content, it must be appended with
     /// "/search_suggest_query".
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub path: Option<String>,
     /// The initial part of a URI path for a subset of content provider data. Permission
     /// can be granted to all data subsets with paths that share this initial part.
-    #[yaserde(attribute = true, prefix = "android", rename = "pathPrefix")]
+    #[xml(attribute = true, prefix = "android", rename = "pathPrefix")]
     pub path_prefix: Option<String>,
     /// A complete URI path for a subset of content provider data, but one that
     /// can use the following wildcards:
@@ -59,19 +59,19 @@ pub struct PathPermission {
     /// [`PATTERN_PREFIX`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_PREFIX
     /// [`PATTERN_SIMPLE_GLOB`]: https://developer.android.com/reference/android/os/PatternMatcher#PATTERN_SIMPLE_GLOB
     /// [`PatternMatcher`]: https://developer.android.com/reference/android/os/PatternMatcher
-    #[yaserde(attribute = true, prefix = "android", rename = "pathPattern")]
+    #[xml(attribute = true, prefix = "android", rename = "pathPattern")]
     pub path_pattern: Option<String>,
     /// The name of a permission that clients must have in order to read or write the
     /// content provider's data. This attribute is a convenient way of setting a
     /// single permission for both reading and writing. However, the `readPermission`
     /// and `writePermission` attributes take precedence over this one.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// A permission that clients must have in order to query the content provider.
-    #[yaserde(attribute = true, prefix = "android", rename = "readPermission")]
+    #[xml(attribute = true, prefix = "android", rename = "readPermission")]
     pub read_permission: Option<String>,
     /// A permission that clients must have in order to make changes to the data
     /// controlled by the content provider.
-    #[yaserde(attribute = true, prefix = "android", rename = "writePermission")]
+    #[xml(attribute = true, prefix = "android", rename = "writePermission")]
     pub write_permission: Option<String>,
 }

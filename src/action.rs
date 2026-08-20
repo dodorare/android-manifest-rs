@@ -22,7 +22,7 @@ use serde::{Deserialize, Serialize};
 /// [`Intent`]: https://developer.android.com/reference/android/content/Intent
 /// [`Intents and Intent Filters`]: https://developer.android.com/guide/components/intents-filters
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct Action {
     /// The name of the action. Some standard actions are defined in the [`Intent`] class
@@ -41,6 +41,6 @@ pub struct Action {
     /// ```
     ///
     /// [`Intent`]: https://developer.android.com/reference/android/content/Intent
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
 }

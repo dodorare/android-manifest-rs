@@ -30,7 +30,7 @@ use serde::{Deserialize, Serialize};
 /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
 /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct Permission {
     /// A user-readable description of the permission, longer and more informative than
@@ -40,17 +40,17 @@ pub struct Permission {
     ///
     /// This attribute must be set as a reference to a string resource; unlike the `label`
     /// unlike the `label` attribute, it cannot be a raw string.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
     /// A reference to a drawable resource for an icon that represents the permission.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// A name for the permission, one that can be displayed to users. As a convenience,
     /// the label can be directly set as a raw string while you're developing the
     /// application. However, when the application is ready to be published, it should
     /// be set as a reference to a string resource, so that it can be localized like
     /// other strings in the user interface.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name of the permission. This is the name that will be used in code to refer to
     /// the permission — for example, in a [`<uses-permission>`] element and the
@@ -67,7 +67,7 @@ pub struct Permission {
     /// `com.example.myapp.ENGAGE_HYPERSPACE`.
     ///
     /// [`<uses-permission>`]: crate::UsesPermission
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// Assigns this permission to a group. The value of this attribute is the name of the
     /// group, which must be declared with the [`<permission-group>`] element in this
@@ -75,7 +75,7 @@ pub struct Permission {
     /// belong to a group.
     ///
     /// [`<permission-group>`]: crate::PermissionGroup
-    #[yaserde(attribute = true, prefix = "android", rename = "permissionGroup")]
+    #[xml(attribute = true, prefix = "android", rename = "permissionGroup")]
     pub permission_group: Option<String>,
     /// Characterizes the potential risk implied in the permission and indicates the
     /// procedure the system should follow when determining whether or not to grant
@@ -85,7 +85,7 @@ pub struct Permission {
     /// For example, the `"dangerous"` protection level has no flags. In contrast,
     /// the protection level `"signature|privileged"` is a combination of the
     /// `"signature"` base permission type and the `"privileged"` flag.
-    #[yaserde(attribute = true, prefix = "android", rename = "protectionLevel")]
+    #[xml(attribute = true, prefix = "android", rename = "protectionLevel")]
     pub protection_level: Option<ProtectionLevel>,
 }
 
@@ -93,7 +93,7 @@ pub struct Permission {
 /// see [`protectionLevel`].
 ///
 /// [`protectionLevel`]: https://developer.android.com/reference/android/R.attr#protectionLevel
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum ProtectionLevel {
@@ -103,7 +103,7 @@ pub enum ProtectionLevel {
     /// type of permission to a requesting application at installation, without asking
     /// for the user's explicit approval (though the user always has the option to
     /// review these permissions before installing).
-    #[yaserde(rename = "normal")]
+    #[xml(rename = "normal")]
     #[default]
     Normal,
     /// A higher-risk permission that would give a requesting application access to
@@ -114,13 +114,13 @@ pub enum ProtectionLevel {
     /// and require confirmation before proceeding, or some other approach may
     /// be taken to avoid the user automatically allowing the use of such
     /// facilities.
-    #[yaserde(rename = "dangerous")]
+    #[xml(rename = "dangerous")]
     Dangerous,
     /// A permission that the system grants only if the requesting application is signed
     /// with the same certificate as the application that declared the permission. If
     /// the certificates match, the system automatically grants the permission without
     /// notifying the user or asking for the user's explicit approval.
-    #[yaserde(rename = "signature")]
+    #[xml(rename = "signature")]
     Signature,
     /// Old synonym for `"signature|privileged"`. Deprecated in API level 23. A permission
     /// that the system grants only to applications that are in a dedicated folder on
@@ -132,6 +132,6 @@ pub enum ProtectionLevel {
     /// situations where multiple vendors have applications
     /// built into a system image and need to share specific features
     /// explicitly because they are being built together.
-    #[yaserde(rename = "signatureOrSystem")]
+    #[xml(rename = "signatureOrSystem")]
     SignatureOrSystem,
 }

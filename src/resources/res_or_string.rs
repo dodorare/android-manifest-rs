@@ -1,11 +1,11 @@
 use super::{Resource, ResourceType, ResourceVisitor, StringResource, parse_resource_with_type};
+use crate::xml::{XmlDeserialize, XmlSerialize};
 use serde::{
     Deserialize, Deserializer, Serialize, Serializer,
     de::{self, Visitor},
 };
 use std::fmt;
 use std::io::{Read, Write};
-use yaserde::{YaDeserialize, YaSerialize};
 
 /// Enum used when the value can be string resource or just a row string.
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -47,31 +47,22 @@ impl Serialize for StringResourceOrString {
     }
 }
 
-impl YaSerialize for StringResourceOrString {
-    fn serialize<W: Write>(&self, writer: &mut yaserde::ser::Serializer<W>) -> Result<(), String> {
+impl XmlSerialize for StringResourceOrString {
+    fn serialize<W: Write>(
+        &self,
+        writer: &mut crate::xml::ser::Serializer<W>,
+    ) -> Result<(), String> {
         match self {
             StringResourceOrString::StringResource(resource) => {
-                YaSerialize::serialize(resource, writer)?;
+                XmlSerialize::serialize(resource, writer)?;
             }
             StringResourceOrString::String(value) => {
-                let _ret = writer.write(xml::writer::XmlEvent::characters(value));
+                writer
+                    .write(xml::writer::XmlEvent::characters(value))
+                    .map_err(|error| error.to_string())?;
             }
         }
         Ok(())
-    }
-
-    fn serialize_attributes(
-        &self,
-        attributes: Vec<xml::attribute::OwnedAttribute>,
-        namespace: xml::namespace::Namespace,
-    ) -> Result<
-        (
-            Vec<xml::attribute::OwnedAttribute>,
-            xml::namespace::Namespace,
-        ),
-        String,
-    > {
-        Ok((attributes, namespace))
     }
 }
 
@@ -110,8 +101,8 @@ impl<'de> Deserialize<'de> for StringResourceOrString {
     }
 }
 
-impl YaDeserialize for StringResourceOrString {
-    fn deserialize<R: Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
+impl XmlDeserialize for StringResourceOrString {
+    fn deserialize<R: Read>(reader: &mut crate::xml::de::Deserializer<R>) -> Result<Self, String> {
         loop {
             match reader.next_event()? {
                 xml::reader::XmlEvent::StartElement { .. } => {}

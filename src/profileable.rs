@@ -19,7 +19,7 @@ use crate::VarOrBool;
 ///
 /// [`<application>`]: crate::Application
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct Profileable {
     /// Specifies whether the user of the device can profile this application
@@ -39,7 +39,7 @@ pub struct Profileable {
     /// [`android.os.Trace`]: https://developer.android.com/reference/kotlin/android/os/Trace
     /// [`simpleperf`]: https://developer.android.com/ndk/guides/simpleperf
     /// [`am profile commands`]: https://developer.android.com/studio/command-line/perfetto
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub shell: VarOrBool,
     /// Specifies whether the application can be profiled by system services or
     /// shell tools (for the latter, you must also set [`android:shell`]). If
@@ -47,6 +47,6 @@ pub struct Profileable {
     /// attribute was added in API level 30.
     ///
     /// [`android:shell`]: https://developer.android.com/guide/topics/manifest/profileable-element#shell
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub enable: VarOrBool,
 }

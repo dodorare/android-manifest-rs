@@ -8,7 +8,10 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@master
-    - run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
-    - run: cargo publish
+    - uses: actions/checkout@v6
+    - run: cargo publish --workspace
+      env:
+        CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}

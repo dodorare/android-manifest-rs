@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate yaserde_derive;
+extern crate android_manifest_derive;
 
 mod action;
 mod activity;
@@ -37,6 +37,7 @@ mod uses_permission;
 mod uses_permission_sdk_23;
 mod uses_sdk;
 mod var_or_bool;
+mod xml;
 
 pub use action::*;
 pub use activity::*;
@@ -75,38 +76,77 @@ pub use uses_permission_sdk_23::*;
 pub use uses_sdk::*;
 pub use var_or_bool::*;
 
-/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from a
+/// Deserialize an instance of type [`AndroidManifest`] from a
 /// string of XML text.
 pub fn from_str(s: &str) -> Result<AndroidManifest> {
-    yaserde::de::from_str(s).map_err(Error::FailedToDeserialize)
+    crate::xml::de::from_str(s).map_err(Error::FailedToDeserialize)
 }
 
-/// Deserialize an instance of type [`AndroidManifest`](crate::AndroidManifest) from an IO
+/// Deserialize an instance of type [`AndroidManifest`] from an IO
 /// stream of XML text.
 pub fn from_reader<R: std::io::Read>(reader: R) -> Result<AndroidManifest> {
-    yaserde::de::from_reader(reader).map_err(Error::FailedToDeserialize)
+    crate::xml::de::from_reader(reader).map_err(Error::FailedToDeserialize)
 }
 
-/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a String
+/// Serialize the given [`AndroidManifest`] structure as a String
 /// of XML text.
 pub fn to_string(manifest: &AndroidManifest) -> Result<String> {
-    yaserde::ser::to_string(manifest).map_err(Error::FailedToSerialize)
+    crate::xml::ser::to_string(manifest).map_err(Error::FailedToSerialize)
 }
 
-/// Serialize the given [`AndroidManifest`](crate::AndroidManifest) structure as a
+/// Serialize the given [`AndroidManifest`] structure as a
 /// pretty-printed String of XML text.
 pub fn to_string_pretty(manifest: &AndroidManifest) -> Result<String> {
-    let config = yaserde::ser::Config {
+    let config = crate::xml::ser::Config {
         perform_indent: true,
         write_document_declaration: true,
         indent_string: None,
     };
-    yaserde::ser::to_string_with_config(manifest, &config).map_err(Error::FailedToSerialize)
+    crate::xml::ser::to_string_with_config(manifest, &config).map_err(Error::FailedToSerialize)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn manifest_round_trip_preserves_literal_text() {
+        let label = r#"R&D <Preview> &amp; "quoted" ✓"#;
+        let manifest = AndroidManifest {
+            application: Application {
+                label: Some(StringResourceOrString::string(label)),
+                has_code: Some(true.into()),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let document = to_string_pretty(&manifest).unwrap();
+        let serialized_label = ::xml::EventReader::new(document.as_bytes())
+            .into_iter()
+            .filter_map(|event| event.ok())
+            .find_map(|event| match event {
+                ::xml::reader::XmlEvent::StartElement {
+                    name, attributes, ..
+                } if name.local_name == "application" => attributes
+                    .into_iter()
+                    .find(|attribute| attribute.name.local_name == "label")
+                    .map(|attribute| attribute.value),
+                _ => None,
+            })
+            .unwrap();
+        let parsed = from_str(&document).unwrap();
+
+        assert_eq!(serialized_label, label);
+        assert_eq!(parsed.application.label.unwrap().to_string(), label);
+        assert_eq!(parsed.application.has_code, Some(VarOrBool::Bool(true)));
+    }
+
+    #[test]
+    fn var_or_bool_deserializes_native_booleans() {
+        let parsed: VarOrBool = serde_json::from_value(serde_json::Value::Bool(true)).unwrap();
+        assert_eq!(parsed, VarOrBool::Bool(true));
+    }
 
     #[test]
     fn test_complex_manifest_deserialize() {

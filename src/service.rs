@@ -56,13 +56,13 @@ use serde::{Deserialize, Serialize};
 /// [`<intent-filter>`]: crate::IntentFilter
 /// [`<meta-data>`]: crate::MetaData
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct Service {
     /// A string that describes the service to users. The label should be set as a
     /// reference to a string resource, so that it can be localized like other strings
     /// in the user interface.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub description: Option<Resource<StringResource>>,
     /// Whether or not the service is direct-boot aware; that is, whether or not it can
     /// run before the user unlocks the device.
@@ -74,20 +74,20 @@ pub struct Service {
     /// The default value is `"false"`.
     ///
     /// [`Direct Boot`]: https://developer.android.com/training/articles/direct-boot
-    #[yaserde(attribute = true, prefix = "android", rename = "directBootAware")]
+    #[xml(attribute = true, prefix = "android", rename = "directBootAware")]
     pub direct_boot_aware: Option<VarOrBool>,
     /// Whether or not the service can be instantiated by the system — `"true"` if it can
     /// be, and `"false"` if not. The default value is `"true"`.
     ///
     /// The [`<application>`] element has its own [`enabled`] attribute that applies to
     /// all application components, including services. The [`<application>`] and
-    /// <service> attributes must both be `"true"` (as they both are by default) for
+    /// `<service>` attributes must both be `"true"` (as they both are by default) for
     /// the service to be enabled. If either is `"false"`, the service is disabled; it
     /// cannot be instantiated.
     ///
     /// [`<application>`]: crate::Application
     /// [`enabled`]: crate::Application#structfield.enabled
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub enabled: Option<VarOrBool>,
     /// Whether or not components of other applications can invoke the service or interact
     /// with it — `"true"` if they can, and `"false"` if not. When the value is
@@ -108,7 +108,7 @@ pub struct Service {
     /// [`permission`] attribute).
     ///
     /// [`permission`]: crate::Service#structfield.enabled
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub exported: Option<VarOrBool>,
     /// Specify that the service is a [`foreground service`] that satisfies a particular
     /// use case. For example, a foreground service type of `"location"` indicates
@@ -119,7 +119,7 @@ pub struct Service {
     ///
     /// [`foreground service`]: https://developer.android.com/guide/components/services
     /// [`continue a user-initiated action`]: https://developer.android.com/training/location/background#continue-user-initiated-action
-    #[yaserde(attribute = true, prefix = "android", rename = "foregroundServiceType")]
+    #[xml(attribute = true, prefix = "android", rename = "foregroundServiceType")]
     pub foreground_service_type: Option<ForegroundServiceType>,
     /// An icon representing the service. This attribute must be set as a reference to a
     /// drawable resource containing the image definition. If it is not set, the icon
@@ -134,13 +134,13 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub icon: Option<MipmapOrDrawableResource>,
     /// If set to true, this service will run under a special process that is isolated
     /// from the rest of the system and has no permissions of its own.
     /// The only communication with it is through the Service API (binding and
     /// starting).
-    #[yaserde(attribute = true, prefix = "android", rename = "isolatedProcess")]
+    #[xml(attribute = true, prefix = "android", rename = "isolatedProcess")]
     pub isolated_process: Option<VarOrBool>,
     /// A name for the service that can be displayed to users. If this attribute is not
     /// set, the label set for the application as a whole is used instead
@@ -158,7 +158,7 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`<intent-filter>`]: crate::IntentFilter
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub label: Option<StringResourceOrString>,
     /// The name of the [`Service`] subclass that implements the service. This should be a
     /// fully qualified class name (such as, `"com.example.project.RoomService"`).
@@ -175,7 +175,7 @@ pub struct Service {
     /// [`<manifest>`]: crate::AndroidManifest
     /// [`should not change this name`]: https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
     /// [`android:exported="false"`]: crate::Service#structfield.exported
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: String,
     /// The name of a permission that an entity must have in order to launch the service
     /// or bind to it. If a caller of [`startService()`], [`bindService()`],
@@ -197,7 +197,7 @@ pub struct Service {
     /// [`Security and Permissions`]: https://developer.android.com/training/articles/security-tips
     /// [`permission`]: crate::Application#structfield.permission
     /// [`Permissions`]: https://developer.android.com/guide/topics/manifest/manifest-intro#perms
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub permission: Option<String>,
     /// The name of the process where the service is to run. Normally, all components of
     /// an application run in the default process created for the application. It has
@@ -215,12 +215,12 @@ pub struct Service {
     ///
     /// [`<application>`]: crate::Application
     /// [`process`]: crate::Application#structfield.process
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub process: Option<String>,
-    #[yaserde(rename = "intent-filter")]
+    #[xml(rename = "intent-filter")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub intent_filter: Vec<IntentFilter>,
-    #[yaserde(rename = "meta-data")]
+    #[xml(rename = "meta-data")]
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meta_data: Vec<MetaData>,
     /// Specifies which attributes from lower priority manifest files should be replaced
@@ -230,60 +230,60 @@ pub struct Service {
     /// For example: `tools:replace="android:process,android:exported"`
     ///
     /// Reference: [Merge manifest files - tools:replace](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub replace: Option<String>,
     /// Specifies which attributes or child elements from lower priority manifest files
     /// should be removed entirely.
     ///
     /// Reference: [Merge manifest files - tools:remove](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub remove: Option<String>,
     /// Specifies the merge strategy for this element.
     ///
     /// Reference: [Merge manifest files - tools:node](https://developer.android.com/studio/build/manage-manifests#merge-manifests)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub node: Option<String>,
     /// Lint issue IDs to ignore on this element.
     ///
     /// Reference: [Tools Attributes - tools:ignore](https://developer.android.com/studio/write/tool-attributes#tools-ignore)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub ignore: Option<String>,
     /// Target API level for this element.
     ///
     /// Reference: [Tools Attributes - tools:targetApi](https://developer.android.com/studio/write/tool-attributes#toolstargetapi)
-    #[yaserde(attribute = true, prefix = "tools", rename = "targetApi")]
+    #[xml(attribute = true, prefix = "tools", rename = "targetApi")]
     pub target_api: Option<String>,
     /// Specifies library package names to apply the merge rule to.
     ///
     /// Reference: [Merge manifest files - tools:selector](https://developer.android.com/studio/build/manage-manifests#marker_selector)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub selector: Option<String>,
     /// Generate a build failure if attributes don't exactly match.
     ///
     /// Reference: [Merge manifest files - tools:strict](https://developer.android.com/studio/build/manage-manifests#attribute_markers)
-    #[yaserde(attribute = true, prefix = "tools")]
+    #[xml(attribute = true, prefix = "tools")]
     pub strict: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum ForegroundServiceType {
-    #[yaserde(rename = "camera")]
+    #[xml(rename = "camera")]
     #[default]
     Camera,
-    #[yaserde(rename = "connectedDevice")]
+    #[xml(rename = "connectedDevice")]
     ConnectedDevice,
-    #[yaserde(rename = "dataSync")]
+    #[xml(rename = "dataSync")]
     DataSync,
-    #[yaserde(rename = "location")]
+    #[xml(rename = "location")]
     Location,
-    #[yaserde(rename = "mediaPlayback")]
+    #[xml(rename = "mediaPlayback")]
     MediaPlayback,
-    #[yaserde(rename = "mediaProjection")]
+    #[xml(rename = "mediaProjection")]
     MediaProjection,
-    #[yaserde(rename = "microphone")]
+    #[xml(rename = "microphone")]
     Microphone,
-    #[yaserde(rename = "phoneCall")]
+    #[xml(rename = "phoneCall")]
     PhoneCall,
 }

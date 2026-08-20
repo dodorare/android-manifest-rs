@@ -1,4 +1,4 @@
-use android_manifest::{AndroidManifest, Application};
+use android_manifest::{AndroidManifest, Application, from_str, to_string};
 
 #[test]
 fn test_package_optional_serialization() {
@@ -9,7 +9,7 @@ fn test_package_optional_serialization() {
         ..Default::default()
     };
 
-    let xml = yaserde::ser::to_string(&manifest).expect("Failed to serialize");
+    let xml = to_string(&manifest).expect("Failed to serialize");
     println!("XML without package:\n{}", xml);
 
     assert!(
@@ -24,7 +24,7 @@ fn test_package_optional_serialization() {
         ..Default::default()
     };
 
-    let xml2 = yaserde::ser::to_string(&manifest2).expect("Failed to serialize");
+    let xml2 = to_string(&manifest2).expect("Failed to serialize");
     println!("\nXML with package:\n{}", xml2);
 
     assert!(
@@ -41,8 +41,7 @@ fn test_package_optional_deserialization() {
     <application />
 </manifest>"#;
 
-    let manifest: AndroidManifest =
-        yaserde::de::from_str(xml_without).expect("Failed to parse manifest without package");
+    let manifest = from_str(xml_without).expect("Failed to parse manifest without package");
 
     assert_eq!(
         manifest.package, None,
@@ -56,8 +55,7 @@ fn test_package_optional_deserialization() {
     <application />
 </manifest>"#;
 
-    let manifest2: AndroidManifest =
-        yaserde::de::from_str(xml_with).expect("Failed to parse manifest with package");
+    let manifest2 = from_str(xml_with).expect("Failed to parse manifest with package");
 
     assert_eq!(
         manifest2.package,

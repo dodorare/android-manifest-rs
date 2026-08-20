@@ -5,13 +5,13 @@ use crate::VarOrBool;
 /// Declares a single hardware or software feature that is used by the
 /// application.
 ///
-/// The purpose of a <uses-feature> declaration is to inform any external entity
+/// The purpose of a `<uses-feature>` declaration is to inform any external entity
 /// of the set of hardware and software features on which your application
 /// depends. The element offers a required attribute that lets you specify
 /// whether your application requires and cannot function without the declared
 /// feature, or whether it prefers to have the feature but can function without
 /// it. Because feature support can vary across Android devices, the
-/// <uses-feature> element serves an important role in letting an application
+/// `<uses-feature>` element serves an important role in letting an application
 /// describe the device-variable features that it uses.
 ///
 /// The set of available features that your application declares corresponds to
@@ -46,7 +46,7 @@ use crate::VarOrBool;
 /// (declared with [`glEsVersion`]). Other features that either do or do not exist
 /// for a device, such as a camera, are declared using the [`name`] attribute.
 ///
-/// Although the <uses-feature> element is only activated for devices running
+/// Although the `<uses-feature>` element is only activated for devices running
 /// API Level 4 or higher, it is recommended to include these elements for all
 /// applications, even if the [`minSdkVersion`] is "3" or lower. Devices running
 /// older versions of the platform will simply ignore the element.
@@ -60,7 +60,7 @@ use crate::VarOrBool;
 /// compatibility.
 ///
 /// ## Important
-/// Google Play uses the <uses-feature> elements declared in your app manifest to filter
+/// Google Play uses the `<uses-feature>` elements declared in your app manifest to filter
 /// your app from devices that do not meet its hardware and software feature requirements.
 ///
 /// By specifying the features that your application requires, you enable Google Play to
@@ -92,7 +92,7 @@ use crate::VarOrBool;
 /// [`Google Play and Feature-Based Filtering`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#market-feature-filtering
 /// [`<manifest>`]: crate::AndroidManifest
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesFeature {
     /// Specifies a single hardware or software feature used by the application,
@@ -102,7 +102,7 @@ pub struct UsesFeature {
     ///
     /// [`Hardware features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#hw-features
     /// [`Software features`]: https://developer.android.com/guide/topics/manifest/uses-feature-element#sw-features
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub name: Option<String>,
     /// Boolean value that indicates whether the application requires the feature
     /// specified in `android:name`.
@@ -117,7 +117,7 @@ pub struct UsesFeature {
     ///   function without the specified feature, if necessary.
     ///
     /// The default value for android:required if not declared is `"true"`.
-    #[yaserde(attribute = true, prefix = "android")]
+    #[xml(attribute = true, prefix = "android")]
     pub required: Option<VarOrBool>,
     /// The OpenGL ES version required by the application. The higher 16 bits represent
     /// the major number and the lower 16 bits represent the minor number. For
@@ -144,6 +144,6 @@ pub struct UsesFeature {
     /// supported OpenGL ES version at runtime, see the [`OpenGL ES API guide`].
     ///
     /// [`OpenGL ES API guide`]: https://developer.android.com/guide/topics/graphics/opengl
-    #[yaserde(attribute = true, prefix = "android", rename = "glEsVersion")]
+    #[xml(attribute = true, prefix = "android", rename = "glEsVersion")]
     pub gl_es_version: Option<String>,
 }

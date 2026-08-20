@@ -38,7 +38,7 @@ use crate::VarOrBool;
 /// [`<uses-feature>`]: crate::UsesFeature
 /// [`<manifest>`]: crate::AndroidManifest
 #[derive(
-    Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Default, Clone,
+    Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Default, Clone,
 )]
 pub struct UsesConfiguration {
     /// Whether or not the application requires a five-way navigation control — `"true"`
@@ -54,17 +54,17 @@ pub struct UsesConfiguration {
     /// `reqNavigation` instead.
     ///
     /// [`reqNavigation`]: crate::UsesConfiguration#structfield.req_navigation
-    #[yaserde(attribute = true, prefix = "android", rename = "reqFiveWayNav")]
+    #[xml(attribute = true, prefix = "android", rename = "reqFiveWayNav")]
     pub req_five_way_nav: Option<VarOrBool>,
     /// Whether or not the application requires a hardware keyboard — `"true"` if it does,
     /// and `"false"` if not.
-    #[yaserde(attribute = true, prefix = "android", rename = "reqHardKeyboard")]
+    #[xml(attribute = true, prefix = "android", rename = "reqHardKeyboard")]
     pub req_hard_keyboard: Option<VarOrBool>,
     /// The type of keyboard the application requires, if any at all. This attribute does
     /// not distinguish between hardware and software keyboards. If a hardware
     /// keyboard of a certain type is required, specify the type here and also set the
     /// reqHardKeyboard attribute to `"true"`.
-    #[yaserde(attribute = true, prefix = "android", rename = "reqKeyboardType")]
+    #[xml(attribute = true, prefix = "android", rename = "reqKeyboardType")]
     pub req_keyboard_type: Option<ReqKeyboardType>,
     /// The navigation device required by the application, if any.
     ///
@@ -73,75 +73,75 @@ pub struct UsesConfiguration {
     /// rather than set this one.
     ///
     /// [`reqFiveWayNav`]: crate::UsesConfiguration#structfield.req_five_way_nav
-    #[yaserde(attribute = true, prefix = "android", rename = "reqNavigation")]
+    #[xml(attribute = true, prefix = "android", rename = "reqNavigation")]
     pub req_navigation: Option<ReqNavigation>,
     /// The type of touch screen the application requires, if any at all.
-    #[yaserde(attribute = true, prefix = "android", rename = "reqTouchScreen")]
+    #[xml(attribute = true, prefix = "android", rename = "reqTouchScreen")]
     pub req_touch_screen: Option<ReqTouchScreen>,
 }
 
 /// The type of keyboard the application requires, if any at all.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum ReqKeyboardType {
     /// The application does not require a keyboard. (A keyboard requirement is
     /// not defined.) This is the default value.
-    #[yaserde(rename = "undefined")]
+    #[xml(rename = "undefined")]
     #[default]
     Undefined,
     /// The application does not require a keyboard.
-    #[yaserde(rename = "nokeys")]
+    #[xml(rename = "nokeys")]
     Nokeys,
     /// The application requires a standard QWERTY keyboard.
-    #[yaserde(rename = "qwerty")]
+    #[xml(rename = "qwerty")]
     Qwerty,
     /// The application requires a twelve-key keypad, like those on most phones
     /// — with keys for the digits from 0 through 9 plus star (*) and pound (#)
     /// keys.
-    #[yaserde(rename = "twelvekey")]
+    #[xml(rename = "twelvekey")]
     Twelvekey,
 }
 
 /// The navigation device required by the application, if any.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum ReqNavigation {
     /// The application does not require any type of navigation control. (The
     /// navigation requirement is not defined.) This is the default value.
-    #[yaserde(rename = "undefined")]
+    #[xml(rename = "undefined")]
     #[default]
     Undefined,
     /// The application does not require a navigation control.
-    #[yaserde(rename = "nonav")]
+    #[xml(rename = "nonav")]
     Nonav,
     /// The application requires a D-pad (directional pad) for navigation.
-    #[yaserde(rename = "dpad")]
+    #[xml(rename = "dpad")]
     Dpad,
     /// The application requires a trackball for navigation.
-    #[yaserde(rename = "trackball")]
+    #[xml(rename = "trackball")]
     Trackball,
     /// The application requires a navigation wheel.
-    #[yaserde(rename = "wheel")]
+    #[xml(rename = "wheel")]
     Wheel,
 }
 
 /// The type of touch screen the application requires, if any at all.
-#[derive(Debug, Deserialize, Serialize, YaSerialize, YaDeserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, Deserialize, Serialize, XmlSerialize, XmlDeserialize, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[derive(Default)]
 pub enum ReqTouchScreen {
     /// The application doesn't require a touch screen. (The touch screen
     /// requirement is undefined.) This is the default value.
-    #[yaserde(rename = "undefined")]
+    #[xml(rename = "undefined")]
     #[default]
     Undefined,
     /// The application doesn't require a touch screen.
-    #[yaserde(rename = "notouch")]
+    #[xml(rename = "notouch")]
     Notouch,
     /// The application requires a touch screen that's operated with a stylus.
-    #[yaserde(rename = "stylus")]
+    #[xml(rename = "stylus")]
     Stylus,
     /// The application requires a touch screen that can be operated with a
     /// finger.
@@ -153,6 +153,6 @@ pub enum ReqTouchScreen {
     /// events.
     ///
     /// [`<uses-feature>`]: crate::UsesFeature
-    #[yaserde(rename = "finger")]
+    #[xml(rename = "finger")]
     Finger,
 }
